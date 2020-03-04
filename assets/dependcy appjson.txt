@@ -1,0 +1,206 @@
+Sebelum build prod :
+1. pastiin depedency di app.json sesuai di setting prod, slug, name, privacy, package android
+2. up version => ganti version, versionCode, buildNumber di app.json, version di packages.json dan package-lock.json
+3. url di api url pastiiin udah di prod
+lalu : 
+1. exp build:android -c atau expo build:android --clear-credentials
+2. path to keystore
+3. alias : touress
+4. password: admin@123
+
+
+sebelum build apk qa:
+1. pastiin depedency di app.json sesuai di setting qa, slug, name, privacy, package android
+2. url di api url pastiiin udah di qa
+lalu : 
+1. exp build:android
+
+// prod
+{
+  "expo": {
+    "name": "Touress.com",
+    "description": "This project is really great.",
+    "slug": "Touresscom",
+    "privacy": "unlisted",
+    "platforms": ["ios", "android"],
+    "version": "3.0.29",
+    "orientation": "portrait",
+    "sdkVersion": "33.0.0",
+    "androidStatusBar": {
+      "backgroundColor": "#010101"
+    },
+    "splash": {
+      "image": "./app/assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "enabled": false
+    },
+    "assetBundlePatterns": ["assets/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.connectworld.touress",
+      "buildNumber": "3.0.29",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to change profile company logo",
+        "NSGalleryUsageDescription": "This app uses the gallery to change profile company logo",
+        "NSPhotoLibraryUsageDescription": "This app uses the gallery to change profile company logo",
+        "NSPhotoLibraryAddUsageDescription": "This app uses the gallery to change profile company logo"
+      },
+      "icon": "./app/assets/IosIcon.png",
+        "config": {
+        "googleMapsApiKey": "AIzaSyAaQYc2o45vQ04S0FRruSY05XL1_TZ9FIg"
+      }
+    },
+    "android": {
+      "package": "com.connectworld.touress",
+      "versionCode": 30029,
+      "icon": "./app/assets/icon.png",
+      "permissions": [
+        "MANAGE_DOCUMENTS",
+        "CAMERA",
+        "NOTIFICATIONS",
+        "CAMERA_ROLL",
+        "READ_INTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "WRITE_INTERNAL_STORAGE"
+      ],
+      "config" : {
+        "googleMaps": {
+          "apiKey" : "AIzaSyBS6CLSuZ1TMTQAkhJlD0fyicCNn_4pOGE"
+          }
+        }
+    }
+  }
+}
+ 
+
+
+
+//qa
+{
+  "expo": {
+    "name": "TouressApp",
+    "description": "This project is really great.",
+    "slug": "TouressApp",
+    "privacy": "public",
+    "platforms": ["ios", "android"],
+    "version": "3.0.29",
+    "orientation": "portrait",
+    "sdkVersion": "33.0.0",
+    "androidStatusBar": {
+      "backgroundColor": "#010101"
+    },
+    "notification": {
+      "icon": "./app/assets/IosIcon.png"
+    },
+    "splash": {
+      "image": "./app/assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["assets/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "touress.com",
+      "buildNumber": "3.0.29",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to change profile company logo",
+        "NSGalleryUsageDescription": "This app uses the gallery to change profile company logo",
+        "NSPhotoLibraryUsageDescription": "This app uses the gallery to change profile company logo",
+        "NSPhotoLibraryAddUsageDescription": "This app uses the gallery to change profile company logo"
+      },
+      "icon": "./app/assets/IosIcon.png",
+       "config": {
+        "googleMapsApiKey": "AIzaSyAaQYc2o45vQ04S0FRruSY05XL1_TZ9FIg"
+      }
+    },
+    "android": {
+      "package": "touress.com",
+      "versionCode": 30029,
+      "icon": "./app/assets/icon.png",
+      "permissions": [
+        "MANAGE_DOCUMENTS",
+        "CAMERA",
+        "NOTIFICATIONS",
+        "CAMERA_ROLL",
+        "READ_INTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "WRITE_INTERNAL_STORAGE"
+      ],
+      "config" : {
+        "googleMaps": {
+          "apiKey" : "AIzaSyAaQYc2o45vQ04S0FRruSY05XL1_TZ9FIg"
+          }
+        }
+      
+    }
+  }
+}
+
+
+
+//demo
+{
+  "expo": {
+    "name": "Touress.com",
+    "description": "This project is really great.",
+    "slug": "Touress",
+    "privacy": "public",
+    "platforms": ["ios", "android"],
+    "version": "3.0.29",
+    "orientation": "portrait",
+    "sdkVersion": "33.0.0",
+    "androidStatusBar": {
+      "backgroundColor": "#010101"
+    },
+    "splash": {
+      "image": "./app/assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["assets/*"],
+     "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "touress.com",
+      "buildNumber": "3.0.29",
+      "infoPlist":{
+        "NSCameraUsageDescription": "This app uses the camera to change profile company logo",
+        "NSGalleryUsageDescription": "This app uses the gallery to change profile company logo",
+        "NSPhotoLibraryUsageDescription": "This app uses the gallery to change profile company logo",
+        "NSPhotoLibraryAddUsageDescription": "This app uses the gallery to change profile company logo"
+      },
+      "icon": "./app/assets/IosIcon.png"
+    },
+    "android": {
+      "package": "touress.com",
+      "versionCode": 30029,
+      "icon": "./app/assets/icon.png",
+      "permissions": [
+       "MANAGE_DOCUMENTS",
+        "CAMERA",
+        "NOTIFICATIONS",
+        "CAMERA_ROLL",
+        "READ_INTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "WRITE_INTERNAL_STORAGE"
+      ],
+      "config" : {
+        "googleMaps": {
+          "apiKey" : "AIzaSyAaQYc2o45vQ04S0FRruSY05XL1_TZ9FIg"
+          }
+        }
+    }
+  }
+}

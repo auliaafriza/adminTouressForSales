@@ -1,0 +1,24 @@
+// //Login
+// export const LOGIN_FAILED = "LOGIN_FAILED";
+// export const LOGIN_START = "LOGIN_START";
+// export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+// export const LOGOUT = "LOGOUT";
+// export const RESET_STATUS_LOGIN = "RESET_STATUS_LOGIN";
+// export const GET_TOKEN = "GET_TOKEN";
+// //Register
+// export const REGISTER = "REGISTER";
+// export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+// export const REGISTER_FAILED = "REGISTER_FAILED";
+// export const RESET_REGISTER = "RESET_REGISTER";
+// //Forgot Password
+// export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
+// export const RESET_STATUS_FORGOT = "RESET_STATUS_FORGOT";
+// export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+// export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
+
+// Login
+export const POST_LOGIN = "POST_LOGIN";
+export const POST_LOGIN_PENDING = "POST_LOGIN_PENDING";
+export const POST_LOGIN_FULFILLED = "POST_LOGIN_FULFILLED";
+export const POST_LOGIN_REJECTED = "POST_LOGIN_REJECTED";
+export const RESET_LOGIN_STATUS = "RESET_LOGIN_STATUS";
