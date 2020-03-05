@@ -49,7 +49,7 @@ export default EStyleSheet.create({
   },
   containerTitle: {
     position: "absolute",
-    top: 80,
+    // top: 80,
     left: 0,
     right: 0,
     width: "100%",
@@ -104,7 +104,7 @@ export default EStyleSheet.create({
     marginBottom: 20
   },
   containerIcon: {
-    width: "25%",
+    width: "33%",
     justifyContent: "center",
     alignSelf: "center"
   },

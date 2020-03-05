@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Text } from 'react-native';
-import styles from './styles';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from "react";
+import PropTypes from "prop-types";
+import { Text } from "react-native";
+import styles from "./styles";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ribbonGold = ({
   heightlabel,
@@ -17,6 +17,7 @@ const ribbonGold = ({
   color2,
   color3,
   colorFont,
+  packageList
 }) => {
   const labelstyle = [styles.labelcontainer];
   if (heightlabel) {
@@ -53,7 +54,7 @@ const ribbonGold = ({
       colors={[color1, color2, color3]}
       start={{ x: 0, y: 1 }}
       end={{ x: 1, y: 1 }}
-      style={styles.ribbonAbsolute}
+      style={packageList ? styles.ribbonPackageList : styles.ribbonBooking}
     >
       <Text style={textstyle}>{label}</Text>
     </LinearGradient>
@@ -72,7 +73,7 @@ ribbonGold.propTypes = {
   color1: PropTypes.string,
   color2: PropTypes.string,
   color3: PropTypes.string,
-  colorFont: PropTypes.string,
+  colorFont: PropTypes.string
 };
 
 export default ribbonGold;

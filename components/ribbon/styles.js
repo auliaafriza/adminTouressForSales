@@ -1,34 +1,34 @@
-import EStyleSheet from 'react-native-extended-stylesheet';
+import EStyleSheet from "react-native-extended-stylesheet";
 const styles = EStyleSheet.create({
   top20: {
-    top: 20,
+    top: 20
   },
   labelcontainer: {
-    backgroundColor: '$gold',
+    backgroundColor: "$gold",
     width: 100,
     height: 20,
     zIndex: 4,
     elevation: 3,
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center"
   },
   linerContainer: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+    width: "100%",
+    height: "100%",
+    position: "absolute"
   },
 
   linerContainerIOS: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+    width: "100%",
+    height: "100%",
+    position: "absolute",
     zIndex: 4,
-    elevation: 3,
+    elevation: 3
   },
 
   labelcontainerParallelogram: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     width: 10,
     height: 10,
     //borderStyle: 'solid',
@@ -36,37 +36,62 @@ const styles = EStyleSheet.create({
     borderRightWidth: 1,
     borderBottomWidth: 0,
     borderLeftWidth: 10,
-    borderTopColor: '$darkgold',
-    borderRightColor: '$darkgold',
-    borderBottomColor: 'transparent',
-    borderLeftColor: 'transparent',
+    borderTopColor: "$darkgold",
+    borderRightColor: "$darkgold",
+    borderBottomColor: "transparent",
+    borderLeftColor: "transparent",
     zIndex: 4,
-    position: 'absolute',
+    position: "absolute"
   },
   text: {
     fontSize: 12,
-    color: 'black',
-    textAlign: 'center',
-    '@media ios': {
-      fontWeight: '600',
+    color: "black",
+    textAlign: "center",
+    "@media ios": {
+      fontWeight: "600",
       zIndex: 5,
-      elevation: 3,
+      elevation: 3
     },
-    '@media android': {
-      fontWeight: '300',
+    "@media android": {
+      fontWeight: "300",
       zIndex: 0,
-      elevation: 0,
-    },
+      elevation: 0
+    }
   },
   ribbonAbsolute: {
     padding: 5,
     borderRadius: 15,
-    borderColor: '#fff',
+    borderColor: "#fff",
     borderWidth: 2,
-    position: 'absolute',
+    position: "absolute",
     top: 10,
-    left: 10,
+    left: 10
   },
+  ribbonBooking: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 15,
+    borderColor: "#fff",
+    borderWidth: 2,
+    position: "absolute",
+    top: -3,
+    right: 1
+    // left: 10
+  },
+  ribbonPackageList: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 15,
+    borderColor: "#fff",
+    borderWidth: 2,
+    position: "absolute",
+    top: 10,
+    right: 10
+  }
 });
 
 export default styles;
