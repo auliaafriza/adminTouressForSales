@@ -2,7 +2,7 @@ import React from "react";
 import EStyleSheet from "react-native-extended-stylesheet";
 import store from "../config/store";
 import { Provider } from "react-redux";
-import Navigator from "./PackageDetailScreen/PackageDetail";
+import Navigator from "./TourTransactionScreen/SeriesPackage/SeriesPackageBooking";
 // import Navigator from "./PackageListScreen/PackageList";
 // import Navigator from "./MyBookingScreen/MyBookingScreen";
 // import Navigator from "./HomeScreen/HomeScreen";

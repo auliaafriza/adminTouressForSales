@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import {connect} from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
+import { connect } from "react-redux";
 import {
   View,
   Text,
@@ -11,21 +11,25 @@ import {
   AsyncStorage,
   StatusBar,
   Alert,
-  Linking,
-} from 'react-native';
-import * as Permissions from 'expo-permissions';
-import {Notifications} from 'expo';
-import {Card, CardHeader, CardIcon} from '../../components/card';
-import {Container} from '../../components/container';
-import axios from 'axios';
-import {exitAlert, handleAndroidBackButton} from '../Common/backHandlerAndroid';
-import VersionCheck from 'react-native-version-check';
-import styles from '../styles';
-import stylesGlobal from '../../components/styles';
-import iconReady from '../../assets/Icon/ready_package.png';
-import iconFixed from '../../assets/Icon/series_package.png';
-import iconCustom from '../../assets/Icon/custom_package.png';
-import {LinearGradient} from 'expo-linear-gradient';
+  Linking
+} from "react-native";
+import * as Permissions from "expo-permissions";
+import { Notifications } from "expo";
+import { Card, CardHeader, CardIcon } from "../../components/card";
+import { Container } from "../../components/container";
+import axios from "axios";
+import {
+  exitAlert,
+  handleAndroidBackButton
+} from "../Common/backHandlerAndroid";
+import VersionCheck from "react-native-version-check";
+import styles from "../styles";
+import stylesGlobal from "../../components/styles";
+import iconReady from "../../assets/Icon/ready_package.png";
+import iconFixed from "../../assets/Icon/series_package.png";
+import iconCustom from "../../assets/Icon/custom_package.png";
+import { LinearGradient } from "expo-linear-gradient";
+import { setPackageStatusFromHomeToListAction } from "../../actions/Transactions/TransactionAction";
 // import { SliderLoading } from "../../components/loading";
 // import {
 //   get_images_home,
@@ -83,7 +87,7 @@ class home extends Component {
       loading: false,
       countryCode: null,
       fixPackages: null,
-      loaded: false,
+      loaded: false
     };
   }
 
@@ -100,13 +104,13 @@ class home extends Component {
     companyProfile: PropTypes.object,
     isFixedPackagesAll: PropTypes.string,
     dataFeaturedPackages: PropTypes.array,
-    isFeaturedPackages: PropTypes.string,
+    isFeaturedPackages: PropTypes.string
   };
 
   getCountryLoc = async () => {
     try {
       return await axios.get(`http://ip-api.com/json`).then(res => {
-        this.setState({countryCode: res.data.countryCode});
+        this.setState({ countryCode: res.data.countryCode });
       });
     } catch (error) {}
   };
@@ -149,7 +153,7 @@ class home extends Component {
 
   async componentDidMount() {
     this.setState({
-      loading: true,
+      loading: true
     });
     // this.getNotif();
     // this._notificationSubscription = Notifications.addListener(
@@ -173,39 +177,39 @@ class home extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.isFeaturedPackages === 'success') {
+    if (this.props.isFeaturedPackages === "success") {
       this.setState({
         loading: false,
-        fixPackages: this.props.dataFeaturedPackages,
+        fixPackages: this.props.dataFeaturedPackages
       });
       this.props.dispatch(reset_featured_packages());
       return false;
-    } else if (this.props.isFeaturedPackages === 'failed') {
-      this.setState({loading: false});
+    } else if (this.props.isFeaturedPackages === "failed") {
+      this.setState({ loading: false });
       this.props.dispatch(reset_featured_packages());
       return false;
     } else return true;
   }
 
   getNotif = async () => {
-    const {status} = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    if (status !== 'granted') {
-      Alert.alert('Please give permissions');
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (status !== "granted") {
+      Alert.alert("Please give permissions");
       return;
     }
     const token = await Notifications.getExpoPushTokenAsync();
     try {
       return await axios
-        .post('https://your-server.com/users/push-token', {
+        .post("https://your-server.com/users/push-token", {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+            Accept: "application/json",
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             token: {
-              value: token,
-            },
-          }),
+              value: token
+            }
+          })
         })
         .then(res => {
           console.log(res);
@@ -219,12 +223,12 @@ class home extends Component {
 
   showNotif = () => {
     let localNotification = {
-      title: 'Hai Sobat Touress',
-      body: 'Cek Yuk Series Packages Kita',
+      title: "Hai Sobat Touress",
+      body: "Cek Yuk Series Packages Kita"
     };
     const schedulingOptions = {
-      repeat: 'day',
-      time: new Date().getTime() + 3600000,
+      repeat: "day",
+      time: new Date().getTime() + 3600000
     };
     Notifications.scheduleLocalNotificationAsync(
       localNotification,
@@ -233,12 +237,12 @@ class home extends Component {
   };
 
   showUpdateVersion = () => {
-    Alert.alert('New version available', 'Please, update app to new version', [
+    Alert.alert("New version available", "Please, update app to new version", [
       {
-        text: 'Update',
-        onPress: () => this.updateVersion(),
+        text: "Update",
+        onPress: () => this.updateVersion()
       },
-      {text: 'Cancel'},
+      { text: "Cancel" }
     ]);
   };
 
@@ -247,54 +251,54 @@ class home extends Component {
   };
 
   handlepressbooking = (Id, TourOperator) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     this.props.dispatch(get_id(Id));
-    this.props.navigation.navigate('PackagesDetail', {
-      status: 'Fixed',
+    this.props.navigation.navigate("PackagesDetail", {
+      status: "Fixed",
       Id: Id,
-      from: 'Home',
-      TourOperator: TourOperator,
+      from: "Home",
+      TourOperator: TourOperator
     });
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   handlePressFix = () => {
-    this.setState({loading: true});
-    this.props.navigation.navigate('SeriesPackagesList', {type: 'Fixed'});
-    this.setState({loading: false});
+    this.setState({ loading: true });
+    // this.props.navigation.navigate("PackageList", { type: "Fixed" });
+    this.props.navigation.navigate("PackageList");
+    this.props.setPackageStatusFromHomeToListAction("Series");
+    this.setState({ loading: false });
   };
 
   handlePressReady = () => {
-    this.setState({loading: true});
-    this.props.navigation.navigate('ReadyPackagesList', {
-      type: 'ready',
-    });
-    this.setState({loading: false});
+    this.setState({ loading: true });
+    // this.props.navigation.navigate("PackageList", {
+    //   type: "ready"
+    // });
+    this.props.navigation.navigate("PackageList");
+    this.props.setPackageStatusFromHomeToListAction("Ready");
+    this.setState({ loading: false });
   };
 
   handlePressCustom = () => {
-    this.props.navigation.navigate('customPackagesOption');
+    this.props.navigation.navigate("customPackagesOption");
   };
 
   handlePressFilter = () => {
-    this.props.navigation.navigate('TravelCategory');
-  };
-
-  handlePressPromo = () => {
-    this.props.navigation.navigate('PromoPackages');
+    this.props.navigation.navigate("TravelCategory");
   };
 
   render() {
     return (
       <Container>
         <LinearGradient
-          colors={['white', '#75BDAE', '#38AF95']}
-          start={{x: 0, y: 1}}
-          end={{x: 0, y: 0}}
+          colors={["white", "#75BDAE", "#38AF95"]}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
           style={{
-            position: 'absolute',
+            position: "absolute",
             height: 80,
-            width: '100%',
+            width: "100%"
           }}
         />
         <View>
@@ -308,13 +312,13 @@ class home extends Component {
           <Container paddingbottomcontainer={80}>
             <View style={styles.containerTitle}>
               <Text style={[stylesGlobal.text16, stylesGlobal.textBold]}>
-                Hello,{' '}
+                Hello,{" "}
                 {this.props.userProfile
-                  ? this.props.userProfile.Gender == 'Male'
-                    ? 'Mr'
-                    : 'Mrs'
-                  : ''}{' '}
-                {this.props.userProfile ? this.props.userProfile.FirstName : ''}
+                  ? this.props.userProfile.Gender == "Male"
+                    ? "Mr"
+                    : "Mrs"
+                  : ""}{" "}
+                {this.props.userProfile ? this.props.userProfile.FirstName : ""}
               </Text>
             </View>
             <Card widthCard="90%" topMargin={50} bottomMargin={20}>
@@ -323,7 +327,7 @@ class home extends Component {
                   styles.text16Bold,
                   styles.paddingLeft20,
                   styles.paddingTop20,
-                  styles.alignSelfLeft,
+                  styles.alignSelfLeft
                 ]}
               >
                 Our Package
@@ -377,4 +381,6 @@ const mapStateToProps = state => ({
 });
 
 // export default connect(mapStateToProps)(home);
-export default home;
+export default connect(mapStateToProps, {
+  setPackageStatusFromHomeToListAction
+})(home);
