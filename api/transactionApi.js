@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-import { GET_TEMPLATE_URL } from "./apiUrl";
+import { GET_TEMPLATE_URL, TOUR_OPERATOR_URL } from "./apiUrl";
 
 export const getReadyPackageListApi = data => {
   return apiClient.get(`${GET_TEMPLATE_URL}/ReadyPackage/All`);
@@ -23,4 +23,8 @@ export const getReadyPackageFixedPriceByIdApi = id => {
 
 export const getReadyPackageByIdApi = id => {
   return apiClient.get(`${GET_TEMPLATE_URL}/Ready/${id}`);
+};
+
+export const getTourOperatorProfileByIdApi = id => {
+  return apiClient.get(`${TOUR_OPERATOR_URL}/ById/${id}`);
 };

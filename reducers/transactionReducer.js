@@ -8,7 +8,28 @@ const initialState = {
   packageStatusFromHomeToList: "",
   packageById: {},
   packageByIdStatus: null,
-  packageIdFromSystem: ""
+  packageIdFromSystem: "",
+  tourOperatorId: null,
+  tourOperatorIdStatus: null,
+  setPackageData: null,
+  setGuestData: null,
+  setGuestDataStatus: null,
+  // DARI MOBILE APPS
+  CustomDetails: null,
+  Arrival: null,
+  ArrivalStatus: "",
+  Departure: null,
+  DepartureStatus: "",
+  SummaryProgram: [],
+  SummaryProgramStatus: "",
+  DailyProgram: [],
+  Guest: [],
+  Operator: null,
+  GuestQoutation: [],
+  Departures: [],
+  Returns: [],
+  DeparturesStatus: "",
+  ReturnsStatus: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,7 +59,10 @@ const reducer = (state = initialState, action) => {
         packageListStatus: null,
         packageList: [],
         packageByIdStatus: null,
-        packageById: {}
+        packageById: {},
+        tourOperatorId: null,
+        tourOperatorIdStatus: null,
+        setGuestDataStatus: null
       };
     case types.SET_PACKAGE_STATUS_FROM_HOME_TO_LIST:
       return {
@@ -69,6 +93,235 @@ const reducer = (state = initialState, action) => {
         ...state,
         packageIdFromSystem: action.payload
       };
+
+    case types.GET_OPERATOR_PROFILE_BY_ID:
+      return { ...state };
+    case types.GET_OPERATOR_PROFILE_BY_ID_PENDING:
+      return { ...state, loading: true };
+    case types.GET_OPERATOR_PROFILE_BY_ID_FULFILLED:
+      return {
+        ...state,
+        tourOperatorId: action.payload.data,
+        tourOperatorIdStatus: true,
+        loading: false,
+        errors: null
+      };
+    case types.GET_OPERATOR_PROFILE_BY_ID_REJECTED:
+      return {
+        ...state,
+        tourOperatorIdStatus: false,
+        loading: false,
+        errors: action.payload.response.data
+      };
+    case types.SET_PACKAGE_DATA:
+      return {
+        ...state,
+        setPackageData: action.payload
+      };
+    case types.SET_GUEST_DATA:
+      return {
+        ...state,
+        setGuestData: action.payload,
+        setGuestDataStatus: true
+      };
+
+    case types.SET_GUEST_TOUR_GUIDE:
+      return {
+        ...state,
+        setGuestTourGuide: action.payload
+      };
+
+    // case types.SET_RETURNS_ITINERARY:
+    //   return {
+    //     ...state,
+    //     setReturnItinerary: action.payload
+    //   };
+
+    // case types.SET_DEPARTURES_ITINERARY:
+    //   return {
+    //     ...state,
+    //     setDepartureItinerary: action.payload
+    //   };
+
+    case types.SET_GUEST_QUOTATION:
+      return {
+        ...state,
+        setGuestQuotation: action.payload
+      };
+
+    // case types.SET_CUSTOM_ITINERARY:
+    //   return {
+    //     ...state,
+    //     setCustomItInerary: action.payload
+    //   };
+    // case types.RESET_CUSTOM_ITINERARY:
+    //   return {
+    //     ...state,
+    //     setCustomItInerary: {}
+    //   };
+
+    // case types.SET_SUMMARY_PROGRAM:
+    //   return {
+    //     ...state,
+    //     setSumaaryProgram: action.payload
+    //   };
+
+    //===============================================================================
+    // --------------------------------------------------------------------------------------------
+    // Custom Itenenrary Option
+    // --------------------------------------------------------------------------------------------
+    case types.SET_CUSTOM_ITINERARY: {
+      return {
+        ...state,
+        CustomDetails: action.payload
+      };
+    }
+    case types.RESET_CUSTOM_ITINERARY: {
+      return {
+        ...state,
+        CustomDetails: null,
+        Arrival: null,
+        Departure: null,
+        SummaryProgram: [],
+        DailyProgram: []
+      };
+    }
+    // --------------------------------------------------------------------------------------------
+    // Departures and Returns
+    // --------------------------------------------------------------------------------------------
+    case types.SET_DEPARTURES_ITINERARY: {
+      return {
+        ...state,
+        Departures: action.payload,
+        DeparturesStatus: "success"
+      };
+    }
+    case types.RESET_DEPARTURES_ITINERARY: {
+      return {
+        ...state,
+        DeparturesStatus: ""
+      };
+    }
+
+    case types.SET_RETURNS_ITINERARY: {
+      return {
+        ...state,
+        Returns: action.payload,
+        ReturnsStatus: "success"
+      };
+    }
+    case types.RESET_RETURNS_ITINERARY: {
+      return {
+        ...state,
+        ReturnsStatus: ""
+      };
+    }
+    // --------------------------------------------------------------------------------------------
+    // Airport Arrival
+    // --------------------------------------------------------------------------------------------
+    case types.ARRIVAL_ITINERARY: {
+      return {
+        ...state,
+        Arrival: action.payload,
+        ArrivalStatus: "success"
+      };
+    }
+    case types.RESET_ARRIVAL_ITINERARY: {
+      return {
+        ...state,
+        ArrivalStatus: ""
+      };
+    }
+
+    // --------------------------------------------------------------------------------------------
+    // Airport Departure
+    // --------------------------------------------------------------------------------------------
+    case types.DEPATURE_ITINERARY: {
+      return {
+        ...state,
+        Departure: action.payload,
+        DepartureStatus: "success"
+      };
+    }
+    case types.RESET_DEPATURE_ITINERARY: {
+      return {
+        ...state,
+        DepartureStatus: ""
+      };
+    }
+
+    // --------------------------------------------------------------------------------------------
+    // Summary Program
+    // --------------------------------------------------------------------------------------------
+    case types.SET_SUMMARY_PROGRAM: {
+      return {
+        ...state,
+        SummaryProgram: action.payload,
+        SummaryProgramStatus: "success"
+      };
+    }
+    case types.RESET_SUMMARY_PROGRAM: {
+      return {
+        ...state,
+        SummaryProgramStatus: ""
+      };
+    }
+
+    // --------------------------------------------------------------------------------------------
+    // Daily Program
+    // --------------------------------------------------------------------------------------------
+    case types.SET_DAILY_PROGRAM: {
+      return {
+        ...state,
+        DailyProgram: action.payload
+      };
+    }
+    case types.RESET_DAILY_PROGRAM: {
+      return {
+        ...state,
+        DailyProgram: []
+      };
+    }
+
+    case types.SET_GUEST_ITINERARY: {
+      return {
+        ...state,
+        Guest: action.payload
+      };
+    }
+
+    case types.RESET_GUEST_ITINERARY: {
+      return {
+        ...state,
+        Guest: []
+      };
+    }
+
+    case types.SET_TOUROPERATOR: {
+      return {
+        ...state,
+        Operator: action.payload
+      };
+    }
+
+    case types.RESET_TOUROPERATOR: {
+      return {
+        ...state,
+        Operator: null
+      };
+    }
+
+    case types.SET_GUEST_QUOTATION:
+      return {
+        ...state,
+        GuestQoutation: action.payload
+      };
+    case types.RESET_GUEST_QUOTATION:
+      return {
+        ...state,
+        GuestQoutation: []
+      };
+
     default:
       return state;
   }

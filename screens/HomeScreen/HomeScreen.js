@@ -281,7 +281,7 @@ class home extends Component {
   };
 
   handlePressCustom = () => {
-    this.props.navigation.navigate("customPackagesOption");
+    this.props.navigation.navigate("CustomPackageOption");
   };
 
   handlePressFilter = () => {

@@ -494,6 +494,15 @@ const styles = EStyleSheet.create({
   headerTop: {
     zIndex: 99,
     backgroundColor: "#fff"
+  },
+  containerScrollSeriesOption: {
+    width: "90%",
+    paddingTop: "25%",
+    backgroundColor: "transparent"
+  },
+  containerScrollCustomOption: {
+    width: "100%",
+    backgroundColor: "transparent"
   }
 });
 

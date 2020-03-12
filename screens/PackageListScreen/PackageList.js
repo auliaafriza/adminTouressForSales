@@ -327,9 +327,10 @@ class PackageList extends PureComponent {
             searchIcon={true}
             onChangeText={this._handleSearch}
             placeholder="Type Here..."
-            containerStyle={styles.searchBarList}
-            inputStyle={styles.searcBarInputStyle}
+            // inputContainerStyle={styles.searchBarList}
+            // inputStyle={styles.searcBarInputStyle}
             value={this.state.searchText}
+            lightTheme
           />
           <View style={styles.showingContainer}>
             <Text style={styles.textShowing}>

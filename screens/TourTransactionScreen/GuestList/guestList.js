@@ -21,6 +21,7 @@ import { Card } from "../../../components/card";
 //   post_demo_fix_packages,
 //   reset_post_demo_price,
 // } from '../../actions/fixPackagesAction';
+import { resetTransactionAction } from "../../../actions/Transactions/TransactionAction";
 import { createTransactionItemSeries } from "../../../helper/transactionHelper";
 import { LinearGradient } from "expo-linear-gradient";
 import { ModalBottom } from "../../../components/modal";
@@ -31,21 +32,27 @@ class guestList extends Component {
     super(props);
     this.state = {
       Booking: {
-        GuestAllocation: this.props.navigation.state.params.Booking
-          .GuestAllocation,
-        RoomAllocation: this.props.navigation.state.params.Booking
-          .RoomAllocation,
-        IsSplitStaffCommission: this.props.navigation.state.params.Booking
-          .IsSplitStaffCommission,
-        IsPrintInvoice: this.props.navigation.state.params.Booking
-          .IsPrintInvoice,
-        TourNote: this.props.navigation.state.params.Booking.TourNote,
-        Guests: this.props.navigation.state.params.Booking.Guests,
-        AdditionalItem: this.props.navigation.state.params.Booking
-          .AdditionalItem,
-        Supplements: this.props.navigation.state.params.Booking.Supplements,
-        StartDate: this.props.navigation.state.params.Booking.StartDate,
-        EndDate: this.props.navigation.state.params.Booking.EndDate
+        GuestAllocation: {},
+        RoomAllocation: {},
+        IsSplitStaffCommission: false,
+        IsPrintInvoice: false,
+        TourNote: "",
+        Guests: null,
+        AdditionalItem: null,
+        Supplements: null,
+        StartDate: new Date(),
+        EndDate: new Date()
+        // GuestAllocation: this.props.guestData.Booking.GuestAllocation,
+        // RoomAllocation: this.props.guestData.Booking.RoomAllocation,
+        // IsSplitStaffCommission: this.props.guestData.Booking
+        //   .IsSplitStaffCommission,
+        // IsPrintInvoice: this.props.guestData.Booking.IsPrintInvoice,
+        // TourNote: this.props.guestData.Booking.TourNote,
+        // Guests: this.props.guestData.Booking.Guests,
+        // AdditionalItem: this.props.guestData.Booking.AdditionalItem,
+        // Supplements: this.props.guestData.Booking.Supplements,
+        // StartDate: this.props.guestData.Booking.StartDate,
+        // EndDate: this.props.guestData.Booking.EndDate
       },
       loading: false,
       errorValidation: "",
@@ -58,7 +65,32 @@ class guestList extends Component {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
+    //  this.setDataGuest(this.props.guestData);
   }
+
+  componentDidUpdate() {
+    if (this.props.guestData !== null) {
+      this.setDataGuest(this.props.guestData);
+      this.props.resetTransactionAction();
+    }
+  }
+
+  setDataGuest = guestData => {
+    this.setState({
+      Booking: {
+        GuestAllocation: guestData.Booking.GuestAllocation,
+        RoomAllocation: guestData.Booking.RoomAllocation,
+        IsSplitStaffCommission: guestData.Booking.IsSplitStaffCommission,
+        IsPrintInvoice: guestData.Booking.IsPrintInvoice,
+        TourNote: guestData.Booking.TourNote,
+        Guests: guestData.Booking.Guests,
+        AdditionalItem: guestData.Booking.AdditionalItem,
+        Supplements: guestData.Booking.Supplements,
+        StartDate: guestData.Booking.StartDate,
+        EndDate: guestData.Booking.EndDate
+      }
+    });
+  };
 
   validate = () => {
     const guest = this.state.Booking.Guests[0];
@@ -115,11 +147,7 @@ class guestList extends Component {
       this.setState({ loading: true });
       item = createTransactionItemSeries(this.state.Booking);
       this.props.dispatch(
-        post_demo_fix_packages(
-          this.props.IdPackages,
-          item,
-          this.props.navigation.state.params.Status
-        )
+        post_demo_fix_packages(this.props.IdPackages, item, packageStatus)
       );
     }
   };
@@ -141,7 +169,7 @@ class guestList extends Component {
   }
 
   render() {
-    const Data = this.state.Booking.Guests || "";
+    // const Data = this.state.Booking.Guests || "";
     let num = 0;
     return (
       <Container>
@@ -154,8 +182,8 @@ class guestList extends Component {
             {this.state.Booking.GuestAllocation.Adult != 0 ? (
               <Card style={styles.bottom} widthCard="90%" topMargin={10}>
                 <View>
-                  {Data
-                    ? Data.map((guest, i, ListGuest) => {
+                  {this.state.Booking.Guests
+                    ? this.state.Booking.Guests.map((guest, i, ListGuest) => {
                         num =
                           i == 0
                             ? 1
@@ -299,8 +327,8 @@ class guestList extends Component {
             {this.state.Booking.GuestAllocation.Child != 0 ? (
               <Card style={styles.bottom} widthCard="90%" topMargin={20}>
                 <View>
-                  {Data
-                    ? Data.map((guest, i, ListGuest) => {
+                  {this.state.Booking.Guests
+                    ? this.state.Booking.Guests.map((guest, i, ListGuest) => {
                         num =
                           i == 0
                             ? 1
@@ -438,8 +466,8 @@ class guestList extends Component {
             {this.state.Booking.GuestAllocation.Infant != 0 ? (
               <Card style={styles.bottom} widthCard="90%" topMargin={20}>
                 <View>
-                  {Data
-                    ? Data.map((guest, i, ListGuest) => {
+                  {this.state.Booking.Guests
+                    ? this.state.Booking.Guests.map((guest, i, ListGuest) => {
                         num =
                           i == 0
                             ? 1
@@ -602,9 +630,12 @@ class guestList extends Component {
 }
 
 const mapStateToProps = state => ({
-  IdPackages: state.fixPackagesReducer.id,
-  ispostDemoFixedPackages: state.fixPackagesReducer.ispostDemoFixedPackages,
-  postDemofixedPackages: state.fixPackagesReducer.postDemofixedPackages
+  // IdPackages: state.fixPackagesReducer.id,
+  // ispostDemoFixedPackages: state.fixPackagesReducer.ispostDemoFixedPackages,
+  // postDemofixedPackages: state.fixPackagesReducer.postDemofixedPackages,
+  guestData: state.transactionReducer.setGuestData,
+  packageStatus: state.transactionReducer.packageStatusFromHomeToList,
+  setGuestDataStatus: state.transactionReducer.setGuestDataStatus
 });
 
-export default connect(mapStateToProps)(guestList);
+export default connect(mapStateToProps, { resetTransactionAction })(guestList);

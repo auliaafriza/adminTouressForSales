@@ -8,7 +8,8 @@ import {
   Alert,
   ScrollView,
   Linking,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from "react-native";
 import VersionCheck from "react-native-version-check";
 import { Container } from "../../components/container";
@@ -40,14 +41,14 @@ class login extends Component {
     super(props);
     this.state = {
       Login: {
-        CompanyCode: "30080",
-        Username: "Jalansesama",
-        Password: "12345Aa~"
+        CompanyCode: "30000",
+        Username: "admin",
+        Password: "123456789Aa~"
       },
       errorCompanyCode: "",
       errorUsername: "",
-      errorPassword: "",
-      loading: false
+      errorPassword: ""
+      // loading: false
     };
   }
 
@@ -126,12 +127,12 @@ class login extends Component {
     const error = this.validate();
 
     if (!error) {
-      this.setState({ loading: true });
+      // this.setState({ loading: true });
       // const { Login } = this.state;
       let auth = {
-        CompanyCode: "30080",
-        Username: "Jalansesama",
-        Password: "12345Aa~"
+        CompanyCode: "30000",
+        Username: "admin",
+        Password: "123456789Aa~"
       };
       this.props.postLogin(auth);
       // this.props.dispatch(
@@ -144,34 +145,48 @@ class login extends Component {
     }
   };
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.isLogin !== this.props.isLogin) {
-      if (nextProps.isLogin) {
-        this.setState({ loading: false });
-        this.handlePressHome();
-        this.props.resetLoginStatus();
-        return false;
-      } else if (!nextProps.isLogin) {
-        Alert.alert("Failed", nextProps.messages, [{ text: "OK" }]);
-        this.setState({ loading: false });
-        this.props.resetLoginStatus();
-        return false;
-      }
-    } else return true;
-  }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.props.isLogin) {
-  //     this.setState({ loading: false });
-  //     this.handlePressHome();
-  //     this.props.resetLoginStatus();
-  //   }
-  //   if (!this.props.isLogin) {
-  //     Alert.alert("Failed", this.props.messages, [{ text: "OK" }]);
-  //     this.setState({ loading: false });
-  //     this.props.resetLoginStatus();
-  //   }
+  // shouldComponentUpdate(nextProps) {
+  //   if (nextProps.isLogin !== this.props.isLogin) {
+  //     if (nextProps.isLogin) {
+  //       this.setState({ loading: false });
+  //       this.handlePressHome();
+  //       this.props.resetLoginStatus();
+  //       return false;
+  //     } else if (!nextProps.isLogin) {
+  //       Alert.alert("Failed", nextProps.messages, [{ text: "OK" }]);
+  //       this.setState({ loading: false });
+  //       this.props.resetLoginStatus();
+  //       return false;
+  //     }
+  //   } else return true;
   // }
+
+  test = async () => {
+    const { token, expiredToken } = this.props;
+    AsyncStorage.setItem("token", token);
+    AsyncStorage.setItem("expiredToken", expiredToken);
+  };
+  componentDidUpdate() {
+    if (this.props.loginStatus) {
+      this.test();
+      this.handlePressHome();
+      this.props.resetLoginStatus();
+    } else if (this.props.loginStatus !== null) {
+      Alert.alert("Failed", this.props.messages, [{ text: "OK" }]);
+      this.props.resetLoginStatus();
+    }
+
+    // if (this.props.loginStatus) {
+    //   this.setState({ loading: false });
+    //   this.handlePressHome();
+    //   this.props.resetLoginStatus();
+    // }
+    // if (this.props.loginStatus) {
+    //   Alert.alert("Failed", this.props.messages, [{ text: "OK" }]);
+    //   this.setState({ loading: false });
+    //   this.props.resetLoginStatus();
+    // }
+  }
 
   showUpdateVersion = () => {
     Alert.alert("New version available", "Please, update app to new version", [
@@ -196,18 +211,21 @@ class login extends Component {
   };
 
   handlePressHome = () => {
-    // this.props.navigation.navigate("Home");
+    // const userToken = AsyncStorage.getItem("token");
+    // Alert.alert("Masuk localstor", userToken, [{ text: "OK" }]);
+    this.props.navigation.navigate("Home");
 
-    Alert.alert("Masuk Home", "Homeypad", [
-      {
-        text: "Update"
-        // onPress: () => this.updateVersion()
-      },
-      { text: "Cancel" }
-    ]);
+    // Alert.alert("Masuk Home", "Homeypad", [
+    //   {
+    //     text: "Update"
+    //     // onPress: () => this.updateVersion()
+    //   },
+    //   { text: "Cancel" }
+    // ]);
   };
 
   render() {
+    const { loading } = this.props;
     return (
       <Container>
         <StatusBar
@@ -215,7 +233,7 @@ class login extends Component {
           barStyle="dark-content"
           backgroundColor="transparent"
         />
-        {this.state.loading ? (
+        {loading ? (
           <Loading sizeloading="large" colorloading={styles.$goldcolor} />
         ) : null}
         <ImageBackground
@@ -330,9 +348,11 @@ class login extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLogin: state.authReducer.login_status,
-  messages: state.authReducer.descriptionLogin
-  // dataLogin: state.authReducer.descriptionLogin
+  loginStatus: state.authReducer.loginStatus,
+  messages: state.authReducer.descriptionLogin,
+  loading: state.authReducer.loading,
+  expiredToken: state.authReducer.expiredToken,
+  token: state.authReducer.token
 });
 export default connect(mapStateToProps, {
   postLogin,
