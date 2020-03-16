@@ -1,4 +1,4 @@
-import { TOUR_TRANSACTION_URL } from "./apiUrl";
+import { TOUR_TRANSACTION_URL, CITIES_URL } from "./apiUrl";
 import apiClient from "./apiClient";
 export const getTourCategoryApi = () => {
   return apiClient.get(`${TOUR_TRANSACTION_URL}/TourPaxTypeList`);
@@ -10,4 +10,8 @@ export const getTourTypeApi = () => {
 
 export const getAllMovementTypesApi = () => {
   return apiClient.get(`/MovementModes`);
+};
+
+export const getCityInCountryApi = () => {
+  return apiClient.get(`${CITIES_URL}/CityInCountry`);
 };

@@ -1,20 +1,20 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from "prop-types";
+import React, { Component } from "react";
 import {
   VirtualizedList,
   View,
   StatusBar,
   BackHandler,
   Text,
-  Platform,
-} from 'react-native';
-import { Loading } from '../../components/loading';
-import { Container } from '../../components/container/index';
-import { SearchBar } from 'react-native-elements';
-import { ListItemCountryAndCity } from '../../components/list';
-import { connect } from 'react-redux';
-import stylesGlobal from '../../components/styles';
-import styles from './styles';
+  Platform
+} from "react-native";
+import { Loading } from "../../components/loading";
+import { Container } from "../../components/container/index";
+import { SearchBar } from "react-native-elements";
+import { ListItemCountryAndCity } from "../../components/list";
+import { connect } from "react-redux";
+import stylesGlobal from "../../components/styles";
+import styles from "./styles";
 
 class listCity extends Component {
   constructor(props) {
@@ -23,18 +23,18 @@ class listCity extends Component {
       ListCity: this.props.city,
       searchClearIcon: false,
       refreshing: true,
-      value: '',
-      searchText: '',
+      value: "",
+      searchText: ""
     };
   }
   static propTypes = {
     navigation: PropTypes.object,
     dispatch: PropTypes.func,
-    city: PropTypes.array,
+    city: PropTypes.array
   };
 
   componentDidMount = () => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    BackHandler.addEventListener("hardwareBackPress", () => {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
@@ -43,19 +43,19 @@ class listCity extends Component {
 
   selectedCountry = results => {
     this.props.navigation.pop();
-    let i = this.props.navigation.state.params.index;
-    if (i >= 0) this.props.navigation.state.params.onSelect(i, results);
-    else this.props.navigation.state.params.onSelect(results);
+    let i = this.props.route.params.index;
+    if (i >= 0) this.props.route.params.onSelect(i, results);
+    else this.props.route.params.onSelect(results);
   };
 
   _onChangeSearchText = searchText => {
     if (searchText) {
       this.setState({
-        searchClearIcon: { color: 'red' },
-        searchText: searchText,
+        searchClearIcon: { color: "red" },
+        searchText: searchText
       });
     } else {
-      this.setState({ searchClearIcon: false, searchText: '' });
+      this.setState({ searchClearIcon: false, searchText: "" });
     }
   };
 
@@ -101,7 +101,7 @@ class listCity extends Component {
             </Text>
           </View>
         </View>
-        <Container paddingtopcontainer={Platform.OS === 'ios' ? 100 : 120}>
+        <Container paddingtopcontainer={Platform.OS === "ios" ? 100 : 120}>
           {this.state.ListCity.length == 0 ? (
             this.state.value ? (
               <Text>{this.state.value} not recorded in city list</Text>
@@ -114,7 +114,7 @@ class listCity extends Component {
                 style={[
                   stylesGlobal.width100,
                   stylesGlobal.paddingBottom80,
-                  stylesGlobal.paddingTop10,
+                  stylesGlobal.paddingTop10
                 ]}
                 disableVirtualization
                 pagingEnabled
@@ -169,7 +169,7 @@ class listCity extends Component {
               style={[
                 stylesGlobal.width100,
                 stylesGlobal.paddingBottom80,
-                stylesGlobal.paddingTop10,
+                stylesGlobal.paddingTop10
               ]}
               disableVirtualization
               pagingEnabled
@@ -222,7 +222,7 @@ class listCity extends Component {
 }
 
 const mapStateToProps = state => ({
-  city: state.generalReducer.cityInCountry,
+  city: state.generalReducer.cityInCountry
 });
 
 export default connect(mapStateToProps)(listCity);

@@ -5,13 +5,15 @@ import transactionReducer from "../reducers/transactionReducer";
 import generalReducer from "../reducers/generalReducer";
 import operatorReducer from "../reducers/operatorReducer";
 import transportationReducer from "../reducers/transportationReducer";
+import accommodationReducer from "../reducers/accommodationReducer";
 
 const reducers = {
   authReducer,
   transactionReducer,
   generalReducer,
   operatorReducer,
-  transportationReducer
+  transportationReducer,
+  accommodationReducer
 };
 
 const rootReducer = combineReducers(reducers);

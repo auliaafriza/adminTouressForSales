@@ -79,7 +79,10 @@ import {
   resetDeparturesItineraryAction,
   resetSummaryProgramAction
 } from "../../../actions/Transactions/TransactionAction";
-import { getAllMovementTypesAction } from "../../../actions/General/generalAction";
+import {
+  getAllMovementTypesAction,
+  getCityInCountryAction
+} from "../../../actions/General/generalAction";
 import { transactionItem } from "../../../helper/transactionHelper";
 import { findName } from "../../../helper/checkingHelper";
 import {
@@ -109,7 +112,8 @@ import { resetAccommodationProfileAction } from "../../../actions/accommodation/
 import {
   setDrivingAction,
   setAirportAction,
-  getDurationAction
+  getDurationAction,
+  getAirportAction
 } from "../../../actions/transportation/transportationAction";
 import {
   getOperatorListAction,
@@ -213,6 +217,7 @@ class AccommodationSummary extends Component {
     if (this.props.isMovementMode == []) {
       this.props.getAllMovementTypesAction();
     }
+    this.props.getCityInCountryAction();
   }
 
   backButton = () => {
@@ -867,8 +872,8 @@ class AccommodationSummary extends Component {
   // };
 
   getAirports = async region => {
-    let airport = await getObjectAirport(this.props.airport, region);
-    if (airport == null) {
+    // let airport = await getObjectAirport(this.props.airport, region);
+    if (this.props.listAirport == null) {
       airport = await this.props.getAirportAction(region);
       if (airport.length > 0) {
         this.props.setAirportAction(
@@ -1487,7 +1492,7 @@ class AccommodationSummary extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.isTourOperator === "success") {
+    if (nextProps.isTourOperator) {
       this.setState({ loading: false });
       // this.props.navigation.navigate('AddAdditionalService', {
       //   type: 'custom',
@@ -1496,7 +1501,7 @@ class AccommodationSummary extends Component {
       this.props.resetOperatorListAction();
       //this.props.dispatch(reset_operator_list());
       return false;
-    } else if (nextProps.isTourOperator === "failed") {
+    } else if (nextProps.isTourOperator) {
       this.setState({ loading: false });
       Alert.alert("Failed", nextProps.tourOperatorListError, [{ text: "OK" }]);
       this.props.resetOperatorListAction();
@@ -1792,9 +1797,9 @@ class AccommodationSummary extends Component {
           <Text style={stylesGlobal.text14}>{this.state.textLoading}</Text>
           <AnimatedEllipsis />
         </ModalBottom> */}
-        {this.state.loading ? (
+        {/* {this.state.loading ? (
           <Loading sizeloading="large" colorloading={styles.$goldcolor} />
-        ) : null}
+        ) : null} */}
 
         <View style={styles.header}>
           <View style={styles.tabNavigation}>
@@ -2659,7 +2664,9 @@ const mapStateToProps = state => ({
   isTourOperator: state.operatorReducer.isTourOperator,
   tourOperatorListError: state.operatorReducer.errors,
   airport: state.transportationReducer.airport,
-  driving: state.transportationReducer.driving
+  listAirport: state.transportationReducer.listAirport,
+  driving: state.transportationReducer.driving,
+  cityList: state.generalReducer.cityInCountry
   // tourOperatorListError: state.operatorReducer.tourOperatorListError,
   //   airport: state.itemIteneraryReducer.airport,
   //   driving: state.itemIteneraryReducer.driving,
@@ -2681,5 +2688,6 @@ export default connect(mapStateToProps, {
   getDurationAction,
   getAirportAction,
   getOperatorListAction,
-  resetOperatorListAction
+  resetOperatorListAction,
+  getCityInCountryAction
 })(AccommodationSummary);

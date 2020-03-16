@@ -4,6 +4,7 @@ const initialState = {
   tourTypeList: [],
   tourCategoryList: [],
   allMovementTypes: [],
+  cityInCountry: [],
   loading: false
 };
 
@@ -63,6 +64,25 @@ const reducer = (state = initialState, action) => {
         loading: false,
         errors: action.payload.response.data,
         isMovementMode: false
+      };
+
+    case types.GET_CITY_IN_COUNTRY:
+      return { ...state };
+    case types.GET_CITY_IN_COUNTRY_PENDING:
+      return { ...state, loading: true };
+    case types.GET_CITY_IN_COUNTRY_FULFILLED:
+      return {
+        ...state,
+
+        cityInCountry: action.payload.data,
+        loading: false,
+        errors: null
+      };
+    case types.GET_CITY_IN_COUNTRY_REJECTED:
+      return {
+        ...state,
+        loading: false,
+        errors: action.payload.response.data
       };
 
     default:

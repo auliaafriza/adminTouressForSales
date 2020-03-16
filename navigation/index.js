@@ -7,7 +7,9 @@ import CustomPackageOption from "../screens/TourTransactionScreen/CustomPackage/
 import RoomAllocation from "../screens/TourTransactionScreen/CustomPackage/RoomAllocation";
 import AccommodationSummary from "../screens/TourTransactionScreen/CustomPackage/AccommodationSummary";
 import ListAirlineTicket from "../screens/TourTransactionScreen/CustomPackage/components/airlineTicket/ListAirlineTicket";
-import listAirport from "../screens/Common/listAirport";
+import ListAirport from "../screens/Common/listAirport";
+import ListCity from "../screens/Common/listCity";
+import ListAccomodation from "../screens/TourTransactionScreen/CustomPackage/components/masterData/listAccomodation";
 const Stack = createStackNavigator();
 
 export default function seriesNav({ navigation, route }) {
@@ -26,7 +28,9 @@ export default function seriesNav({ navigation, route }) {
         component={AccommodationSummary}
       />
       <Stack.Screen name="ListAirlineTicket" component={ListAirlineTicket} />
-      <Stack.Screen name="ListAirport" component={listAirport} />
+      <Stack.Screen name="ListAirport" component={ListAirport} />
+      <Stack.Screen name="ListCity" component={ListCity} />
+      <Stack.Screen name="ListAccomodation" component={ListAccomodation} />
     </Stack.Navigator>
   );
 }
