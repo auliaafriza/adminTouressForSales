@@ -16,4 +16,8 @@ export default EStyleSheet.create({
     padding: 3,
     borderRadius: 2,
   },
+  styleSafeAreaWhite: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
 });

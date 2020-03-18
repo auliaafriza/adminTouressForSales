@@ -55,16 +55,16 @@ export const ObjectAirport = {
 };
 
 export const setObjectAirport = (oldObjAirport, Region, Data) => {
-  let newObj = copyObject(oldObjAirport);
-  let obj = copyObject(ObjectAirport);
+  let newObj = copyObject (oldObjAirport);
+  let obj = copyObject (ObjectAirport);
   obj.Region = Region;
   obj.Data = Data;
-  newObj.push(obj);
+  newObj.push (obj);
   return newObj;
 };
 
 export const getObjectAirport = (oldObjAirport, Region) => {
-  let obj = oldObjAirport.find(item => item.Region == Region);
+  let obj = oldObjAirport.find (item => item.Region.Id == Region);
   return obj != undefined ? obj.Data : null;
 };
 
@@ -77,42 +77,46 @@ export const ObjectDuration = {
 };
 
 export const setObjectDuration = (oldObjectDuration, data, item) => {
-  let newObjectDuration = copyObject(oldObjectDuration);
-  let obj = copyObject(ObjectDuration);
+  let newObjectDuration = copyObject (oldObjectDuration);
+  let obj = copyObject (ObjectDuration);
   obj.FromId = data.FromId;
   obj.FromAddress = data.FromAddress;
   obj.ToId = data.ToId;
   obj.ToAddress = data.ToAddress;
   obj.Duration = item.Duration;
   obj.Duration = item.Duration;
-  newObjectDuration.push(obj);
+  newObjectDuration.push (obj);
   return newObjectDuration;
 };
 
 export const getObjectDuration = (oldObjectDuration, data1, data2) => {
   if (data1.ServiceItemId != null && data2.ServiceItemId != null) {
-    const obj1 = oldObjectDuration.filter(i => i.FromId == data1.ServiceItemId);
-    return obj1.find(i => i.ToId == data2.ServiceItemId) != undefined
-      ? obj1.find(i => i.ToId == data2.ServiceItemId)
+    const obj1 = oldObjectDuration.filter (
+      i => i.FromId == data1.ServiceItemId
+    );
+    return obj1.find (i => i.ToId == data2.ServiceItemId) != undefined
+      ? obj1.find (i => i.ToId == data2.ServiceItemId)
       : null;
   } else if (data1.ServiceItemId == null && data2.ServiceItemId != null) {
-    const obj1 = oldObjectDuration.filter(
+    const obj1 = oldObjectDuration.filter (
       i => i.FromAddress == data1.Address.AddressString
     );
-    return obj1.find(i => i.ToId == data2.ServiceItemId) != undefined
-      ? obj1.find(i => i.ToId == data2.ServiceItemId)
+    return obj1.find (i => i.ToId == data2.ServiceItemId) != undefined
+      ? obj1.find (i => i.ToId == data2.ServiceItemId)
       : null;
   } else if (data1.ServiceItemId != null && data2.ServiceItemId == null) {
-    const obj1 = oldObjectDuration.filter(i => i.FromId == data1.ServiceItemId);
-    return obj1.find(i => i.ToAddress == data2.Address.AddressString) !=
+    const obj1 = oldObjectDuration.filter (
+      i => i.FromId == data1.ServiceItemId
+    );
+    return obj1.find (i => i.ToAddress == data2.Address.AddressString) !=
       undefined
-      ? obj1.find(i => i.ToAddress == data2.Address.AddressString)
+      ? obj1.find (i => i.ToAddress == data2.Address.AddressString)
       : null;
   }
 };
 
 export class Guest {
-  constructor(GuestCategory) {
+  constructor (GuestCategory) {
     this.FirstName = null;
     this.LastName = null;
     this.CountryId = null;
@@ -129,7 +133,7 @@ export const DetailCustom = {
   GroupCapacity: null,
   TourCategory: null,
   TourType: null,
-  FirstArrival: { Name: null },
+  FirstArrival: {Name: null},
   GuestAllocation: {
     Adult: 0,
     Child: 0,
@@ -174,7 +178,7 @@ export const Movement = {
   Duration: 0,
   DurationText: '',
   Id: null,
-  Item: Object.assign({}, ItemMov),
+  Item: Object.assign ({}, ItemMov),
   MovementName: null,
   MovementDescription: null,
   Note: null,
@@ -208,7 +212,7 @@ export const ItemMov = {
 
 export const Airport = {
   Address: null,
-  City: { Name: null },
+  City: {Name: null},
   Date: null,
   Day: null,
   Note: null,
@@ -254,7 +258,7 @@ export const SummaryProgram = {
     ServiceItemId: null,
     ImageUrl: null,
   },
-  City: { Name: null },
+  City: {Name: null},
   Date: null,
   Day: null,
   LeavingDate: null,
@@ -265,8 +269,8 @@ export const SummaryProgram = {
 };
 
 export const copyObject = par => {
-  let temp = JSON.stringify(par);
-  return JSON.parse(temp);
+  let temp = JSON.stringify (par);
+  return JSON.parse (temp);
 };
 
 export const func = num => {
@@ -334,18 +338,18 @@ export const func = num => {
 //city : masukan object kota yg berisi region (bisa filter dari balikan API)
 //room : berisi object room allocation
 export const setSummaryProgram = (city, room) => {
-  let SP = copyObject(SummaryProgram);
+  let SP = copyObject (SummaryProgram);
   //let hourOffset = new Date().getTimezoneOffset() / 60;
   SP.City = city && city;
-  SP.Date = convertToStringDate(SumDays(new Date(), 1)) + 'T00:00:00';
+  SP.Date = convertToStringDate (SumDays (new Date (), 1)) + 'T00:00:00';
   SP.Day = 1;
-  SP.LeavingDate = convertToStringDate(SumDays(new Date(), 2)) + 'T00:00:00';
+  SP.LeavingDate = convertToStringDate (SumDays (new Date (), 2)) + 'T00:00:00';
   SP.Region = city ? city.Region.Id : null;
   SP.AccommodationSummary.DateTime = SP.Date;
   SP.AccommodationSummary.CheckIn =
-    convertToStringDate(SumDays(new Date(), 1)) + 'T14:00:00';
+    convertToStringDate (SumDays (new Date (), 1)) + 'T14:00:00';
   SP.AccommodationSummary.CheckOut =
-    convertToStringDate(SumDays(new Date(), 2)) + 'T10:00:00';
+    convertToStringDate (SumDays (new Date (), 2)) + 'T10:00:00';
   //Allocation Room
   SP.AccommodationSummary.Allocations.ChildExtraBedPax = room.ChildExtraBedQty;
   SP.AccommodationSummary.Allocations.ChildSharingRoomPax =
@@ -372,34 +376,33 @@ export const setSummaryProgramReady = (
   room,
   type
 ) => {
-  let oldSP = copyObject(oldSummaryProgram);
+  let oldSP = copyObject (oldSummaryProgram);
   let oldDate = Arrival.Date;
-  let newDate =
-    ['Ready', 'Similar'].indexOf(type) !== -1
-      ? convertToStringDate(SumDays(new Date(), 1)) + 'T00:00:00'
-      : copyObject(Arrival.Date);
+  let newDate = ['Ready', 'Similar'].indexOf (type) !== -1
+    ? convertToStringDate (SumDays (new Date (), 1)) + 'T00:00:00'
+    : copyObject (Arrival.Date);
 
   let newSP = [];
-  oldSP.map((obj, i) => {
+  oldSP.map ((obj, i) => {
     if (obj.AccommodationSummary !== undefined) {
-      let SP = copyObject(SummaryProgram);
-      if (convertToStringDate(oldDate) !== convertToStringDate(obj.Date)) {
+      let SP = copyObject (SummaryProgram);
+      if (convertToStringDate (oldDate) !== convertToStringDate (obj.Date)) {
         SP.NextDay = true;
-        newDate = SumDays(newDate, 1);
+        newDate = SumDays (newDate, 1);
       }
       SP.Day = obj.Day;
-      SP.City = cityList.find(item => item.Id === obj.City.Id);
+      SP.City = cityList.find (item => item.Id === obj.City.Id);
       SP.Region = SP.City.Region.Id;
       SP.TotalDays = obj.TotalDays;
-      SP.Date = convertToStringDate(newDate) + 'T00:00:00';
+      SP.Date = convertToStringDate (newDate) + 'T00:00:00';
       SP.LeavingDate =
-        convertToStringDate(SumDays(SP.Date, SP.TotalDays - 1)) + 'T00:00:00';
+        convertToStringDate (SumDays (SP.Date, SP.TotalDays - 1)) + 'T00:00:00';
       SP.AccommodationSummary.DateTime = SP.Date;
       SP.AccommodationSummary.CheckIn =
-        convertToStringDate(SP.Date) + convertToStringTime(obj.Date);
+        convertToStringDate (SP.Date) + convertToStringTime (obj.Date);
       SP.AccommodationSummary.CheckOut =
-        convertToStringDate(SP.LeavingDate) +
-        convertToStringTime(obj.LeavingDate);
+        convertToStringDate (SP.LeavingDate) +
+        convertToStringTime (obj.LeavingDate);
       SP.AccommodationSummary.Address = obj.AccommodationSummary.Address;
       SP.AccommodationSummary.AccommodationProfileId =
         obj.AccommodationSummary.AccommodationProfileId;
@@ -425,48 +428,49 @@ export const setSummaryProgramReady = (
       SP.AccommodationSummary.Allocations.SingleRoomPax = room.SingleRoomQty;
       oldDate = obj.LeavingDate;
       newDate = SP.LeavingDate;
-      newSP.push(SP);
+      newSP.push (SP);
     } else {
       oldDate = obj.Date;
-      let arr = copyObject(Airport);
+      let arr = copyObject (Airport);
       arr.Address = obj.Address;
-      arr.City = cityList.find(item => item.Id === obj.City.Id);
+      arr.City = cityList.find (item => item.Id === obj.City.Id);
       arr.Region = arr.City.Region.Id;
       arr.Day = obj.Day;
       arr.Note = obj.Note;
       arr.Place = obj.Place;
       arr.PlaceId = obj.PlaceId;
       arr.PlaceType = obj.PlaceType;
-      arr.Date = convertToStringDate(newDate) + convertToStringTime(obj.Date);
+      arr.Date = convertToStringDate (newDate) + convertToStringTime (obj.Date);
       arr.TransferType = obj.TransferType;
-      let accomObj =
-        obj.TransferType === 'Movement_departure' ? oldSP[i - 1] : oldSP[i + 1];
-      let accomCity = cityList.find(item => item.Id === accomObj.City.Id);
+      let accomObj = obj.TransferType === 'Movement_departure'
+        ? oldSP[i - 1]
+        : oldSP[i + 1];
+      let accomCity = cityList.find (item => item.Id === accomObj.City.Id);
       arr.RequestFrom = accomCity.Region.Id;
       if (oldSP[i - 1].AccommodationSummary !== undefined) {
         if (
-          convertToStringDate(oldSP[i - 1].LeavingDate) !==
-          convertToStringDate(obj.Date)
+          convertToStringDate (oldSP[i - 1].LeavingDate) !==
+          convertToStringDate (obj.Date)
         ) {
           arr.NextDay = true;
           arr.Date =
-            convertToStringDate(SumDays(newDate, 1)) +
-            convertToStringTime(obj.Date);
+            convertToStringDate (SumDays (newDate, 1)) +
+            convertToStringTime (obj.Date);
         }
       } else {
         if (
-          convertToStringDate(oldSP[i - 1].Date) !==
-          convertToStringDate(obj.Date)
+          convertToStringDate (oldSP[i - 1].Date) !==
+          convertToStringDate (obj.Date)
         ) {
           arr.NextDay = true;
           arr.Date =
-            convertToStringDate(SumDays(newDate, 1)) +
-            convertToStringTime(obj.Date);
+            convertToStringDate (SumDays (newDate, 1)) +
+            convertToStringTime (obj.Date);
         }
       }
 
       newDate = arr.Date;
-      newSP.push(arr);
+      newSP.push (arr);
     }
     return obj;
   });
@@ -481,29 +485,28 @@ export const setSummaryProgramReadyFixPrice = (
   room,
   status
 ) => {
-  let oldSP = copyObject(oldSummaryProgram);
-  let newDate =
-    status == 'edit'
-      ? copyObject(Arrival.Date)
-      : convertToStringDate(SumDays(new Date(), 1)) + 'T00:00:00';
+  let oldSP = copyObject (oldSummaryProgram);
+  let newDate = status == 'edit'
+    ? copyObject (Arrival.Date)
+    : convertToStringDate (SumDays (new Date (), 1)) + 'T00:00:00';
 
   let newSP = [];
-  oldSP.map((obj, i) => {
+  oldSP.map ((obj, i) => {
     if (obj.AccommodationSummary !== undefined) {
-      let SP = copyObject(SummaryProgram);
+      let SP = copyObject (SummaryProgram);
       SP.Day = obj.Day;
-      SP.City = cityList.find(item => item.Id === obj.City.Id);
+      SP.City = cityList.find (item => item.Id === obj.City.Id);
       SP.Region = SP.City.Region.Id;
       SP.TotalDays = obj.TotalDays;
-      SP.Date = convertToStringDate(newDate) + 'T00:00:00';
+      SP.Date = convertToStringDate (newDate) + 'T00:00:00';
       SP.LeavingDate =
-        convertToStringDate(SumDays(SP.Date, SP.TotalDays - 1)) + 'T00:00:00';
+        convertToStringDate (SumDays (SP.Date, SP.TotalDays - 1)) + 'T00:00:00';
       SP.AccommodationSummary.DateTime = SP.Date;
       SP.AccommodationSummary.CheckIn =
-        convertToStringDate(SP.Date) + convertToStringTime(obj.Date);
+        convertToStringDate (SP.Date) + convertToStringTime (obj.Date);
       SP.AccommodationSummary.CheckOut =
-        convertToStringDate(SP.LeavingDate) +
-        convertToStringTime(obj.LeavingDate);
+        convertToStringDate (SP.LeavingDate) +
+        convertToStringTime (obj.LeavingDate);
       SP.AccommodationSummary.Address = obj.AccommodationSummary.Address;
       SP.AccommodationSummary.AccommodationProfileId =
         obj.AccommodationSummary.AccommodationProfileId;
@@ -527,45 +530,45 @@ export const setSummaryProgramReadyFixPrice = (
       SP.AccommodationSummary.Allocations.SharingRoomPax = room.SharingRoomQty;
       SP.AccommodationSummary.Allocations.SingleRoomPax = room.SingleRoomQty;
       newDate = SP.LeavingDate;
-      newSP.push(SP);
+      newSP.push (SP);
     } else {
-      let arr = copyObject(Airport);
+      let arr = copyObject (Airport);
       arr.Address = obj.Address;
-      arr.City = cityList.find(item => item.Id === obj.City.Id);
+      arr.City = cityList.find (item => item.Id === obj.City.Id);
       arr.Region = arr.City.Region.Id;
       arr.Day = obj.Day;
       arr.Note = obj.Note;
       arr.Place = obj.Place;
       arr.PlaceId = obj.PlaceId;
       arr.PlaceType = obj.PlaceType;
-      arr.Date = convertToStringDate(newDate) + convertToStringTime(obj.Date);
+      arr.Date = convertToStringDate (newDate) + convertToStringTime (obj.Date);
       arr.TransferType = obj.TransferType;
       if (oldSP[i - 1]) {
         if (oldSP[i - 1].AccommodationSummary !== undefined) {
           if (
-            convertToStringDate(oldSP[i - 1].LeavingDate) !==
-            convertToStringDate(obj.Date)
+            convertToStringDate (oldSP[i - 1].LeavingDate) !==
+            convertToStringDate (obj.Date)
           ) {
             arr.NextDay = true;
             arr.Date =
-              convertToStringDate(SumDays(newDate, 1)) +
-              convertToStringTime(obj.Date);
+              convertToStringDate (SumDays (newDate, 1)) +
+              convertToStringTime (obj.Date);
           }
         } else {
           if (
-            convertToStringDate(oldSP[i - 1].Date) !==
-            convertToStringDate(obj.Date)
+            convertToStringDate (oldSP[i - 1].Date) !==
+            convertToStringDate (obj.Date)
           ) {
             arr.NextDay = true;
             arr.Date =
-              convertToStringDate(SumDays(newDate, 1)) +
-              convertToStringTime(obj.Date);
+              convertToStringDate (SumDays (newDate, 1)) +
+              convertToStringTime (obj.Date);
           }
         }
       }
 
       newDate = arr.Date;
-      newSP.push(arr);
+      newSP.push (arr);
     }
     return obj;
   });
@@ -575,34 +578,34 @@ export const setSummaryProgramReadyFixPrice = (
 
 //add accomodation baru
 export const addSummaryProgram = (oldSP, nextGT, cityList) => {
-  oldSP = copyObject(oldSP);
-  let SP = copyObject(SummaryProgram);
+  oldSP = copyObject (oldSP);
+  let SP = copyObject (SummaryProgram);
   SP.Day = oldSP[oldSP.length - 1].Day + 1;
   SP.Date = nextGT
-    ? SumDays(oldSP[oldSP.length - 1].LeavingDate, -1)
+    ? SumDays (oldSP[oldSP.length - 1].LeavingDate, -1)
     : oldSP[oldSP.length - 1].LeavingDate;
   SP.LeavingDate = nextGT
     ? oldSP[oldSP.length - 1].LeavingDate
-    : SumDays(oldSP[oldSP.length - 1].LeavingDate, 1);
-  SP.AccommodationSummary.CheckIn = convertToStringDate(SP.Date) + 'T14:00:00';
+    : SumDays (oldSP[oldSP.length - 1].LeavingDate, 1);
+  SP.AccommodationSummary.CheckIn = convertToStringDate (SP.Date) + 'T14:00:00';
   SP.AccommodationSummary.CheckOut =
-    convertToStringDate(SP.LeavingDate) + 'T10:00:00';
+    convertToStringDate (SP.LeavingDate) + 'T10:00:00';
   SP.Region = nextGT ? nextGT.Region : oldSP[oldSP.length - 1].Region;
   SP.AccommodationSummary.Allocations =
     oldSP[oldSP.length - 1].AccommodationSummary.Allocations;
   if (nextGT) {
-    let city = cityList.find(city => city.Id === nextGT.City.Id);
+    let city = cityList.find (city => city.Id === nextGT.City.Id);
     SP.City = city;
-    oldSP[oldSP.length - 1].LeavingDate = SumDays(
+    oldSP[oldSP.length - 1].LeavingDate = SumDays (
       oldSP[oldSP.length - 1].LeavingDate,
       -1
     );
-    oldSP[oldSP.length - 1].TotalDays = getNumberOfDays(
+    oldSP[oldSP.length - 1].TotalDays = getNumberOfDays (
       oldSP[oldSP.length - 1].Date,
       oldSP[oldSP.length - 1].LeavingDate
     );
   }
-  oldSP.push(SP);
+  oldSP.push (SP);
   return oldSP;
 };
 // export const addSummaryProgram = oldSP => {
@@ -633,14 +636,14 @@ export const delSummaryProgram = (
   oldDailyProgram,
   index
 ) => {
-  let isTicketNext = findIndexTicketNext(oldSP, index);
+  let isTicketNext = findIndexTicketNext (oldSP, index);
   let isReturnsTicket = Departure.Ticket.ServiceItemId;
   let newSP = oldSP;
-  let newDP = rmDailyProgramByAccomodation(oldSP, oldDailyProgram, index);
+  let newDP = rmDailyProgramByAccomodation (oldSP, oldDailyProgram, index);
   if (isTicketNext || isReturnsTicket)
-    newSP = deleteSummaryProgramGroupTicket(oldSP, Departure, index);
-  newSP = rmSummaryProgram(Arrival, newSP, index);
-  let newDeparture = setDateDeparture(Departure, newSP);
+    newSP = deleteSummaryProgramGroupTicket (oldSP, Departure, index);
+  newSP = rmSummaryProgram (Arrival, newSP, index);
+  let newDeparture = setDateDeparture (Departure, newSP);
   return {
     dailyProgram: newDP,
     summaryProgram: newSP,
@@ -649,41 +652,41 @@ export const delSummaryProgram = (
 };
 
 export const rmDailyProgramByAccomodation = (oldSP, oldDailyProgram, index) => {
-  let newDP = copyObject(oldDailyProgram);
-  oldSP = copyObject(oldSP);
+  let newDP = copyObject (oldDailyProgram);
+  oldSP = copyObject (oldSP);
   let startDate = moment
-    .utc(new Date(oldSP[index].Date))
-    .format('YYYY-MM-DD HH:mm');
-  startDate = new Date(startDate);
+    .utc (new Date (oldSP[index].Date))
+    .format ('YYYY-MM-DD HH:mm');
+  startDate = new Date (startDate);
   let leaveDate = moment
-    .utc(new Date(oldSP[index].LeavingDate))
-    .format('YYYY-MM-DD HH:mm');
-  leaveDate = new Date(leaveDate);
-  newDP = newDP.map(SP => {
-    let tgl = moment.utc(new Date(SP.Date)).format('YYYY-MM-DD HH:mm');
-    tgl = new Date(tgl);
+    .utc (new Date (oldSP[index].LeavingDate))
+    .format ('YYYY-MM-DD HH:mm');
+  leaveDate = new Date (leaveDate);
+  newDP = newDP.map (SP => {
+    let tgl = moment.utc (new Date (SP.Date)).format ('YYYY-MM-DD HH:mm');
+    tgl = new Date (tgl);
     let checkin = false;
-    if (tgl.getDate() === startDate.getDate()) {
+    if (tgl.getDate () === startDate.getDate ()) {
       for (let j = 0; j < SP.Movements.length; j++) {
         let movMen = SP.Movements[j].MovementName;
         if (checkin == true) {
-          SP.Movements.splice(j, 1);
+          SP.Movements.splice (j, 1);
           j--;
         }
         if (movMen == 'CHECKOUT') checkin = true;
       }
-    } else if (tgl.getDate() === leaveDate.getDate()) {
+    } else if (tgl.getDate () === leaveDate.getDate ()) {
       for (let j = 0; j < SP.Movements.length; j++) {
         let movMen = SP.Movements.MovementName;
-        SP.Movements.splice(j, 1);
+        SP.Movements.splice (j, 1);
         j--;
         if (movMen == 'CHECKOUT') {
           break;
         }
       }
     } else if (
-      tgl.getDate() > startDate.getDate() &&
-      tgl.getDate() < leaveDate.getDate()
+      tgl.getDate () > startDate.getDate () &&
+      tgl.getDate () < leaveDate.getDate ()
     ) {
       SP.Movements = [];
     }
@@ -692,7 +695,7 @@ export const rmDailyProgramByAccomodation = (oldSP, oldDailyProgram, index) => {
   //delete dailyprogram if dailydetails is null
   for (let i = 0; i < newDP.length; i++) {
     if (newDP[i].Movements.length == 0) {
-      newDP.splice(i, 1);
+      newDP.splice (i, 1);
       i--;
     }
   }
@@ -700,50 +703,52 @@ export const rmDailyProgramByAccomodation = (oldSP, oldDailyProgram, index) => {
   let mergeIndex = [];
   if (index != 0 || index != oldSP.length - 1) {
     let tgl1 = moment
-      .utc(new Date(oldSP[index].Date))
-      .format('YYYY-MM-DD HH:mm');
-    tgl1 = new Date(tgl1);
+      .utc (new Date (oldSP[index].Date))
+      .format ('YYYY-MM-DD HH:mm');
+    tgl1 = new Date (tgl1);
     let tgl2 = moment
-      .utc(new Date(oldSP[index].LeavingDate))
-      .format('YYYY-MM-DD HH:mm');
-    tgl2 = new Date(tgl2);
+      .utc (new Date (oldSP[index].LeavingDate))
+      .format ('YYYY-MM-DD HH:mm');
+    tgl2 = new Date (tgl2);
     for (let i = 0; i < newDP.length; i++) {
-      let tgl = moment.utc(new Date(newDP[i].Date)).format('YYYY-MM-DD HH:mm');
-      tgl = new Date(tgl);
+      let tgl = moment
+        .utc (new Date (newDP[i].Date))
+        .format ('YYYY-MM-DD HH:mm');
+      tgl = new Date (tgl);
       if (
-        tgl.getDate() === tgl1.getDate() ||
-        tgl.getDate() === tgl2.getDate()
+        tgl.getDate () === tgl1.getDate () ||
+        tgl.getDate () === tgl2.getDate ()
       ) {
-        mergeIndex.push(i);
+        mergeIndex.push (i);
       }
     }
   }
 
   if (mergeIndex.length > 1) {
     //if delete in not array
-    newDP[mergeIndex[0]].Movements = newDP[mergeIndex[0]].Movements.concat(
+    newDP[mergeIndex[0]].Movements = newDP[mergeIndex[0]].Movements.concat (
       newDP[mergeIndex[1]].Movements
     );
-    newDP.splice(mergeIndex[1], 1);
+    newDP.splice (mergeIndex[1], 1);
   }
   return newDP;
 };
 
 export const deleteSummaryProgramGroupTicket = (mainProg, returns, index) => {
-  let isGroupTicket = findIndexTicketNext(mainProg, index);
+  let isGroupTicket = findIndexTicketNext (mainProg, index);
   let isReturnsTicket = returns.Ticket.ServiceItemId;
   let isPrevFlight = mainProg[index - 1].TransferType;
 
   if (isGroupTicket || isReturnsTicket) {
     if (isPrevFlight) {
       mainProg[index - 3].LeavingDate = mainProg[index].LeavingDate;
-      mainProg[index - 3].TotalDays = getNumberOfDays(
+      mainProg[index - 3].TotalDays = getNumberOfDays (
         mainProg[index - 3].Date,
         mainProg[index - 3].LeavingDate
       );
     } else {
       mainProg[index - 1].LeavingDate = mainProg[index].LeavingDate;
-      mainProg[index - 1].TotalDays = getNumberOfDays(
+      mainProg[index - 1].TotalDays = getNumberOfDays (
         mainProg[index - 1].Date,
         mainProg[index - 1].LeavingDate
       );
@@ -754,7 +759,7 @@ export const deleteSummaryProgramGroupTicket = (mainProg, returns, index) => {
 
 export const rmSummaryProgram = (arrival, oldSP, index) => {
   //delete summaryProgram
-  let newSP = copyObject(oldSP);
+  let newSP = copyObject (oldSP);
   if (index > -1) {
     if (newSP[index + 1] !== undefined) {
       // check what is mext summary program not null
@@ -762,34 +767,38 @@ export const rmSummaryProgram = (arrival, oldSP, index) => {
       let next = newSP[index + 1].AccommodationSummary;
       if (prev === undefined && next === undefined) {
         // prev = arival , next = dep
-        for (let j = 0; j < 5; j++) newSP.splice(index - 2, 1); // harus di delete arifalnya
+        for (let j = 0; j < 5; j++)
+          newSP.splice (index - 2, 1); // harus di delete arifalnya
       } else if (prev !== undefined && next === undefined) {
         //prev = accom, next = dep
         if (newSP[index - 1].Region === newSP[index].Region)
-          newSP.splice(index, 1);
+          newSP.splice (index, 1);
         else {
-          for (let j = 0; j < 3; j++) newSP.splice(index, 1); // didelete dari index sampai arrival
+          for (let j = 0; j < 3; j++)
+            newSP.splice (index, 1); // didelete dari index sampai arrival
         }
       } else if (prev === undefined && next !== undefined) {
         // prev = arival , next = accom
         if (newSP[index + 1].Region === newSP[index].Region)
-          newSP.splice(index, 1);
+          newSP.splice (index, 1);
         else {
-          for (let j = 0; j < 3; j++) newSP.splice(index - 2, 1); // didelete dari index sampai arrival
+          for (let j = 0; j < 3; j++)
+            newSP.splice (index - 2, 1); // didelete dari index sampai arrival
         }
       } else if (prev !== undefined && next !== undefined) {
-        newSP.splice(index, 1);
+        newSP.splice (index, 1);
       }
     } else {
       if (newSP[index - 1].AccommodationSummary !== undefined) {
-        newSP.splice(index, 1);
+        newSP.splice (index, 1);
       } else {
-        for (let j = 0; j < 3; j++) newSP.splice(index - 2, 1); // harus di delete arifalnya
+        for (let j = 0; j < 3; j++)
+          newSP.splice (index - 2, 1); // harus di delete arifalnya
       }
     }
   }
   //update datetime
-  return setDateSummaryProgram(arrival, newSP);
+  return setDateSummaryProgram (arrival, newSP);
 };
 // export const rmSummaryProgram = (arrival, oldSP, index) => {
 //   //delete summaryProgram
@@ -844,7 +853,7 @@ export const changeAccomodation = (
   room,
   hotel
 ) => {
-  const newData = copyObject(ListSummaryProgram);
+  const newData = copyObject (ListSummaryProgram);
   newData[index].AccommodationSummary.Name = hotel.Name;
   newData[index].AccommodationSummary.Address = hotel.Address;
   newData[index].AccommodationSummary.ImageUrl = hotel.ImageUrl;
@@ -868,9 +877,9 @@ export const changeDestinationSummaryProgram = (
   index,
   city
 ) => {
-  const newSP = copyObject(ListSummaryProgram);
-  const newArrival = copyObject(Arrival);
-  const newDeparture = copyObject(Departure);
+  const newSP = copyObject (ListSummaryProgram);
+  const newArrival = copyObject (Arrival);
+  const newDeparture = copyObject (Departure);
   if (index == 0) {
     newArrival.City = city;
     newArrival.Region = city.Region.Id;
@@ -904,7 +913,7 @@ export const changeDestinationSummaryProgram = (
 };
 
 export const findCityById = (cities, id) => {
-  return cities.find(item => item.Id === id);
+  return cities.find (item => item.Id === id);
 };
 
 //Untuk change airport jika ada perubahan destination
@@ -917,8 +926,8 @@ export const changeDestinationArivalDeparture = (
   ListAirport,
   requestFrom
 ) => {
-  let air = copyObject(ArrivalDeparture);
-  let city = findCityById(cities, ListAirport[0].CityId);
+  let air = copyObject (ArrivalDeparture);
+  let city = findCityById (cities, ListAirport[0].CityId);
   air.City = city;
   air.Region = city.Region.Id;
   if (ListAirport.length > 0) {
@@ -940,7 +949,7 @@ export const changeDestinationArivalDeparture = (
 //Data : object SP atau object Arrival Departure
 //airport : object airport yg diselect
 export const changeAirport = (Data, index, airport) => {
-  let data = copyObject(Data);
+  let data = copyObject (Data);
   if (index != null) {
     data[index].Address = airport.AddressObject.AddressString
       ? airport.AddressObject.AddressString
@@ -964,20 +973,21 @@ export const changeAirport = (Data, index, airport) => {
 //untuk change date arrival;
 //arrival : object arrival
 export const setDateArrival = (arrival, date) => {
-  let air = copyObject(arrival);
+  let air = copyObject (arrival);
   if (air.length) {
     if (air.length != 0) {
-      air.map(item => {
+      air.map (item => {
         item.Date = item.NextDay
-          ? convertToStringDate(SumDays(date, 1)) +
-            convertToStringTime(item.Date)
-          : convertToStringDate(changeTime(date)) +
-            convertToStringTime(item.Date);
+          ? convertToStringDate (SumDays (date, 1)) +
+              convertToStringTime (item.Date)
+          : convertToStringDate (changeTime (date)) +
+              convertToStringTime (item.Date);
       });
     }
   } else {
     air.Date =
-      convertToStringDate(changeTime(date)) + convertToStringTime(arrival.Date);
+      convertToStringDate (changeTime (date)) +
+      convertToStringTime (arrival.Date);
   }
 
   return air;
@@ -986,34 +996,34 @@ export const setDateArrival = (arrival, date) => {
 //departure : objeck dari departure
 //SummaryProgram : list of object summary program
 export const setDateDeparture = (departure, SummaryProgram) => {
-  let air = copyObject(departure);
+  let air = copyObject (departure);
   if (air.length) {
     if (air.length != 0) {
-      air.map(item => {
+      air.map (item => {
         if (item.NextDay) {
           item.Date =
-            convertToStringDate(
-              SumDays(SummaryProgram[SummaryProgram.length - 1].LeavingDate, 1)
-            ) + convertToStringTime(item.Date);
+            convertToStringDate (
+              SumDays (SummaryProgram[SummaryProgram.length - 1].LeavingDate, 1)
+            ) + convertToStringTime (item.Date);
         } else {
           item.Date =
-            convertToStringDate(
+            convertToStringDate (
               SummaryProgram[SummaryProgram.length - 1].LeavingDate
-            ) + convertToStringTime(item.Date);
+            ) + convertToStringTime (item.Date);
         }
       });
     }
   } else {
     if (air.NextDay) {
       air.Date =
-        convertToStringDate(
-          SumDays(SummaryProgram[SummaryProgram.length - 1].LeavingDate, 1)
-        ) + convertToStringTime(air.Date);
+        convertToStringDate (
+          SumDays (SummaryProgram[SummaryProgram.length - 1].LeavingDate, 1)
+        ) + convertToStringTime (air.Date);
     } else {
       air.Date =
-        convertToStringDate(
+        convertToStringDate (
           SummaryProgram[SummaryProgram.length - 1].LeavingDate
-        ) + convertToStringTime(air.Date);
+        ) + convertToStringTime (air.Date);
     }
   }
   return air;
@@ -1022,9 +1032,9 @@ export const setDateDeparture = (departure, SummaryProgram) => {
 //arrivalDeparture : object arrival or departure
 //time : object date yang berisi time
 export const changeTimeArrivalDeparture = (arrivalDeparture, time) => {
-  let air = copyObject(arrivalDeparture);
+  let air = copyObject (arrivalDeparture);
   air.Date =
-    convertToStringDate(air.Date) + convertToStringTime(changeTime(time));
+    convertToStringDate (air.Date) + convertToStringTime (changeTime (time));
   return air;
 };
 
@@ -1032,10 +1042,10 @@ export const changeTimeArrivalDeparture = (arrivalDeparture, time) => {
 //arrivalDeparture : object arrival or departure connection flight
 //time : object date yang berisi time
 export const changeTimeConnectionFlight = (arrivalDeparture, index, time) => {
-  let air = copyObject(arrivalDeparture);
+  let air = copyObject (arrivalDeparture);
   air[index].Date =
-    convertToStringDate(air[index].Date) +
-    convertToStringTime(changeTime(time));
+    convertToStringDate (air[index].Date) +
+    convertToStringTime (changeTime (time));
   // air[index].Date = moment
   //   .utc(new Date(air[index].Date))
   //   .format('YYYY-MM-DD HH:mm');
@@ -1045,24 +1055,25 @@ export const changeTimeConnectionFlight = (arrivalDeparture, index, time) => {
 //set date Summary program jika arrival date diganti
 export const setDateSummaryProgram = (arrival, SummaryProgram) => {
   let date = arrival.Date;
-  let SP = copyObject(SummaryProgram);
-  SP.map(obj => {
+  let SP = copyObject (SummaryProgram);
+  SP.map (obj => {
     if (obj.NextDay === true) {
       obj.Date =
-        convertToStringDate(SumDays(date, 1)) + convertToStringTime(obj.Date);
+        convertToStringDate (SumDays (date, 1)) +
+        convertToStringTime (obj.Date);
     } else {
-      obj.Date = convertToStringDate(date) + convertToStringTime(obj.Date);
+      obj.Date = convertToStringDate (date) + convertToStringTime (obj.Date);
     }
 
     if (obj.AccommodationSummary !== undefined) {
-      obj.LeavingDate = SumDays(obj.Date, obj.TotalDays - 1);
+      obj.LeavingDate = SumDays (obj.Date, obj.TotalDays - 1);
       obj.AccommodationSummary.DateTime = obj.Date;
       obj.AccommodationSummary.CheckIn =
-        convertToStringDate(obj.Date) +
-        convertToStringTime(obj.AccommodationSummary.CheckIn);
+        convertToStringDate (obj.Date) +
+        convertToStringTime (obj.AccommodationSummary.CheckIn);
       obj.AccommodationSummary.CheckOut =
-        convertToStringDate(obj.LeavingDate) +
-        convertToStringTime(obj.AccommodationSummary.CheckOut);
+        convertToStringDate (obj.LeavingDate) +
+        convertToStringTime (obj.AccommodationSummary.CheckOut);
       date = obj.LeavingDate;
     } else {
       date = obj.Date;
@@ -1075,13 +1086,14 @@ export const setDateSummaryProgram = (arrival, SummaryProgram) => {
 //index : index number yang diganti durationnya
 //duration : int dari duration day
 export const changeDuration = (headline, index, duration) => {
-  let SP = copyObject(headline.MainPrograms);
-  let indexTicketNext = findIndexTicketNext(SP, index);
+  let SP = copyObject (headline.MainPrograms);
+  let indexTicketNext = findIndexTicketNext (SP, index);
   let diffDurationAdd = duration - SP[index].TotalDays;
-  let indexTicketPrev =
-    SP[index - 1] && SP[index - 1].Ticket && SP[index - 1].Ticket.ServiceItemId
-      ? true
-      : false;
+  let indexTicketPrev = SP[index - 1] &&
+    SP[index - 1].Ticket &&
+    SP[index - 1].Ticket.ServiceItemId
+    ? true
+    : false;
   let data = {
     MainPrograms: null,
     errorMessage: null,
@@ -1104,16 +1116,16 @@ export const changeDuration = (headline, index, duration) => {
         'Maximum days. Please try change duration other destination';
     }
     if (!data.errorMessage) {
-      SP[index].Date = SumDays(SP[index].Date, SP[index].TotalDays - duration);
+      SP[index].Date = SumDays (SP[index].Date, SP[index].TotalDays - duration);
 
       SP[index].AccommodationSummary.DateTime = SP[index].Date;
       SP[index].AccommodationSummary.CheckIn =
-        convertToStringDate(SP[index].Date) +
-        convertToStringTime(SP[index].AccommodationSummary.CheckIn);
+        convertToStringDate (SP[index].Date) +
+        convertToStringTime (SP[index].AccommodationSummary.CheckIn);
       SP[index].AccommodationSummary.CheckOut =
-        convertToStringDate(SP[index].LeavingDate) +
-        convertToStringTime(SP[index].AccommodationSummary.CheckOut);
-      SP[index].TotalDays = getNumberOfDays(
+        convertToStringDate (SP[index].LeavingDate) +
+        convertToStringTime (SP[index].AccommodationSummary.CheckOut);
+      SP[index].TotalDays = getNumberOfDays (
         SP[index].Date,
         SP[index].LeavingDate
       );
@@ -1124,7 +1136,7 @@ export const changeDuration = (headline, index, duration) => {
       //   headline,
       //   index
       // );
-      data.MainPrograms = fixingDateTimeChangeDurationSP(
+      data.MainPrograms = fixingDateTimeChangeDurationSP (
         SP,
         index,
         diffDurationAdd
@@ -1146,11 +1158,11 @@ export const changeDuration = (headline, index, duration) => {
         'Maximum days. Please try change duration other destination';
     }
     if (!data.errorMessage) {
-      SP[index].LeavingDate = SumDays(SP[index].Date, duration - 1);
+      SP[index].LeavingDate = SumDays (SP[index].Date, duration - 1);
       SP[index].AccommodationSummary.CheckOut =
-        convertToStringDate(SP[index].LeavingDate) +
-        convertToStringTime(SP[index].AccommodationSummary.CheckOut);
-      SP[index].TotalDays = getNumberOfDays(
+        convertToStringDate (SP[index].LeavingDate) +
+        convertToStringTime (SP[index].AccommodationSummary.CheckOut);
+      SP[index].TotalDays = getNumberOfDays (
         SP[index].Date,
         SP[index].LeavingDate
       );
@@ -1161,26 +1173,26 @@ export const changeDuration = (headline, index, duration) => {
       //   headline,
       //   index
       // );
-      data.MainPrograms = fixingDateTimeChangeDurationSP(
+      data.MainPrograms = fixingDateTimeChangeDurationSP (
         SP,
         index,
         diffDurationAdd
       );
     }
   } else {
-    SP[index].TotalDays = Number(duration);
-    SP[index].LeavingDate = SumDays(SP[index].Date, SP[index].TotalDays - 1);
+    SP[index].TotalDays = Number (duration);
+    SP[index].LeavingDate = SumDays (SP[index].Date, SP[index].TotalDays - 1);
     SP[index].AccommodationSummary.DateTime = SP[index].Date;
     SP[index].AccommodationSummary.CheckIn =
-      convertToStringDate(SP[index].Date) +
-      convertToStringTime(SP[index].AccommodationSummary.CheckIn);
+      convertToStringDate (SP[index].Date) +
+      convertToStringTime (SP[index].AccommodationSummary.CheckIn);
     SP[index].AccommodationSummary.CheckOut =
-      convertToStringDate(SP[index].LeavingDate) +
-      convertToStringTime(SP[index].AccommodationSummary.CheckOut);
+      convertToStringDate (SP[index].LeavingDate) +
+      convertToStringTime (SP[index].AccommodationSummary.CheckOut);
     let date = SP[index].LeavingDate;
     index++;
     data.MainPrograms = SP[index]
-      ? setDateSummaryProgramSequence(SP, null, index, date)
+      ? setDateSummaryProgramSequence (SP, null, index, date)
       : SP;
   }
   return data;
@@ -1197,38 +1209,36 @@ export const setDateSummaryProgramByIndex = (
   index,
   date
 ) => {
-  let SP = copyObject(SummaryProgram);
-  let air = copyObject(Arrival);
-  date = changeTime(date);
+  let SP = copyObject (SummaryProgram);
+  let air = copyObject (Arrival);
+  date = changeTime (date);
   SP[index].Date =
-    convertToStringDate(date) + convertToStringTime(SP[index].Date);
+    convertToStringDate (date) + convertToStringTime (SP[index].Date);
   if (index === 0) {
-    SP[index].NextDay =
-      convertToStringDate(SP[index].Date) === convertToStringDate(air.Date)
-        ? false
-        : true;
+    SP[index].NextDay = convertToStringDate (SP[index].Date) ===
+      convertToStringDate (air.Date)
+      ? false
+      : true;
   } else {
     if (SP[index - 1].AccommodationSummary !== undefined) {
-      SP[index].NextDay =
-        convertToStringDate(SP[index - 1].LeavingDate) ===
-        convertToStringDate(SP[index].Date)
-          ? false
-          : true;
+      SP[index].NextDay = convertToStringDate (SP[index - 1].LeavingDate) ===
+        convertToStringDate (SP[index].Date)
+        ? false
+        : true;
     } else {
-      SP[index].NextDay =
-        convertToStringDate(SP[index - 1].Date) ===
-        convertToStringDate(SP[index].Date)
-          ? false
-          : true;
+      SP[index].NextDay = convertToStringDate (SP[index - 1].Date) ===
+        convertToStringDate (SP[index].Date)
+        ? false
+        : true;
     }
   }
 
   if (SP[index].AccommodationSummary !== undefined) {
     SP[index].AccommodationSummary.DateTime = SP[index].Date;
     SP[index].AccommodationSummary.CheckIn =
-      convertToStringDate(SP[index].Date) +
-      convertToStringTime(SP[index].AccommodationSummary.CheckIn);
-    SP[index].TotalDays = getNumberOfDays(
+      convertToStringDate (SP[index].Date) +
+      convertToStringTime (SP[index].AccommodationSummary.CheckIn);
+    SP[index].TotalDays = getNumberOfDays (
       SP[index].Date,
       SP[index].LeavingDate
     );
@@ -1237,7 +1247,7 @@ export const setDateSummaryProgramByIndex = (
     date = SP[index].Date;
   }
   index++;
-  return SP[index] ? setDateSummaryProgramSequence(SP, null, index, date) : SP;
+  return SP[index] ? setDateSummaryProgramSequence (SP, null, index, date) : SP;
 };
 
 //set date Summary program
@@ -1251,41 +1261,39 @@ export const setDateSummaryProgramSequence = (
   index,
   date
 ) => {
-  let SP = copyObject(SummaryProgram);
-  let air = copyObject(Arrival);
-  date = changeTime(date);
+  let SP = copyObject (SummaryProgram);
+  let air = copyObject (Arrival);
+  date = changeTime (date);
   SP[index].Date =
-    convertToStringDate(date) + convertToStringTime(SP[index].Date);
+    convertToStringDate (date) + convertToStringTime (SP[index].Date);
   if (index == 0) {
-    SP[index].NextDay =
-      convertToStringDate(SP[index].Date) === convertToStringDate(air.Date)
-        ? false
-        : true;
+    SP[index].NextDay = convertToStringDate (SP[index].Date) ===
+      convertToStringDate (air.Date)
+      ? false
+      : true;
   } else {
     if (SP[index - 1].AccommodationSummary !== undefined) {
-      SP[index].NextDay =
-        convertToStringDate(SP[index - 1].LeavingDate) ===
-        convertToStringDate(SP[index].Date)
-          ? false
-          : true;
+      SP[index].NextDay = convertToStringDate (SP[index - 1].LeavingDate) ===
+        convertToStringDate (SP[index].Date)
+        ? false
+        : true;
     } else {
-      SP[index - 1].NextDay =
-        convertToStringDate(SP[index - 1].Date) ===
-        convertToStringDate(SP[index].Date)
-          ? false
-          : true;
+      SP[index - 1].NextDay = convertToStringDate (SP[index - 1].Date) ===
+        convertToStringDate (SP[index].Date)
+        ? false
+        : true;
     }
   }
 
   if (SP[index].AccommodationSummary !== undefined) {
     SP[index].AccommodationSummary.DateTime = SP[index].Date;
     SP[index].AccommodationSummary.CheckIn =
-      convertToStringDate(SP[index].Date) +
-      convertToStringTime(SP[index].AccommodationSummary.CheckIn);
-    SP[index].LeavingDate = SumDays(SP[index].Date, SP[index].TotalDays - 1);
+      convertToStringDate (SP[index].Date) +
+      convertToStringTime (SP[index].AccommodationSummary.CheckIn);
+    SP[index].LeavingDate = SumDays (SP[index].Date, SP[index].TotalDays - 1);
     SP[index].AccommodationSummary.CheckOut =
-      convertToStringDate(SP[index].LeavingDate) +
-      convertToStringTime(SP[index].AccommodationSummary.CheckOut);
+      convertToStringDate (SP[index].LeavingDate) +
+      convertToStringTime (SP[index].AccommodationSummary.CheckOut);
     date = SP[index].LeavingDate;
   } else {
     date = SP[index].Date;
@@ -1294,19 +1302,21 @@ export const setDateSummaryProgramSequence = (
   for (let i = index; i < SP.length; i++) {
     if (SP[i].NextDay === true) {
       SP[i].Date =
-        convertToStringDate(SumDays(date, 1)) + convertToStringTime(SP[i].Date);
+        convertToStringDate (SumDays (date, 1)) +
+        convertToStringTime (SP[i].Date);
     } else {
-      SP[i].Date = convertToStringDate(date) + convertToStringTime(SP[i].Date);
+      SP[i].Date =
+        convertToStringDate (date) + convertToStringTime (SP[i].Date);
     }
     if (SP[i].AccommodationSummary !== undefined) {
-      SP[i].LeavingDate = SumDays(SP[i].Date, SP[i].TotalDays - 1);
+      SP[i].LeavingDate = SumDays (SP[i].Date, SP[i].TotalDays - 1);
       SP[i].AccommodationSummary.DateTime = SP[i].Date;
       SP[i].AccommodationSummary.CheckIn =
-        convertToStringDate(SP[i].Date) +
-        convertToStringTime(SP[i].AccommodationSummary.CheckIn);
+        convertToStringDate (SP[i].Date) +
+        convertToStringTime (SP[i].AccommodationSummary.CheckIn);
       SP[i].AccommodationSummary.CheckOut =
-        convertToStringDate(SP[i].LeavingDate) +
-        convertToStringTime(SP[i].AccommodationSummary.CheckOut);
+        convertToStringDate (SP[i].LeavingDate) +
+        convertToStringTime (SP[i].AccommodationSummary.CheckOut);
       date = SP[i].LeavingDate;
     } else {
       date = SP[i].Date;
@@ -1317,14 +1327,14 @@ export const setDateSummaryProgramSequence = (
 
 //addConnection Flight
 export const addConnectionFlight = (SummaryProgram, index) => {
-  let SP = copyObject(SummaryProgram);
+  let SP = copyObject (SummaryProgram);
   if (SP[index - 1] != undefined) {
     if (SP[index - 1].AccommodationSummary != undefined) {
       if (SP[index].Region != SP[index - 1].Region) {
-        SP.splice(
+        SP.splice (
           index,
           0,
-          setInitialAirport(
+          setInitialAirport (
             null,
             SP[index - 1].City,
             SP[index - 1].Day + 1,
@@ -1333,10 +1343,10 @@ export const addConnectionFlight = (SummaryProgram, index) => {
             null
           )
         );
-        SP.splice(
+        SP.splice (
           index + 1,
           0,
-          setInitialAirport(
+          setInitialAirport (
             null,
             SP[index + 1].City,
             SP[index].Day + 1,
@@ -1345,22 +1355,23 @@ export const addConnectionFlight = (SummaryProgram, index) => {
             null
           )
         );
-        SP[index + 2].AccommodationSummary.CheckIn = SumSecond(
+        SP[index + 2].AccommodationSummary.CheckIn = SumSecond (
           SP[index + 1].Date,
           7200
         );
       }
     } else {
       if (SP[index].Region == SP[index - 2].Region) {
-        for (let j = 0; j < 2; j++) SP.splice(index - 1 - j, 1);
+        for (let j = 0; j < 2; j++)
+          SP.splice (index - 1 - j, 1);
       }
       if (SP[index - 1] != undefined) {
         if (SP[index - 1].AccommodationSummary != undefined) {
           if (SP[index].Region != SP[index - 1].Region) {
-            SP.splice(
+            SP.splice (
               index - 1,
               0,
-              setInitialAirport(
+              setInitialAirport (
                 null,
                 SP[index - 2].City,
                 SP[index - 2].Day + 1,
@@ -1369,10 +1380,10 @@ export const addConnectionFlight = (SummaryProgram, index) => {
                 null
               )
             );
-            SP.splice(
+            SP.splice (
               index,
               0,
-              setInitialAirport(
+              setInitialAirport (
                 null,
                 SP[index].City,
                 SP[index - 1].Day + 1,
@@ -1381,14 +1392,15 @@ export const addConnectionFlight = (SummaryProgram, index) => {
                 null
               )
             );
-            SP[index + 1].AccommodationSummary.CheckIn = SumSecond(
+            SP[index + 1].AccommodationSummary.CheckIn = SumSecond (
               SP[index].Date,
               7200
             );
           }
         } else {
           if (SP[index].Region == SP[index - 2].Region) {
-            for (let j = 0; j < 2; j++) SP.splice(index - 1, 1);
+            for (let j = 0; j < 2; j++)
+              SP.splice (index - 1, 1);
           }
         }
       }
@@ -1399,21 +1411,22 @@ export const addConnectionFlight = (SummaryProgram, index) => {
 
 //connection Flight when same region
 export const deleteConnectionFlight = (SummaryProgram, index) => {
-  let SP = copyObject(SummaryProgram);
+  let SP = copyObject (SummaryProgram);
   if (SP[index - 1] != undefined) {
-    for (let j = 0; j < 2; j++) SP.splice(index - 1 - j, 1);
+    for (let j = 0; j < 2; j++)
+      SP.splice (index - 1 - j, 1);
   }
   return SP;
 };
 
 export const addConnectionFlightManual = (SummaryProgram, index, places) => {
-  let SP = copyObject(SummaryProgram);
-  let newSp = SP.reduce((res, main, i, origin) => {
+  let SP = copyObject (SummaryProgram);
+  let newSp = SP.reduce ((res, main, i, origin) => {
     if (i === index && index !== 0) {
       let prevMain = origin[i - 1];
-      let listAirportPrev = findPlaceByRegion(places, prevMain.City.Region.Id);
-      let listAirport = findPlaceByRegion(places, main.City.Region.Id);
-      let departure = setInitialAirport(
+      let listAirportPrev = findPlaceByRegion (places, prevMain.City.Region.Id);
+      let listAirport = findPlaceByRegion (places, main.City.Region.Id);
+      let departure = setInitialAirport (
         listAirportPrev,
         prevMain.City,
         prevMain.Day + 1,
@@ -1422,7 +1435,7 @@ export const addConnectionFlightManual = (SummaryProgram, index, places) => {
         null,
         prevMain.City.Region.Id
       );
-      let arrival = setInitialAirport(
+      let arrival = setInitialAirport (
         listAirport,
         main.City,
         main.Day + 1,
@@ -1431,10 +1444,10 @@ export const addConnectionFlightManual = (SummaryProgram, index, places) => {
         null,
         main.City.Region.Id
       );
-      main.AccommodationSummary.CheckIn = SumSecond(arrival.Date, 7200);
-      res.push(departure, arrival, main);
+      main.AccommodationSummary.CheckIn = SumSecond (arrival.Date, 7200);
+      res.push (departure, arrival, main);
     } else {
-      res.push(main);
+      res.push (main);
     }
     return res;
   }, []);
@@ -1447,9 +1460,9 @@ export const addConnectionFlightManual = (SummaryProgram, index, places) => {
 //time : string datetime
 //type : 'in' untuk checkin dan 'out' untuk checkout
 export const changeChecInCheckOut = (SummaryProgram, index, time, type) => {
-  let SP = copyObject(SummaryProgram);
+  let SP = copyObject (SummaryProgram);
   if (type == 'in') {
-    SP[index].AccommodationSummary.CheckIn = changeTimeNew(
+    SP[index].AccommodationSummary.CheckIn = changeTimeNew (
       SP[index].AccommodationSummary.CheckIn,
       time
     );
@@ -1457,7 +1470,7 @@ export const changeChecInCheckOut = (SummaryProgram, index, time, type) => {
     // if (hour < 14) SP[index].NextDay = true;
     // else SP[index].NextDay = false;
   } else {
-    SP[index].AccommodationSummary.CheckOut = changeTimeNew(
+    SP[index].AccommodationSummary.CheckOut = changeTimeNew (
       SP[index].AccommodationSummary.CheckOut,
       time
     );
@@ -1472,15 +1485,15 @@ export const nextDayConnectionFlight = (
   index,
   oldSummaryProgram
 ) => {
-  let newSP = copyObject(oldSummaryProgram);
+  let newSP = copyObject (oldSummaryProgram);
   if (isNextDay) {
-    newSP[index].Date = SubDays(newSP[index].Date, 1);
+    newSP[index].Date = SubDays (newSP[index].Date, 1);
     newSP[index].NextDay = false;
   } else {
-    newSP[index].Date = SumDays(newSP[index].Date, 1);
+    newSP[index].Date = SumDays (newSP[index].Date, 1);
     newSP[index].NextDay = true;
   }
-  return setDateSummaryProgramByIndex(
+  return setDateSummaryProgramByIndex (
     newSP,
     null,
     index + 1,
@@ -1489,12 +1502,12 @@ export const nextDayConnectionFlight = (
 };
 //for next day Departure
 export const nextDayDeparture = (isNextDay, Departure) => {
-  let newDeparture = copyObject(Departure);
+  let newDeparture = copyObject (Departure);
   if (isNextDay) {
-    newDeparture.Date = SubDays(newDeparture.Date, 1);
+    newDeparture.Date = SubDays (newDeparture.Date, 1);
     newDeparture.NextDay = false;
   } else {
-    newDeparture.Date = SumDays(newDeparture.Date, 1);
+    newDeparture.Date = SumDays (newDeparture.Date, 1);
     newDeparture.NextDay = true;
   }
   return newDeparture;
@@ -1533,7 +1546,7 @@ export const initialAccomodationAndDate = (
   let returns = [];
 
   if (status == 'edit') {
-    sP = setSummaryProgramReady(
+    sP = setSummaryProgramReady (
       arr[0],
       mainPrograms,
       cityList,
@@ -1542,35 +1555,35 @@ export const initialAccomodationAndDate = (
     );
 
     departures = [
-      setInitialAirport(
+      setInitialAirport (
         arr.length > 1 ? arr[0] : [],
         null,
         1,
         'Departure',
-        SumDays(new Date(), 1),
+        SumDays (new Date (), 1),
         'edit',
         'T08:00:00'
       ),
-      setInitialAirport(
+      setInitialAirport (
         arr.length > 1 ? arr[1] : arr[0],
         detailCustom.FirstArrival,
         1,
         'Arrival',
-        new Date(),
+        new Date (),
         'edit'
       ),
     ];
 
     returns = [
-      setInitialAirport(
+      setInitialAirport (
         dep[0],
-        cityList.find(item => item.Id === dep[0].City.Id),
+        cityList.find (item => item.Id === dep[0].City.Id),
         2,
         'Departure',
         sP[sP.length - 1].AccommodationSummary.CheckOut,
         'edit'
       ),
-      setInitialAirport(
+      setInitialAirport (
         [],
         null,
         1,
@@ -1581,7 +1594,7 @@ export const initialAccomodationAndDate = (
       ),
     ];
   } else if (status == 'FixedDateVariable') {
-    sP = setSummaryProgramReadyFixPrice(
+    sP = setSummaryProgramReadyFixPrice (
       arr[0],
       mainPrograms,
       cityList,
@@ -1589,65 +1602,56 @@ export const initialAccomodationAndDate = (
       'edit'
     );
 
-    departures =
-      arr.length > 1
-        ? [
-            setInitialAirport(
-              arr[0],
-              null,
-              1,
-              'Departure',
-              arr.Date[0],
-              'edit'
-            ),
-            setInitialAirport(
-              arr[1],
-              detailCustom.FirstArrival,
-              1,
-              'Arrival',
-              arr[1].Date,
-              'edit'
-            ),
-          ]
-        : setInitialAirport(
-            arr,
+    departures = arr.length > 1
+      ? [
+          setInitialAirport (arr[0], null, 1, 'Departure', arr.Date[0], 'edit'),
+          setInitialAirport (
+            arr[1],
             detailCustom.FirstArrival,
             1,
             'Arrival',
-            arr.Date,
+            arr[1].Date,
             'edit'
-          );
+          ),
+        ]
+      : setInitialAirport (
+          arr,
+          detailCustom.FirstArrival,
+          1,
+          'Arrival',
+          arr.Date,
+          'edit'
+        );
 
-    returns =
-      dep.length > 1
-        ? [
-            setInitialAirport(
-              dep[0],
-              cityList.find(item => item.Id == dep[0].City.Id),
-              dep[0].Day,
-              'Departure',
-              dep[0].Date,
-              'edit'
-            ),
-            setInitialAirport(
-              dep[1],
-              cityList.find(item => item.Id == dep[1].City.Id),
-              dep[1].Day,
-              'Arrival',
-              dep[1].Date,
-              'edit'
-            ),
-          ]
-        : setInitialAirport(
-            dep,
-            cityList.find(item => item.Id == dep.City.Id),
-            dep.Day,
+    returns = dep.length > 1
+      ? [
+          setInitialAirport (
+            dep[0],
+            cityList.find (item => item.Id == dep[0].City.Id),
+            dep[0].Day,
             'Departure',
-            sP[sP.length - 1].AccommodationSummary.CheckOut,
+            dep[0].Date,
             'edit'
-          );
+          ),
+          setInitialAirport (
+            dep[1],
+            cityList.find (item => item.Id == dep[1].City.Id),
+            dep[1].Day,
+            'Arrival',
+            dep[1].Date,
+            'edit'
+          ),
+        ]
+      : setInitialAirport (
+          dep,
+          cityList.find (item => item.Id == dep.City.Id),
+          dep.Day,
+          'Departure',
+          sP[sP.length - 1].AccommodationSummary.CheckOut,
+          'edit'
+        );
   } else if (status == 'Ready') {
-    sP = setSummaryProgramReady(
+    sP = setSummaryProgramReady (
       arr[0],
       mainPrograms,
       cityList,
@@ -1655,35 +1659,35 @@ export const initialAccomodationAndDate = (
       'Ready'
     );
     departures = [
-      setInitialAirport(
+      setInitialAirport (
         arr.length > 1 ? arr[0] : [],
         null,
         1,
         'Departure',
-        SumDays(new Date(), 1),
+        SumDays (new Date (), 1),
         'Custom',
         'T08:00:00'
       ),
-      setInitialAirport(
+      setInitialAirport (
         arr.length > 1 ? arr[1] : arr[0],
         detailCustom.FirstArrival,
         1,
         'Arrival',
-        new Date(),
+        new Date (),
         'Ready'
       ),
     ];
 
     returns = [
-      setInitialAirport(
+      setInitialAirport (
         dep[0],
-        cityList.find(item => item.Id === dep[0].City.Id),
+        cityList.find (item => item.Id === dep[0].City.Id),
         2,
         'Departure',
         sP[sP.length - 1].AccommodationSummary.CheckOut,
         'Ready'
       ),
-      setInitialAirport(
+      setInitialAirport (
         [],
         null,
         1,
@@ -1695,31 +1699,34 @@ export const initialAccomodationAndDate = (
     ];
   } else {
     departures = [
-      setInitialAirport(
+      setInitialAirport (
         [],
         null,
         1,
         'Departure',
-        SumDays(new Date(), 1),
+        SumDays (new Date (), 1),
         'Custom',
         'T08:00:00'
       ),
-      setInitialAirport(
+      setInitialAirport (
         airport,
         detailCustom.FirstArrival,
         1,
         'Arrival',
-        SumDays(new Date(), 1),
+        SumDays (new Date (), 1),
         'Custom',
         'T10:00:00'
       ),
     ];
     sP = [
-      setSummaryProgram(detailCustom.FirstArrival, detailCustom.RoomAllocation),
+      setSummaryProgram (
+        detailCustom.FirstArrival,
+        detailCustom.RoomAllocation
+      ),
     ];
 
     returns = [
-      setInitialAirport(
+      setInitialAirport (
         airport,
         detailCustom.FirstArrival,
         2,
@@ -1728,7 +1735,7 @@ export const initialAccomodationAndDate = (
         'Custom',
         'T12:00:00'
       ),
-      setInitialAirport(
+      setInitialAirport (
         [],
         null,
         2,
@@ -1758,25 +1765,25 @@ export const initialAccomodationAndDateFixPrice = (
   let sP = [];
   let departure = null;
 
-  sP = setSummaryProgramReadyFixPrice(
+  sP = setSummaryProgramReadyFixPrice (
     arr,
     mainPrograms,
     cityList,
     detailCustom.RoomAllocation,
     'edit'
   );
-  arrival = setInitialAirport(
+  arrival = setInitialAirport (
     arr[0],
     detailCustom.FirstArrival,
     1,
     'Arrival',
-    new Date(),
+    new Date (),
     'edit'
   );
 
-  departure = setInitialAirport(
+  departure = setInitialAirport (
     dep[0],
-    cityList.find(item => item.Id == dep.City.Id),
+    cityList.find (item => item.Id == dep.City.Id),
     dep.Day,
     'Departure',
     sP[sP.length - 1].AccommodationSummary.CheckOut,
@@ -1791,14 +1798,14 @@ export const initialAccomodationAndDateFixPrice = (
 };
 
 const deleteDayendNextDeparture = dailyProgram => {
-  let dpTemp = copyObject(dailyProgram);
-  dpTemp.map((daily, i) => {
+  let dpTemp = copyObject (dailyProgram);
+  dpTemp.map ((daily, i) => {
     let nextDay = dpTemp[i + 1];
     if (
       nextDay
         ? nextDay.Movements[0]
-          ? nextDay.Movements[0].MovementName === 'DEPARTURE'
-          : false
+            ? nextDay.Movements[0].MovementName === 'DEPARTURE'
+            : false
         : false
     ) {
       if (
@@ -1806,7 +1813,7 @@ const deleteDayendNextDeparture = dailyProgram => {
           ? daily.Movements[0].MovementName === 'DAYEND'
           : false
       ) {
-        dpTemp[i].Movements.pop();
+        dpTemp[i].Movements.pop ();
       }
     }
     return dpTemp;
@@ -1829,38 +1836,38 @@ export const dailyGenerate4 = (
 ) => {
   let DailyProgramTemp = [];
   if (!isVariableDate) {
-    DailyProgramTemp = generateInitialDailyProgram({
+    DailyProgramTemp = generateInitialDailyProgram ({
       Departures: Arrival,
       MainPrograms: SummaryProgram,
       Returns: Departure,
     });
-    DailyProgramTemp = setMovementAirportToDailyProgram(
+    DailyProgramTemp = setMovementAirportToDailyProgram (
       DailyProgramTemp,
       Arrival,
       MovementList
     );
-    DailyProgramTemp = setMovementConnectionFlight(
+    DailyProgramTemp = setMovementConnectionFlight (
       SummaryProgram,
       DailyProgramTemp,
       MovementList
     ); //set connection flight
-    DailyProgramTemp = setMovementCheckoutinAccomodasi(
+    DailyProgramTemp = setMovementCheckoutinAccomodasi (
       SummaryProgram,
       DailyProgramTemp,
       MovementList
     ); // setcheckout
-    DailyProgramTemp = setMovementAirportToDailyProgram(
+    DailyProgramTemp = setMovementAirportToDailyProgram (
       DailyProgramTemp,
       Departure,
       MovementList
     ); //setdeparture
-    DailyProgramTemp = getActivityOldDailyProgram(
+    DailyProgramTemp = getActivityOldDailyProgram (
       //getOldDailyProgram(
       DailyProgramTemp,
       oldDailyProgram,
       cityInCountry
     ); //get old program to new program
-    DailyProgramTemp = fixFlightPlaceDailyProgram(
+    DailyProgramTemp = fixFlightPlaceDailyProgram (
       {
         Departures: Arrival,
         MainPrograms: SummaryProgram,
@@ -1869,27 +1876,27 @@ export const dailyGenerate4 = (
       DailyProgramTemp,
       MovementList
     );
-    DailyProgramTemp = deleteDayendNextDeparture(DailyProgramTemp);
-    DailyProgramTemp = setMovementVirtualAccommodation(
+    DailyProgramTemp = deleteDayendNextDeparture (DailyProgramTemp);
+    DailyProgramTemp = setMovementVirtualAccommodation (
       DailyProgramTemp,
       MovementList
     );
-    DailyProgramTemp = setMovementDriving(DailyProgramTemp, MovementList);
-    DailyProgramTemp = setMovementDayStartDayEnd(
+    DailyProgramTemp = setMovementDriving (DailyProgramTemp, MovementList);
+    DailyProgramTemp = setMovementDayStartDayEnd (
       SummaryProgram,
       DailyProgramTemp,
       MovementList
     );
-    DailyProgramTemp = fixLeaveReturnAccomodation(DailyProgramTemp);
-    DailyProgramTemp = checkDayEnd(DailyProgramTemp);
-    DailyProgramTemp = setMovementFreetimeLocked(
+    DailyProgramTemp = fixLeaveReturnAccomodation (DailyProgramTemp);
+    DailyProgramTemp = checkDayEnd (DailyProgramTemp);
+    DailyProgramTemp = setMovementFreetimeLocked (
       DailyProgramTemp,
       MovementList
     );
-    DailyProgramTemp = setDailyProgramTempIfNull(DailyProgramTemp);
-    DailyProgramTemp = fixDateAndSequenceNum(DailyProgramTemp);
-    DailyProgramTemp = fixFlightTime(DailyProgramTemp);
-    DailyProgramTemp = fixDayStartDayEndAddress(DailyProgramTemp);
+    DailyProgramTemp = setDailyProgramTempIfNull (DailyProgramTemp);
+    DailyProgramTemp = fixDateAndSequenceNum (DailyProgramTemp);
+    DailyProgramTemp = fixFlightTime (DailyProgramTemp);
+    DailyProgramTemp = fixDayStartDayEndAddress (DailyProgramTemp);
   } else {
     DailyProgramTemp = oldDailyProgram; //get old program to new program
   }
@@ -1969,13 +1976,13 @@ export const dailyGenerate4 = (
 // };
 
 export const fixFlightTime = dailyProgram => {
-  dailyProgram.map(daily => {
-    daily.Movements.map((move, iMove) => {
+  dailyProgram.map (daily => {
+    daily.Movements.map ((move, iMove) => {
       if (move.MovementName === FLIGHTTIME) {
         let prevMove = daily.Movements[iMove - 1];
         let nextMove = daily.Movements[iMove + 1];
         move.Item.PlaceId = prevMove ? prevMove.Item.PlaceId : '';
-        move.Duration = getNumberOfSecond(move.DateTime, nextMove.DateTime);
+        move.Duration = getNumberOfSecond (move.DateTime, nextMove.DateTime);
       }
       return move;
     });
@@ -1995,15 +2002,15 @@ export const fixFlightTime = dailyProgram => {
 export const dailyProgramNull = (Arrival, SummaryProgram, Departure) => {
   //set date
   let DP = [];
-  let tgl1 = convertToStringDate(Arrival.Date) + 'T00:00:00';
-  let days = getNumberOfDays(Arrival.Date, Departure.Date);
+  let tgl1 = convertToStringDate (Arrival.Date) + 'T00:00:00';
+  let days = getNumberOfDays (Arrival.Date, Departure.Date);
   for (let i = 0; i < days; i++) {
-    let DailyPrograms = copyObject(DailyProgram);
-    DP.push(DailyPrograms);
+    let DailyPrograms = copyObject (DailyProgram);
+    DP.push (DailyPrograms);
   }
 
-  DP.map((obj, index) => {
-    let tgl = SumDays(tgl1, index);
+  DP.map ((obj, index) => {
+    let tgl = SumDays (tgl1, index);
     obj.Day = index + 1;
     obj.Date = tgl;
   });
@@ -2018,37 +2025,38 @@ export const dailyProgramNull = (Arrival, SummaryProgram, Departure) => {
   //Set Destination
 
   DestinationArrival.Destination &&
-    DP[0].TourDestinations.push(DestinationArrival);
+    DP[0].TourDestinations.push (DestinationArrival);
 
-  SummaryProgram.map(obj => {
-    let DateFrom = convertToStringDate(obj.Date);
+  SummaryProgram.map (obj => {
+    let DateFrom = convertToStringDate (obj.Date);
     let DateTo = null;
     let newDP = [];
     if (obj.AccommodationSummary !== undefined) {
-      DateTo = convertToStringDate(obj.LeavingDate);
-      newDP = DP.filter(
+      DateTo = convertToStringDate (obj.LeavingDate);
+      newDP = DP.filter (
         item =>
-          convertToStringDate(item.Date) >= DateFrom &&
-          convertToStringDate(item.Date) <= DateTo
+          convertToStringDate (item.Date) >= DateFrom &&
+          convertToStringDate (item.Date) <= DateTo
       );
     } else {
-      newDP = DP.filter(item => convertToStringDate(item.Date) === DateFrom);
+      newDP = DP.filter (item => convertToStringDate (item.Date) === DateFrom);
     }
     let item = {
       Destination: obj.City ? (obj.City.Id ? obj.City.Id : null) : null,
     };
 
-    newDP.map(x => {
-      x.TourDestinations.findIndex(td => td.Destination == item.Destination) < 0
-        ? x.TourDestinations.push(item)
+    newDP.map (x => {
+      x.TourDestinations.findIndex (td => td.Destination == item.Destination) <
+        0
+        ? x.TourDestinations.push (item)
         : null;
     });
   });
 
-  DP[DP.length - 1].TourDestinations.findIndex(
+  DP[DP.length - 1].TourDestinations.findIndex (
     item => item.Destination === DestinationDeparture.Destination
   ) < 0
-    ? DP[DP.length - 1].TourDestinations.push(DestinationDeparture)
+    ? DP[DP.length - 1].TourDestinations.push (DestinationDeparture)
     : null;
   return DP;
 };
@@ -2065,13 +2073,13 @@ export const setMovementAirportDailyProgram = (
   MovementList,
   type
 ) => {
-  let DP = copyObject(DailyProgram);
+  let DP = copyObject (DailyProgram);
   type === 'ARRIVAL'
-    ? DP[0].Movements.push(
-        setAirportMovement(ArrivalDeparture, MovementList, type)
+    ? DP[0].Movements.push (
+        setAirportMovement (ArrivalDeparture, MovementList, type)
       )
-    : DP[DP.length - 1].Movements.push(
-        setAirportMovement(ArrivalDeparture, MovementList, type)
+    : DP[DP.length - 1].Movements.push (
+        setAirportMovement (ArrivalDeparture, MovementList, type)
       );
   return DP;
 };
@@ -2081,12 +2089,12 @@ export const setMovementAirportDailyProgram = (
 //movementList : array of object type movement
 //type :  stirng with value "ARRIVAL" or "DEPARTURE"
 export const setAirportMovement = (item, movementList, type) => {
-  let mov = copyObject(Movement);
-  let typeMov = movementList.filter(mov => mov.Name === type);
-  mov.DateTime = changeTime(item.Date);
+  let mov = copyObject (Movement);
+  let typeMov = movementList.filter (mov => mov.Name === type);
+  mov.DateTime = changeTime (item.Date);
   mov.Destination = item.City.Id;
   mov.DestinationName = item.City.Name;
-  mov.Item = addItemArrivalDeparture(item, type);
+  mov.Item = addItemArrivalDeparture (item, type);
   mov.MovementName = typeMov[0].Name;
   mov.MovementDescription = typeMov[0].Description;
   mov.Note = item.Note;
@@ -2099,7 +2107,7 @@ export const setAirportMovement = (item, movementList, type) => {
 //item : object arrival / departure
 //type :  stirng with value "ARRIVAL" or "DEPARTURE"
 export const addItemArrivalDeparture = (item, type) => {
-  let it = copyObject(ItemMov);
+  let it = copyObject (ItemMov);
   it.Address.AddressString = item.Address;
   it.CityId = item.City ? item.City.Id : null;
   it.Desc = item.PlaceType;
@@ -2119,19 +2127,21 @@ export const setConnectionFlight = (
   DailyProgram,
   MovementList
 ) => {
-  let DP = copyObject(DailyProgram);
-  let CF = copyObject(SummaryProgram).filter(
+  let DP = copyObject (DailyProgram);
+  let CF = copyObject (SummaryProgram).filter (
     item => item.AccommodationSummary === undefined
   );
-  CF.map(obj => {
-    let j = DP.findIndex(
-      item => convertToStringDate(item.Date) === convertToStringDate(obj.Date)
+  CF.map (obj => {
+    let j = DP.findIndex (
+      item => convertToStringDate (item.Date) === convertToStringDate (obj.Date)
     );
     if (j >= 0) {
       obj.TransferType === 'Movement_arrival'
-        ? DP[j].Movements.push(setAirportMovement(obj, MovementList, 'ARRIVAL'))
-        : DP[j].Movements.push(
-            setAirportMovement(obj, MovementList, 'DEPARTURE')
+        ? DP[j].Movements.push (
+            setAirportMovement (obj, MovementList, 'ARRIVAL')
+          )
+        : DP[j].Movements.push (
+            setAirportMovement (obj, MovementList, 'DEPARTURE')
           );
     }
   });
@@ -2147,81 +2157,84 @@ export const setCheckoutinAccomodasi = (
   DailyProgram,
   MovementList
 ) => {
-  let SP = copyObject(SummaryProgram);
-  let DP = copyObject(DailyProgram);
+  let SP = copyObject (SummaryProgram);
+  let DP = copyObject (DailyProgram);
   let i = 0;
-  SP = SP.filter(item => item.AccommodationSummary !== undefined);
+  SP = SP.filter (item => item.AccommodationSummary !== undefined);
   let no = SP.length;
   for (let j = 0; j < DP.length; j++) {
     //checkout
     if (
-      convertToStringDate(SP[i].LeavingDate) === convertToStringDate(DP[j].Date)
+      convertToStringDate (SP[i].LeavingDate) ===
+      convertToStringDate (DP[j].Date)
     ) {
       if (DP[j].Movements.length === 0) {
-        DP[j].Movements.push(
-          setAccomodationtMovement(SP[i], MovementList, 'CHECKOUT')
+        DP[j].Movements.push (
+          setAccomodationtMovement (SP[i], MovementList, 'CHECKOUT')
         );
       } else {
         for (let k = 0; k < DP[j].Movements.length; k++) {
           if (k == DP[j].Movements.length) break;
           else if (DP[j].Movements[k + 1] == null) {
-            DP[j].Movements.push(
-              setAccomodationtMovement(SP[i], MovementList, 'CHECKOUT')
+            DP[j].Movements.push (
+              setAccomodationtMovement (SP[i], MovementList, 'CHECKOUT')
             );
             k = DP[j].Movements.length;
           } else if (
-            convertToStringTime(DP[j].Movements[k].DateTime) <
-              convertToStringTime(SP[i].AccommodationSummary.CheckOut) &&
-            convertToStringTime(SP[i].AccommodationSummary.CheckOut) <
-              convertToStringTime(DP[j].Movements[k + 1].DateTime)
+            convertToStringTime (DP[j].Movements[k].DateTime) <
+              convertToStringTime (SP[i].AccommodationSummary.CheckOut) &&
+            convertToStringTime (SP[i].AccommodationSummary.CheckOut) <
+              convertToStringTime (DP[j].Movements[k + 1].DateTime)
           ) {
-            DP[j].Movements.splice(
+            DP[j].Movements.splice (
               k + 1,
               0,
-              setAccomodationtMovement(SP[i], MovementList, 'CHECKOUT')
+              setAccomodationtMovement (SP[i], MovementList, 'CHECKOUT')
             );
             k = DP[j].Movements.length;
           } else if (
-            convertToStringTime(DP[j].Movements[k].DateTime) >
-            convertToStringTime(SP[i].AccommodationSummary.CheckOut)
+            convertToStringTime (DP[j].Movements[k].DateTime) >
+            convertToStringTime (SP[i].AccommodationSummary.CheckOut)
           ) {
-            DP[j].Movements.splice(
+            DP[j].Movements.splice (
               k,
               0,
-              setAccomodationtMovement(SP[i], MovementList, 'CHECKOUT')
+              setAccomodationtMovement (SP[i], MovementList, 'CHECKOUT')
             );
             k = DP[j].Movements.length;
           }
         }
       }
-      if (convertToStringDate(SP[i].Date) === convertToStringDate(DP[j].Date)) {
+      if (
+        convertToStringDate (SP[i].Date) === convertToStringDate (DP[j].Date)
+      ) {
         for (let k = 0; k < DP[j].Movements.length; k++) {
           if (k == DP[j].Movements.length) break;
           else if (DP[j].Movements[k + 1] == null) {
-            DP[j].Movements.push(
-              setAccomodationtMovement(SP[i], MovementList, 'CHECKIN')
+            DP[j].Movements.push (
+              setAccomodationtMovement (SP[i], MovementList, 'CHECKIN')
             );
             k = DP[j].Movements.length;
           } else if (
-            convertToStringTime(DP[j].Movements[k].DateTime) <
-              convertToStringTime(SP[i].AccommodationSummary.CheckIn) &&
-            convertToStringTime(SP[i].AccommodationSummary.CheckIn) <
-              convertToStringTime(DP[j].Movements[k + 1].DateTime)
+            convertToStringTime (DP[j].Movements[k].DateTime) <
+              convertToStringTime (SP[i].AccommodationSummary.CheckIn) &&
+            convertToStringTime (SP[i].AccommodationSummary.CheckIn) <
+              convertToStringTime (DP[j].Movements[k + 1].DateTime)
           ) {
-            DP[j].Movements.splice(
+            DP[j].Movements.splice (
               k + 1,
               0,
-              setAccomodationtMovement(SP[i], MovementList, 'CHECKIN')
+              setAccomodationtMovement (SP[i], MovementList, 'CHECKIN')
             );
             k = DP[j].Movements.length;
           } else if (
-            convertToStringTime(DP[j].Movements[k].DateTime) >
-            convertToStringTime(SP[i].AccommodationSummary.CheckIn)
+            convertToStringTime (DP[j].Movements[k].DateTime) >
+            convertToStringTime (SP[i].AccommodationSummary.CheckIn)
           ) {
-            DP[j].Movements.splice(
+            DP[j].Movements.splice (
               k,
               0,
-              setAccomodationtMovement(SP[i], MovementList, 'CHECKIN')
+              setAccomodationtMovement (SP[i], MovementList, 'CHECKIN')
             );
             k = DP[j].Movements.length;
           }
@@ -2231,17 +2244,17 @@ export const setCheckoutinAccomodasi = (
     }
     if (i === no) break;
     //checkin
-    if (convertToStringDate(SP[i].Date) === convertToStringDate(DP[j].Date)) {
-      DP[j].Movements.push(
-        setAccomodationtMovement(SP[i], MovementList, 'CHECKIN')
+    if (convertToStringDate (SP[i].Date) === convertToStringDate (DP[j].Date)) {
+      DP[j].Movements.push (
+        setAccomodationtMovement (SP[i], MovementList, 'CHECKIN')
       );
       if (
-        convertToStringDate(SP[i].LeavingDate) ===
-        convertToStringDate(DP[j].Date)
+        convertToStringDate (SP[i].LeavingDate) ===
+        convertToStringDate (DP[j].Date)
       ) {
-        DP[j].Movements.push(
+        DP[j].Movements.push (
           // eslint-disable-next-line no-undef
-          setAccomodationtMovement(SP[i], MovementList, 'CHECKOUT')
+          setAccomodationtMovement (SP[i], MovementList, 'CHECKOUT')
         );
         i++;
       }
@@ -2277,7 +2290,7 @@ export const setCheckoutinAccomodasi = (
 //Destination : id of City
 //AccommodationSummary
 export const addItemHotel = (Destination, AccommodationSummary) => {
-  let it = copyObject(ItemMov);
+  let it = copyObject (ItemMov);
   if (AccommodationSummary !== null) {
     it.Address.AddressString = AccommodationSummary.Address;
     it.CityId = Destination;
@@ -2657,9 +2670,9 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
   let IndexVirtual = [];
   let data = null;
   // eslint-disable-next-line
-  newDailyProgram.map((obj, i) => {
+  newDailyProgram.map ((obj, i) => {
     // eslint-disable-next-line
-    obj.Movements.map(nextObj => {
+    obj.Movements.map (nextObj => {
       if (nextObj.MovementName === 'CHECKIN') {
         data = {
           In: null,
@@ -2668,16 +2681,16 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
         data.In = i;
       } else if (nextObj.MovementName === 'CHECKOUT') {
         data.Out = i;
-        IndexCheckInOutNew.push(data);
+        IndexCheckInOutNew.push (data);
       }
       // return nextObj;
     });
     // return obj;
   });
   // eslint-disable-next-line
-  oldDailyProgram.map((obj, i) => {
+  oldDailyProgram.map ((obj, i) => {
     // eslint-disable-next-line
-    obj.Movements.map((nextObj, j) => {
+    obj.Movements.map ((nextObj, j) => {
       if (nextObj.MovementName === 'CHECKIN') {
         data = {
           In: null,
@@ -2686,20 +2699,20 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
         data.In = i;
       } else if (nextObj.MovementName === 'CHECKOUT') {
         data.Out = i;
-        IndexCheckInOutOld.push(data);
+        IndexCheckInOutOld.push (data);
       } else if (nextObj.MovementName === 'VIRTUALCHECKOUT') {
         let data = {
           IndexI: i,
           IndexJ: j,
         };
-        IndexVirtual.push(data);
+        IndexVirtual.push (data);
       }
       // return nextObj;
     });
     // return obj;
   });
   // eslint-disable-next-line
-  IndexCheckInOutNew.some((obj, i) => {
+  IndexCheckInOutNew.some ((obj, i) => {
     let idxnewIn = obj.In;
     let idxnewOut = obj.Out;
     if (IndexCheckInOutOld[i] !== undefined) {
@@ -2709,7 +2722,7 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
         if (idxoldIn === idxoldOut) j = idxnewOut;
         if (newDailyProgram[j].Movements.length === 0) {
           // eslint-disable-next-line
-          oldDailyProgram[idxoldIn].Movements.map((oDP, index) => {
+          oldDailyProgram[idxoldIn].Movements.map ((oDP, index) => {
             let num = newDailyProgram[j].Movements.length;
             if (
               [
@@ -2720,36 +2733,36 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
                 'DRIVING',
                 'FREETIMELOCKED',
                 'FREETIME',
-              ].indexOf(oDP.MovementName) !== -1
+              ].indexOf (oDP.MovementName) !== -1
             ) {
               if (num > 0) {
                 if (
-                  getHour(oDP.DateTime) >=
-                  getHour(newDailyProgram[j].Movements[num - 1].DateTime)
+                  getHour (oDP.DateTime) >=
+                  getHour (newDailyProgram[j].Movements[num - 1].DateTime)
                 ) {
-                  newDailyProgram[j].Movements.push(
+                  newDailyProgram[j].Movements.push (
                     oldDailyProgram[idxoldIn].Movements[index]
                   );
                 } else if (
-                  convertToStringDate(oDP.DateTime) >=
-                  convertToStringDate(
+                  convertToStringDate (oDP.DateTime) >=
+                  convertToStringDate (
                     newDailyProgram[j].Movements[num - 1].DateTime
                   )
                 ) {
                   if (oldDailyProgram[idxoldIn].Movements[index + 1]) {
                     if (
                       // eslint-disable-next-line
-                      convertToStringDate(oDP.DateTime) ==
-                      convertToStringDate(
+                      convertToStringDate (oDP.DateTime) ==
+                      convertToStringDate (
                         oldDailyProgram[idxoldIn].Movements[index + 1].DateTime
                       )
                     ) {
-                      newDailyProgram[j].Movements.push(
+                      newDailyProgram[j].Movements.push (
                         oldDailyProgram[idxoldIn].Movements[index]
                       );
                     }
                   } else {
-                    newDailyProgram[j].Movements.push(
+                    newDailyProgram[j].Movements.push (
                       oldDailyProgram[idxoldIn].Movements[index]
                     );
                   }
@@ -2771,7 +2784,7 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
                   oDP.Destination ===
                   newDailyProgram[j].TourDestinations[0].Destination
                 ) {
-                  newDailyProgram[j].Movements.push(
+                  newDailyProgram[j].Movements.push (
                     oldDailyProgram[idxoldIn].Movements[index]
                   );
                 }
@@ -2784,17 +2797,17 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
         } else {
           let dp = newDailyProgram[j].Movements;
           let dpOld = oldDailyProgram[idxoldIn].Movements;
-          let arival = dp.filter(item => item.MovementName === 'ARRIVAL');
-          let checkin = dp.filter(item => item.MovementName === 'CHECKIN');
-          let checkout = dp.filter(item => item.MovementName === 'CHECKOUT');
-          let departure = dp.filter(item => item.MovementName === 'DEPARTURE');
-          dp = arival.concat(checkin, checkout, departure);
+          let arival = dp.filter (item => item.MovementName === 'ARRIVAL');
+          let checkin = dp.filter (item => item.MovementName === 'CHECKIN');
+          let checkout = dp.filter (item => item.MovementName === 'CHECKOUT');
+          let departure = dp.filter (item => item.MovementName === 'DEPARTURE');
+          dp = arival.concat (checkin, checkout, departure);
 
-          arival = dpOld.filter(item => item.MovementName === 'ARRIVAL');
-          checkin = dpOld.filter(item => item.MovementName === 'CHECKIN');
-          checkout = dpOld.filter(item => item.MovementName === 'CHECKOUT');
-          departure = dpOld.filter(item => item.MovementName === 'DEPARTURE');
-          dpOld = arival.concat(checkin, checkout, departure);
+          arival = dpOld.filter (item => item.MovementName === 'ARRIVAL');
+          checkin = dpOld.filter (item => item.MovementName === 'CHECKIN');
+          checkout = dpOld.filter (item => item.MovementName === 'CHECKOUT');
+          departure = dpOld.filter (item => item.MovementName === 'DEPARTURE');
+          dpOld = arival.concat (checkin, checkout, departure);
 
           if (dp.length === dpOld.length) {
             let ok = false;
@@ -2803,17 +2816,17 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
             let isthereCheckin = false;
             let isthereCheckout = false;
             // eslint-disable-next-line
-            let indexFlight = dp.findIndex(
+            let indexFlight = dp.findIndex (
               obj =>
                 obj.MovementName === 'ARRIVAL' ||
                 obj.MovementName === 'DEPARTURE'
             );
             // eslint-disable-next-line
-            dp.some((obj, i) => {
+            dp.some ((obj, i) => {
               if (
                 obj.MovementName === dpOld[i].MovementName &&
-                convertToStringTime(obj.DateTime) ===
-                  convertToStringTime(dpOld[i].DateTime) &&
+                convertToStringTime (obj.DateTime) ===
+                  convertToStringTime (dpOld[i].DateTime) &&
                 obj.Item.ServiceItemId === dpOld[i].Item.ServiceItemId
                 // &&
                 // obj.Item.CityId === dpOld[i].Item.CityId
@@ -2853,8 +2866,8 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
             // eslint-disable-next-line
             let replaceDataFlightAccomo = indexFlight
               ? ok && (checkOutCheck !== false || checkInCheck !== false)
-                ? true
-                : false
+                  ? true
+                  : false
               : true;
             // eslint-disable-next-line
             if (
@@ -2879,40 +2892,39 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
               newDailyProgram[j].Movements = newDailyProgram[j].Movements;
             } else if (replaceDataFlightAccomo) {
               if (checkInCheck !== false || checkOutCheck !== false) {
-                let indexNewDp = newDailyProgram[j].Movements.findIndex(
+                let indexNewDp = newDailyProgram[j].Movements.findIndex (
                   obj =>
                     obj.MovementName ===
                     (!checkInCheck ? 'CHECKIN' : 'CHECKOUT')
                 );
-                let indexNewDpTrue = newDailyProgram[j].Movements.findIndex(
+                let indexNewDpTrue = newDailyProgram[j].Movements.findIndex (
                   obj =>
                     obj.MovementName === (checkInCheck ? 'CHECKIN' : 'CHECKOUT')
                 );
-                let indexOldDp = oldDailyProgram[idxoldIn].Movements.findIndex(
+                let indexOldDp = oldDailyProgram[idxoldIn].Movements.findIndex (
                   obj =>
                     obj.MovementName === (checkInCheck ? 'CHECKIN' : 'CHECKOUT')
                 );
-                let slicdeDpOld =
-                  indexOldDp >= oldDailyProgram[j].Movements.length / 2
-                    ? oldDailyProgram[idxoldIn].Movements.slice(
-                        indexOldDp,
-                        oldDailyProgram[idxoldIn].Movements.length
-                      )
-                    : oldDailyProgram[idxoldIn].Movements.slice(
-                        0,
-                        indexOldDp + 1
-                      );
-                let slicdeDpNew =
-                  indexNewDp >= newDailyProgram[j].Movements.length / 2
-                    ? newDailyProgram[j].Movements.slice(
-                        indexNewDp,
-                        newDailyProgram[j].Movements.length
-                      )
-                    : newDailyProgram[j].Movements.slice(0, indexNewDp + 1);
-                newDailyProgram[j].Movements =
-                  indexNewDpTrue > indexNewDp
-                    ? slicdeDpNew.concat(slicdeDpOld)
-                    : slicdeDpOld.concat(slicdeDpNew);
+                let slicdeDpOld = indexOldDp >=
+                  oldDailyProgram[j].Movements.length / 2
+                  ? oldDailyProgram[idxoldIn].Movements.slice (
+                      indexOldDp,
+                      oldDailyProgram[idxoldIn].Movements.length
+                    )
+                  : oldDailyProgram[idxoldIn].Movements.slice (
+                      0,
+                      indexOldDp + 1
+                    );
+                let slicdeDpNew = indexNewDp >=
+                  newDailyProgram[j].Movements.length / 2
+                  ? newDailyProgram[j].Movements.slice (
+                      indexNewDp,
+                      newDailyProgram[j].Movements.length
+                    )
+                  : newDailyProgram[j].Movements.slice (0, indexNewDp + 1);
+                newDailyProgram[j].Movements = indexNewDpTrue > indexNewDp
+                  ? slicdeDpNew.concat (slicdeDpOld)
+                  : slicdeDpOld.concat (slicdeDpNew);
               }
             }
           }
@@ -2927,12 +2939,12 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
   let k = 0;
   //untuk get activity di virtual checkout
   // eslint-disable-next-line
-  newDailyProgram.some((obj, i) => {
+  newDailyProgram.some ((obj, i) => {
     if (k < IndexVirtual.length) {
-      let indexArr = obj.Movements.findIndex(
+      let indexArr = obj.Movements.findIndex (
         item => item.MovementName === 'ARRIVAL'
       );
-      let indexCO = obj.Movements.findIndex(
+      let indexCO = obj.Movements.findIndex (
         item => item.MovementName === 'CHECKOUT'
       );
       let num = IndexVirtual[k].IndexJ;
@@ -2966,8 +2978,9 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
             obj.TourDestinations[0].Destination ===
               oldDailyProgram[IndexVirtual[k].IndexI].TourDestinations[0]
                 .Destination &&
-            obj.Movements.findIndex(item => item.MovementName === 'CHECKOUT') >=
-              0
+            obj.Movements.findIndex (
+              item => item.MovementName === 'CHECKOUT'
+            ) >= 0
           ) {
             while (num) {
               if (
@@ -2987,7 +3000,7 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
                 oldDailyProgram[IndexVirtual[k].IndexI].Movements[
                   num - 1
                 ].Destination;
-              obj[i].Movements.splice(
+              obj[i].Movements.splice (
                 id + 1,
                 0,
                 oldDailyProgram[IndexVirtual[k].IndexI].Movements[num]
@@ -3002,10 +3015,10 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
           obj.Movements[id].MovementName === 'ARRIVAL' ||
           obj.Movements[id].MovementName === 'CHECKOUT'
         ) {
-          let Arr = oldDailyProgram[IndexVirtual[k].IndexI].Movements.findIndex(
-            item => item.MovementName === 'ARRIVAL'
-          );
-          let CO = oldDailyProgram[IndexVirtual[k].IndexI].Movements.findIndex(
+          let Arr = oldDailyProgram[
+            IndexVirtual[k].IndexI
+          ].Movements.findIndex (item => item.MovementName === 'ARRIVAL');
+          let CO = oldDailyProgram[IndexVirtual[k].IndexI].Movements.findIndex (
             item => item.MovementName === 'CHECKOUT'
           );
           let idx = 0;
@@ -3021,7 +3034,7 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
               y < oldDailyProgram[IndexVirtual[k].IndexI].Movements.length;
               y++
             ) {
-              obj.Movements.push(
+              obj.Movements.push (
                 oldDailyProgram[IndexVirtual[k].IndexI].Movements[y]
               );
               if (
@@ -3043,30 +3056,30 @@ export const getOldDailyProgram = (newDailyProgram, oldDailyProgram) => {
 //newDailyProgram : Daily Program baru
 //MovementList : Array of object movementList
 export const addVirtualAccomodasi = (newDailyProgram, MovementList) => {
-  newDailyProgram.map(obj => {
+  newDailyProgram.map (obj => {
     for (let j = 0; j < obj.Movements.length; j++) {
       if (obj.Movements[j].MovementName === 'VIRTUALCHECKIN') {
         // obj.Movements[j].Item = copyObject(obj.Movements[j - 1].Item);
-        obj.Movements[j].Item =
-          obj.Movements[j - 1].MovementName === 'FREETIMELOCKED'
-            ? copyObject(obj.Movements[j - 2].Item)
-            : copyObject(obj.Movements[j - 1].Item);
+        obj.Movements[j].Item = obj.Movements[j - 1].MovementName ===
+          'FREETIMELOCKED'
+          ? copyObject (obj.Movements[j - 2].Item)
+          : copyObject (obj.Movements[j - 1].Item);
       } else if (obj.Movements[j].MovementName === 'VIRTUALCHECKOUT') {
-        obj.Movements[j].Item = copyObject(obj.Movements[j - 1].Item);
+        obj.Movements[j].Item = copyObject (obj.Movements[j - 1].Item);
       } else if (
         obj.Movements[j].MovementName === 'ARRIVAL' ||
         obj.Movements[j].MovementName === 'CHECKOUT'
       ) {
         if (obj.Movements[j + 1] === undefined) {
-          obj.Movements.splice(
+          obj.Movements.splice (
             j + 1,
             0,
-            virtualCheckInOut(obj.Movements[j], MovementList, 'VIRTUALCHECKIN')
+            virtualCheckInOut (obj.Movements[j], MovementList, 'VIRTUALCHECKIN')
           );
-          obj.Movements.splice(
+          obj.Movements.splice (
             j + 2,
             0,
-            virtualCheckInOut(
+            virtualCheckInOut (
               obj.Movements[j + 1],
               MovementList,
               'VIRTUALCHECKOUT'
@@ -3079,19 +3092,19 @@ export const addVirtualAccomodasi = (newDailyProgram, MovementList) => {
           ) {
             // //console.log('Not Function');
           } else {
-            obj.Movements.splice(
+            obj.Movements.splice (
               j + 1,
               0,
-              virtualCheckInOut(
+              virtualCheckInOut (
                 obj.Movements[j],
                 MovementList,
                 'VIRTUALCHECKIN'
               )
             );
-            obj.Movements.splice(
+            obj.Movements.splice (
               j + 2,
               0,
-              virtualCheckInOut(
+              virtualCheckInOut (
                 obj.Movements[j + 1],
                 MovementList,
                 'VIRTUALCHECKOUT'
@@ -3107,8 +3120,8 @@ export const addVirtualAccomodasi = (newDailyProgram, MovementList) => {
 };
 
 export const virtualCheckInOut = (item, MovementList, type) => {
-  let d = copyObject(Movement);
-  let mov1 = MovementList.filter(item => item.Name === type);
+  let d = copyObject (Movement);
+  let mov1 = MovementList.filter (item => item.Name === type);
   d.DateTime = item.DateTime;
   d.SeqNumber = null;
   d.MovementName = mov1[0].Name;
@@ -3124,12 +3137,12 @@ export const virtualCheckInOut = (item, MovementList, type) => {
 
 //menambahkan driving null di antara activity
 export const addedDriving = (newDailyProgram, MovementList) => {
-  newDailyProgram.map((obj, i) => {
+  newDailyProgram.map ((obj, i) => {
     for (let j = 0; j < obj.Movements.length; j++) {
       let mov = obj.Movements[j].MovementName;
       //let item = obj.Movements[j];
       let item = obj.Movements[j + 1] ? obj.Movements[j + 1] : obj.Movements[j];
-      let date = SumSecond(
+      let date = SumSecond (
         obj.Movements[j].DateTime,
         obj.Movements[j].Duration
       );
@@ -3139,10 +3152,10 @@ export const addedDriving = (newDailyProgram, MovementList) => {
             if (obj.Movements[j - 1].MovementName !== 'CHECKIN') {
               if (obj.Movements[j - 1].MovementName !== 'DAYSTART')
                 if (obj.Movements[j].MovementName !== 'DRIVING') {
-                  obj.Movements.splice(
+                  obj.Movements.splice (
                     j,
                     0,
-                    AddDrivingNull(MovementList, item, date)
+                    AddDrivingNull (MovementList, item, date)
                   );
                   j++;
                 }
@@ -3152,33 +3165,33 @@ export const addedDriving = (newDailyProgram, MovementList) => {
           if (obj.Movements[j + 3] !== undefined) {
             if (obj.Movements[j + 3].MovementName !== 'DRIVING') {
               item = obj.Movements[j + 3];
-              obj.Movements.splice(
+              obj.Movements.splice (
                 j + 3,
                 0,
-                AddDrivingNull(MovementList, item, date)
+                AddDrivingNull (MovementList, item, date)
               );
               j++;
               item = obj.Movements[j + 1];
             }
           } else {
-            obj.Movements.push(AddDrivingNull(MovementList, item, date));
+            obj.Movements.push (AddDrivingNull (MovementList, item, date));
             j++;
           }
       }
 
       if (mov === 'VIRTUALCHECKOUT') {
         if (obj.Movements[j + 1] === undefined) {
-          obj.Movements.splice(
+          obj.Movements.splice (
             j + 1,
             0,
-            AddDrivingNull(MovementList, item, date)
+            AddDrivingNull (MovementList, item, date)
           );
           j++;
         } else if (obj.Movements[j + 1].MovementName !== 'DRIVING') {
-          obj.Movements.splice(
+          obj.Movements.splice (
             j + 1,
             0,
-            AddDrivingNull(MovementList, item, date)
+            AddDrivingNull (MovementList, item, date)
           );
           j++;
         }
@@ -3187,15 +3200,15 @@ export const addedDriving = (newDailyProgram, MovementList) => {
       if (i !== newDailyProgram.length - 1 && mov === 'DEPARTURE') {
         if (obj.Movements[j + 1] !== undefined) {
           if (obj.Movements[j + 1].MovementName !== 'FLIGHTTIME') {
-            obj.Movements.splice(
+            obj.Movements.splice (
               j + 1,
               0,
-              AddMovmentFlight(MovementList, item, date)
+              AddMovmentFlight (MovementList, item, date)
             );
             j++;
           }
         } else {
-          obj.Movements.push(AddMovmentFlight(MovementList, item, date));
+          obj.Movements.push (AddMovmentFlight (MovementList, item, date));
         }
       }
     }
@@ -3207,9 +3220,9 @@ export const addedDriving = (newDailyProgram, MovementList) => {
 
 //untuk mengecek item pada dayend
 export const checkDayEnd = DailyProgramTemp => {
-  let dpTemp = copyObject(DailyProgramTemp);
-  dpTemp.map((daily, i) => {
-    let dayEndIndex = daily.Movements.findIndex(
+  let dpTemp = copyObject (DailyProgramTemp);
+  dpTemp.map ((daily, i) => {
+    let dayEndIndex = daily.Movements.findIndex (
       item => item.MovementName === 'DAYEND'
     );
     if (dayEndIndex > 0) {
@@ -3224,28 +3237,29 @@ export const checkDayEnd = DailyProgramTemp => {
 };
 
 export const generateFreeTimeNew = (DailyProgramTemp, MovementList) => {
-  let dpTemp = copyObject(DailyProgramTemp);
-  dpTemp.map((daily, iDaily) => {
+  let dpTemp = copyObject (DailyProgramTemp);
+  dpTemp.map ((daily, iDaily) => {
     for (let j = 0; j < daily.Movements.length; j++) {
       if (daily.Movements[j].MovementName === 'DRIVING') {
         // tambah freetime jika next day departure
         if (
           daily.Movements.length - 1 === j
             ? dpTemp[iDaily + 1]
-              ? dpTemp[iDaily + 1].Movements[0]
-                ? dpTemp[iDaily + 1].Movements[0].MovementName === 'DEPARTURE'
+                ? dpTemp[iDaily + 1].Movements[0]
+                    ? dpTemp[iDaily + 1].Movements[0].MovementName ===
+                        'DEPARTURE'
+                    : false
                 : false
-              : false
             : false
         ) {
-          let tgl = SumSecond(
+          let tgl = SumSecond (
             daily.Movements[j].DateTime,
             daily.Movements[j].Duration
           );
-          daily.Movements.splice(
+          daily.Movements.splice (
             j + 1,
             0,
-            addFreeTime(
+            addFreeTime (
               MovementList,
               tgl,
               dpTemp[iDaily + 1].Movements[0],
@@ -3255,19 +3269,19 @@ export const generateFreeTimeNew = (DailyProgramTemp, MovementList) => {
           );
           j++;
         } else if (
-          ['CHECKIN', 'DEPARTURE', 'DAYEND'].indexOf(
+          ['CHECKIN', 'DEPARTURE', 'DAYEND'].indexOf (
             daily.Movements[j + 1].MovementName
           ) !== -1
         ) {
           // tambah freetime jika next day departure
-          let tgl = SumSecond(
+          let tgl = SumSecond (
             daily.Movements[j].DateTime,
             daily.Movements[j].Duration
           );
-          daily.Movements.splice(
+          daily.Movements.splice (
             j + 1,
             0,
-            addFreeTime(MovementList, tgl, daily.Movements[j + 1], 0, false)
+            addFreeTime (MovementList, tgl, daily.Movements[j + 1], 0, false)
           );
           j++;
         }
@@ -3283,17 +3297,13 @@ export const generateFreeTimeNew = (DailyProgramTemp, MovementList) => {
           let nextDay = dpTemp[iDaily + 1];
           daily.Movements[j].Item = nextMove
             ? nextMove.Item
-            : nextDay
-            ? nextDay.Movements[0].Item
-            : null;
+            : nextDay ? nextDay.Movements[0].Item : null;
           let firstDatetime = daily.Movements[j].DateTime;
           // let secondDatetime = daily.Movements[j + 1].DateTime;
           let secondDatetime = nextMove
             ? nextMove.DateTime
-            : nextDay
-            ? nextDay.Movements[0].DateTime
-            : null;
-          let duration = getNumberOfSecond(firstDatetime, secondDatetime);
+            : nextDay ? nextDay.Movements[0].DateTime : null;
+          let duration = getNumberOfSecond (firstDatetime, secondDatetime);
           daily.Movements[j].Duration = duration;
         } else {
           daily.Movements[j].Item = daily.Movements[j - 1].Item;
@@ -3307,23 +3317,22 @@ export const generateFreeTimeNew = (DailyProgramTemp, MovementList) => {
 
 // set movement jika null;
 export const setDailyProgramTempIfNull = DailyProgramTemp => {
-  let dpTemp = copyObject(DailyProgramTemp);
-  dpTemp.map(daily => {
-    daily.Movements =
-      daily.Movements.length === 0
-        ? generateProgramDetailsIfNull(daily.Date)
-        : daily.Movements;
+  let dpTemp = copyObject (DailyProgramTemp);
+  dpTemp.map (daily => {
+    daily.Movements = daily.Movements.length === 0
+      ? generateProgramDetailsIfNull (daily.Date)
+      : daily.Movements;
   });
   return dpTemp;
 };
 
 //untuk memperbaiki date movement dengan sequence number
 export const fixDateAndSequenceNum = DailyProgramTemp => {
-  let dpTemp = copyObject(DailyProgramTemp);
-  dpTemp.map(daily => {
-    daily.Movements.map((move, j) => {
+  let dpTemp = copyObject (DailyProgramTemp);
+  dpTemp.map (daily => {
+    daily.Movements.map ((move, j) => {
       move.DateTime =
-        convertToStringDate(daily.Date) + convertToStringTime(move.DateTime);
+        convertToStringDate (daily.Date) + convertToStringTime (move.DateTime);
       move.SeqNumber = j + 1;
     });
   });
@@ -3332,9 +3341,9 @@ export const fixDateAndSequenceNum = DailyProgramTemp => {
 
 //khusus untuk memperbaiki squntial number
 export const sequentialNumberinMovement = DailyProgramTemp => {
-  let dpTemp = copyObject(DailyProgramTemp);
-  dpTemp.map(daily => {
-    daily.Movements.map((move, j) => {
+  let dpTemp = copyObject (DailyProgramTemp);
+  dpTemp.map (daily => {
+    daily.Movements.map ((move, j) => {
       move.SeqNumber = j + 1;
     });
   });
@@ -3346,34 +3355,34 @@ export const sequentialNumberinMovement = DailyProgramTemp => {
 //movementlist :array of objek type movement
 export const generateProgramDetailsIfNull = (date, MovementList) => {
   let mov = [];
-  let mov1 = MovementList.filter(item => item.Name === 'DAYSTART');
-  let m = copyObject(Movement);
+  let mov1 = MovementList.filter (item => item.Name === 'DAYSTART');
+  let m = copyObject (Movement);
   m.Id = null;
-  m.DateTime = convertToStringDate(date) + 'T08:00:00';
+  m.DateTime = convertToStringDate (date) + 'T08:00:00';
   m.Duration = 0;
   m.MovementDescription = mov1[0].Description;
   m.MovementName = mov1[0].Name;
   m.SeqNumber = 1;
   m.ServiceItemId = mov1[0].ServiceItemId;
-  mov.push(m);
-  let k = copyObject(Movement);
-  mov1 = MovementList.filter(item => item.Name === 'DAYEND');
+  mov.push (m);
+  let k = copyObject (Movement);
+  mov1 = MovementList.filter (item => item.Name === 'DAYEND');
   k.Id = null;
-  k.DateTime = convertToStringDate(date) + 'T20:00:00';
+  k.DateTime = convertToStringDate (date) + 'T20:00:00';
   k.Duration = 0;
   k.MovementDescription = mov1[0].Description;
   k.MovementName = mov1[0].Name;
   k.Note = '';
   k.SeqNumber = 2;
   k.ServiceItemId = mov1[0].ServiceItemId;
-  mov.push(k);
+  mov.push (k);
   return mov;
 };
 
 export const addFreeTime = (MovementList, date, item, duration, type) => {
   //let hourOffset = new Date().getTimezoneOffset() / 60;
-  let newMovement = copyObject(Movement);
-  let move = MovementList.filter(e => e.Name === 'FREETIMELOCKED');
+  let newMovement = copyObject (Movement);
+  let move = MovementList.filter (e => e.Name === 'FREETIMELOCKED');
   newMovement.DateTime = date === null ? item.DateTime : date;
   newMovement.SeqNumber = null;
   newMovement.MovementName = move[0].Name;
@@ -3383,14 +3392,14 @@ export const addFreeTime = (MovementList, date, item, duration, type) => {
   newMovement.Destination = item.Destination;
   newMovement.DestinationName = item.DestinationName;
   newMovement.Note = '';
-  newMovement.Item = addItemList(item.Item);
+  newMovement.Item = addItemList (item.Item);
   newMovement.TypeMovement = type;
   return newMovement;
 };
 
 export const AddMovmentFlight = (movements, item, date) => {
-  let newMovement = copyObject(Movement);
-  let move = movements.filter(item => item.Name === 'FLIGHTTIME');
+  let newMovement = copyObject (Movement);
+  let move = movements.filter (item => item.Name === 'FLIGHTTIME');
   newMovement.DateTime = date;
   newMovement.SeqNumber = null;
   newMovement.MovementName = move[0].Name;
@@ -3398,14 +3407,14 @@ export const AddMovmentFlight = (movements, item, date) => {
   newMovement.ServiceItemId = move[0].ServiceItemId;
   newMovement.Destination = item.Destination;
   newMovement.DestinationName = item.DestinationName;
-  newMovement.Item = addItemList(null);
+  newMovement.Item = addItemList (null);
   newMovement.Duration = 0;
   return newMovement;
 };
 
 export const AddDrivingNull = (MovementList, item, date) => {
-  let newMovement = copyObject(Movement);
-  let move = MovementList.filter(item => item.Name === 'DRIVING');
+  let newMovement = copyObject (Movement);
+  let move = MovementList.filter (item => item.Name === 'DRIVING');
   newMovement.DateTime = date;
   newMovement.SeqNumber = null;
   newMovement.MovementName = move[0].Name;
@@ -3413,14 +3422,14 @@ export const AddDrivingNull = (MovementList, item, date) => {
   newMovement.ServiceItemId = move[0].ServiceItemId;
   newMovement.Destination = item.Destination;
   newMovement.DestinationName = item.DestinationName;
-  newMovement.Item = addItemList(null);
+  newMovement.Item = addItemList (null);
   newMovement.Duration = 0;
   return newMovement;
 };
 
 export const checkinCheck = (daily, dayIdx, moveIdx, move, MovementList) => {
-  let dailyTemp = copyObject(daily);
-  let chIdx = dailyTemp[dayIdx].Movements.findIndex(
+  let dailyTemp = copyObject (daily);
+  let chIdx = dailyTemp[dayIdx].Movements.findIndex (
     item => item.MovementName === 'CHECKIN'
   );
   if (chIdx >= 0)
@@ -3429,18 +3438,18 @@ export const checkinCheck = (daily, dayIdx, moveIdx, move, MovementList) => {
       if (move === 'CHECKIN') n = chIdx + 3;
       else n = chIdx + 2;
       if (
-        new Date(dailyTemp[dayIdx].Movements[chIdx].DateTime) <
-        new Date(dailyTemp[dayIdx].Movements[n].DateTime)
+        new Date (dailyTemp[dayIdx].Movements[chIdx].DateTime) <
+        new Date (dailyTemp[dayIdx].Movements[n].DateTime)
       ) {
         let date = dailyTemp[dayIdx].Movements[n].DateTime;
         let durasi = 0;
         for (let i = 0; i < n; i++) {
           durasi = dailyTemp[dayIdx].Movements[n - 1 - i].Duration;
-          let date1 = SubstractSecond(date, durasi);
+          let date1 = SubstractSecond (date, durasi);
           dailyTemp[dayIdx].Movements[n - 1 - i].DateTime = date1;
           date = dailyTemp[dayIdx].Movements[n - 1 - i].DateTime;
           if (
-            ['CHECKIN', 'CHECKOUT', 'ARRIVAL'].indexOf(
+            ['CHECKIN', 'CHECKOUT', 'ARRIVAL'].indexOf (
               dailyTemp[dayIdx].Movements[n - 1 - i].MovementName
             ) !== -1
           ) {
@@ -3448,7 +3457,7 @@ export const checkinCheck = (daily, dayIdx, moveIdx, move, MovementList) => {
           }
         }
 
-        chIdx = dailyTemp[dayIdx].Movements.findIndex(
+        chIdx = dailyTemp[dayIdx].Movements.findIndex (
           item => item.MovementName === 'CHECKIN'
         );
         if (chIdx > 0)
@@ -3458,20 +3467,20 @@ export const checkinCheck = (daily, dayIdx, moveIdx, move, MovementList) => {
           ) {
             let firstDatetime = dailyTemp[dayIdx].Movements[chIdx - 1].DateTime;
             let secondDatetime = dailyTemp[dayIdx].Movements[chIdx].DateTime;
-            let duration = getNumberOfSecond(firstDatetime, secondDatetime);
+            let duration = getNumberOfSecond (firstDatetime, secondDatetime);
             dailyTemp[dayIdx].Movements[chIdx - 1].Duration = duration;
           } else {
-            let time = SumSecond(
+            let time = SumSecond (
               dailyTemp[dayIdx].Movements[chIdx - 1].DateTime,
               dailyTemp[dayIdx].Movements[chIdx - 1].Duration
             );
             let firstDatetime = time;
             let secondDatetime = dailyTemp[dayIdx].Movements[chIdx].DateTime;
-            let duration = getNumberOfSecond(firstDatetime, secondDatetime);
-            dailyTemp[dayIdx].Movements.splice(
+            let duration = getNumberOfSecond (firstDatetime, secondDatetime);
+            dailyTemp[dayIdx].Movements.splice (
               chIdx,
               0,
-              addFreeTime(
+              addFreeTime (
                 MovementList,
                 time,
                 dailyTemp[dayIdx].Movements[chIdx],
@@ -3496,15 +3505,15 @@ export const afterAddActivityAndDriving = (
   MovementList
 ) => {
   let newDP = [];
-  let idDep = daily[dayIdx].Movements.findIndex(
+  let idDep = daily[dayIdx].Movements.findIndex (
     e => e.MovementName == 'DEPARTURE'
   );
   let isDep = idDep >= 0 ? true : false;
 
   if (isDep && moveIdx < idDep) {
-    newDP = getFunctionDPBot(daily, dayIdx, moveIdx, MovementList);
+    newDP = getFunctionDPBot (daily, dayIdx, moveIdx, MovementList);
   } else {
-    newDP = getFunctionDP(daily, dayIdx, moveIdx, MovementList);
+    newDP = getFunctionDP (daily, dayIdx, moveIdx, MovementList);
   }
   return newDP;
 };
@@ -3512,43 +3521,43 @@ export const afterAddActivityAndDriving = (
 // this function is callled when add activity after arrival
 // fix the daily program after add activity
 export const getFunctionDP = (daily, dayIdx, moveIdx, MovementList) => {
-  let dailyTemp = copyObject(daily);
-  dailyTemp = checkinCheck(
+  let dailyTemp = copyObject (daily);
+  dailyTemp = checkinCheck (
     dailyTemp,
     dayIdx,
     moveIdx,
     dailyTemp[dayIdx].Movements[moveIdx].MovementName,
     MovementList
   );
-  dailyTemp = sequanceDailytoTopNew(
+  dailyTemp = sequanceDailytoTopNew (
     dailyTemp,
     dayIdx,
     moveIdx,
     dailyTemp[dayIdx].Movements[moveIdx].MovementName,
     MovementList
   );
-  dailyTemp = sequanceDailyProgram(dailyTemp, dayIdx);
-  dailyTemp = checkOutTime(dailyTemp, dayIdx);
-  dailyTemp = generateFreeTimeDP(dailyTemp, dayIdx, MovementList);
-  dailyTemp = sequentialNumberinMovementByDays(dailyTemp, dayIdx);
+  dailyTemp = sequanceDailyProgram (dailyTemp, dayIdx);
+  dailyTemp = checkOutTime (dailyTemp, dayIdx);
+  dailyTemp = generateFreeTimeDP (dailyTemp, dayIdx, MovementList);
+  dailyTemp = sequentialNumberinMovementByDays (dailyTemp, dayIdx);
   return dailyTemp;
 };
 
 //fix daily program after add activity in lasy day
 export const getFunctionDPBot = (daily, dayIdx, moveIdx, MovementList) => {
-  let dailyTemp = copyObject(daily);
-  dailyTemp = sequanceDailytoTopNew(
+  let dailyTemp = copyObject (daily);
+  dailyTemp = sequanceDailytoTopNew (
     dailyTemp,
     dayIdx,
     moveIdx,
     dailyTemp[dayIdx].Movements[moveIdx].MovementName,
     MovementList
   );
-  dailyTemp = sequanceDailyProgram(dailyTemp, dayIdx);
-  dailyTemp = sequanceDailyProgramFromLast(dailyTemp, dayIdx); //Old function
-  dailyTemp = checkOutTime(dailyTemp, dayIdx);
-  dailyTemp = generateFreeTimeDP(dailyTemp, dayIdx, MovementList);
-  dailyTemp = sequentialNumberinMovementByDays(dailyTemp, dayIdx);
+  dailyTemp = sequanceDailyProgram (dailyTemp, dayIdx);
+  dailyTemp = sequanceDailyProgramFromLast (dailyTemp, dayIdx); //Old function
+  dailyTemp = checkOutTime (dailyTemp, dayIdx);
+  dailyTemp = generateFreeTimeDP (dailyTemp, dayIdx, MovementList);
+  dailyTemp = sequentialNumberinMovementByDays (dailyTemp, dayIdx);
   return dailyTemp;
 };
 export const afterEditActivity = (
@@ -3558,23 +3567,23 @@ export const afterEditActivity = (
   activity,
   MovementList
 ) => {
-  daily = copyObject(daily);
+  daily = copyObject (daily);
   let newDP = [];
-  let idDep = daily[dayIdx].Movements.findIndex(
+  let idDep = daily[dayIdx].Movements.findIndex (
     e => e.MovementName == 'DEPARTURE'
   );
   let isDep = idDep >= 0 ? true : false;
-  daily = editDailyProgramItem(daily, dayIdx, moveIdx, activity);
+  daily = editDailyProgramItem (daily, dayIdx, moveIdx, activity);
   if (isDep && moveIdx < idDep) {
-    newDP = editFunctionDPBot(daily, dayIdx, moveIdx, MovementList);
+    newDP = editFunctionDPBot (daily, dayIdx, moveIdx, MovementList);
   } else {
-    newDP = editFunctionDP(daily, dayIdx, moveIdx, MovementList);
+    newDP = editFunctionDP (daily, dayIdx, moveIdx, MovementList);
   }
   return newDP;
 };
 
 export const editDailyProgramItem = (daily, dayIdx, moveIdx, activity) => {
-  let newDP = copyObject(daily);
+  let newDP = copyObject (daily);
   newDP[dayIdx].Movements[moveIdx].DateTime = activity.Startime;
   newDP[dayIdx].Movements[moveIdx].Duration = activity.Duration;
   newDP[dayIdx].Movements[moveIdx].Note = activity.Note;
@@ -3583,43 +3592,43 @@ export const editDailyProgramItem = (daily, dayIdx, moveIdx, activity) => {
 
 //fix the daily program after edit activity
 export const editFunctionDP = (daily, dayIdx, moveIdx, MovementList) => {
-  let dailyTemp = copyObject(daily);
-  dailyTemp = checkinCheck(
+  let dailyTemp = copyObject (daily);
+  dailyTemp = checkinCheck (
     dailyTemp,
     dayIdx,
     moveIdx,
     dailyTemp[dayIdx].Movements[moveIdx].MovementName,
     MovementList
   );
-  dailyTemp = sequanceDailytoTopNewEdit(dailyTemp, dayIdx, moveIdx);
-  dailyTemp = sequanceDailyProgram(dailyTemp, dayIdx);
-  dailyTemp = checkOutTime(dailyTemp, dayIdx);
+  dailyTemp = sequanceDailytoTopNewEdit (dailyTemp, dayIdx, moveIdx);
+  dailyTemp = sequanceDailyProgram (dailyTemp, dayIdx);
+  dailyTemp = checkOutTime (dailyTemp, dayIdx);
   return dailyTemp;
 };
 //fix daily program after edit in last day
 export const editFunctionDPBot = (daily, dayIdx, moveIdx, MovementList) => {
-  let dailyTemp = copyObject(daily);
-  dailyTemp = sequanceDailytoTopNewEdit(dailyTemp, dayIdx, moveIdx);
-  dailyTemp = sequanceDailyProgram(dailyTemp, dayIdx);
-  dailyTemp = sequanceDailyProgramFromLast(dailyTemp, dayIdx); //Old function
-  dailyTemp = checkOutTime(dailyTemp, dayIdx);
-  dailyTemp = generateFreeTimeDP(dailyTemp, dayIdx, MovementList);
-  dailyTemp = sequentialNumberinMovementByDays(dailyTemp, dayIdx);
+  let dailyTemp = copyObject (daily);
+  dailyTemp = sequanceDailytoTopNewEdit (dailyTemp, dayIdx, moveIdx);
+  dailyTemp = sequanceDailyProgram (dailyTemp, dayIdx);
+  dailyTemp = sequanceDailyProgramFromLast (dailyTemp, dayIdx); //Old function
+  dailyTemp = checkOutTime (dailyTemp, dayIdx);
+  dailyTemp = generateFreeTimeDP (dailyTemp, dayIdx, MovementList);
+  dailyTemp = sequentialNumberinMovementByDays (dailyTemp, dayIdx);
   return dailyTemp;
 };
 
 export const getDrivingDurations3 = async (drivings, daillyProgram) => {
-  let { durationStore } = this.props;
-  let dp = copyObject(daillyProgram);
+  let {durationStore} = this.props;
+  let dp = copyObject (daillyProgram);
   for (var i = 0; i < drivings.length; i++) {
     let obj = drivings[i];
-    let existingDuration = durationStore.find(
+    let existingDuration = durationStore.find (
       item => item.from === obj.from && item.to === obj.to
     );
     if (existingDuration) {
       dp[obj.day].Movements[obj.index].Duration = existingDuration.duration;
     } else if (obj.fromType === 'ID' && obj.toType === 'ADDRESS') {
-      let response = await this.props.getDurationIdtoAddress(
+      let response = await this.props.getDurationIdtoAddress (
         obj.from,
         obj.to,
         obj.day,
@@ -3629,7 +3638,7 @@ export const getDrivingDurations3 = async (drivings, daillyProgram) => {
         ? response.payload.Duration.value
         : 0;
     } else if (obj.fromType === 'ADDRESS' && obj.toType === 'ID') {
-      let response = await this.props.getDurationAddresstoId(
+      let response = await this.props.getDurationAddresstoId (
         obj.from,
         obj.to,
         obj.day,
@@ -3639,7 +3648,7 @@ export const getDrivingDurations3 = async (drivings, daillyProgram) => {
         ? response.payload.Duration.value
         : 0;
     } else {
-      let response = await this.props.getDurationIdtoId(
+      let response = await this.props.getDurationIdtoId (
         obj.from,
         obj.to,
         obj.day,
@@ -3654,20 +3663,20 @@ export const getDrivingDurations3 = async (drivings, daillyProgram) => {
 };
 
 export const getFunctionAfterDriving = DailyProgramTemp => {
-  let newDpTemp = copyObject(DailyProgramTemp);
-  newDpTemp = sequentialNumberinMovement(newDpTemp);
-  newDpTemp = addDurationFlightTime(newDpTemp);
-  newDpTemp = sequenceDP(newDpTemp);
-  newDpTemp = checkDurationFreetime(newDpTemp);
+  let newDpTemp = copyObject (DailyProgramTemp);
+  newDpTemp = sequentialNumberinMovement (newDpTemp);
+  newDpTemp = addDurationFlightTime (newDpTemp);
+  newDpTemp = sequenceDP (newDpTemp);
+  newDpTemp = checkDurationFreetime (newDpTemp);
   return newDpTemp;
 };
 
 export const addDurationFlightTime = dailyProgramTemp => {
-  let newDpTemp = copyObject(dailyProgramTemp);
-  newDpTemp.map(daily => {
-    daily.Movements.map((move, i) => {
+  let newDpTemp = copyObject (dailyProgramTemp);
+  newDpTemp.map (daily => {
+    daily.Movements.map ((move, i) => {
       if (move.MovementName === 'FLIGHTTIME') {
-        move.Duration = getNumberOfSecond(
+        move.Duration = getNumberOfSecond (
           move.DateTime,
           daily.Movements[i + 1].DateTime
         );
@@ -3685,7 +3694,7 @@ export const sequenceDP = DailyProgramTemp => {
     let date = DailyProgramTemp[i].Movements[0].DateTime;
 
     for (let j = 1; j < DailyProgramTemp[i].Movements.length; j++) {
-      let date1 = SumSecond(date, duration);
+      let date1 = SumSecond (date, duration);
       if (
         DailyProgramTemp[i].Movements[j - 1].MovementName === 'CHECKIN' &&
         DailyProgramTemp[i].Movements[j].MovementName === 'CHECKOUT'
@@ -3716,11 +3725,9 @@ export const sequenceDP = DailyProgramTemp => {
         // let b = DailyProgramTemp[i].Movements[j + 1].DateTime;
         let b = nextMove
           ? nextMove.DateTime
-          : nextDay
-          ? nextDay.DateTime
-          : null;
+          : nextDay ? nextDay.DateTime : null;
         let a = DailyProgramTemp[i].Movements[j].DateTime;
-        let newDuration = getNumberOfSecond(a, b);
+        let newDuration = getNumberOfSecond (a, b);
         if (newDuration < 0) newDuration = 0;
         DailyProgramTemp[i].Movements[j].Duration = newDuration;
       }
@@ -3738,7 +3745,7 @@ export const sequenceDP = DailyProgramTemp => {
         'CHECKOUT' &&
       DailyProgramTemp[idx].Movements[idp - 2 - j].MovementName === 'CHECKIN'
     ) {
-      let date1 = SubstractSecond(
+      let date1 = SubstractSecond (
         date,
         DailyProgramTemp[idx].Movements[idp - 1 - j].Duration
       );
@@ -3749,16 +3756,16 @@ export const sequenceDP = DailyProgramTemp => {
       DailyProgramTemp[idx].Movements[idp - 1 - j].MovementName ===
       'FREETIMELOCKED'
     ) {
-      let time = SumSecond(
+      let time = SumSecond (
         DailyProgramTemp[idx].Movements[idp - 2 - j].DateTime,
         DailyProgramTemp[idx].Movements[idp - 2 - j].Duration
       );
       let b = date;
       let a = time;
-      let newDuration = getNumberOfSecond(a, b);
+      let newDuration = getNumberOfSecond (a, b);
       if (newDuration < 0) newDuration = 0;
       DailyProgramTemp[idx].Movements[idp - 1 - j].Duration = newDuration;
-      let dateNew = SubstractSecond(date, newDuration);
+      let dateNew = SubstractSecond (date, newDuration);
       DailyProgramTemp[idx].Movements[idp - 1 - j].DateTime = dateNew;
     } else if (
       DailyProgramTemp[idx].Movements[idp - 1 - j].MovementName === DEPARTURE &&
@@ -3767,7 +3774,7 @@ export const sequenceDP = DailyProgramTemp => {
     ) {
       break;
     } else {
-      let date1 = SubstractSecond(
+      let date1 = SubstractSecond (
         date,
         DailyProgramTemp[idx].Movements[idp - 1 - j].Duration
       );
@@ -3779,7 +3786,7 @@ export const sequenceDP = DailyProgramTemp => {
 };
 
 export const checkDurationFreetime = oldDp => {
-  let dpTemp = copyObject(oldDp);
+  let dpTemp = copyObject (oldDp);
   for (let i = 0; i < dpTemp.length; i++) {
     for (let j = 0; j < dpTemp[i].Movements.length; j++) {
       let move = dpTemp[i].Movements[j].MovementName;
@@ -3788,15 +3795,15 @@ export const checkDurationFreetime = oldDp => {
         if (
           dpTemp[i].Movements.length - 1 === j
             ? dpTemp[i + 1]
-              ? dpTemp[i + 1].Movements[0]
-                ? dpTemp[i + 1].Movements[0].MovementName === 'DEPARTURE'
+                ? dpTemp[i + 1].Movements[0]
+                    ? dpTemp[i + 1].Movements[0].MovementName === 'DEPARTURE'
+                    : false
                 : false
-              : false
             : false
         ) {
           let a = oldDp[i + 1].Movements[0].DateTime;
           let b = oldDp[i].Movements[j].DateTime;
-          let duration = getNumberOfSecond(b, a);
+          let duration = getNumberOfSecond (b, a);
           dpTemp[i].Movements[j].Duration = duration;
         } else if (
           dpTemp[i].Movements[j + 1]
@@ -3805,7 +3812,7 @@ export const checkDurationFreetime = oldDp => {
         ) {
           let a = oldDp[i + 1].Movements[0].DateTime;
           let b = oldDp[i].Movements[j].DateTime;
-          let duration = getNumberOfSecond(b, a);
+          let duration = getNumberOfSecond (b, a);
           dpTemp[i].Movements[j].Duration = duration;
         }
       }
@@ -3814,7 +3821,7 @@ export const checkDurationFreetime = oldDp => {
         if (dpTemp[i].Movements[j + 1].MovementName === 'DAYEND') {
           let b = dpTemp[i + 1].Movements[0].DateTime;
           let a = dpTemp[i].Movements[j - 1].DateTime;
-          let duration = getNumberOfSecond(a, b);
+          let duration = getNumberOfSecond (a, b);
           if (duration < 0) duration = 0;
           dpTemp[i].Movements[j].Duration = duration;
           dpTemp[i].Movements[j + 1].Item = dpTemp[i + 1].Movements[0].Item;
@@ -3829,7 +3836,7 @@ export const checkDurationFreetime = oldDp => {
 //menghapus isi list atraksi
 //listAttraction: list attraksi
 export const destroyListAtt = listAttraction => {
-  let list = copyObject(listAttraction);
+  let list = copyObject (listAttraction);
   list.length = 0;
   return list;
 };
@@ -3837,8 +3844,8 @@ export const destroyListAtt = listAttraction => {
 //listAttraction: list attraksi
 //param: object atraksi
 export const setListAttraction = (listAttraction, param) => {
-  let list = copyObject(listAttraction);
-  list.push(param);
+  let list = copyObject (listAttraction);
+  list.push (param);
   return list;
   // listAttraction.push(param);
 };
@@ -3859,31 +3866,33 @@ export const addDailyDetails = (
   itemMovement,
   activityData
 ) => {
-  let dailyTemp = copyObject(DailyProgram);
+  let dailyTemp = copyObject (DailyProgram);
   let move = dailyTemp[id].Movements[moveIdx].MovementName;
-  let item =
-    ['CHECKIN', 'DAYSTART', 'LEAVEACCOMMODATION', 'RECREATION'].indexOf(
-      move
-    ) !== -1
-      ? dailyTemp[id].Movements[moveIdx].Item
-      : null;
-  if (['CHECKIN', 'DAYSTART'].indexOf(move) !== -1) {
-    dailyTemp[id].Movements.splice(
+  let item = [
+    'CHECKIN',
+    'DAYSTART',
+    'LEAVEACCOMMODATION',
+    'RECREATION',
+  ].indexOf (move) !== -1
+    ? dailyTemp[id].Movements[moveIdx].Item
+    : null;
+  if (['CHECKIN', 'DAYSTART'].indexOf (move) !== -1) {
+    dailyTemp[id].Movements.splice (
       moveIdx + 1,
       0,
-      addLeaveAco(dailyTemp, MovementList, item, id, moveIdx)
+      addLeaveAco (dailyTemp, MovementList, item, id, moveIdx)
     );
-    dailyTemp[id].Movements.splice(
+    dailyTemp[id].Movements.splice (
       moveIdx + 2,
       0,
-      AddDriving(dailyTemp, id, moveIdx, MovementList)
+      AddDriving (dailyTemp, id, moveIdx, MovementList)
     );
 
     if (TypeMovement.Name === 'RECREATION')
-      dailyTemp[id].Movements.splice(
+      dailyTemp[id].Movements.splice (
         moveIdx + 3,
         0,
-        addMovement(
+        addMovement (
           dailyTemp,
           TypeMovement,
           itemMovement,
@@ -3893,10 +3902,10 @@ export const addDailyDetails = (
         )
       );
     else
-      dailyTemp[id].Movements.splice(
+      dailyTemp[id].Movements.splice (
         moveIdx + 3,
         0,
-        addEatFreeTime(
+        addEatFreeTime (
           dailyTemp,
           id,
           moveIdx,
@@ -3907,21 +3916,21 @@ export const addDailyDetails = (
         )
       );
 
-    dailyTemp[id].Movements.splice(
+    dailyTemp[id].Movements.splice (
       moveIdx + 4,
       0,
-      AddDriving(dailyTemp, id, moveIdx, MovementList)
+      AddDriving (dailyTemp, id, moveIdx, MovementList)
     );
-    dailyTemp[id].Movements.splice(
+    dailyTemp[id].Movements.splice (
       moveIdx + 5,
       0,
-      addReaturnAco(dailyTemp, MovementList, item, id, moveIdx)
+      addReaturnAco (dailyTemp, MovementList, item, id, moveIdx)
     );
   } else if (move === 'VIRTUALCHECKIN') {
-    dailyTemp[id].Movements.splice(
+    dailyTemp[id].Movements.splice (
       moveIdx + 1,
       0,
-      virtualLeave(
+      virtualLeave (
         dailyTemp,
         MovementList,
         dailyTemp[id].Movements[moveIdx].Item,
@@ -3929,16 +3938,16 @@ export const addDailyDetails = (
         moveIdx
       )
     );
-    dailyTemp[id].Movements.splice(
+    dailyTemp[id].Movements.splice (
       moveIdx + 2,
       0,
-      AddDriving(dailyTemp, id, moveIdx + 2, MovementList)
+      AddDriving (dailyTemp, id, moveIdx + 2, MovementList)
     );
     if (TypeMovement.Name === 'RECREATION')
-      dailyTemp[id].Movements.splice(
+      dailyTemp[id].Movements.splice (
         moveIdx + 3,
         0,
-        addMovement(
+        addMovement (
           dailyTemp,
           TypeMovement,
           itemMovement,
@@ -3948,10 +3957,10 @@ export const addDailyDetails = (
         )
       );
     else
-      dailyTemp[id].Movements.splice(
+      dailyTemp[id].Movements.splice (
         moveIdx + 3,
         0,
-        addEatFreeTime(
+        addEatFreeTime (
           dailyTemp,
           id,
           moveIdx + 3,
@@ -3962,15 +3971,15 @@ export const addDailyDetails = (
         )
       );
 
-    dailyTemp[id].Movements.splice(
+    dailyTemp[id].Movements.splice (
       moveIdx + 4,
       0,
-      AddDriving(dailyTemp, id, moveIdx + 4, MovementList)
+      AddDriving (dailyTemp, id, moveIdx + 4, MovementList)
     );
-    dailyTemp[id].Movements.splice(
+    dailyTemp[id].Movements.splice (
       moveIdx + 5,
       0,
-      virtualReturn(
+      virtualReturn (
         dailyTemp,
         MovementList,
         dailyTemp[id].Movements[moveIdx + 3].Item,
@@ -3982,16 +3991,16 @@ export const addDailyDetails = (
     dailyTemp[id].Movements[moveIdx + 6].Item =
       dailyTemp[id].Movements[moveIdx + 5].Item;
   } else {
-    dailyTemp[id].Movements.splice(
+    dailyTemp[id].Movements.splice (
       moveIdx + 1,
       0,
-      AddDriving(dailyTemp, id, moveIdx, MovementList)
+      AddDriving (dailyTemp, id, moveIdx, MovementList)
     );
     if (TypeMovement.Name === 'RECREATION')
-      dailyTemp[id].Movements.splice(
+      dailyTemp[id].Movements.splice (
         moveIdx + 2,
         0,
-        addMovement(
+        addMovement (
           dailyTemp,
           TypeMovement,
           itemMovement,
@@ -4001,10 +4010,10 @@ export const addDailyDetails = (
         )
       );
     else
-      dailyTemp[id].Movements.splice(
+      dailyTemp[id].Movements.splice (
         moveIdx + 2,
         0,
-        addEatFreeTime(
+        addEatFreeTime (
           dailyTemp,
           id,
           moveIdx,
@@ -4035,37 +4044,37 @@ export const addDailyDetails = (
 //par : parameter boolean
 export const sequanceDailyDPDays = (daily, id, moveIdx, par) => {
   let idx = 0;
-  let dailyTemp = copyObject(daily);
+  let dailyTemp = copyObject (daily);
   idx = id ? (par ? moveIdx - 3 : moveIdx - 2) : 0;
   let duration = dailyTemp[id].Movements[idx].Duration;
   let dataLength = dailyTemp[id].Movements.length;
   let date = dailyTemp[id].Movements[idx].DateTime;
   for (let i = idx + 1; i < dataLength; i++) {
     let activity = dailyTemp[id].Movements[i];
-    let date1 = SumSecond(date, duration);
+    let date1 = SumSecond (date, duration);
     activity.DateTime = date1; // date1.slice(0, -6);
     date = activity.DateTime;
     duration = activity.Duration;
     activity.SeqNumber = i + 1;
     if (
-      ['VIRTUALCHECKIN', 'VIRTUALCHECKOUT'].indexOf(activity.MovementName) !==
+      ['VIRTUALCHECKIN', 'VIRTUALCHECKOUT'].indexOf (activity.MovementName) !==
       -1
     )
       dailyTemp[id].Movements[i].Item = dailyTemp[id].Movements[i - 1].Item;
     if (dailyTemp[id].Movements[i + 1] !== undefined) {
       if (dailyTemp[id].Movements[i + 1].MovementName === 'FREETIMELOCKED') {
-        let newDate = SumSecond(activity.DateTime, activity.Duration);
+        let newDate = SumSecond (activity.DateTime, activity.Duration);
         let firstDateTime = newDate;
         // let secondDateTime = dailyTemp[id].Movements[i + 2].DateTime;
         let nextDay = dailyTemp[id + 1];
         let secondDateTime = dailyTemp[id].Movements[i + 2]
           ? dailyTemp[id].Movements[i + 2].DateTime
           : nextDay
-          ? nextDay.Movements[0].MovementName === 'DEPARTURE'
-            ? nextDay.Movements[0].DateTime
-            : null
-          : null;
-        let duration = getNumberOfSecond(firstDateTime, secondDateTime);
+              ? nextDay.Movements[0].MovementName === 'DEPARTURE'
+                  ? nextDay.Movements[0].DateTime
+                  : null
+              : null;
+        let duration = getNumberOfSecond (firstDateTime, secondDateTime);
         dailyTemp[id].Movements[i + 1].Duration = duration < 0 ? 0 : duration;
       }
     }
@@ -4078,7 +4087,7 @@ export const sequanceDailyDPDays = (daily, id, moveIdx, par) => {
 //id: index dari daily prgram yang sedang dirubah saat ini
 //moveIdx: index dari movement saat ini
 export const sequanceDailytoTopNewEdit = (daily, dayIdx, moveIdx) => {
-  let dailyTemp = copyObject(daily);
+  let dailyTemp = copyObject (daily);
   // let n = IdP;
   let duration = 0;
   //if n = 5;
@@ -4087,7 +4096,7 @@ export const sequanceDailytoTopNewEdit = (daily, dayIdx, moveIdx) => {
     if (dailyTemp[dayIdx].Movements[moveIdx - 1 - i].MovementName === 'ARRIVAL')
       break;
     duration = dailyTemp[dayIdx].Movements[moveIdx - 1 - i].Duration;
-    dailyTemp[dayIdx].Movements[moveIdx - 1 - i].DateTime = SubstractSecond(
+    dailyTemp[dayIdx].Movements[moveIdx - 1 - i].DateTime = SubstractSecond (
       date,
       duration
     );
@@ -4108,9 +4117,11 @@ export const sequanceDailytoTopNew = (
   move,
   MovementList
 ) => {
-  let dailyTemp = copyObject(daily);
-  let addVariable =
-    ['DAYSTART', 'CHECKIN', 'VIRTUALCHECKIN'].indexOf(move) !== -1 ? 3 : 2;
+  let dailyTemp = copyObject (daily);
+  let addVariable = ['DAYSTART', 'CHECKIN', 'VIRTUALCHECKIN'].indexOf (move) !==
+    -1
+    ? 3
+    : 2;
   // if (mov === "DAYSTART" || mov === "CHECKIN" || mov === "VIRTUALCHECKIN") x = 3;
   // else x = 2;
   let n = moveIdx + addVariable;
@@ -4126,18 +4137,19 @@ export const sequanceDailytoTopNew = (
           dailyTemp[dayIdx].Movements[n - 1 - i].DateTime;
         let firstDateTime = dailyTemp[dayIdx].Movements[n - 1 - i].DateTime;
         let secondDateTime = dailyTemp[dayIdx].Movements[n + 1 - i].DateTime;
-        let duration2 = getNumberOfSecond(firstDateTime, secondDateTime);
-        dailyTemp[dayIdx].Movements[n - i].Duration =
-          duration2 <= 0 ? 0 : duration2;
+        let duration2 = getNumberOfSecond (firstDateTime, secondDateTime);
+        dailyTemp[dayIdx].Movements[n - i].Duration = duration2 <= 0
+          ? 0
+          : duration2;
       } else {
         let firstDateTime = dailyTemp[dayIdx].Movements[n - 1 - i].DateTime;
         let secondDateTime = dailyTemp[dayIdx].Movements[n - i].DateTime;
-        let duration2 = getNumberOfSecond(firstDateTime, secondDateTime);
+        let duration2 = getNumberOfSecond (firstDateTime, secondDateTime);
         if (duration2 <= 0) duration2 = 0;
-        dailyTemp[dayIdx].Movements.splice(
+        dailyTemp[dayIdx].Movements.splice (
           n - i,
           0,
-          addFreeTime(
+          addFreeTime (
             MovementList,
             dailyTemp[dayIdx].Movements[n - 1 - i].DateTime,
             dailyTemp[dayIdx].Movements[n - 1 - i],
@@ -4155,7 +4167,7 @@ export const sequanceDailytoTopNew = (
     )
       break;
     duration = dailyTemp[dayIdx].Movements[n - 1 - i].Duration;
-    let date1 = SubstractSecond(date, duration);
+    let date1 = SubstractSecond (date, duration);
     dailyTemp[dayIdx].Movements[n - 1 - i].DateTime = date1;
     date = dailyTemp[dayIdx].Movements[n - 1 - i].DateTime;
   }
@@ -4166,15 +4178,15 @@ export const sequanceDailytoTopNew = (
 //daily : Array daily program yang lama
 //id: index dari daily prgram yang sedang dirubah saat ini
 export const sequanceDailyProgram = (daily, dayIdx) => {
-  let dailyTemp = copyObject(daily);
-  let arrivalIdx = dailyTemp[dayIdx].Movements.findIndex(
+  let dailyTemp = copyObject (daily);
+  let arrivalIdx = dailyTemp[dayIdx].Movements.findIndex (
     e => e.MovementName === 'ARRIVAL'
   );
   if (arrivalIdx <= 0) arrivalIdx = 0;
   let duration = dailyTemp[dayIdx].Movements[arrivalIdx].Duration;
   let date = moment
-    .utc(new Date(dailyTemp[dayIdx].Movements[arrivalIdx].DateTime))
-    .format('YYYY-MM-DD HH:mm');
+    .utc (new Date (dailyTemp[dayIdx].Movements[arrivalIdx].DateTime))
+    .format ('YYYY-MM-DD HH:mm');
   dailyTemp[dayIdx].Movements[0].SeqNumber = 1;
   for (let i = arrivalIdx + 1; i < dailyTemp[dayIdx].Movements.length; i++) {
     if (dailyTemp[dayIdx].Movements[i].MovementName == 'DEPARTURE') break;
@@ -4183,7 +4195,7 @@ export const sequanceDailyProgram = (daily, dayIdx) => {
     // if(dailyTemp[id].Movements[i].MovementName === "CHECKIN") {
     //   if (dailyTemp[id].Movements[i + 1].MovementName === "CHECKOUT") break;
     // }
-    let date1 = SumSecond(date, duration);
+    let date1 = SumSecond (date, duration);
     dailyTemp[dayIdx].Movements[i].DateTime = date1;
 
     if (
@@ -4193,24 +4205,24 @@ export const sequanceDailyProgram = (daily, dayIdx) => {
       dailyTemp[dayIdx].Movements[i].DateTime = date1;
       let firstDateTime = dailyTemp[dayIdx].Movements[i].DateTime;
       let secondDateTime = dailyTemp[dayIdx].Movements[i - 1].DateTime;
-      let newDuration = getNumberOfSecond(secondDateTime, firstDateTime);
+      let newDuration = getNumberOfSecond (secondDateTime, firstDateTime);
       dailyTemp[dayIdx].Movements[i - 1].Duration = newDuration;
     } else if (
       dailyTemp[dayIdx].Movements[i].MovementName === 'DAYEND' &&
       dailyTemp[dayIdx].Movements[i - 1].MovementName === 'FREETIMELOCKED'
     ) {
-      if (new Date(date1) <= new Date(date1.slice(0, -9) + 'T23:59:00')) {
+      if (new Date (date1) <= new Date (date1.slice (0, -9) + 'T23:59:00')) {
         dailyTemp[dayIdx].Movements[i].DateTime =
-          convertToStringDate(date1) + 'T23:59:00';
+          convertToStringDate (date1) + 'T23:59:00';
         let firstDateTime = dailyTemp[dayIdx].Movements[i].DateTime;
         let secondDateTime = dailyTemp[dayIdx].Movements[i - 1].DateTime;
-        let newDuration = getNumberOfSecond(firstDateTime, secondDateTime);
+        let newDuration = getNumberOfSecond (firstDateTime, secondDateTime);
         dailyTemp[dayIdx].Movements[i - 1].Duration = newDuration;
       } else {
         dailyTemp[dayIdx].Movements[i].DateTime = date1;
         let firstDateTime = dailyTemp[dayIdx].Movements[i].DateTime;
         let secondDateTime = dailyTemp[dayIdx].Movements[i - 1].DateTime;
-        let newDuration = getNumberOfSecond(firstDateTime, secondDateTime);
+        let newDuration = getNumberOfSecond (firstDateTime, secondDateTime);
         dailyTemp[dayIdx].Movements[i - 1].Duration = newDuration;
       }
     } else if (
@@ -4219,33 +4231,34 @@ export const sequanceDailyProgram = (daily, dayIdx) => {
       if (
         dailyTemp[dayIdx].Movements.length - 1 === i
           ? dailyTemp[dayIdx + 1]
-            ? dailyTemp[dayIdx + 1].Movements[0]
-              ? dailyTemp[dayIdx + 1].Movements[0].MovementName === 'DEPARTURE'
+              ? dailyTemp[dayIdx + 1].Movements[0]
+                  ? dailyTemp[dayIdx + 1].Movements[0].MovementName ===
+                      'DEPARTURE'
+                  : false
               : false
-            : false
           : false
       ) {
         let secondDateTime = dailyTemp[dayIdx + 1].Movements[0].DateTime;
         let firstDateTime = dailyTemp[dayIdx].Movements[i].DateTime;
-        let newDuration = getNumberOfSecond(firstDateTime, secondDateTime);
+        let newDuration = getNumberOfSecond (firstDateTime, secondDateTime);
         if (newDuration < 0) dailyTemp[dayIdx].Movements[i].Duration = 0;
         else dailyTemp[dayIdx].Movements[i].Duration = newDuration;
       } else if (
         dailyTemp[dayIdx].Movements[i + 1].MovementName === 'DEPARTURE'
       ) {
-        let date = SumSecond(
+        let date = SumSecond (
           dailyTemp[dayIdx].Movements[i - 1].DateTime,
           dailyTemp[dayIdx].Movements[i - 1].Duration
         );
         dailyTemp[dayIdx].Movements[i].DateTime = date;
         let firstDateTime = dailyTemp[dayIdx].Movements[i + 1].DateTime;
         let secondDateTime = date;
-        let newDuration = getNumberOfSecond(firstDateTime, secondDateTime);
+        let newDuration = getNumberOfSecond (firstDateTime, secondDateTime);
         dailyTemp[dayIdx].Movements[i].Duration = newDuration;
       } else {
         let secondDateTime = dailyTemp[dayIdx].Movements[i + 1].DateTime;
         let firstDateTime = dailyTemp[dayIdx].Movements[i].DateTime;
-        let newDuration = getNumberOfSecond(firstDateTime, secondDateTime);
+        let newDuration = getNumberOfSecond (firstDateTime, secondDateTime);
         if (newDuration < 0) dailyTemp[dayIdx].Movements[i].Duration = 0;
         else dailyTemp[dayIdx].Movements[i].Duration = newDuration;
       }
@@ -4257,9 +4270,9 @@ export const sequanceDailyProgram = (daily, dayIdx) => {
   return dailyTemp;
 };
 export const sequanceDailyProgramFromLast = (daily, dayIdx) => {
-  let dailyTemp = copyObject(daily);
+  let dailyTemp = copyObject (daily);
   let duration = 0;
-  let idx = dailyTemp[dayIdx].Movements.findIndex(
+  let idx = dailyTemp[dayIdx].Movements.findIndex (
     e => e.MovementName === 'DEPARTURE'
   );
   let n = idx >= 0 ? idx : dailyTemp[dayIdx].Movements.length - 1;
@@ -4271,13 +4284,13 @@ export const sequanceDailyProgramFromLast = (daily, dayIdx) => {
     ) {
       let firstDateTime = dailyTemp[dayIdx].Movements[n - 1 - i].DateTime;
       let secondDateTime = dailyTemp[dayIdx].Movements[n - i].DateTime;
-      let newDuration = getNumberOfSecond(firstDateTime, secondDateTime);
+      let newDuration = getNumberOfSecond (firstDateTime, secondDateTime);
       if (newDuration < 0) dailyTemp[dayIdx].Movements[n - 1 - i].Duration = 0;
       else dailyTemp[dayIdx].Movements[n - 1 - i].Duration = newDuration;
     }
 
     duration = dailyTemp[dayIdx].Movements[n - 1 - i].Duration;
-    let date1 = SubstractSecond(date, duration);
+    let date1 = SubstractSecond (date, duration);
     dailyTemp[dayIdx].Movements[n - 1 - i].DateTime = date1;
     dailyTemp[dayIdx].Movements[n - 1 - i].SeqNumber = n - i - 1;
     date = dailyTemp[dayIdx].Movements[n - 1 - i].DateTime;
@@ -4288,17 +4301,17 @@ export const sequanceDailyProgramFromLast = (daily, dayIdx) => {
 //daily : Array daily program yang lama
 //id: index dari daily prgram yang sedang dirubah saat ini
 export const checkOutTime = (daily, dayIdx) => {
-  let dailyTemp = copyObject(daily);
-  let idx = dailyTemp[dayIdx].Movements.findIndex(
+  let dailyTemp = copyObject (daily);
+  let idx = dailyTemp[dayIdx].Movements.findIndex (
     e => e.MovementName === 'CHECKOUT'
   );
   if (idx >= 0) {
     let dp = dailyTemp[dayIdx].Movements[idx];
-    if (getHour(dp.DateTime) >= 12) {
+    if (getHour (dp.DateTime) >= 12) {
       dailyTemp[dayIdx].Movements[idx].DateTime =
-        convertToStringDate(dp.DateTime) + 'T12:00:00';
-      dailyTemp = changeTimeDailyDetailProgramTop(dailyTemp, idx, dayIdx);
-      dailyTemp = sequanceDailyProgram(dailyTemp, dayIdx);
+        convertToStringDate (dp.DateTime) + 'T12:00:00';
+      dailyTemp = changeTimeDailyDetailProgramTop (dailyTemp, idx, dayIdx);
+      dailyTemp = sequanceDailyProgram (dailyTemp, dayIdx);
     }
   }
   return dailyTemp;
@@ -4309,13 +4322,13 @@ export const checkOutTime = (daily, dayIdx) => {
 //id: index dari daily prgram yang sedang dirubah saat ini
 //moveIdx :  index dari Movements yang sedang dirubah saat ini
 export const changeTimeDailyDetailProgramTop = (daily, moveIdx, id) => {
-  let dailyTemp = copyObject(daily);
+  let dailyTemp = copyObject (daily);
   let duration = 0;
   let date = dailyTemp[id].Movements[moveIdx].DateTime;
   let n = moveIdx;
   for (let j = 0; j < n; j++) {
     duration = dailyTemp[id].Movements[n - 1 - j].Duration;
-    let date1 = SubstractSecond(date, duration);
+    let date1 = SubstractSecond (date, duration);
     dailyTemp[id].Movements[n - 1 - j].DateTime = date1;
     date = date1;
   }
@@ -4328,15 +4341,14 @@ export const changeTimeDailyDetailProgramTop = (daily, moveIdx, id) => {
 //id: index dari daily prgram yang sedang dirubah saat ini
 //moveIdx : index dari movements saat ini
 export const fixafterDelete = (oldDailyProgram, newDp, id, movIdx) => {
-  let isCheck = checkMovIdxDel(id, movIdx, oldDailyProgram) ? true : false;
+  let isCheck = checkMovIdxDel (id, movIdx, oldDailyProgram) ? true : false;
   // let idx = id != 0 ? (isCheck ? movIdx - 3 : movIdx - 2) : 0;
-  let dailyTemp = copyObject(newDp);
-  dailyTemp = sequanceDailyDPDays(newDp, id, movIdx, isCheck); // ini parameternya kurang belum jelas dari mana
+  let dailyTemp = copyObject (newDp);
+  dailyTemp = sequanceDailyDPDays (newDp, id, movIdx, isCheck); // ini parameternya kurang belum jelas dari mana
   let moveLength = dailyTemp[id].Movements.length;
-  dailyTemp =
-    isCheck && moveLength === 2
-      ? setDefaultTimeDayStartDayEnd(dailyTemp, id)
-      : dailyTemp;
+  dailyTemp = isCheck && moveLength === 2
+    ? setDefaultTimeDayStartDayEnd (dailyTemp, id)
+    : dailyTemp;
   return dailyTemp;
 };
 
@@ -4344,27 +4356,27 @@ export const fixafterDelete = (oldDailyProgram, newDp, id, movIdx) => {
 //daily : Array daily program yang lama
 //id: index dari daily prgram yang sedang dirubah saat ini
 export const checkFreetime = (daily, id, MovementList) => {
-  let dailyTemp = copyObject(daily);
-  let moveLength = Object.keys(dailyTemp[id].Movements).length;
+  let dailyTemp = copyObject (daily);
+  let moveLength = Object.keys (dailyTemp[id].Movements).length;
   let date = dailyTemp[id].Movements[0].DateTime;
   let duration = dailyTemp[id].Movements[0].Duration;
   for (let i = 1; i < moveLength - 1; i++) {
-    let freeTimeDate = SumSecond(date, duration);
+    let freeTimeDate = SumSecond (date, duration);
     if (dailyTemp[id].Movements[i].DateTime !== freeTimeDate) {
       if (dailyTemp[id].Movements[i].MovementName === 'CHECKIN') {
         if (dailyTemp[id].Movements[i - 1].MovementName === 'FREETIMELOCKED') {
           let firstDateTime = dailyTemp[id].Movements[i - 1].DateTime;
           let secondDateTime = dailyTemp[id].Movements[i].DateTime;
-          let newDuration = getNumberOfSecond(firstDateTime, secondDateTime);
+          let newDuration = getNumberOfSecond (firstDateTime, secondDateTime);
           dailyTemp[id].Movements[i - 1].Duration = newDuration;
         } else {
           let firstDateTime = dailyTemp[id].Movements[i].DateTime;
           let secondDateTime = freeTimeDate;
-          let newDuration = getNumberOfSecond(firstDateTime, secondDateTime);
-          dailyTemp[i].Movements.splice(
+          let newDuration = getNumberOfSecond (firstDateTime, secondDateTime);
+          dailyTemp[i].Movements.splice (
             i,
             0,
-            addFreeTime(
+            addFreeTime (
               MovementList,
               freeTimeDate,
               dailyTemp[id].Movements[i],
@@ -4386,30 +4398,30 @@ export const checkFreetime = (daily, id, MovementList) => {
 //daily : Array daily program yang lama
 //id: index dari daily prgram yang sedang dirubah saat ini
 export const setDefaultTimeDayStartDayEnd = (daily, id) => {
-  let dailyTemp = copyObject(daily);
+  let dailyTemp = copyObject (daily);
   let length = dailyTemp[id].Movements.length;
   dailyTemp[id].Movements[0].DateTime =
     dailyTemp[id].Movements[0].MovementName === 'DAYSTART' &&
-    convertToStringDate(dailyTemp[id].Movements[0].DateTime) + 'T08:00:00';
+    convertToStringDate (dailyTemp[id].Movements[0].DateTime) + 'T08:00:00';
   dailyTemp[id].Movements[length - 1].DateTime =
     dailyTemp[id].Movements[length - 1].MovementName === 'DAYEND' &&
-    convertToStringDate(dailyTemp[id].Movements[length - 1].DateTime) +
+    convertToStringDate (dailyTemp[id].Movements[length - 1].DateTime) +
       'T20:00:00';
   return dailyTemp;
 };
 
 export const getFromToTransport = (daily, id, movId) => {
-  let DP = copyObject(daily);
+  let DP = copyObject (daily);
   let item = {
     from: [],
     to: [],
   };
 
-  item.from.push(DP[id].Movements[movId - 1].Destination);
-  item.to.push(DP[id].Movements[movId + 1].Destination);
+  item.from.push (DP[id].Movements[movId - 1].Destination);
+  item.to.push (DP[id].Movements[movId + 1].Destination);
 
-  let idArr = DP[id].Movements.findIndex(e => e.MovementName == 'ARRIVAL');
-  let idDep = DP[id].Movements.findIndex(e => e.MovementName == 'DEPARTURE');
+  let idArr = DP[id].Movements.findIndex (e => e.MovementName == 'ARRIVAL');
+  let idDep = DP[id].Movements.findIndex (e => e.MovementName == 'DEPARTURE');
   let start = 0;
   let end = DP[id].Movements.length;
 
@@ -4428,12 +4440,12 @@ export const getFromToTransport = (daily, id, movId) => {
     let mov = DP[id].Movements;
     if (mov[i].MovementName == 'RECREATION') {
       if (mov[i].Item.Address.City != null)
-        item.to.push(mov[i].Item.Address.City.Id);
-      else item.to.push(mov[i].Item.CityId);
+        item.to.push (mov[i].Item.Address.City.Id);
+      else item.to.push (mov[i].Item.CityId);
     } else if (mov[i].MovementName == 'EAT') {
       if (mov[i].Item.Address == null || mov[i].Item.Address == '')
-        console.log('No Address');
-      else item.to.push(mov[i].Item.CityId);
+        console.log ('No Address');
+      else item.to.push (mov[i].Item.CityId);
     } else if (
       mov[i].MovementName == 'CHECKIN' ||
       mov[i].MovementName == 'CHECKOUT' ||
@@ -4441,19 +4453,19 @@ export const getFromToTransport = (daily, id, movId) => {
       mov[i].MovementName == 'DAYEND'
     ) {
       if (mov[i].Item.CityId == null || mov[i].Item.CityId == '')
-        item.to.push(mov[i].Destination);
-      else item.to.push(mov[i].Item.CityId);
+        item.to.push (mov[i].Destination);
+      else item.to.push (mov[i].Item.CityId);
     }
   }
 
   return {
-    from: item.from.join(),
-    to: item.to.join(),
+    from: item.from.join (),
+    to: item.to.join (),
   };
 };
 
 export const findExistDriving = (iStart, iEnd, movements) => {
-  let index = movements.findIndex(
+  let index = movements.findIndex (
     (item, i) =>
       i >= iStart &&
       i <= iEnd &&
@@ -4478,11 +4490,11 @@ export const addItemTransportation = (
   service,
   hour
 ) => {
-  let dailyTemp = copyObject(daily);
-  let arrivalIdx = dailyTemp[id].Movements.findIndex(
+  let dailyTemp = copyObject (daily);
+  let arrivalIdx = dailyTemp[id].Movements.findIndex (
     e => e.MovementName === 'ARRIVAL'
   );
-  let departureIdx = dailyTemp[id].Movements.findIndex(
+  let departureIdx = dailyTemp[id].Movements.findIndex (
     e => e.MovementName === 'DEPARTURE'
   );
   let start = moveIdx;
@@ -4491,7 +4503,7 @@ export const addItemTransportation = (
   if (departureIdx >= 0 && arrivalIdx >= 0) {
     //console.log('ada semua');
     if (moveIdx < departureIdx && moveIdx > arrivalIdx) {
-      existTransIdx = findExistDriving(
+      existTransIdx = findExistDriving (
         arrivalIdx,
         moveIdx,
         dailyTemp[id].Movements
@@ -4499,11 +4511,15 @@ export const addItemTransportation = (
       start = existTransIdx !== -1 ? existTransIdx : moveIdx; //arrivalIdx;
       end = departureIdx;
     } else if (moveIdx < departureIdx && departureIdx < arrivalIdx) {
-      existTransIdx = findExistDriving(start, moveIdx, dailyTemp[id].Movements);
+      existTransIdx = findExistDriving (
+        start,
+        moveIdx,
+        dailyTemp[id].Movements
+      );
       start = existTransIdx !== -1 ? existTransIdx : moveIdx; //start;
       end = departureIdx;
     } else if (moveIdx > departureIdx && departureIdx < arrivalIdx) {
-      existTransIdx = findExistDriving(
+      existTransIdx = findExistDriving (
         arrivalIdx,
         moveIdx,
         dailyTemp[id].Movements
@@ -4511,13 +4527,13 @@ export const addItemTransportation = (
       start = existTransIdx !== -1 ? existTransIdx : moveIdx; //arrivalIdx;
     }
   } else {
-    existTransIdx = findExistDriving(0, moveIdx, dailyTemp[id].Movements);
+    existTransIdx = findExistDriving (0, moveIdx, dailyTemp[id].Movements);
   }
   start = existTransIdx !== -1 ? existTransIdx : moveIdx;
   for (let i = start; i < end; i++) {
     if (dailyTemp[id].Movements[i].MovementName === 'DRIVING') {
       let destination = dailyTemp[id].Movements[i + 1].Destination;
-      dailyTemp[id].Movements[i].Item = setItemTransport(
+      dailyTemp[id].Movements[i].Item = setItemTransport (
         transport,
         service,
         hour,
@@ -4534,7 +4550,7 @@ export const addItemTransportation = (
 //hour: object hour
 //destination : destination transport
 export const setItemTransport = (transport, service, hour, destination) => {
-  let item = copyObject(ItemMov);
+  let item = copyObject (ItemMov);
   item.Desc = transport.Description;
   item.Capacity = transport.TransportationSeatTypeId;
   item.Hours = hour.Id;
@@ -4553,11 +4569,11 @@ export const setItemTransport = (transport, service, hour, destination) => {
 //id: index dari daily prgram yang sedang dirubah saat ini
 //moveIdx :  index dari Movements yang sedang dirubah saat ini
 export const deleteTransportation = (daily, id, moveIdx) => {
-  let dailyTemp = copyObject(daily);
-  let arrivalIdx = dailyTemp[id].Movements.findIndex(
+  let dailyTemp = copyObject (daily);
+  let arrivalIdx = dailyTemp[id].Movements.findIndex (
     item => item.MovementName === 'ARRIVAL'
   );
-  let departureIdx = dailyTemp[id].Movements.findIndex(
+  let departureIdx = dailyTemp[id].Movements.findIndex (
     item => item.MovementName === 'DEPARTURE'
   );
   let start = 0;
@@ -4574,7 +4590,7 @@ export const deleteTransportation = (daily, id, moveIdx) => {
     }
   }
   for (let i = start; i < end; i++) {
-    let item = copyObject(ItemMov);
+    let item = copyObject (ItemMov);
     if (dailyTemp[id].Movements[i].MovementName === 'DRIVING')
       dailyTemp[id].Movements[i].Item = item;
   }
@@ -4584,7 +4600,7 @@ export const deleteTransportation = (daily, id, moveIdx) => {
 //daily : Array daily program yang lama
 //id: index dari daily prgram yang sedang dirubah saat ini
 export const checkDriving = (daily, id) => {
-  let dailyTemp = copyObject(daily);
+  let dailyTemp = copyObject (daily);
   let item = null;
   for (let i = 0; i < dailyTemp[id].Movements.length; i++)
     if (dailyTemp[id].Movements[i].MovementName === 'DRIVING') {
@@ -4598,9 +4614,9 @@ export const checkDriving = (daily, id) => {
 
 export const addLeaveAco = (daily, movementList, item, id, moveIdx) => {
   //for set datetime
-  let dailyTemp = copyObject(daily);
-  let newMovement = copyObject(Movement);
-  let move = movementList.filter(item => item.Name === 'LEAVEACCOMMODATION');
+  let dailyTemp = copyObject (daily);
+  let newMovement = copyObject (Movement);
+  let move = movementList.filter (item => item.Name === 'LEAVEACCOMMODATION');
   newMovement.DateTime = dailyTemp[id].Movements[moveIdx].DateTime;
   newMovement.SeqNumber = null;
   newMovement.MovementName = move[0].Name;
@@ -4610,14 +4626,14 @@ export const addLeaveAco = (daily, movementList, item, id, moveIdx) => {
   newMovement.Destination = dailyTemp[id].Movements[moveIdx].Destination;
   newMovement.DestinationName =
     dailyTemp[id].Movements[moveIdx].DestinationName;
-  newMovement.Item = addItemList(item);
+  newMovement.Item = addItemList (item);
   return newMovement;
 };
 export const addReaturnAco = (daily, movementsList, item, id, moveIdx) => {
   //for set datetime
-  let dailyTemp = copyObject(daily);
-  let newMovement = copyObject(Movement);
-  let move = movementsList.filter(item => item.Name === 'RETURNACCOMMODATION');
+  let dailyTemp = copyObject (daily);
+  let newMovement = copyObject (Movement);
+  let move = movementsList.filter (item => item.Name === 'RETURNACCOMMODATION');
   newMovement.DateTime = dailyTemp[id].Movements[moveIdx].DateTime;
   newMovement.SeqNumber = null;
   newMovement.MovementName = move[0].Name;
@@ -4627,13 +4643,13 @@ export const addReaturnAco = (daily, movementsList, item, id, moveIdx) => {
   newMovement.Destination = dailyTemp[id].Movements[moveIdx].Destination;
   newMovement.DestinationName =
     dailyTemp[id].Movements[moveIdx].DestinationName;
-  newMovement.Item = addItemList(item);
+  newMovement.Item = addItemList (item);
   return newMovement;
 };
 export const addCheckInAco = (movements, item) => {
   //for set datetime
-  let newMovement = copyObject(Movement);
-  let move = movements.filter(item => item.Name === 'CHECKIN');
+  let newMovement = copyObject (Movement);
+  let move = movements.filter (item => item.Name === 'CHECKIN');
   newMovement.DateTime = item.AccommodationSummary.CheckIn;
   newMovement.SeqNumber = null;
   newMovement.MovementName = move[0].Name;
@@ -4642,7 +4658,7 @@ export const addCheckInAco = (movements, item) => {
   newMovement.ServiceItemId = move[0].ServiceItemId;
   newMovement.Destination = item.City.Name ? item.City.Id : null;
   newMovement.DestinationName = item.City.Name ? item.City.Name : null;
-  newMovement.Item = addItemHotel(
+  newMovement.Item = addItemHotel (
     newMovement.Destination,
     item.AccommodationSummary,
     'CHECKIN'
@@ -4653,8 +4669,8 @@ export const addCheckInAco = (movements, item) => {
 };
 export const addCheckOutAco = (movements, item) => {
   //for set datetime
-  let newMovement = copyObject(Movement);
-  let move = movements.filter(item => item.Name === 'CHECKOUT');
+  let newMovement = copyObject (Movement);
+  let move = movements.filter (item => item.Name === 'CHECKOUT');
   newMovement.DateTime = item.AccommodationSummary.CheckOut;
   newMovement.SeqNumber = null;
   newMovement.MovementName = move[0].Name;
@@ -4663,7 +4679,7 @@ export const addCheckOutAco = (movements, item) => {
   newMovement.ServiceItemId = move[0].ServiceItemId;
   newMovement.Destination = item.City ? item.City.Id : null;
   newMovement.DestinationName = item.City ? item.City.Name : null;
-  newMovement.Item = addItemHotel(
+  newMovement.Item = addItemHotel (
     newMovement.Destination,
     item.AccommodationSummary,
     'CHECKOUT'
@@ -4681,8 +4697,8 @@ export const addEatFreeTime = (
   ActivityData
 ) => {
   //for set datetime
-  let dailyTemp = copyObject(daily);
-  let newMovement = copyObject(Movement);
+  let dailyTemp = copyObject (daily);
+  let newMovement = copyObject (Movement);
   newMovement.DateTime = ActivityData.Startime;
   newMovement.SeqNumber = moveIdx + 1;
   newMovement.MovementName = typeMovement.Name;
@@ -4696,23 +4712,20 @@ export const addEatFreeTime = (
   } else {
     newMovement.DestinationName = resto
       ? resto.AddressObject
-        ? resto.AddressObject.City
-          ? resto.AddressObject.City.Name
+          ? resto.AddressObject.City ? resto.AddressObject.City.Name : null
           : null
-        : null
       : null;
   }
   newMovement.Note = ActivityData.Note;
-  newMovement.Item =
-    resto !== undefined && resto !== null
-      ? addItemResto(resto)
-      : addItemList(item);
+  newMovement.Item = resto !== undefined && resto !== null
+    ? addItemResto (resto)
+    : addItemList (item);
 
   return newMovement;
 };
 
 export const addItemList = par => {
-  let item = copyObject(ItemMov);
+  let item = copyObject (ItemMov);
   if (par !== null) {
     item.Name = par.Name;
     item.Desc = par.Desc;
@@ -4731,7 +4744,7 @@ export const addItemList = par => {
   return item;
 };
 export const addItemResto = resto => {
-  let item = copyObject(ItemMov);
+  let item = copyObject (ItemMov);
   item.Name = resto.Name;
   item.Address.AddressString = resto.Address;
   item.Desc = resto.MenuClass;
@@ -4747,7 +4760,7 @@ export const addItemResto = resto => {
 };
 export const addItemAtt = (par, act) => {
   //for attraction
-  let item = copyObject(ItemMov);
+  let item = copyObject (ItemMov);
   if (par !== null) {
     item.Name = par.Name;
     item.Desc = par.Description;
@@ -4764,9 +4777,9 @@ export const addItemAtt = (par, act) => {
 };
 export const virtualReturn = (daily, movements, item, id, moveIdx) => {
   //for set datetime
-  let dailyTemp = copyObject(daily);
-  let newMovement = copyObject(Movement);
-  let move = movements.filter(
+  let dailyTemp = copyObject (daily);
+  let newMovement = copyObject (Movement);
+  let move = movements.filter (
     item => item.Name === 'VIRTUALRETURNACCOMMODATION'
   );
   newMovement.DateTime = dailyTemp[id].Movements[moveIdx - 1].DateTime;
@@ -4778,15 +4791,15 @@ export const virtualReturn = (daily, movements, item, id, moveIdx) => {
   newMovement.Destination = dailyTemp[id].Movements[moveIdx].Destination;
   newMovement.DestinationName =
     dailyTemp[id].Movements[moveIdx].DestinationName;
-  newMovement.Item = addItemList(item);
+  newMovement.Item = addItemList (item);
   newMovement.TypeVirtual = true;
   return newMovement;
 };
 export const virtualLeave = (daily, movementlist, item, id, moveIdx) => {
   //for set datetime
-  let dailyTemp = copyObject(daily);
-  let newMovement = copyObject(Movement);
-  let move = movementlist.filter(
+  let dailyTemp = copyObject (daily);
+  let newMovement = copyObject (Movement);
+  let move = movementlist.filter (
     item => item.Name === 'VIRTUALLEAVEACCOMMODATION'
   );
   newMovement.DateTime = dailyTemp[id].Movements[moveIdx].DateTime;
@@ -4799,7 +4812,7 @@ export const virtualLeave = (daily, movementlist, item, id, moveIdx) => {
     dailyTemp[id].Movements[moveIdx].DestinationName;
   newMovement.Destination = dailyTemp[id].Movements[moveIdx].Destination;
   newMovement.TypeVirtual = true;
-  newMovement.Item = addItemList(item);
+  newMovement.Item = addItemList (item);
   return newMovement;
 };
 
@@ -4810,15 +4823,15 @@ export const addStartEndDays2 = (
   Arrival,
   MovementList
 ) => {
-  let dpTemp = copyObject(DailyProgramTemp);
+  let dpTemp = copyObject (DailyProgramTemp);
   let idx = 0;
-  let SP = SummaryProgram.filter(
+  let SP = SummaryProgram.filter (
     item => item.AccommodationSummary !== undefined
   );
-  dpTemp.map((daily, i) => {
+  dpTemp.map ((daily, i) => {
     let chIn = false;
     let chOut = false;
-    daily.Movements.map(move => {
+    daily.Movements.map (move => {
       if (move.MovementName === 'CHECKIN') chIn = true;
       else if (move.MovementName === 'CHECKOUT') chOut = true;
       return move;
@@ -4827,17 +4840,17 @@ export const addStartEndDays2 = (
     let dpLength = dp.length - 1;
     if (i === 0) {
       if (!chIn && !chOut && dp[dpLength].MovementName !== 'DAYEND') {
-        daily.Movements.push(
-          addDayEndDriving(
-            addCheckInAco(MovementList, SP[idx]),
-            convertToStringDate(Arrival.Date) + 'T23:59:59',
+        daily.Movements.push (
+          addDayEndDriving (
+            addCheckInAco (MovementList, SP[idx]),
+            convertToStringDate (Arrival.Date) + 'T23:59:59',
             MovementList
           )
         );
       } else if (chIn && !chOut && dp[dpLength].MovementName !== 'DAYEND') {
-        daily.Movements.push(
-          addDayEnd(
-            addCheckInAco(MovementList, SP[idx]),
+        daily.Movements.push (
+          addDayEnd (
+            addCheckInAco (MovementList, SP[idx]),
             SP[idx].AccommodationSummary.CheckIn,
             MovementList
           )
@@ -4852,14 +4865,14 @@ export const addStartEndDays2 = (
         if (
           dpTemp[i + 1]
             ? dpTemp[i + 1].Movements[0]
-              ? dpTemp[i + 1].Movements[0].MovementName !== 'DEPARTURE'
-              : true
+                ? dpTemp[i + 1].Movements[0].MovementName !== 'DEPARTURE'
+                : true
             : true
         ) {
-          daily.Movements.push(
-            addDayEndDriving(
-              addCheckInAco(MovementList, SP[idx]),
-              convertToStringDate(SP[idx - 1].Date) + 'T23:59:59',
+          daily.Movements.push (
+            addDayEndDriving (
+              addCheckInAco (MovementList, SP[idx]),
+              convertToStringDate (SP[idx - 1].Date) + 'T23:59:59',
               MovementList
             )
           );
@@ -4871,11 +4884,11 @@ export const addStartEndDays2 = (
         dp[0].MovementName !== 'DAYSTART'
       )
         if (daily.Movements[0].MovementName !== 'DEPARTURE')
-          daily.Movements.splice(
+          daily.Movements.splice (
             0,
             0,
-            addDayStart(
-              addCheckInAco(MovementList, SP[idx]),
+            addDayStart (
+              addCheckInAco (MovementList, SP[idx]),
               SP[idx].AccommodationSummary.CheckOut,
               MovementList
             )
@@ -4883,7 +4896,7 @@ export const addStartEndDays2 = (
     } else {
       let chIn = false;
       let chOut = false;
-      daily.Movements.map(move => {
+      daily.Movements.map (move => {
         if (move.MovementName === 'CHECKIN') chIn = true;
         else if (move.MovementName === 'CHECKOUT') chOut = true;
         return move;
@@ -4894,11 +4907,11 @@ export const addStartEndDays2 = (
         dp[0].MovementName !== 'DAYSTART' &&
         dp[0].MovementName !== 'DEPARTURE'
       ) {
-        daily.Movements.splice(
+        daily.Movements.splice (
           0,
           0,
-          addDayStart(
-            addCheckInAco(MovementList, SP[idx]),
+          addDayStart (
+            addCheckInAco (MovementList, SP[idx]),
             daily.Movements[0].DateTime,
             MovementList
           )
@@ -4906,19 +4919,19 @@ export const addStartEndDays2 = (
         idx++;
         if (SP[idx] !== undefined) {
           if (dp[dp.length - 1].MovementName !== 'DAYEND') {
-            daily.Movements.push(
-              addDayEnd(
-                addCheckInAco(MovementList, SP[idx]),
+            daily.Movements.push (
+              addDayEnd (
+                addCheckInAco (MovementList, SP[idx]),
                 daily.Movements[daily.Movements.length - 1].DateTime,
                 MovementList
               )
             );
           }
         } else
-          daily.Movements.push(
-            addDayEndDriving(
-              setAirportMovement(Departure, MovementList, 'DEPARTURE'),
-              convertToStringDate(SP[idx - 1].LeavingDate) + 'T23:59:59',
+          daily.Movements.push (
+            addDayEndDriving (
+              setAirportMovement (Departure, MovementList, 'DEPARTURE'),
+              convertToStringDate (SP[idx - 1].LeavingDate) + 'T23:59:59',
               MovementList
             )
           );
@@ -4930,19 +4943,19 @@ export const addStartEndDays2 = (
       ) {
         idx++;
       } else if (chIn && !chOut && dp[dpLength].MovementName !== 'DAYEND') {
-        daily.Movements.push(
-          addDayEnd(
-            addCheckInAco(MovementList, SP[idx]),
+        daily.Movements.push (
+          addDayEnd (
+            addCheckInAco (MovementList, SP[idx]),
             SP[idx].AccommodationSummary.CheckIn,
             MovementList
           )
         );
       } else if (!chIn && chOut && dp[0].MovementName !== 'DAYSTART') {
-        daily.Movements.splice(
+        daily.Movements.splice (
           0,
           0,
-          addDayStart(
-            addCheckInAco(MovementList, SP[idx]),
+          addDayStart (
+            addCheckInAco (MovementList, SP[idx]),
             daily.Movements[0].DateTime,
             MovementList
           )
@@ -4952,47 +4965,47 @@ export const addStartEndDays2 = (
           SP[idx] !== undefined &&
           (dpTemp[i + 1]
             ? dpTemp[i + 1].Movements[0]
-              ? dpTemp[i + 1].Movements[0].MovementName !== 'DEPARTURE'
-              : true
+                ? dpTemp[i + 1].Movements[0].MovementName !== 'DEPARTURE'
+                : true
             : true)
         )
-          daily.Movements.push(
-            addDayEndDriving(
-              addCheckInAco(MovementList, SP[idx]),
-              convertToStringDate(SP[idx - 1].LeavingDate) + 'T23:59:59',
+          daily.Movements.push (
+            addDayEndDriving (
+              addCheckInAco (MovementList, SP[idx]),
+              convertToStringDate (SP[idx - 1].LeavingDate) + 'T23:59:59',
               MovementList
             )
           );
         else if (
           dpTemp[i + 1]
             ? dpTemp[i + 1].Movements[0]
-              ? dpTemp[i + 1].Movements[0].MovementName !== 'DEPARTURE'
-              : true
+                ? dpTemp[i + 1].Movements[0].MovementName !== 'DEPARTURE'
+                : true
             : true
         ) {
-          daily.Movements.push(
-            addDayEndDriving(
-              setAirportMovement(Departure, MovementList, 'DEPARTURE'),
-              convertToStringDate(SP[idx - 1].LeavingDate) + 'T23:59:59',
+          daily.Movements.push (
+            addDayEndDriving (
+              setAirportMovement (Departure, MovementList, 'DEPARTURE'),
+              convertToStringDate (SP[idx - 1].LeavingDate) + 'T23:59:59',
               MovementList
             )
           );
         }
       } else {
         if (daily.Movements.length === 0) {
-          daily.Movements.splice(
+          daily.Movements.splice (
             0,
             0,
-            addDayStartDriving(
-              addCheckInAco(MovementList, SP[idx]),
-              convertToStringDate(SP[idx].Date) + 'T08:00:00',
+            addDayStartDriving (
+              addCheckInAco (MovementList, SP[idx]),
+              convertToStringDate (SP[idx].Date) + 'T08:00:00',
               MovementList
             )
           );
-          daily.Movements.push(
-            addDayEndDriving(
-              addCheckInAco(MovementList, SP[idx]),
-              convertToStringDate(SP[idx].Date) + 'T20:00:00',
+          daily.Movements.push (
+            addDayEndDriving (
+              addCheckInAco (MovementList, SP[idx]),
+              convertToStringDate (SP[idx].Date) + 'T20:00:00',
               MovementList
             )
           );
@@ -5000,11 +5013,11 @@ export const addStartEndDays2 = (
           if (dp[0].MovementName !== 'DAYSTART')
             if (dp[0].MovementName !== 'CHECKIN')
               if (dp[0].MovementName !== 'DEPARTURE')
-                daily.Movements.splice(
+                daily.Movements.splice (
                   0,
                   0,
-                  addDayStartDriving(
-                    addCheckInAco(MovementList, SP[idx]),
+                  addDayStartDriving (
+                    addCheckInAco (MovementList, SP[idx]),
                     daily.Movements[0].DateTime,
                     MovementList
                   )
@@ -5013,13 +5026,13 @@ export const addStartEndDays2 = (
             if (
               dpTemp[i + 1]
                 ? dpTemp[i + 1].Movements[0]
-                  ? dpTemp[i + 1].Movements[0].MovementName !== 'DEPARTURE'
-                  : true
+                    ? dpTemp[i + 1].Movements[0].MovementName !== 'DEPARTURE'
+                    : true
                 : true
             )
-              daily.Movements.push(
-                addDayEndDriving(
-                  addCheckInAco(MovementList, SP[idx]),
+              daily.Movements.push (
+                addDayEndDriving (
+                  addCheckInAco (MovementList, SP[idx]),
                   daily.Movements[daily.Movements.length - 1].DateTime,
                   MovementList
                 )
@@ -5037,15 +5050,15 @@ export const generateFreeTimeDP = (daily, dayIdx, MovementList) => {
   for (let j = 1; j < daily[dayIdx].Movements.length - 1; j++) {
     let tgl = daily[dayIdx].Movements[j - 1].DateTime;
     let durasi = daily[dayIdx].Movements[j - 1].Duration;
-    let tglFree = SumSecond(tgl, durasi);
+    let tglFree = SumSecond (tgl, durasi);
     if (daily[dayIdx].Movements[j].DateTime !== tglFree) {
       let a = tglFree;
       let b = daily[dayIdx].Movements[j].DateTime;
-      let dur = getNumberOfSecond(a, b);
-      daily[dayIdx].Movements.splice(
+      let dur = getNumberOfSecond (a, b);
+      daily[dayIdx].Movements.splice (
         j,
         0,
-        addFreeTime(
+        addFreeTime (
           MovementList,
           tglFree,
           daily[dayIdx].Movements[j],
@@ -5060,18 +5073,18 @@ export const generateFreeTimeDP = (daily, dayIdx, MovementList) => {
 };
 
 export const sequentialNumberinMovementByDays = (daily, dayIdx) => {
-  let dailyTemp = copyObject(daily);
+  let dailyTemp = copyObject (daily);
 
-  dailyTemp[dayIdx].Movements.map((obj, i) => {
+  dailyTemp[dayIdx].Movements.map ((obj, i) => {
     obj.SeqNumber = i + 1;
   });
   return dailyTemp;
 };
 
 export const AddDriving = (daily, id, moveIdx, MovementList) => {
-  let item = checkDriving(daily, id);
-  let typeMov = MovementList.filter(item => item.Name === 'DRIVING');
-  let obj = copyObject(Movement);
+  let item = checkDriving (daily, id);
+  let typeMov = MovementList.filter (item => item.Name === 'DRIVING');
+  let obj = copyObject (Movement);
   obj.DateTime = daily[id].Movements[moveIdx].DateTime;
   obj.SeqNumber = moveIdx + 1;
   obj.MovementName = typeMov[0].Name;
@@ -5079,13 +5092,13 @@ export const AddDriving = (daily, id, moveIdx, MovementList) => {
   obj.ServiceItemId = typeMov[0].ServiceItemId;
   obj.Destination = daily[id].Movements[moveIdx].Destination;
   obj.DestinationName = daily[id].Movements[moveIdx].DestinationName;
-  obj.Item = addItemList(item);
+  obj.Item = addItemList (item);
   if (daily) return obj;
 };
 
 export const addMovement = (daily, par, item, activity, id, moveIdx) => {
   //for set datetime
-  let obj = copyObject(Movement);
+  let obj = copyObject (Movement);
   obj.DateTime = activity.Startime;
   obj.SeqNumber = null;
   obj.MovementName = par.Name;
@@ -5099,22 +5112,20 @@ export const addMovement = (daily, par, item, activity, id, moveIdx) => {
   if (par.Name === 'RECREATION') {
     // obj.DestinationName = item.Cities ? item.Cities[0].Name : null;
     obj.DestinationName = item.AddressObject
-      ? item.AddressObject.City
-        ? item.AddressObject.City.Name
-        : null
+      ? item.AddressObject.City ? item.AddressObject.City.Name : null
       : null;
-    obj.Item = addItemAtt(item, activity);
+    obj.Item = addItemAtt (item, activity);
   } else if (par.Name === 'FREETIME') {
     obj.DestinationName = daily[id].Movements[moveIdx].DestinationName;
-    obj.Item = addItemList(item);
+    obj.Item = addItemList (item);
     obj.Note = activity.Note;
-  } else obj.Item = addItemList(item);
+  } else obj.Item = addItemList (item);
   return obj;
 };
 
 export const addDayStart = (par, date, MovementList) => {
-  let move = MovementList.filter(item => item.Name === 'DAYSTART');
-  let obj = copyObject(Movement);
+  let move = MovementList.filter (item => item.Name === 'DAYSTART');
+  let obj = copyObject (Movement);
   obj.Id = null;
   obj.Destination = par.Destination;
   obj.DestinationName = par.DestinationName;
@@ -5129,8 +5140,8 @@ export const addDayStart = (par, date, MovementList) => {
   return obj;
 };
 export const addDayEnd = (par, date, MovementList) => {
-  let obj = copyObject(Movement);
-  let move = MovementList.filter(item => item.Name === 'DAYEND');
+  let obj = copyObject (Movement);
+  let move = MovementList.filter (item => item.Name === 'DAYEND');
   obj.Id = null;
   obj.Destination = par.Destination;
   obj.DestinationName = par.DestinationName;
@@ -5145,8 +5156,8 @@ export const addDayEnd = (par, date, MovementList) => {
   return obj;
 };
 export const addDayEndDriving = (par, date, MovementList) => {
-  let obj = copyObject(Movement);
-  let move = MovementList.filter(item => item.Name === 'DAYEND');
+  let obj = copyObject (Movement);
+  let move = MovementList.filter (item => item.Name === 'DAYEND');
   obj.Id = null;
   obj.Destination = par.Destination;
   obj.DestinationName = par.DestinationName;
@@ -5161,8 +5172,8 @@ export const addDayEndDriving = (par, date, MovementList) => {
   return obj;
 };
 export const addDayStartDriving = (par, date, MovementList) => {
-  let obj = copyObject(Movement);
-  let move = MovementList.filter(item => item.Name === 'DAYSTART');
+  let obj = copyObject (Movement);
+  let move = MovementList.filter (item => item.Name === 'DAYSTART');
   obj.Id = null;
   obj.Destination = par.Destination;
   obj.DestinationName = par.DestinationName;
@@ -5182,17 +5193,17 @@ export const changeTimeSummaryProgramAfterAddActivity = (
   dailyProgram,
   summaryProgram
 ) => {
-  let newSP = copyObject(summaryProgram);
-  let daily = copyObject(dailyProgram);
+  let newSP = copyObject (summaryProgram);
+  let daily = copyObject (dailyProgram);
   for (let i = 0; i < newSP.length; i++) {
     if (newSP[i].AccommodationSummary != null) {
-      let objDP = daily.find(item => item.Date == newSP[i].Date);
-      newSP[i].AccommodationSummary.CheckIn = objDP.Movements.find(
+      let objDP = daily.find (item => item.Date == newSP[i].Date);
+      newSP[i].AccommodationSummary.CheckIn = objDP.Movements.find (
         item => item.MovementName == 'CHECKIN'
       ).DateTime;
 
-      objDP = daily.find(item => item.Date == newSP[i].LeavingDate);
-      newSP[i].AccommodationSummary.CheckOut = objDP.Movements.find(
+      objDP = daily.find (item => item.Date == newSP[i].LeavingDate);
+      newSP[i].AccommodationSummary.CheckOut = objDP.Movements.find (
         item => item.MovementName == 'CHECKOUT'
       ).DateTime;
     }
@@ -5215,8 +5226,8 @@ export const editActivityData = (
   itemMovement,
   activityData
 ) => {
-  let newDp = copyObject(dailyTemp);
-  let newActivity = addMovement(
+  let newDp = copyObject (dailyTemp);
+  let newActivity = addMovement (
     dailyTemp,
     TypeMovement,
     itemMovement,
@@ -5234,15 +5245,15 @@ export const editActivityData = (
 //oldSP : array of object SummaryProgram,
 //index : index dari connection flight departure
 export const delConectionFlight = (arrival, oldSP, index) => {
-  let newSP = copyObject(oldSP);
+  let newSP = copyObject (oldSP);
   for (
     let j = 0;
     j < 2;
     j++ // harus di delete arifalnya
   )
-    newSP.splice(index, 1);
+    newSP.splice (index, 1);
 
-  return setDateSummaryProgram(arrival, newSP);
+  return setDateSummaryProgram (arrival, newSP);
 };
 //Delete Activity
 //id : id dari daily program
@@ -5250,11 +5261,11 @@ export const delConectionFlight = (arrival, oldSP, index) => {
 //oldDP : array of object dari
 //setelah fungsi ini selesai, panggil fungsi fixafterDelete()
 export const deleteActivity = (dayIdx, movIdx, oldDP) => {
-  let newDP = copyObject(oldDP);
-  if (checkMovIdxDel(dayIdx, movIdx, oldDP)) {
+  let newDP = copyObject (oldDP);
+  if (checkMovIdxDel (dayIdx, movIdx, oldDP)) {
     let j = 5;
     while (j) {
-      newDP[dayIdx].Movements.splice(movIdx - 2, 1);
+      newDP[dayIdx].Movements.splice (movIdx - 2, 1);
       j--;
     }
     if (newDP[dayIdx].Movements[movIdx - 4] != undefined)
@@ -5262,11 +5273,11 @@ export const deleteActivity = (dayIdx, movIdx, oldDP) => {
         newDP[dayIdx].Movements[movIdx - 4].MovementName === 'FREETIMELOCKED' &&
         newDP[dayIdx].Movements[movIdx - 3].MovementName !== 'CHECKIN'
       )
-        newDP[dayIdx].Movements.splice(movIdx - 4, 1);
+        newDP[dayIdx].Movements.splice (movIdx - 4, 1);
   } else {
     let j = 2;
     while (j) {
-      newDP[dayIdx].Movements.splice(movIdx - 1, 1);
+      newDP[dayIdx].Movements.splice (movIdx - 1, 1);
       j--;
     }
     if (
@@ -5286,18 +5297,17 @@ export const deleteActivity = (dayIdx, movIdx, oldDP) => {
 };
 
 export const checkMovIdxDel = (dayIdx, movIdx, oldDP) => {
-  let newDP = copyObject(oldDP);
-  let isTrue =
-    (newDP[dayIdx].Movements[movIdx - 2].MovementName ===
-      'LEAVEACCOMMODATION' &&
-      newDP[dayIdx].Movements[movIdx + 2].MovementName ===
-        'RETURNACCOMMODATION') ||
+  let newDP = copyObject (oldDP);
+  let isTrue = (newDP[dayIdx].Movements[movIdx - 2].MovementName ===
+    'LEAVEACCOMMODATION' &&
+    newDP[dayIdx].Movements[movIdx + 2].MovementName ===
+      'RETURNACCOMMODATION') ||
     (newDP[dayIdx].Movements[movIdx - 2].MovementName ===
       'VIRTUALLEAVEACCOMMODATION' &&
       newDP[dayIdx].Movements[movIdx + 2].MovementName ===
         'VIRTUALRETURNACCOMMODATION')
-      ? true
-      : false;
+    ? true
+    : false;
 
   return isTrue;
 };
@@ -5325,8 +5335,8 @@ export const checkMovIdxDel = (dayIdx, movIdx, oldDP) => {
 
 // //update leave and return accommodation
 export const fixLeaveReturnAccomodation = dailyProgram => {
-  return dailyProgram.map(daily => {
-    daily.Movements.map((move, i) => {
+  return dailyProgram.map (daily => {
+    daily.Movements.map ((move, i) => {
       if (move.MovementName === 'LEAVEACCOMMODATION') {
         move.Item = daily.Movements[i - 1].Item;
         move.DestinationName = daily.Movements[i - 1].DestinationName;
@@ -5345,7 +5355,7 @@ export const fixLeaveReturnAccomodation = dailyProgram => {
 export const isThereExcursionMeal = (dailyProgram, dayIndex, moveIndex) => {
   let movements = dailyProgram[dayIndex].Movements;
   let activity = movements[moveIndex];
-  let result = movements.find(
+  let result = movements.find (
     item =>
       item.Destination === activity.Destination &&
       (item.MovementName === 'RECREATION' || item.MovementName === 'EAT')
@@ -5423,7 +5433,7 @@ export const fixDailyAfterMovement = (dp, dayIdx, moveIdx) => {
       (curMoveName === 'RECREATION' && curMovements[i].Item.IsSolidStartTime)
     )
       break;
-    let newMoveDateTime = SumSecond(
+    let newMoveDateTime = SumSecond (
       curMovements[i - 1].DateTime,
       curMovements[i - 1].Duration
     );
@@ -5432,8 +5442,8 @@ export const fixDailyAfterMovement = (dp, dayIdx, moveIdx) => {
       curMovements[i + 1].MovementName === 'DEPARTURE'
     ) {
       let nextDate = curMovements[i + 1].DateTime;
-      if (new Date(newMoveDateTime) <= new Date(nextDate)) {
-        let newDuration = getNumberOfSecond(newMoveDateTime, nextDate);
+      if (new Date (newMoveDateTime) <= new Date (nextDate)) {
+        let newDuration = getNumberOfSecond (newMoveDateTime, nextDate);
         curMovements[i].Duration = newDuration;
         curMovements[i].DateTime = newMoveDateTime;
       } else {
@@ -5449,12 +5459,12 @@ export const fixDailyAfterMovement = (dp, dayIdx, moveIdx) => {
 };
 
 export const fixDayStartDayEndAddress = dailyProgram => {
-  dailyProgram.map(daily => {
-    daily.Movements.map(move => {
-      if ([DAYSTART, DAYEND].indexOf(move.MovementName) !== -1) {
-        let pivot = daily.Movements.find(
+  dailyProgram.map (daily => {
+    daily.Movements.map (move => {
+      if ([DAYSTART, DAYEND].indexOf (move.MovementName) !== -1) {
+        let pivot = daily.Movements.find (
           item =>
-            [CHECKIN, CHECKOUT].indexOf(item.MovementName) !== -1 &&
+            [CHECKIN, CHECKOUT].indexOf (item.MovementName) !== -1 &&
             // eslint-disable-next-line
             item.Item.ServiceItemId == move.Item.ServiceItemId
         );
@@ -5470,10 +5480,10 @@ export const fixDayStartDayEndAddress = dailyProgram => {
 };
 
 export const fixDestinationDriving = dailyProgram => {
-  let dailyTemp = copyObject(dailyProgram);
-  dailyTemp.map(daily => {
-    daily.Movements.map((move, iMove) => {
-      if (['DRIVING'].indexOf(move.MovementName) !== -1) {
+  let dailyTemp = copyObject (dailyProgram);
+  dailyTemp.map (daily => {
+    daily.Movements.map ((move, iMove) => {
+      if (['DRIVING'].indexOf (move.MovementName) !== -1) {
         let nextMove = daily.Movements[iMove + 1];
         move.Destination = nextMove ? nextMove.Destination : move.Destination;
         move.DestinationName = nextMove
@@ -5488,15 +5498,14 @@ export const fixDestinationDriving = dailyProgram => {
 };
 
 export const copyDailyProgram = (DailyProgramTemp, DailyProgram) => {
-  DailyProgram.map((dataDp, i) => {
+  DailyProgram.map ((dataDp, i) => {
     let Mov = [];
     dataDp.Movements.length != 0
-      ? dataDp.Movements.map(mov => {
-          Mov.push({
+      ? dataDp.Movements.map (mov => {
+          Mov.push ({
             Id: mov.Id,
-            DateTime:
-              convertToStringDate(dataDp.Date) +
-              convertToStringTime(mov.DateTime),
+            DateTime: convertToStringDate (dataDp.Date) +
+              convertToStringTime (mov.DateTime),
             Destination: mov.Destination,
             DestinationName: mov.DestinationName,
             Duration: mov.Duration,
@@ -5523,16 +5532,16 @@ export const getDailyProgramFixPrice = (
   DailyProgram
 ) => {
   let DailyProgramTemp = [];
-  DailyProgramTemp = generateInitialDailyProgram({
+  DailyProgramTemp = generateInitialDailyProgram ({
     Departures: Arrival,
     MainPrograms: SummaryProgram,
     Returns: Departure,
   });
-  DailyProgramTemp = copyDailyProgram(DailyProgramTemp, DailyProgram);
+  DailyProgramTemp = copyDailyProgram (DailyProgramTemp, DailyProgram);
   return DailyProgramTemp;
 };
 
 export const findPlaceByRegion = (places, region) => {
-  let newPlace = places.find(item => item.Region === region);
+  let newPlace = places.find (item => item.Region === region);
   return newPlace ? newPlace.Data : [];
 };

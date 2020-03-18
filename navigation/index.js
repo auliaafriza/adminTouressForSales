@@ -1,36 +1,22 @@
-import * as React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import ListScreen from "./seriesNav";
-import Home from "./homeNav";
-import DetailSeriesPackage from "../screens/PackageDetailScreen/PackageDetail";
-import CustomPackageOption from "../screens/TourTransactionScreen/CustomPackage/CustomPackageOption";
-import RoomAllocation from "../screens/TourTransactionScreen/CustomPackage/RoomAllocation";
-import AccommodationSummary from "../screens/TourTransactionScreen/CustomPackage/AccommodationSummary";
-import ListAirlineTicket from "../screens/TourTransactionScreen/CustomPackage/components/airlineTicket/ListAirlineTicket";
-import ListAirport from "../screens/Common/listAirport";
-import ListCity from "../screens/Common/listCity";
-import ListAccomodation from "../screens/TourTransactionScreen/CustomPackage/components/masterData/listAccomodation";
-const Stack = createStackNavigator();
+import * as React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import ListScreen from './seriesNav';
+import Home from './homeNav';
+import DetailSeriesPackage from '../screens/PackageDetailScreen/PackageDetail';
+import CustomPackage from './customNav';
+import general from './general';
+import masterData from './masterDataNav';
+const Stack = createStackNavigator ();
 
-export default function seriesNav({ navigation, route }) {
+export default function seriesNav({navigation, route}) {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Home" headerMode="none">
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="PackageList" component={ListScreen} />
       <Stack.Screen name="PackagesDetail" component={DetailSeriesPackage} />
-      <Stack.Screen
-        name="CustomPackageOption"
-        component={CustomPackageOption}
-      />
-      <Stack.Screen name="roomAllocation" component={RoomAllocation} />
-      <Stack.Screen
-        name="AccommodationSummary"
-        component={AccommodationSummary}
-      />
-      <Stack.Screen name="ListAirlineTicket" component={ListAirlineTicket} />
-      <Stack.Screen name="ListAirport" component={ListAirport} />
-      <Stack.Screen name="ListCity" component={ListCity} />
-      <Stack.Screen name="ListAccomodation" component={ListAccomodation} />
+      <Stack.Screen name="General" component={general} />
+      <Stack.Screen name="CustomPackageOption" component={CustomPackage} />
+      <Stack.Screen name="masterData" component={masterData} />
     </Stack.Navigator>
   );
 }

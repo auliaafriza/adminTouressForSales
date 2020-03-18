@@ -1,5 +1,5 @@
-import { TOUR_TRANSACTION_URL, PLACE_URL } from "./apiUrl";
-import apiClient from "./apiClient";
+import {TOUR_TRANSACTION_URL, PLACE_URL} from './apiUrl';
+import apiClient from './apiClient';
 export const getDurationApi = (type, data) => {
   let urlString = null;
   if (data.FromId && data.ToId)
@@ -27,13 +27,13 @@ export const getDurationApi = (type, data) => {
         data.ToAddress +
         '&mode=DRIVING`;
 
-  return apiClient.get(urlString);
+  return apiClient.get (urlString);
 };
 
 export const getAirportApi = region => {
-  return apiClient.get(`${PLACE_URL}/Get/ByRegion/${region}`);
+  return apiClient.get (`${PLACE_URL}/Get/ByRegion/${region}`);
 };
 
 export const getAirportListApi = () => {
-  return apiClient.get(`${PLACE_URL}/Get/ByPlaceType/1`);
+  return apiClient.get (`${PLACE_URL}/Get/ByPlaceType/1`);
 };
