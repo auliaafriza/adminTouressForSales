@@ -672,8 +672,6 @@ class AccommodationSummary extends Component {
       });
       this.props.setSummaryProgramAction (SP);
       this.props.setReturnsItineraryAction (newReturns);
-      //this.props.dispatch(set_summary_program(SP));
-      //this.props.dispatch(set_returns_itenerary(newReturns));
     }
     this.setState ({loading: false});
   };

@@ -42,7 +42,7 @@ const reducer = (state = initialState, action) => {
     case types.SET_CITY_ACCOMMODATION: {
       return {
         ...state,
-        cityId: payload.data,
+        cityId: action.payload,
       };
     }
 

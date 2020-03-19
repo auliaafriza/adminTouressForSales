@@ -1,13 +1,14 @@
-import * as types from "../actions/UserAuth/actionTypes";
+import * as types from '../actions/UserAuth/actionTypes';
 
 const initialState = {
   loginStatus: null,
   logout: false,
   logoutStatus: null,
-  descriptionLogin: "",
+  descriptionLogin: '',
   loading: false,
-  expiredToken: "",
-  errors: {}
+  expiredToken: '',
+  errors: {},
+  token: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,9 +17,9 @@ const reducer = (state = initialState, action) => {
     // POST_LOGIN
     //---------------------------------
     case types.POST_LOGIN:
-      return { ...state };
+      return {...state};
     case types.POST_LOGIN_PENDING:
-      return { ...state, loading: true };
+      return {...state, loading: true};
     case types.POST_LOGIN_FULFILLED:
       //   localStorage.setItem("token", action.payload.data.access_token);
       //   localStorage.setItem("expiredToken", action.payload.data.expires);
@@ -31,34 +32,37 @@ const reducer = (state = initialState, action) => {
         expiredToken: action.payload.data.expires,
         token: action.payload.data.access_token,
         loading: false,
-        loginStatus: true
+        loginStatus: true,
       };
     case types.POST_LOGIN_REJECTED:
       return {
         ...state,
         loading: false,
         loginStatus: false,
-        descriptionLogin: action.payload.response.data.error_description
+        descriptionLogin: action.payload.response.data.error_description,
       };
     case types.RESET_loginStatus:
-      return { ...state, loginStatus: false };
+      return {...state, loginStatus: false};
 
     case types.LOGOUT: {
-      return { ...state, logoutStatus: null, loginStatus: null };
+      return {...state, logoutStatus: null, loginStatus: null};
     }
     case types.RESET_LOGOUT_STATUS: {
-      return { ...state, logoutStatus: null };
+      return {...state, logoutStatus: null};
     }
     case types.RESET_LOGIN_STATUS: {
       return {
         ...state,
         loginStatus: null,
-        descriptionLogin: "",
-        expiredToken: ""
+        descriptionLogin: '',
+        expiredToken: '',
       };
     }
     case types.SET_EXPIRED_TOKEN: {
-      return { ...state, logoutStatus: action.payload };
+      return {...state, logoutStatus: action.payload};
+    }
+    case types.SET_TOKEN: {
+      return {...state, token: action.payload};
     }
 
     default:

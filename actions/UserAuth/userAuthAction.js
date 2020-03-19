@@ -9,9 +9,10 @@ import {
   // GET_TOKEN,
   // LOGIN_SUCCESS
   POST_LOGIN,
-  RESET_LOGIN_STATUS
-} from "./actionTypes";
-import { postLoginApi } from "../../api/authenticationUrl";
+  RESET_LOGIN_STATUS,
+  SET_TOKEN,
+} from './actionTypes';
+import {postLoginApi} from '../../api/authenticationUrl';
 
 // const login_start = (CompanyCode, Username, Password) => {
 //   return {
@@ -24,16 +25,25 @@ import { postLoginApi } from "../../api/authenticationUrl";
 
 export const postLogin = data => {
   return dispatch => {
-    return dispatch({
+    return dispatch ({
       type: POST_LOGIN,
-      payload: postLoginApi(data)
+      payload: postLoginApi (data),
     });
   };
 };
 
 export const resetLoginStatus = () => {
   return dispatch => {
-    dispatch({ type: RESET_LOGIN_STATUS });
+    dispatch ({type: RESET_LOGIN_STATUS});
+  };
+};
+
+export const setToken = token => {
+  return dispatch => {
+    return dispatch ({
+      type: SET_TOKEN,
+      payload: token,
+    });
   };
 };
 

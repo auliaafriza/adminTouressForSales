@@ -124,6 +124,7 @@ class listAccomodation extends Component {
       dataDemoPrice,
     } = this.state.Parameter;
     if (this.props.cityAccommodation != CityId) {
+      CityId;
       const data = {
         cityId: CityId,
         ratingId: ratingId,
@@ -156,48 +157,10 @@ class listAccomodation extends Component {
             loading: false,
           });
         } else {
-          this.props.dispatch (
-            get_accomodation (
-              CityId,
-              ratingId,
-              areaId,
-              locationsId,
-              typeId,
-              facilityId,
-              false,
-              StartDate,
-              useExtraBed,
-              useChildExtraBed,
-              useSharingBed,
-              useSharingRoom,
-              useSingleRoom,
-              EndDate,
-              //tambahan estimated price
-              dataDemoPrice
-            )
-          );
+          this.props.getAccommodationProfileAction (data);
         }
       } else {
-        this.props.dispatch (
-          get_accomodation (
-            CityId,
-            ratingId,
-            areaId,
-            locationsId,
-            typeId,
-            facilityId,
-            false,
-            StartDate,
-            useExtraBed,
-            useChildExtraBed,
-            useSharingBed,
-            useSharingRoom,
-            useSingleRoom,
-            EndDate,
-            //tambahan estimated price
-            dataDemoPrice
-          )
-        );
+        this.props.getAccommodationProfileAction (data);
       }
     }
   }
@@ -220,7 +183,7 @@ class listAccomodation extends Component {
       });
       return false;
     } else if (this.props.isAccomodation === 'failed') {
-      this.props.dispatch (reset_accomodation ());
+      this.props.resetAccommodationProfileAction ();
       this.setState ({loading: false});
       return false;
     } else return true;

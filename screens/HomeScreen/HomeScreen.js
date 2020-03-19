@@ -29,55 +29,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {
   setPackageStatusFromHomeToListAction,
 } from '../../actions/Transactions/TransactionAction';
-// import { SliderLoading } from "../../components/loading";
-// import {
-//   get_images_home,
-//   get_featured_packages,
-//   reset_featured_packages
-// } from "../actions/homeAction";
-
-// import { login_success } from "../actions/userAuthAction";
-// import { get_fixpackages, get_id } from "../actions/fixPackagesAction";
-// import {
-//   get_type_tour_start,
-//   get_pax_type_tour_start,
-//   get_city_incountry,
-//   get_country,
-//   get_movement_mode,
-//   get_guest_title
-// } from "../actions/generalAction";
-// import {
-//   get_transport_seat_filter,
-//   get_transport_type_filter,
-//   get_attraction_type_filter,
-//   get_menu_category,
-//   get_menu_types,
-//   get_menu_classes,
-//   get_list_airport
-// } from "../actions/itemIteneraryAction";
-// import {
-//   get_accommodation_ratings,
-//   get_accommodation_facilities,
-//   get_accommodation_types,
-//   get_restaurant_specialization,
-//   get_accommodation_locations,
-//   get_accommodation_areas
-// } from "../actions/advanceFilterAction";
-// import {
-//   get_status_unread_booking,
-//   reset_status_unread_booking
-// } from "../actions/historyAction";
-
-// import { get_readypackages } from "../actions/readyPackegaesAction";
-// import {
-//   get_user_profile,
-//   get_userinfo,
-//   get_user_role
-// } from "../actions/accountAction";
-// import { get_company_profile } from "../actions/companyAction";
-// import { convertRoundPrice } from "../helper/helper";
-// import EmpatyPackages from "../assets/images/HomeTouressEmpty.png";
-// import TourHome from "./home/components/TourSeriesPackage";
+// import {setToken} from '../../actions/General/generalAction';
 
 class home extends Component {
   constructor (props) {
@@ -114,54 +66,12 @@ class home extends Component {
     } catch (error) {}
   };
 
-  // getAllData = async () => {
-  //   const userToken = JSON.parse(await AsyncStorage.getItem('userLogin'));
-  //   this.props.dispatch(login_success(userToken));
-  //   this.props.dispatch(get_images_home(this.state.countryCode));
-  //   this.props.dispatch(get_featured_packages());
-  //   this.props.dispatch(get_pax_type_tour_start());
-  //   this.props.dispatch(get_fixpackages());
-  //   this.props.dispatch(get_user_role());
-  //   this.props.dispatch(get_type_tour_start());
-  //   this.props.dispatch(get_city_incountry());
-  //   this.props.dispatch(get_country());
-  //   this.props.dispatch(get_userinfo());
-  //   this.props.dispatch(get_readypackages());
-  //   this.props.dispatch(get_guest_title());
-  //   this.props.dispatch(get_movement_mode());
-  //   // this.props.dispatch(get_tour_operator_profile_list());
-
-  //   //item Itenerary
-  //   this.props.dispatch(get_transport_seat_filter());
-  //   this.props.dispatch(get_transport_type_filter());
-  //   this.props.dispatch(get_attraction_type_filter());
-  //   this.props.dispatch(get_accommodation_ratings());
-  //   // this.props.dispatch(get_accommodation_name());
-  //   this.props.dispatch(get_accommodation_facilities());
-  //   this.props.dispatch(get_accommodation_types());
-  //   this.props.dispatch(get_accommodation_locations());
-  //   this.props.dispatch(get_accommodation_areas());
-  //   this.props.dispatch(get_restaurant_specialization());
-  //   this.props.dispatch(get_list_airport());
-  //   this.props.dispatch(get_menu_classes());
-  //   this.props.dispatch(get_menu_category());
-  //   this.props.dispatch(get_menu_types());
-  //   this.props.dispatch(get_user_profile());
-  //   this.props.dispatch(get_company_profile());
-  // };
-
   async componentDidMount () {
     this.setState ({
       loading: true,
     });
-    // this.getNotif();
-    // this._notificationSubscription = Notifications.addListener(
-    //   this._handleNotification
-    // );
-    // let dateTimeNow = new Date().getHours();
-    // {
-    //   dateTimeNow >= 8 && dateTimeNow <= 9 ? this.showNotif() : null;
-    // }
+    // const userToken = JSON.parse (await AsyncStorage.getItem ('token'));
+    // this.props.setToken (userToken);
     handleAndroidBackButton (exitAlert);
     await this.getCountryLoc ();
 
@@ -170,9 +80,6 @@ class home extends Component {
         this.showUpdateVersion ();
       }
     });
-    //Linking.openURL('market://details?id=com.connectworld.touress');
-    // WebBrowser.openBrowserAsync('https://expo.io');
-    // await this.getAllData();
   }
 
   componentDidUpdate () {
@@ -383,4 +290,5 @@ const mapStateToProps = state => ({
 // export default connect(mapStateToProps)(home);
 export default connect (mapStateToProps, {
   setPackageStatusFromHomeToListAction,
+  // setToken,
 }) (home);
