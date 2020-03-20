@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   ImageBackground,
   View,
@@ -9,45 +9,45 @@ import {
   ScrollView,
   Linking,
   StatusBar,
-  AsyncStorage
-} from "react-native";
-import VersionCheck from "react-native-version-check";
-import { Container } from "../../components/container";
-import { NormalButton, ClearButton } from "../../components/button";
+  AsyncStorage,
+} from 'react-native';
+import VersionCheck from 'react-native-version-check';
+import { Container } from '../../components/container';
+import { NormalButton, ClearButton } from '../../components/button';
 import {
   RoundedTextInput,
-  FloatingLabelInputPass
-} from "../../components/textInput";
+  FloatingLabelInputPass,
+} from '../../components/textInput';
 // import { login_start, reset_status_login } from "../../actions/userAuthAction";
-import { Loading } from "../../components/loading";
-import { KeyboardAvoid } from "../../components/keyboard";
+import { Loading } from '../../components/loading';
+import { KeyboardAvoid } from '../../components/keyboard';
 import {
   exitAlert,
-  handleAndroidBackButton
-} from "./../Common/backHandlerAndroid";
-import styles from "./styles";
-import stylesGlobal from "../../components/styles";
-import { Updates } from "expo";
-import IMG_BG from "./../../assets/images/sign-in-bg.png";
-import IMG_ICON from "./../../assets/images/touress-logo-white.png";
-import { TextWarning } from "../../components/text";
+  handleAndroidBackButton,
+} from './../Common/backHandlerAndroid';
+import styles from './styles';
+import stylesGlobal from '../../components/styles';
+import { Updates } from 'expo';
+import IMG_BG from './../../assets/images/sign-in-bg.png';
+import IMG_ICON from './../../assets/images/touress-logo-white.png';
+import { TextWarning } from '../../components/text';
 import {
   postLogin,
-  resetLoginStatus
-} from "../../actions/UserAuth/userAuthAction";
+  resetLoginStatus,
+} from '../../actions/UserAuth/userAuthAction';
 
 class login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       Login: {
-        CompanyCode: "30000",
-        Username: "admin",
-        Password: "123456789Aa~"
+        CompanyCode: '30000',
+        Username: 'sales008',
+        Password: '12345Aa~',
       },
-      errorCompanyCode: "",
-      errorUsername: "",
-      errorPassword: ""
+      errorCompanyCode: '',
+      errorUsername: '',
+      errorPassword: '',
       // loading: false
     };
   }
@@ -59,7 +59,7 @@ class login extends Component {
     isLogin: PropTypes.string,
     messages: PropTypes.string,
     validate: PropTypes.func,
-    dataLogin: PropTypes.object
+    dataLogin: PropTypes.object,
   };
 
   componentDidMount() {
@@ -78,12 +78,12 @@ class login extends Component {
       if (update.isAvailable) {
         await Updates.fetchUpdateAsync();
         Alert.alert(
-          "New version available",
-          "Please, update app to new version",
+          'New version available',
+          'Please, update app to new version',
           [
             {
-              text: "Ok"
-            }
+              text: 'Ok',
+            },
           ]
         );
         // ... notify user of update ...
@@ -97,11 +97,11 @@ class login extends Component {
   validate = () => {
     const { CompanyCode, Username, Password } = this.state.Login;
     let isError = false;
-    const REQUIRED = "This field is required";
+    const REQUIRED = 'This field is required';
     const errors = {
-      errorCompanyCode: "",
-      errorUsername: "",
-      errorPassword: ""
+      errorCompanyCode: '',
+      errorUsername: '',
+      errorPassword: '',
     };
 
     if (CompanyCode.length < 1) {
@@ -118,7 +118,7 @@ class login extends Component {
     }
     this.setState({
       ...this.state,
-      ...errors
+      ...errors,
     });
     return isError;
   };
@@ -130,9 +130,9 @@ class login extends Component {
       // this.setState({ loading: true });
       // const { Login } = this.state;
       let auth = {
-        CompanyCode: "30000",
-        Username: "admin",
-        Password: "123456789Aa~"
+        CompanyCode: '30000',
+        Username: 'sales008',
+        Password: '12345Aa~',
       };
       this.props.postLogin(auth);
       // this.props.dispatch(
@@ -163,8 +163,8 @@ class login extends Component {
 
   test = async () => {
     const { token, expiredToken } = this.props;
-    AsyncStorage.setItem("token", token);
-    AsyncStorage.setItem("expiredToken", expiredToken);
+    AsyncStorage.setItem('token', token);
+    AsyncStorage.setItem('expiredToken', expiredToken);
   };
   componentDidUpdate() {
     if (this.props.loginStatus) {
@@ -172,7 +172,7 @@ class login extends Component {
       this.handlePressHome();
       this.props.resetLoginStatus();
     } else if (this.props.loginStatus !== null) {
-      Alert.alert("Failed", this.props.messages, [{ text: "OK" }]);
+      Alert.alert('Failed', this.props.messages, [{ text: 'OK' }]);
       this.props.resetLoginStatus();
     }
 
@@ -189,12 +189,12 @@ class login extends Component {
   }
 
   showUpdateVersion = () => {
-    Alert.alert("New version available", "Please, update app to new version", [
+    Alert.alert('New version available', 'Please, update app to new version', [
       {
-        text: "Update",
-        onPress: () => this.updateVersion()
+        text: 'Update',
+        onPress: () => this.updateVersion(),
       },
-      { text: "Cancel" }
+      { text: 'Cancel' },
     ]);
   };
 
@@ -203,17 +203,17 @@ class login extends Component {
   };
 
   handlePressRegister = () => {
-    this.props.navigation.navigate("RegisterAgent");
+    this.props.navigation.navigate('RegisterAgent');
   };
 
   handlePressForgot = () => {
-    this.props.navigation.navigate("ForgotPassword");
+    this.props.navigation.navigate('ForgotPassword');
   };
 
   handlePressHome = () => {
     // const userToken = AsyncStorage.getItem("token");
     // Alert.alert("Masuk localstor", userToken, [{ text: "OK" }]);
-    this.props.navigation.navigate("Home");
+    this.props.navigation.navigate('Home');
 
     // Alert.alert("Masuk Home", "Homeypad", [
     //   {
@@ -265,7 +265,7 @@ class login extends Component {
                         value={this.state.Login.CompanyCode}
                         onChangeText={text =>
                           this.setState({
-                            Login: { ...this.state.Login, CompanyCode: text }
+                            Login: { ...this.state.Login, CompanyCode: text },
                           })
                         }
                         keyboardType="numeric"
@@ -283,7 +283,7 @@ class login extends Component {
                         value={this.state.Login.Username}
                         onChangeText={text =>
                           this.setState({
-                            Login: { ...this.state.Login, Username: text }
+                            Login: { ...this.state.Login, Username: text },
                           })
                         }
                         error={this.state.errorUsername}
@@ -293,9 +293,9 @@ class login extends Component {
                       <View style={stylesGlobal.width100}>
                         <View
                           style={{
-                            position: "absolute",
+                            position: 'absolute',
                             right: 0,
-                            zIndex: 99
+                            zIndex: 99,
                           }}
                         >
                           <TextWarning
@@ -313,7 +313,7 @@ class login extends Component {
                           value={this.state.Login.Password}
                           onChangeText={text =>
                             this.setState({
-                              Login: { ...this.state.Login, Password: text }
+                              Login: { ...this.state.Login, Password: text },
                             })
                           }
                           required={true}
@@ -322,7 +322,7 @@ class login extends Component {
                       <View
                         style={[
                           stylesGlobal.row100,
-                          stylesGlobal.justifyContentCenter
+                          stylesGlobal.justifyContentCenter,
                         ]}
                       >
                         <NormalButton
@@ -352,9 +352,9 @@ const mapStateToProps = state => ({
   messages: state.authReducer.descriptionLogin,
   loading: state.authReducer.loading,
   expiredToken: state.authReducer.expiredToken,
-  token: state.authReducer.token
+  token: state.authReducer.token,
 });
 export default connect(mapStateToProps, {
   postLogin,
-  resetLoginStatus
+  resetLoginStatus,
 })(login);

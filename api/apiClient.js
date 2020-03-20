@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 let backendHost;
 // config dev
-backendHost = 'https://touressapidev.azurewebsites.net/';
+// backendHost = "https://touressapidev.azurewebsites.net/";
 //config qa
-// backendHost = "https://touressapiqa.azurewebsites.net/";
+backendHost = 'https://touressapiqa.azurewebsites.net/';
 //config demo
 //backendHost = 'https://touressapidemo.azurewebsites.net/';
 //config prod
@@ -13,11 +13,11 @@ backendHost = 'https://touressapidev.azurewebsites.net/';
 // const userToken = JSON.parse (AsyncStorage.getItem ('token'));
 
 const API_ROOT = `${backendHost}/Api`;
-const apiClient = axios.create ({
+const apiClient = axios.create({
   baseURL: API_ROOT,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer ' + AsyncStorage.getItem ('token'),
+    Authorization: 'Bearer ' + AsyncStorage.getItem('token'),
   },
 });
 

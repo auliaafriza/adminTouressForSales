@@ -1,14 +1,14 @@
-import * as types from "../actions/Transactions/actionTypes";
+import * as types from '../actions/Transactions/actionTypes';
 
 const initialState = {
   packageList: [],
   packageListStatus: null,
   loading: false,
   packageId: null,
-  packageStatusFromHomeToList: "",
+  packageStatusFromHomeToList: '',
   packageById: {},
   packageByIdStatus: null,
-  packageIdFromSystem: "",
+  packageIdFromSystem: '',
   tourOperatorId: null,
   tourOperatorIdStatus: null,
   setPackageData: null,
@@ -17,19 +17,20 @@ const initialState = {
   // DARI MOBILE APPS
   CustomDetails: null,
   Arrival: null,
-  ArrivalStatus: "",
+  ArrivalStatus: '',
   Departure: null,
-  DepartureStatus: "",
+  DepartureStatus: '',
   SummaryProgram: [],
-  SummaryProgramStatus: "",
+  SummaryProgramStatus: '',
   DailyProgram: [],
   Guest: [],
   Operator: null,
   GuestQoutation: [],
   Departures: [],
   Returns: [],
-  DeparturesStatus: "",
-  ReturnsStatus: ""
+  DeparturesStatus: '',
+  ReturnsStatus: '',
+  isUpdateSpecialAdjusment: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -44,14 +45,14 @@ const reducer = (state = initialState, action) => {
         packageList: action.payload.data,
         packageListStatus: true,
         loading: false,
-        errors: null
+        errors: null,
       };
     case types.GET_PACKAGE_LIST_REJECTED:
       return {
         ...state,
         packageListStatus: false,
         loading: false,
-        errors: action.payload.response.data
+        errors: action.payload.response.data,
       };
     case types.RESET_PACKAGE_LIST_STATUS:
       return {
@@ -62,12 +63,13 @@ const reducer = (state = initialState, action) => {
         packageById: {},
         tourOperatorId: null,
         tourOperatorIdStatus: null,
-        setGuestDataStatus: null
+        setGuestDataStatus: null,
+        isUpdateSpecialAdjusment: null,
       };
     case types.SET_PACKAGE_STATUS_FROM_HOME_TO_LIST:
       return {
         ...state,
-        packageStatusFromHomeToList: action.payload
+        packageStatusFromHomeToList: action.payload,
       };
     case types.GET_PACKAGE_BY_ID:
       return { ...state };
@@ -79,19 +81,19 @@ const reducer = (state = initialState, action) => {
         packageById: action.payload.data,
         packageByIdStatus: true,
         loading: false,
-        errors: null
+        errors: null,
       };
     case types.GET_PACKAGE_BY_ID_REJECTED:
       return {
         ...state,
         packageByIdStatus: false,
         loading: false,
-        errors: action.payload.response.data
+        errors: action.payload.response.data,
       };
     case types.SET_PACKAGE_ID:
       return {
         ...state,
-        packageIdFromSystem: action.payload
+        packageIdFromSystem: action.payload,
       };
 
     case types.GET_OPERATOR_PROFILE_BY_ID:
@@ -104,31 +106,31 @@ const reducer = (state = initialState, action) => {
         tourOperatorId: action.payload.data,
         tourOperatorIdStatus: true,
         loading: false,
-        errors: null
+        errors: null,
       };
     case types.GET_OPERATOR_PROFILE_BY_ID_REJECTED:
       return {
         ...state,
         tourOperatorIdStatus: false,
         loading: false,
-        errors: action.payload.response.data
+        errors: action.payload.response.data,
       };
     case types.SET_PACKAGE_DATA:
       return {
         ...state,
-        setPackageData: action.payload
+        setPackageData: action.payload,
       };
     case types.SET_GUEST_DATA:
       return {
         ...state,
         setGuestData: action.payload,
-        setGuestDataStatus: true
+        setGuestDataStatus: true,
       };
 
     case types.SET_GUEST_TOUR_GUIDE:
       return {
         ...state,
-        setGuestTourGuide: action.payload
+        setGuestTourGuide: action.payload,
       };
 
     // case types.SET_RETURNS_ITINERARY:
@@ -146,7 +148,7 @@ const reducer = (state = initialState, action) => {
     case types.SET_GUEST_QUOTATION:
       return {
         ...state,
-        setGuestQuotation: action.payload
+        setGuestQuotation: action.payload,
       };
 
     // case types.SET_CUSTOM_ITINERARY:
@@ -173,7 +175,7 @@ const reducer = (state = initialState, action) => {
     case types.SET_CUSTOM_ITINERARY: {
       return {
         ...state,
-        CustomDetails: action.payload
+        CustomDetails: action.payload,
       };
     }
     case types.RESET_CUSTOM_ITINERARY: {
@@ -183,7 +185,7 @@ const reducer = (state = initialState, action) => {
         Arrival: null,
         Departure: null,
         SummaryProgram: [],
-        DailyProgram: []
+        DailyProgram: [],
       };
     }
     // --------------------------------------------------------------------------------------------
@@ -193,13 +195,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         Departures: action.payload,
-        DeparturesStatus: "success"
+        DeparturesStatus: 'success',
       };
     }
     case types.RESET_DEPARTURES_ITINERARY: {
       return {
         ...state,
-        DeparturesStatus: ""
+        DeparturesStatus: '',
       };
     }
 
@@ -207,13 +209,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         Returns: action.payload,
-        ReturnsStatus: "success"
+        ReturnsStatus: 'success',
       };
     }
     case types.RESET_RETURNS_ITINERARY: {
       return {
         ...state,
-        ReturnsStatus: ""
+        ReturnsStatus: '',
       };
     }
     // --------------------------------------------------------------------------------------------
@@ -223,13 +225,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         Arrival: action.payload,
-        ArrivalStatus: "success"
+        ArrivalStatus: 'success',
       };
     }
     case types.RESET_ARRIVAL_ITINERARY: {
       return {
         ...state,
-        ArrivalStatus: ""
+        ArrivalStatus: '',
       };
     }
 
@@ -240,13 +242,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         Departure: action.payload,
-        DepartureStatus: "success"
+        DepartureStatus: 'success',
       };
     }
     case types.RESET_DEPATURE_ITINERARY: {
       return {
         ...state,
-        DepartureStatus: ""
+        DepartureStatus: '',
       };
     }
 
@@ -257,13 +259,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         SummaryProgram: action.payload,
-        SummaryProgramStatus: "success"
+        SummaryProgramStatus: 'success',
       };
     }
     case types.RESET_SUMMARY_PROGRAM: {
       return {
         ...state,
-        SummaryProgramStatus: ""
+        SummaryProgramStatus: '',
       };
     }
 
@@ -273,53 +275,100 @@ const reducer = (state = initialState, action) => {
     case types.SET_DAILY_PROGRAM: {
       return {
         ...state,
-        DailyProgram: action.payload
+        DailyProgram: action.payload,
       };
     }
     case types.RESET_DAILY_PROGRAM: {
       return {
         ...state,
-        DailyProgram: []
+        DailyProgram: [],
       };
     }
 
     case types.SET_GUEST_ITINERARY: {
       return {
         ...state,
-        Guest: action.payload
+        Guest: action.payload,
       };
     }
 
     case types.RESET_GUEST_ITINERARY: {
       return {
         ...state,
-        Guest: []
+        Guest: [],
       };
     }
 
     case types.SET_TOUROPERATOR: {
       return {
         ...state,
-        Operator: action.payload
+        Operator: action.payload,
       };
     }
 
     case types.RESET_TOUROPERATOR: {
       return {
         ...state,
-        Operator: null
+        Operator: null,
       };
     }
 
     case types.SET_GUEST_QUOTATION:
       return {
         ...state,
-        GuestQoutation: action.payload
+        GuestQoutation: action.payload,
       };
     case types.RESET_GUEST_QUOTATION:
       return {
         ...state,
-        GuestQoutation: []
+        GuestQoutation: [],
+      };
+
+    case types.SET_SPECIAL_ADJUSMENT:
+      return {
+        ...state,
+        setSpecialAdjusment: action.payload,
+        isUpdateSpecialAdjusment: true,
+      };
+
+    case types.POST_CREATE_CUSTOM_ON_BE_HALF:
+      return { ...state };
+    case types.POST_CREATE_CUSTOM_ON_BE_HALF_PENDING:
+      return { ...state, loading: true };
+    case types.POST_CREATE_CUSTOM_ON_BE_HALF_FULFILLED:
+      return {
+        ...state,
+        postCreateCustomOnBeHalf: action.payload.data,
+        postCreateCustomOnBeHalfStatus: true,
+        loading: false,
+        errors: null,
+      };
+    case types.POST_CREATE_CUSTOM_ON_BE_HALF_REJECTED:
+      return {
+        ...state,
+        postCreateCustomOnBeHalfStatus: false,
+        loading: false,
+        errors: action.payload.response.data,
+      };
+
+    case types.POST_EDIT_QUOTATION:
+      return { ...state };
+    case types.POST_EDIT_QUOTATION_PENDING:
+      return { ...state, loading: true };
+    case types.POST_EDIT_QUOTATION_FULFILLED:
+      return {
+        ...state,
+        postEditQuotation: action.payload.data,
+        postEditQuotationStatus: true,
+        loading: false,
+        errors: null,
+      };
+    case types.POST_EDIT_QUOTATION_REJECTED:
+      return {
+        ...state,
+        postEditQuotationStatus: false,
+        loading: false,
+        errors: action.payload.response.data,
       };
 
     default:

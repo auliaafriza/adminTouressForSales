@@ -1,5 +1,9 @@
-import apiClient from "./apiClient";
-import { GET_TEMPLATE_URL, TOUR_OPERATOR_URL } from "./apiUrl";
+import apiClient from './apiClient';
+import {
+  GET_TEMPLATE_URL,
+  TOUR_OPERATOR_URL,
+  TOUR_TRANSACTION_URL,
+} from './apiUrl';
 
 export const getReadyPackageListApi = data => {
   return apiClient.get(`${GET_TEMPLATE_URL}/ReadyPackage/All`);
@@ -27,4 +31,34 @@ export const getReadyPackageByIdApi = id => {
 
 export const getTourOperatorProfileByIdApi = id => {
   return apiClient.get(`${TOUR_OPERATOR_URL}/ById/${id}`);
+};
+
+// export const postCreateCustomApi = id => {
+//   return apiClient.get(`${TOUR_OPERATOR_URL}/ById/${id}`);
+// };
+
+export const postCreateCustomOnBeHalfApi = data => {
+  return apiClient.post(`${TOUR_TRANSACTION_URL}/CreateTour/OnBehalf`, data);
+};
+
+export const postEditQuotationApi = (tourTransactionId, data) => {
+  return apiClient.post(
+    `${TOUR_TRANSACTION_URL}/EditQuotation?tourTransactionId=${tourTransactionId}`,
+    data
+  );
+};
+
+export const postJoinTourApi = (data, type, packageId) => {
+  return apiClient.post(
+    type === 'FixedDateVariable'
+      ? (`${TOUR_TRANSACTION_URL}/JoinTour/VariableDate/${packageId}`, data)
+      : (`${TOUR_TRANSACTION_URL}/JoinTour/${packageId}`, data)
+  );
+};
+
+export const getTourSummaryByIdApi = (tourTransactionId, data) => {
+  return apiClient.post(
+    `${TOUR_TRANSACTION_URL}/TransactionSummary?id=${tourTransactionId}`,
+    data
+  );
 };

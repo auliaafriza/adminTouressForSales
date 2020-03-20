@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   View,
   Text,
@@ -14,26 +14,27 @@ import {
   Linking,
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
-import {Notifications} from 'expo';
-import {Card, CardHeader, CardIcon} from '../../components/card';
-import {Container} from '../../components/container';
+import { Notifications } from 'expo';
+import { Card, CardHeader, CardIcon } from '../../components/card';
+import { Container } from '../../components/container';
 import axios from 'axios';
-import {exitAlert, handleAndroidBackButton} from '../Common/backHandlerAndroid';
+import {
+  exitAlert,
+  handleAndroidBackButton,
+} from '../Common/backHandlerAndroid';
 import VersionCheck from 'react-native-version-check';
 import styles from '../styles';
 import stylesGlobal from '../../components/styles';
 import iconReady from '../../assets/Icon/ready_package.png';
 import iconFixed from '../../assets/Icon/series_package.png';
 import iconCustom from '../../assets/Icon/custom_package.png';
-import {LinearGradient} from 'expo-linear-gradient';
-import {
-  setPackageStatusFromHomeToListAction,
-} from '../../actions/Transactions/TransactionAction';
+import { LinearGradient } from 'expo-linear-gradient';
+import { setPackageStatusFromHomeToListAction } from '../../actions/Transactions/TransactionAction';
 // import {setToken} from '../../actions/General/generalAction';
 
 class home extends Component {
-  constructor (props) {
-    super (props);
+  constructor(props) {
+    super(props);
     this.state = {
       loading: false,
       countryCode: null,
@@ -60,68 +61,68 @@ class home extends Component {
 
   getCountryLoc = async () => {
     try {
-      return await axios.get (`http://ip-api.com/json`).then (res => {
-        this.setState ({countryCode: res.data.countryCode});
+      return await axios.get(`http://ip-api.com/json`).then(res => {
+        this.setState({ countryCode: res.data.countryCode });
       });
     } catch (error) {}
   };
 
-  async componentDidMount () {
-    this.setState ({
+  async componentDidMount() {
+    this.setState({
       loading: true,
     });
     // const userToken = JSON.parse (await AsyncStorage.getItem ('token'));
     // this.props.setToken (userToken);
-    handleAndroidBackButton (exitAlert);
-    await this.getCountryLoc ();
+    handleAndroidBackButton(exitAlert);
+    await this.getCountryLoc();
 
-    VersionCheck.needUpdate ().then (async res => {
+    VersionCheck.needUpdate().then(async res => {
       if (res.isNeeded) {
-        this.showUpdateVersion ();
+        this.showUpdateVersion();
       }
     });
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     if (this.props.isFeaturedPackages === 'success') {
-      this.setState ({
+      this.setState({
         loading: false,
         fixPackages: this.props.dataFeaturedPackages,
       });
-      this.props.dispatch (reset_featured_packages ());
+      this.props.dispatch(reset_featured_packages());
       return false;
     } else if (this.props.isFeaturedPackages === 'failed') {
-      this.setState ({loading: false});
-      this.props.dispatch (reset_featured_packages ());
+      this.setState({ loading: false });
+      this.props.dispatch(reset_featured_packages());
       return false;
     } else return true;
   }
 
   getNotif = async () => {
-    const {status} = await Permissions.askAsync (Permissions.NOTIFICATIONS);
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     if (status !== 'granted') {
-      Alert.alert ('Please give permissions');
+      Alert.alert('Please give permissions');
       return;
     }
-    const token = await Notifications.getExpoPushTokenAsync ();
+    const token = await Notifications.getExpoPushTokenAsync();
     try {
       return await axios
-        .post ('https://your-server.com/users/push-token', {
+        .post('https://your-server.com/users/push-token', {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify ({
+          body: JSON.stringify({
             token: {
               value: token,
             },
           }),
         })
-        .then (res => {
-          console.log (res);
+        .then(res => {
+          console.log(res);
         });
     } catch (error) {
-      console.log (error);
+      console.log(error);
     }
   };
 
@@ -134,75 +135,76 @@ class home extends Component {
     };
     const schedulingOptions = {
       repeat: 'day',
-      time: new Date ().getTime () + 3600000,
+      time: new Date().getTime() + 3600000,
     };
-    Notifications.scheduleLocalNotificationAsync (
+    Notifications.scheduleLocalNotificationAsync(
       localNotification,
       schedulingOptions
     );
   };
 
   showUpdateVersion = () => {
-    Alert.alert ('New version available', 'Please, update app to new version', [
+    Alert.alert('New version available', 'Please, update app to new version', [
       {
         text: 'Update',
-        onPress: () => this.updateVersion (),
+        onPress: () => this.updateVersion(),
       },
-      {text: 'Cancel'},
+      { text: 'Cancel' },
     ]);
   };
 
   updateVersion = async () => {
-    Linking.openURL (await VersionCheck.getStoreUrl ());
+    Linking.openURL(await VersionCheck.getStoreUrl());
   };
 
   handlepressbooking = (Id, TourOperator) => {
-    this.setState ({loading: true});
-    this.props.dispatch (get_id (Id));
-    this.props.navigation.navigate ('PackagesDetail', {
+    this.setState({ loading: true });
+    this.props.dispatch(get_id(Id));
+    this.props.navigation.navigate('PackagesDetail', {
       status: 'Fixed',
       Id: Id,
       from: 'Home',
       TourOperator: TourOperator,
     });
-    this.setState ({loading: false});
+    this.setState({ loading: false });
   };
 
   handlePressFix = () => {
-    this.setState ({loading: true});
+    this.setState({ loading: true });
     // this.props.navigation.navigate("PackageList", { type: "Fixed" });
-    this.props.navigation.navigate ('PackageList');
-    this.props.setPackageStatusFromHomeToListAction ('Series');
-    this.setState ({loading: false});
+    this.props.navigation.navigate('PackageList');
+    this.props.setPackageStatusFromHomeToListAction('Series');
+    this.setState({ loading: false });
   };
 
   handlePressReady = () => {
-    this.setState ({loading: true});
+    this.setState({ loading: true });
     // this.props.navigation.navigate("PackageList", {
     //   type: "ready"
     // });
-    this.props.navigation.navigate ('PackageList');
-    this.props.setPackageStatusFromHomeToListAction ('Ready');
-    this.setState ({loading: false});
+    this.props.navigation.navigate('PackageList');
+    this.props.setPackageStatusFromHomeToListAction('Ready');
+    this.setState({ loading: false });
   };
 
   handlePressCustom = () => {
-    this.props.navigation.navigate ('CustomPackageOption', {
-      screen: 'CustomPackageOptionStack',
-    });
+    // this.props.navigation.navigate('CustomPackageOption', {
+    //   screen: 'CustomPackageOptionStack',
+    // });
+    this.props.navigation.navigate('TourSummaryCustomReady');
   };
 
   handlePressFilter = () => {
-    this.props.navigation.navigate ('TravelCategory');
+    this.props.navigation.navigate('TravelCategory');
   };
 
-  render () {
+  render() {
     return (
       <Container>
         <LinearGradient
           colors={['white', '#75BDAE', '#38AF95']}
-          start={{x: 0, y: 1}}
-          end={{x: 0, y: 0}}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
           style={{
             position: 'absolute',
             height: 80,
@@ -222,9 +224,10 @@ class home extends Component {
               <Text style={[stylesGlobal.text16, stylesGlobal.textBold]}>
                 Hello,{' '}
                 {this.props.userProfile
-                  ? this.props.userProfile.Gender == 'Male' ? 'Mr' : 'Mrs'
-                  : ''}
-                {' '}
+                  ? this.props.userProfile.Gender == 'Male'
+                    ? 'Mr'
+                    : 'Mrs'
+                  : ''}{' '}
                 {this.props.userProfile ? this.props.userProfile.FirstName : ''}
               </Text>
             </View>
@@ -288,7 +291,7 @@ const mapStateToProps = state => ({
 });
 
 // export default connect(mapStateToProps)(home);
-export default connect (mapStateToProps, {
+export default connect(mapStateToProps, {
   setPackageStatusFromHomeToListAction,
   // setToken,
-}) (home);
+})(home);

@@ -8,7 +8,8 @@ import {
   GET_TOUR_TYPE,
   GET_TOUR_CATEGORY,
   GET_ALL_MOVEMENT_TYPES,
-  GET_CITY_IN_COUNTRY
+  GET_CITY_IN_COUNTRY,
+  SET_GUEST
 } from "./actionTypes";
 
 export const getTourTypeAction = () => {
@@ -43,5 +44,11 @@ export const getCityInCountryAction = () => {
       type: GET_CITY_IN_COUNTRY,
       payload: getCityInCountryApi()
     });
+  };
+};
+
+export const setGuestAction = () => {
+  return {
+    type: SET_GUEST
   };
 };

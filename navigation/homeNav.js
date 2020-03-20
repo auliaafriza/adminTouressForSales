@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Image} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { Image } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import LinksScreen from '../screens/LoginScreen/LoginScreen';
+import MyBookingScreen from '../screens/MyBookingScreen/MyBookingScreen';
 import HomeIcon from './../assets/Icon/home.png';
 import TicketIcon from './../assets/Icon/my_booking.png';
 import MyAccountIcon from './../assets/Icon/account.png';
@@ -11,7 +12,7 @@ import styles from './styles';
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
-export default function BottomTabNavigator({navigation, route}) {
+export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator
       initialRouteName={INITIAL_ROUTE_NAME}
@@ -46,13 +47,13 @@ export default function BottomTabNavigator({navigation, route}) {
         component={HomeScreen}
         options={{
           title: 'Home',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={HomeIcon}
               resizeMode="contain"
               style={[
                 styles.image20,
-                {tintColor: focused ? '#38AF95' : '#efefef'},
+                { tintColor: focused ? '#38AF95' : '#efefef' },
               ]}
             />
           ),
@@ -60,16 +61,17 @@ export default function BottomTabNavigator({navigation, route}) {
       />
       <BottomTab.Screen
         name="MyBooking"
-        component={LinksScreen}
+        component={MyBookingScreen}
         options={{
           title: 'My Booking',
-          tabBarIcon: ({focused}) => (
+          headerMode: 'none',
+          tabBarIcon: ({ focused }) => (
             <Image
               source={TicketIcon}
               resizeMode="contain"
               style={[
                 styles.image20,
-                {tintColor: focused ? '#38AF95' : '#efefef'},
+                { tintColor: focused ? '#38AF95' : '#efefef' },
               ]}
             />
           ),
@@ -80,13 +82,13 @@ export default function BottomTabNavigator({navigation, route}) {
         component={LinksScreen}
         options={{
           title: 'My Account',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={MyAccountIcon}
               resizeMode="contain"
               style={[
                 styles.image20,
-                {tintColor: focused ? '#38AF95' : '#efefef'},
+                { tintColor: focused ? '#38AF95' : '#efefef' },
               ]}
             />
           ),

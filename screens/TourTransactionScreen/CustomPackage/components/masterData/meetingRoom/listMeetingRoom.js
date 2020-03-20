@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Text,
   ScrollView,
@@ -10,31 +10,31 @@ import {
   BackHandler,
   StatusBar,
   Platform,
-  Dimensions,
-} from 'react-native';
-import IOSPicker from 'react-native-ios-picker';
-import { Container } from '../../../components/container/index';
-import styles from '../styles';
-import stylesGlobal from '../../../components/styles';
-import { CardAccomodation } from '../../../components/card/index';
-import { ClearButtonWithIcon, NormalButton } from '../../../components/button';
-import { RoundedLoading } from '../../../components/loading';
-import PropTypes from 'prop-types';
+  Dimensions
+} from "react-native";
+import IOSPicker from "react-native-ios-picker";
+import { Container } from "../../../components/container/index";
+import styles from "../styles";
+import stylesGlobal from "../../../components/styles";
+import { CardAccomodation } from "../../../components/card/index";
+import { ClearButtonWithIcon, NormalButton } from "../../../components/button";
+import { RoundedLoading } from "../../../components/loading";
+import PropTypes from "prop-types";
 import {
   get_attraction,
-  reset_get_attraction,
-} from '../../../actions/itemIteneraryAction';
-import { SearchBar } from 'react-native-elements';
-import { convertTimetoString } from '../../../helper/helper';
+  reset_get_attraction
+} from "../../../actions/itemIteneraryAction";
+import { SearchBar } from "react-native-elements";
+import { convertTimetoString } from "../../../helper/helper";
 import {
   convertToStringDate,
   getHour,
-  SumSecond,
-} from '../../../helper/timeHelper';
-import { Seperator } from '../../../components/list';
-import { copyObject } from '../../../helper/dailyProgram';
-import { handleFilterImagePrimary } from '../../../helper/checkingHelper';
-import { transactionItem } from '../../../helper/transactionHelper';
+  SumSecond
+} from "../../../helper/timeHelper";
+import { Seperator } from "../../../components/list";
+import { copyObject } from "../../../helper/dailyProgram";
+import { handleFilterImagePrimary } from "../../../helper/checkingHelper";
+import { transactionItem } from "../../../helper/transactionHelper";
 
 class listExcrution extends Component {
   static propTypes = {
@@ -47,25 +47,25 @@ class listExcrution extends Component {
     CustomDetails: PropTypes.array,
     Returns: PropTypes.array,
     Departures: PropTypes.array,
-    SummaryProgram: PropTypes.array,
+    SummaryProgram: PropTypes.array
   };
 
   constructor(props) {
     super(props);
     this.state = {
       Filter: {
-        categoryId: '',
-        typeId: '',
+        categoryId: "",
+        typeId: ""
       },
       labelcategoryId: null,
       labeltypeId: null,
       // Mov: this.props.navigation.state.params.Mov,
       AccomodationFilter: null,
       modalVisible: false,
-      searchText: '',
+      searchText: "",
       // yg diubah
       loading: false,
-      ListExcrusion: DUMMYMEETING,
+      ListExcrusion: DUMMYMEETING
     };
   }
 
@@ -284,14 +284,14 @@ class listExcrution extends Component {
   };
 
   handleDetailMeetingRoom = data => {
-    this.props.navigation.navigate('ListMeetingRoomItem', {
-      MeetingRoom: data,
+    this.props.navigation.navigate("ListMeetingRoomItem", {
+      MeetingRoom: data
       // Parameter: this.state.Parameter,
     });
   };
   render() {
     const width90 =
-      Dimensions.get('window').width - Dimensions.get('window').width * 0.1;
+      Dimensions.get("window").width - Dimensions.get("window").width * 0.1;
     return (
       <Container>
         {/* <SearchBar
@@ -319,7 +319,7 @@ class listExcrution extends Component {
                 <View style={styles.row}>
                   <Text>Excrusion Of Category</Text>
                 </View>
-                {Platform.OS === 'ios' ? (
+                {Platform.OS === "ios" ? (
                   <IOSPicker
                     mode="modal"
                     textStyle={styles.textblack}
@@ -327,14 +327,14 @@ class listExcrution extends Component {
                     selectedValue={
                       this.state.Filter.categoryId
                         ? this.state.Filter.categoryId
-                        : 'Excrusion Category'
+                        : "Excrusion Category"
                     }
                     onValueChange={itemValue => {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          categoryId: itemValue,
-                        },
+                          categoryId: itemValue
+                        }
                       });
                     }}
                   >
@@ -352,8 +352,8 @@ class listExcrution extends Component {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          categoryId: itemValue,
-                        },
+                          categoryId: itemValue
+                        }
                       });
                     }}
                   >
@@ -370,7 +370,7 @@ class listExcrution extends Component {
                 <View style={styles.row}>
                   <Text>Excrusion Type</Text>
                 </View>
-                {Platform.OS === 'ios' ? (
+                {Platform.OS === "ios" ? (
                   <IOSPicker
                     mode="modal"
                     textStyle={styles.textblack}
@@ -378,19 +378,19 @@ class listExcrution extends Component {
                     selectedValue={
                       this.state.Filter.typeId
                         ? this.state.labeltypeId == 0
-                          ? 'Excrusion Type'
+                          ? "Excrusion Type"
                           : this.props.attractionTypeFilter[
                               this.state.labeltypeId - 1
                             ].Name
-                        : 'Excrusion Type'
+                        : "Excrusion Type"
                     }
                     onValueChange={(itemValue, itemIndex) => {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          typeId: itemValue,
+                          typeId: itemValue
                         },
-                        labeltypeId: itemIndex,
+                        labeltypeId: itemIndex
                       });
                     }}
                   >
@@ -417,8 +417,8 @@ class listExcrution extends Component {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          typeId: itemValue,
-                        },
+                          typeId: itemValue
+                        }
                       });
                     }}
                   >
@@ -474,20 +474,20 @@ class listExcrution extends Component {
                 stylesGlobal.width100,
                 stylesGlobal.marginTop10,
                 stylesGlobal.flexSize,
-                stylesGlobal.paddingHorizontal20,
+                stylesGlobal.paddingHorizontal20
               ]}
             >
               <RoundedLoading width={width90} height={150} line={10} />
             </View>
           ) : (
             <Container
-              paddingtopcontainer={Platform.OS === 'ios' ? 20 : 40}
+              paddingtopcontainer={Platform.OS === "ios" ? 20 : 40}
               paddingbottomcontainer={50}
             >
               {this.state.ListExcrusion
                 ? this.state.ListExcrusion.map((att, i) => {
-                    let DataStar = att.AccommodationRating || '';
-                    let Star = parseInt(DataStar.Id) || '';
+                    let DataStar = att.AccommodationRating || "";
+                    let Star = parseInt(DataStar.Id) || "";
                     return (
                       <CardAccomodation
                         widthCard="90%"
@@ -500,14 +500,14 @@ class listExcrution extends Component {
                         key={i}
                         onPress={() => this.handleDetailMeetingRoom(att)}
                         subText={
-                          att.AttractionType ? att.AttractionType.Name : ''
+                          att.AttractionType ? att.AttractionType.Name : ""
                         }
                         typeCard="MeetingRoom"
                         Address={att.Address}
                         ProfileFacilities={att.ProfileFacilities}
                         numberStar={Star}
                         estimatedPrice={3000000}
-                        currency={'IDR'}
+                        currency={"IDR"}
                       />
                     );
                   })
@@ -527,7 +527,7 @@ class listExcrution extends Component {
             backgroundColor="transparent"
           />
           <SearchBar
-            clearIcon={{ color: 'red' }}
+            clearIcon={{ color: "red" }}
             searchIcon={true}
             onChangeText={this._handleSearch}
             placeholder="Type Here..."
@@ -569,10 +569,10 @@ const mapStateToProps = state => ({
   isExcursion: state.itemIteneraryReducer.isAttraction,
   attractionTypeFilter: state.itemIteneraryReducer.attractionTypeFilter,
   DailyProgram: state.cusPackagesReducer.DailyProgram,
-  CustomDetails: state.cusPackagesReducer.CustomDetails,
+  CustomDetails: state.transactionReducer.CustomDetails,
   Returns: state.cusPackagesReducer.Returns,
   Departures: state.cusPackagesReducer.Departures,
-  SummaryProgram: state.cusPackagesReducer.SummaryProgram,
+  SummaryProgram: state.cusPackagesReducer.SummaryProgram
 });
 
 export default connect(mapStateToProps)(listExcrution);
@@ -580,493 +580,493 @@ export default connect(mapStateToProps)(listExcrution);
 const DUMMYMEETING = [
   {
     ProfileFacilities: [
-      { Id: 'GYM', Name: 'Gym' },
-      { Id: 'MEETINGROOMS', Name: 'Meeting Rooms' },
-      { Id: 'SPA', Name: 'Spa' },
-      { Id: 'WIFI', Name: 'Wi Fi' },
+      { Id: "GYM", Name: "Gym" },
+      { Id: "MEETINGROOMS", Name: "Meeting Rooms" },
+      { Id: "SPA", Name: "Spa" },
+      { Id: "WIFI", Name: "Wi Fi" }
     ],
-    AccommodationRating: { Id: '5', Name: '5 Stars' },
+    AccommodationRating: { Id: "5", Name: "5 Stars" },
     Id: 0,
-    Name: 'Meeting Room Profile',
+    Name: "Meeting Room Profile",
     Description:
       '"Bali�Tanah Lot Temple�located at Tabanan regency and Tanah Lot word meaning is the small island floating on the sea,�Tanah Lot Temple�is built on the rock with 3 acre size."',
     LongDescription:
-      'The�Tanah Lot temple�was built and has been a part of Balinese mythology for centuries. The temple is one of seven sea temples around the Balinese coast.',
-    Address: 'Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217',
+      "The�Tanah Lot temple�was built and has been a part of Balinese mythology for centuries. The temple is one of seven sea temples around the Balinese coast.",
+    Address: "Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217",
     ImageUrl:
-      'https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/33de3db1-44e3-4093-8fc7-347e3cd7fcfaSunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg.jpg',
+      "https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/33de3db1-44e3-4093-8fc7-347e3cd7fcfaSunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg.jpg",
     TinyImageUrl:
-      'https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/33de3db1-44e3-4093-8fc7-347e3cd7fcfaSunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg_TINY.jpg',
+      "https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/33de3db1-44e3-4093-8fc7-347e3cd7fcfaSunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg_TINY.jpg",
     AttractionType: {
-      Id: 'RELIGIOUS',
-      Name: 'Religious',
+      Id: "RELIGIOUS",
+      Name: "Religious"
     },
     ServiceItemId: 2525,
     OptimumDuration: 5400,
-    OperationStartTime: '2020-02-25T07:00:00',
-    OperationEndTime: '2020-02-25T19:00:00',
+    OperationStartTime: "2020-02-25T07:00:00",
+    OperationEndTime: "2020-02-25T19:00:00",
     IsSolidStartTime: false,
     IsSolidDuration: false,
-    AttractionCategory: 'Single',
-    PhoneNumber: '123123123',
-    EmailAddress: 'tes@mail.com',
+    AttractionCategory: "Single",
+    PhoneNumber: "123123123",
+    EmailAddress: "tes@mail.com",
     Cities: [
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'BADUNG',
-        Name: 'Badung',
+        Id: "BADUNG",
+        Name: "Badung"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'BAGUSJATI',
-        Name: 'Bagus Jati',
+        Id: "BAGUSJATI",
+        Name: "Bagus Jati"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'BALISUKAWATI',
-        Name: 'Sukawati',
+        Id: "BALISUKAWATI",
+        Name: "Sukawati"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'BALITABANAN',
-        Name: 'Tabanan',
+        Id: "BALITABANAN",
+        Name: "Tabanan"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'BEDUGUL',
-        Name: 'Bedugul',
+        Id: "BEDUGUL",
+        Name: "Bedugul"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'BULELENG',
-        Name: 'Buleleng',
+        Id: "BULELENG",
+        Name: "Buleleng"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'CANDIDASA',
-        Name: 'Candidasa',
+        Id: "CANDIDASA",
+        Name: "Candidasa"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'CANGGU',
-        Name: 'Canggu',
+        Id: "CANGGU",
+        Name: "Canggu"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'DENPASAR',
-        Name: 'Denpasar',
+        Id: "DENPASAR",
+        Name: "Denpasar"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'GIANYAR',
-        Name: 'Gianyar',
+        Id: "GIANYAR",
+        Name: "Gianyar"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'GILIMANUK',
-        Name: 'Gilimanuk',
+        Id: "GILIMANUK",
+        Name: "Gilimanuk"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'JEMBRANA',
-        Name: 'Jembrana',
+        Id: "JEMBRANA",
+        Name: "Jembrana"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'JIMBARAN',
-        Name: 'Jimbaran',
+        Id: "JIMBARAN",
+        Name: "Jimbaran"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'KARANGASEM',
-        Name: 'Karangasem',
+        Id: "KARANGASEM",
+        Name: "Karangasem"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'KEROBOKAN',
-        Name: 'Kerobokan',
+        Id: "KEROBOKAN",
+        Name: "Kerobokan"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'KINTAMANI',
-        Name: 'Kintamani',
+        Id: "KINTAMANI",
+        Name: "Kintamani"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'KLUNGKUNG',
-        Name: 'Klungkung',
+        Id: "KLUNGKUNG",
+        Name: "Klungkung"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'KUTA',
-        Name: 'Kuta',
+        Id: "KUTA",
+        Name: "Kuta"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'LEGIAN',
-        Name: 'Legian',
+        Id: "LEGIAN",
+        Name: "Legian"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'LOVINA',
-        Name: 'Lovina',
+        Id: "LOVINA",
+        Name: "Lovina"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'MENJANGAN',
-        Name: 'Menjangan',
+        Id: "MENJANGAN",
+        Name: "Menjangan"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'NGURAHRAI',
-        Name: 'Ngurah Rai',
+        Id: "NGURAHRAI",
+        Name: "Ngurah Rai"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'NUSADUA',
-        Name: 'Nusa Dua',
+        Id: "NUSADUA",
+        Name: "Nusa Dua"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'NUSALEMBONGAN',
-        Name: 'Nusa Lembongan',
+        Id: "NUSALEMBONGAN",
+        Name: "Nusa Lembongan"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'NUSAPENIDA',
-        Name: 'Nusa Penida',
+        Id: "NUSAPENIDA",
+        Name: "Nusa Penida"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'PADANGBAY',
-        Name: 'Padang Bay',
+        Id: "PADANGBAY",
+        Name: "Padang Bay"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'PECATU',
-        Name: 'Pecatu',
+        Id: "PECATU",
+        Name: "Pecatu"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'PEMUTERAN',
-        Name: 'Pemuteran',
+        Id: "PEMUTERAN",
+        Name: "Pemuteran"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'SANUR',
-        Name: 'Sanur',
+        Id: "SANUR",
+        Name: "Sanur"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'SEMINYAK',
-        Name: 'Seminyak',
+        Id: "SEMINYAK",
+        Name: "Seminyak"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'SINGARAJA',
-        Name: 'Singa Raja',
+        Id: "SINGARAJA",
+        Name: "Singa Raja"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'TABANAN',
-        Name: 'Tabanan',
+        Id: "TABANAN",
+        Name: "Tabanan"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'TANAHLOT',
-        Name: 'Tanah Lot',
+        Id: "TANAHLOT",
+        Name: "Tanah Lot"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'TANJUNGBENOA',
-        Name: 'Tanjung Benoa',
+        Id: "TANJUNGBENOA",
+        Name: "Tanjung Benoa"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'TUBAN',
-        Name: 'Tuban',
+        Id: "TUBAN",
+        Name: "Tuban"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'TULAMBEN',
-        Name: 'Tulamben',
+        Id: "TULAMBEN",
+        Name: "Tulamben"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'UBUD',
-        Name: 'Ubud',
+        Id: "UBUD",
+        Name: "Ubud"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'ULUWATU',
-        Name: 'Uluwatu',
+        Id: "ULUWATU",
+        Name: "Uluwatu"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'UMALAS',
-        Name: 'Umalas',
+        Id: "UMALAS",
+        Name: "Umalas"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'UNGASAN',
-        Name: 'Ungasan',
+        Id: "UNGASAN",
+        Name: "Ungasan"
       },
       {
         Region: {
           ImageUrl: null,
-          Id: 'BALI',
-          Name: 'Bali',
+          Id: "BALI",
+          Name: "Bali"
         },
-        Id: 'UNGGASAN',
-        Name: 'Unggasan',
-      },
+        Id: "UNGGASAN",
+        Name: "Unggasan"
+      }
     ],
     ObjectImages: [
       {
         Id: 39,
         ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/0911fc5f-7bb7-4f20-9ba8-b699ad2f94a3TanLot.jpg',
-        ImageName: 'TanLot',
+          "https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/0911fc5f-7bb7-4f20-9ba8-b699ad2f94a3TanLot.jpg",
+        ImageName: "TanLot",
         TinyImageUrl: null,
-        IsPrimaryImage: false,
+        IsPrimaryImage: false
       },
       {
         Id: 285,
         ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/d64574af-f753-456c-9624-133506567825Tanah-Lot-Bali-1.jpg.jpg',
-        ImageName: 'Tanah-Lot-Bali-1.jpg',
+          "https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/d64574af-f753-456c-9624-133506567825Tanah-Lot-Bali-1.jpg.jpg",
+        ImageName: "Tanah-Lot-Bali-1.jpg",
         TinyImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/d64574af-f753-456c-9624-133506567825Tanah-Lot-Bali-1.jpg_TINY.jpg',
-        IsPrimaryImage: false,
+          "https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/d64574af-f753-456c-9624-133506567825Tanah-Lot-Bali-1.jpg_TINY.jpg",
+        IsPrimaryImage: false
       },
       {
         Id: 286,
         ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/33de3db1-44e3-4093-8fc7-347e3cd7fcfaSunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg.jpg',
-        ImageName: 'Sunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg',
+          "https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/33de3db1-44e3-4093-8fc7-347e3cd7fcfaSunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg.jpg",
+        ImageName: "Sunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg",
         TinyImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/33de3db1-44e3-4093-8fc7-347e3cd7fcfaSunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg_TINY.jpg',
-        IsPrimaryImage: true,
-      },
+          "https://touressapiqa.azurewebsites.net//Content/imgSrc/Attractions/33de3db1-44e3-4093-8fc7-347e3cd7fcfaSunset-Di-Pura-Tanah-Lot-Tabanan-Bali-Facebook.jpg_TINY.jpg",
+        IsPrimaryImage: true
+      }
     ],
     AddressObject: {
       Id: 1617,
-      Address1: 'Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217',
-      Address2: '',
-      Address3: '',
-      PostalCode: '',
-      Landmark: '',
-      AreaId: 'DENPASAR',
+      Address1: "Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217",
+      Address2: "",
+      Address3: "",
+      PostalCode: "",
+      Landmark: "",
+      AreaId: "DENPASAR",
       Area: {
-        Id: 'DENPASAR',
-        Name: 'Denpasar',
+        Id: "DENPASAR",
+        Name: "Denpasar"
       },
       City: {
-        Id: 'DENPASAR',
-        Name: 'Denpasar',
+        Id: "DENPASAR",
+        Name: "Denpasar"
       },
       Region: {
-        Id: 'BALI',
-        Name: 'Bali',
+        Id: "BALI",
+        Name: "Bali"
       },
       Country: {
-        Id: 'ID',
-        Name: 'Indonesia',
+        Id: "ID",
+        Name: "Indonesia"
       },
       AddressString:
-        'Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217, Denpasar, Denpasar, Bali, Indonesia',
+        "Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217, Denpasar, Denpasar, Bali, Indonesia",
       Coordinate: {
         Lat: -8.621213,
-        Lng: 115.086807,
-      },
+        Lng: 115.086807
+      }
     },
     BillingAddressObject: {
       Id: 1618,
-      Address1: 'Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217',
-      Address2: '',
-      Address3: '',
-      PostalCode: '',
-      Landmark: '',
-      AreaId: 'DENPASAR',
+      Address1: "Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217",
+      Address2: "",
+      Address3: "",
+      PostalCode: "",
+      Landmark: "",
+      AreaId: "DENPASAR",
       Area: {
-        Id: 'DENPASAR',
-        Name: 'Denpasar',
+        Id: "DENPASAR",
+        Name: "Denpasar"
       },
       City: {
-        Id: 'DENPASAR',
-        Name: 'Denpasar',
+        Id: "DENPASAR",
+        Name: "Denpasar"
       },
       Region: {
-        Id: 'BALI',
-        Name: 'Bali',
+        Id: "BALI",
+        Name: "Bali"
       },
       Country: {
-        Id: 'ID',
-        Name: 'Indonesia',
+        Id: "ID",
+        Name: "Indonesia"
       },
       AddressString:
-        'Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217, Denpasar, Denpasar, Bali, Indonesia',
-      Coordinate: null,
-    },
-  },
+        "Tanah Lot, Beraban, Kediri, Kabupaten Tabanan, Bali 8217, Denpasar, Denpasar, Bali, Indonesia",
+      Coordinate: null
+    }
+  }
 ];
