@@ -1,38 +1,26 @@
-import * as React from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import ListScreen from './seriesNav';
-import Home from './homeNav';
-import DetailSeriesPackage from '../screens/PackageDetailScreen/PackageDetail';
-import CustomPackage from './customNav';
-import general from './general';
-import masterData from './masterDataNav';
-import TourSummaryCustomReady from '../screens/TourTransactionScreen/TourSummary/tourSummaryCustomReady';
-import SpecialAdjusmentDetail from '../screens/TourTransactionScreen/TourSummary/components/specialAdjusmentDetail/specialAdjusmentDetail';
-import MyBookingScreen from '../screens/MyBookingScreen/MyBookingScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import Login from '../screens/LoginScreen/LoginScreen';
+import AuthLoadingScreen from '../screens/LoginScreen/AuthLoadingScreen';
+import AppNav from './appNav';
+
 const Stack = createStackNavigator();
 
-export default function seriesNav({ navigation, route }) {
+const Root = () => {
   return (
-    <Stack.Navigator initialRouteName="Home" headerMode="none">
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="PackageList" component={ListScreen} />
-      <Stack.Screen name="PackagesDetail" component={DetailSeriesPackage} />
-      <Stack.Screen name="General" component={general} />
-      <Stack.Screen name="CustomPackageOption" component={CustomPackage} />
-      <Stack.Screen name="masterData" component={masterData} />
-      <Stack.Screen
-        name="TourSummaryCustomReady"
-        component={TourSummaryCustomReady}
-      />
-      <Stack.Screen
-        name="SpecialAdjusmentDetail"
-        component={SpecialAdjusmentDetail}
-      />
-      {/* <Stack.Screen name="MyBooking" component={MyBookingScreen} /> */}
-      {/* <Stack.Screen name="ListAirlineTicket" component={ListAirlineTicket} />
-      <Stack.Screen name="ListAirport" component={ListAirport} />
-      <Stack.Screen name="ListCity" component={ListCity} />
-      <Stack.Screen name="ListAccomodation" component={ListAccomodation} /> */}
-    </Stack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="AuthLoading"
+        headerMode="none"
+        mode="modal"
+      >
+        <Stack.Screen name="App" component={AppNav} />
+        <Stack.Screen name="AuthLoading" component={AuthLoadingScreen} />
+        <Stack.Screen name="Auth" component={Login} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
+
+export default Root;

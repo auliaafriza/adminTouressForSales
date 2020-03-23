@@ -229,4 +229,9 @@ export default EStyleSheet.create({
     marginBottom: 30,
     marginTop: 64,
   },
+  containerAuth: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

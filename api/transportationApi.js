@@ -13,6 +13,7 @@ import {
 import apiClient from './apiClient';
 
 export const getDurationApi = (type, data) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   let urlString = null;
   if (data.FromId && data.ToId)
     urlString = `${TOUR_TRANSACTION_URL}/Movement?originSesrviceItemId=' +
@@ -43,39 +44,48 @@ export const getDurationApi = (type, data) => {
 };
 
 export const getAirportApi = region => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${PLACE_URL}/Get/ByRegion/${region}`);
 };
 
 export const getAirportListApi = () => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${PLACE_URL}/Get/ByPlaceType/1`);
 };
 
 export const getTransportationProfileRatingsApi = () => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_PROFILE_RATINGS_URL);
 };
 
 export const getTransportationProfileCategoriesApi = () => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_PROFILE_CATEGORIES_URL);
 };
 
 export const getTransportationProfilesApi = () => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_PROFILES_URL);
 };
 
 export const getTransportationTypesApi = () => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_TYPES_URL);
 };
 
 export const getTransportationSeatTypesApi = () => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_SEAT_TYPES_URL);
 };
 
 export const getTransportationUnitsFilterApi = data => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(
     `${GET_TRANSPORTATION_UNITS_FILTER_URL}?fromCity=${data.fromCity}&toCities=${data.toCities}&RatingId=${data.RatingId}&seatTypeId=${data.seatTypeId}&typeId=${data.typeId}&requestedDate=${data.requestedDate}`
   );
 };
 
 export const getTransportationUnitByIdApi = id => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${GET_TRANSPORTATION_UNIT_BY_ID_URL}/${id}`);
 };

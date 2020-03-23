@@ -19,62 +19,78 @@ import {
   getRestaurantProfileByServiceItemApi,
 } from '../../api/restaurantApi';
 
+import store from '../../config/store';
+
 const getRestaurantByFilter = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_RESTAURANT_BY_FILTER,
-      payload: getRestaurantByFilterApi(data),
+      payload: getRestaurantByFilterApi(data, authToken),
     });
   };
 };
 
 const getRestaurantRating = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_RESTAURANT_RATING,
-      payload: getRestaurantRatingApi(),
+      payload: getRestaurantRatingApi(authToken),
     });
   };
 };
 
 const getRestaurantSpecializations = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_RESTAURANT_SPECIALIZATIONS,
-      payload: getRestaurantSpecializationsApi(),
+      payload: getRestaurantSpecializationsApi(authToken),
     });
   };
 };
 
 const getRestaurantMenuClasses = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_RESTAURANT_MENU_CLASSES,
-      payload: getRestaurantMenuClassesApi(),
+      payload: getRestaurantMenuClassesApi(authToken),
     });
   };
 };
 const getRestaurantMenuById = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_RESTAURANT_MENU_BY_ID,
-      payload: getRestaurantMenuByIdApi(data),
+      payload: getRestaurantMenuByIdApi(data, authToken),
     });
   };
 };
 const getMenuById = id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_MENU_BY_ID,
-      payload: getMenuByIdApi(id),
+      payload: getMenuByIdApi(id, authToken),
     });
   };
 };
 const getRestaurantProfileByServiceItem = id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_RESTAURANT_PROFILE_BY_SERVICE_ITEM,
-      payload: getRestaurantProfileByServiceItemApi(id),
+      payload: getRestaurantProfileByServiceItemApi(id, authToken),
     });
   };
 };

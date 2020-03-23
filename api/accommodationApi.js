@@ -4,47 +4,52 @@ import {
   GET_ACCOMMODATION_ROOMS_URL,
 } from './apiUrl';
 
-export const getAccommodationProfileApi = data => {
-  // return apiClient.post(
-  //   `${ACCOMMODATION_PROFILE_URL}/v2/Filter/ShowPrice?cityId=${data.cityId}&ratingId=${data.ratingId}&areaId=${data.areaId}&locationId=${data.locationId}&typeId=${data.typeId}&facilityId=${data.facilityId}&promoOnly=${data.promoOnly}&requestedDate=${data.requestedDate}&useExtraBed=${data.useExtraBed}&useChildExtraBed=${data.useChildExtraBed}&useSharingBed=${data.useSharingBed}&sharingRoomPax=${data.sharingRoomPax}&singleRoomPax=${data.singleRoomPax}&checkOutDate=${data.checkOutDate}`,
-  //   data.dataDemoPrice
-  // );
+export const getAccommodationProfileApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.post(
     `${ACCOMMODATION_PROFILE_URL}/v2/ByCity/ShowPrice?city=${data.cityId}&requestedDate=${data.requestedDate}&useExtraBed=${data.useExtraBed}&useChildExtraBed=${data.useChildExtraBed}&useSharingBed=${data.useSharingBed}&sharingRoomPax=${data.sharingRoomPax}&singleRoomPax=${data.singleRoomPax}&checkOutDate=${data.checkOutDate}`,
     data.dataDemoPrice
   );
 };
 
-export const getAccommodationRatingApi = () => {
+export const getAccommodationRatingApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`/AccommodationRatings`);
 };
 
-export const getAccommodationLocationApi = () => {
+export const getAccommodationLocationApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`/AccommodationLocations`);
 };
 
-export const getAccommodationTypeApi = () => {
+export const getAccommodationTypeApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`/AccommodationTypes`);
 };
 
-export const getAccommodationFacilitiesApi = () => {
+export const getAccommodationFacilitiesApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`/AccommodationFacilities`);
 };
 
-export const getAccommodationAreaApi = cityId => {
-  return apiClient.get(`/Areas/ByCity?cityId=${cityId}`);
+export const getAccommodationAreaApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.get(`/Areas/ByCity?cityId=${data.cityId}`);
 };
 
-export const getAccommodationByIdApi = Id => {
-  return apiClient.get(`/AccommodationProfiles?ID=${Id}`);
+export const getAccommodationByIdApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.get(`/AccommodationProfiles?ID=${data.Id}`);
 };
 
-export const getAccommodationRoomsApi = data => {
+export const getAccommodationRoomsApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(
     `${GET_ACCOMMODATION_ROOMS_URL}?profileId=${data.profileId}&requestedDate=${data.requestedDate}&endDate=${data.checkOutDate}&useExtraBed=${data.useExtraBed}&useChildExtraBed=${data.useChildExtraBed}&useSharingBed=${data.useSharingBed}&sharingRoomPax=${data.sharingRoomPax}&singleRoomPax=${data.singleRoomPax}`
   );
 };
 
-export const getAccommodationByServiceItemIdApi = Id => {
+export const getAccommodationByServiceItemIdApi = (Id, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`/AccommodationProfiles/ByServiceItemId/${Id}`);
 };

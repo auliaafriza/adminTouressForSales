@@ -94,13 +94,13 @@ class MyBookingScreen extends Component {
   }
 
   handlePayment = id => {
-    // this.setState({ loading: true, positionLoad: 'absolute' });
-    // this.props.navigation.navigate("TourSummaryPayment", { id: id });
-    this.props.navigation.navigate('TourSummaryCustomReady', {
-      id: id,
-      type: 'myBooking',
+    this.props.navigation.navigate('Summary', {
+      screen: 'TourSummaryCustomReady',
+      params: {
+        id: id,
+        type: 'myBooking',
+      },
     });
-    // this.setState({ loading: false });
   };
 
   _handleSearch = value => {

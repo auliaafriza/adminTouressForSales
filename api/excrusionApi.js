@@ -5,19 +5,23 @@ import {
   GET_EXCURSION_BY_ID_URL,
 } from './apiUrl';
 
-const getExcursionTypesApi = () => {
+const getExcursionTypesApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_EXCURSION_TYPES_URL);
 };
-const getExcursionByFilterApi = data => {
+const getExcursionByFilterApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(
     `${GET_EXCURSION_BY_FILTER_URL}?cityid=${data.cityid}&attractionTypeId=${data.attractionTypeId}&requestedDate=${data.requestedDate}&pax=${data.pax}`
   );
 };
-const getExcursionByIdApi = id => {
+const getExcursionByIdApi = (id, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${GET_EXCURSION_BY_ID_URL}/${id}`);
 };
 
-const getExcrusionDetailApi = Id => {
+const getExcrusionDetailApi = (Id, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`/AttractionObjects/ById/${Id}`);
 };
 

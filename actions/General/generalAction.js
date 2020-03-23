@@ -17,37 +17,47 @@ import {
   GET_USER_ID_COMPANY,
 } from './actionTypes';
 
+import store from '../../config/store';
+
 export const getTourTypeAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_TOUR_TYPE,
-      payload: getTourTypeApi(),
+      payload: getTourTypeApi(authToken),
     });
   };
 };
 export const getTourCategoryAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_TOUR_CATEGORY,
-      payload: getTourCategoryApi(),
+      payload: getTourCategoryApi(authToken),
     });
   };
 };
 
 export const getAllMovementTypesAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ALL_MOVEMENT_TYPES,
-      payload: getAllMovementTypesApi(),
+      payload: getAllMovementTypesApi(authToken),
     });
   };
 };
 
 export const getCityInCountryAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_CITY_IN_COUNTRY,
-      payload: getCityInCountryApi(),
+      payload: getCityInCountryApi(authToken),
     });
   };
 };
@@ -59,16 +69,20 @@ export const setGuestAction = () => {
 };
 
 export const getListCustomerAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return {
     type: GET_CUSTOMER_LIST,
-    payload: getCustomerListApi(),
+    payload: getCustomerListApi(authToken),
   };
 };
 
 export const getUserIdCompanyAction = id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return {
     type: GET_USER_ID_COMPANY,
-    payload: getUserIdCompanyApi(id),
+    payload: getUserIdCompanyApi(id, authToken),
   };
 };
 

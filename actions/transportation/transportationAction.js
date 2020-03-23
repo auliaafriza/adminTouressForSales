@@ -25,6 +25,8 @@ import {
   getTransportationUnitsFilterApi,
 } from '../../api/transportationApi';
 
+import store from '../../config/store';
+
 export const setDrivingAction = item => {
   return {
     type: SET_DRIVING,
@@ -47,10 +49,13 @@ export const getDrivingAction = airport => {
 };
 
 export const getAirportAction = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_AIRPORT,
-      payload: getAirportApi(data),
+      payload: getAirportApi(data, authToken),
     });
   };
 };
@@ -61,73 +66,97 @@ export const getAirportAction = data => {
 // ID TO ADDRESS
 // ADDRESS TO ADDRESS
 export const getDurationAction = (type, data) => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_DURATION,
-      payload: getDurationApi(type, data),
+      payload: getDurationApi(type, data, authToken),
     });
   };
 };
 
 export const getListAirportAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_LIST_AIRPORT,
-      payload: getAirportListApi(),
+      payload: getAirportListApi(authToken),
     });
   };
 };
 
 export const getTransportationProfileRatings = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_TRANSPORTATION_PROFILE_RATINGS,
-      payload: getTransportationProfileRatingsApi(),
+      payload: getTransportationProfileRatingsApi(authToken),
     });
   };
 };
 
 export const getTransportationProfileCategories = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_TRANSPORTATION_PROFILE_CATEGORIES,
-      payload: getTransportationProfileCategoriesApi(),
+      payload: getTransportationProfileCategoriesApi(authToken),
     });
   };
 };
 
 export const getTransportationProfiles = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_TRANSPORTATION_PROFILES,
-      payload: getTransportationProfilesApi(),
+      payload: getTransportationProfilesApi(authToken),
     });
   };
 };
 
 export const getTransportationTypes = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_TRANSPORTATION_TYPES,
-      payload: getTransportationTypesApi(),
+      payload: getTransportationTypesApi(authToken),
     });
   };
 };
 
 export const getTransportationSeatTypes = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_TRANSPORTATION_SEAT_TYPES,
-      payload: getTransportationSeatTypesApi(),
+      payload: getTransportationSeatTypesApi(authToken),
     });
   };
 };
 
 export const getTransportationUnitsFilter = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_TRANSPORTATION_UNITS_FILTER,
-      payload: getTransportationUnitsFilterApi(data),
+      payload: getTransportationUnitsFilterApi(data, authToken),
     });
   };
 };

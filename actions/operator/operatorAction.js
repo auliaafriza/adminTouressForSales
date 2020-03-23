@@ -5,11 +5,15 @@ import {
 } from './actionTypes';
 import { getOperatorListApi } from '../../api/operatorApi';
 
+import store from '../../config/store';
+
 export const getOperatorListAction = (type, data) => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_TOUR_OPERATOR_LIST,
-      payload: getOperatorListApi(type, data),
+      payload: getOperatorListApi(type, data, authToken),
     });
   };
 };

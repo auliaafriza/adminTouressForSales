@@ -125,7 +125,7 @@ class summaryCustom extends Component {
   }
 
   handleGuest = () => {
-    this.props.navigation.navigate('GuestListCustom');
+    this.props.navigation.navigate('Guest', { screen: 'GuestList' });
   };
 
   handleOpenNoteModal = () => {
@@ -317,10 +317,12 @@ class summaryCustom extends Component {
   };
 
   handlePressSpecialAdjusmentDetail = async () => {
-    this.props.navigation.navigate('SpecialAdjusmentDetail', {
-      data: this.state.specialAdjusment,
-      // onUpdate: handleSetSpecialAdjusment()
-      onUpdate: await this.handleSetSpecialAdjusment,
+    this.props.navigation.navigate('Summary', {
+      screen: 'SpecialAdjusmentDetail',
+      params: {
+        data: this.state.specialAdjusment,
+        onUpdate: await this.handleSetSpecialAdjusment,
+      },
     });
   };
 

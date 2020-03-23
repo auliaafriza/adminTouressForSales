@@ -13,19 +13,25 @@ import {
   getExcrusionDetailApi,
 } from '../../api/excrusionApi';
 
+import store from '../../config/store';
+
 const getExcursionTypes = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_EXCURSION_TYPES,
-      payload: getExcursionTypesApi(),
+      payload: getExcursionTypesApi(authToken),
     });
   };
 };
 const getExcursionByFilter = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_EXCURSION_BY_FILTER,
-      payload: getExcursionByFilterApi(data),
+      payload: getExcursionByFilterApi(data, authToken),
     });
   };
 };
@@ -37,19 +43,23 @@ const resetStatusExcursion = () => {
   };
 };
 const getExcursionById = id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_EXCURSION_BY_ID,
-      payload: getExcursionByIdApi(id),
+      payload: getExcursionByIdApi(id, authToken),
     });
   };
 };
 
 const getExcrusionDetail = id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_EXCRUSION_DETAIL,
-      payload: getExcrusionDetailApi(id),
+      payload: getExcrusionDetailApi(id, authToken),
     });
   };
 };

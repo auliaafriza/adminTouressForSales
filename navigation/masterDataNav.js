@@ -13,10 +13,7 @@ import ListTransportasiUnit from '../screens/TourTransactionScreen/CustomPackage
 import TransportasiUnitDetail from '../screens/TourTransactionScreen/CustomPackage/components/masterData/transportasiUnitDetail';
 import RestaurantDetail from '../screens/TourTransactionScreen/CustomPackage/components/masterData/restaurantDetail';
 import MapView from '../screens/TourTransactionScreen/CustomPackage/components/masterData/mapView';
-<<<<<<< Updated upstream
-=======
 // import ListAccomodation from '../screens/TourTransactionScreen/CustomPackage/components/masterData/listAccomodation';
->>>>>>> Stashed changes
 import ListCustomer from '../screens/Common/listCustomer';
 import ListUserCustomer from '../screens/Common/listUserCustomer';
 

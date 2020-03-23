@@ -56,27 +56,37 @@ import {
   getTransactionHistoryByStatusApi,
 } from '../../api/transactionApi';
 
+import store from '../../config/store';
+
 export const getReadyPackageListAction = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_PACKAGE_LIST,
-      payload: getReadyPackageListApi(data),
+      payload: getReadyPackageListApi(data, authToken),
     });
   };
 };
 export const getSeriesPackageListAction = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_PACKAGE_LIST,
-      payload: getSeriesPackageListApi(data),
+      payload: getSeriesPackageListApi(data, authToken),
     });
   };
 };
 export const getReadyPackageFixedPriceListAction = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_PACKAGE_LIST,
-      payload: getReadyPackageFixedPriceListApi(data),
+      payload: getReadyPackageFixedPriceListApi(data, authToken),
     });
   };
 };
@@ -105,37 +115,49 @@ export const resetTransactionAction = () => {
 };
 
 export const getReadyPackageFixedPriceByIdAction = id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_PACKAGE_BY_ID,
-      payload: getReadyPackageFixedPriceByIdApi(id),
+      payload: getReadyPackageFixedPriceByIdApi(id, authToken),
     });
   };
 };
 
 export const getSeriesPackageByIdAction = id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_PACKAGE_BY_ID,
-      payload: getSeriesPackageByIdApi(id),
+      payload: getSeriesPackageByIdApi(id, authToken),
     });
   };
 };
 
 export const getReadyPackageByIdAction = id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_PACKAGE_BY_ID,
-      payload: getReadyPackageByIdApi(id),
+      payload: getReadyPackageByIdApi(id, authToken),
     });
   };
 };
 
 export const getTourOperatorProfileByIdAction = id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_OPERATOR_PROFILE_BY_ID,
-      payload: getTourOperatorProfileByIdApi(id),
+      payload: getTourOperatorProfileByIdApi(id, authToken),
     });
   };
 };
@@ -354,19 +376,25 @@ export const resetGuestQoutationAction = () => {
 // };
 
 export const postCreateCustomOnBeHalfAction = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: POST_CREATE_CUSTOM_ON_BE_HALF,
-      payload: postCreateCustomOnBeHalfApi(data),
+      payload: postCreateCustomOnBeHalfApi(data, authToken),
     });
   };
 };
 
 export const postEditQuotationAction = (tourTransactionId, data) => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: POST_EDIT_QUOTATION,
-      payload: postEditQuotationApi(tourTransactionId, data),
+      payload: postEditQuotationApi(tourTransactionId, data, authToken),
     });
   };
 };
@@ -394,19 +422,25 @@ export const resetPostCreateCustomAction = () => {
 // };
 
 export const postJoinTourAction = (data, type, packageId) => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: POST_JOIN_TOUR,
-      payload: postJoinTourApi(data, type, packageId),
+      payload: postJoinTourApi(data, type, packageId, authToken),
     });
   };
 };
 
 export const getTourSummaryByIdAction = (tourTransactionId, data) => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return dispatch => {
     return dispatch({
       type: GET_TOUR_SUMMARY_BY_ID,
-      payload: getTourSummaryByIdApi(tourTransactionId, data),
+      payload: getTourSummaryByIdApi(tourTransactionId, data, authToken),
     });
   };
 };
@@ -429,8 +463,11 @@ export const setSpecialAdjusmentAction = data => {
 };
 
 export const getTransactionHistoryByStatusAction = status => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
   return {
     type: GET_TRANSACTION_HISTORY_BY_STATUS,
-    payload: getTransactionHistoryByStatusApi(status),
+    payload: getTransactionHistoryByStatusApi(status, authToken),
   };
 };

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -6,25 +6,25 @@ import {
   ScrollView,
   BackHandler,
   Platform,
-  Image
-} from "react-native";
-import IOSPicker from "react-native-ios-picker";
-import { CardWithInputDuration, Card } from "../../../components/card";
-import styles from "../styles";
-import stylesGlobal from "../../../components/styles";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { Container } from "../../../components/container";
-import { ShimmerButton, ClearButton } from "../../../components/button";
-import { TextWarning } from "../../../components/text";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { SeperatorRepeat } from "../../../components/list";
-import { Guest } from "../../../helper/dailyProgram";
-import { convertRoundPrice } from "../../../helper/helper";
-import { viewDate } from "../../../helper/timeHelper";
-import { Ionicons } from "@expo/vector-icons";
-import IconCalendar from "../../../assets/Icon/calendar.png";
-import { setGuestDataAction } from "../../../actions/Transactions/TransactionAction";
+  Image,
+} from 'react-native';
+import IOSPicker from 'react-native-ios-picker';
+import { CardWithInputDuration, Card } from '../../../components/card';
+import styles from '../styles';
+import stylesGlobal from '../../../components/styles';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Container } from '../../../components/container';
+import { ShimmerButton, ClearButton } from '../../../components/button';
+import { TextWarning } from '../../../components/text';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { SeperatorRepeat } from '../../../components/list';
+import { Guest } from '../../../helper/dailyProgram';
+import { convertRoundPrice } from '../../../helper/helper';
+import { viewDate } from '../../../helper/timeHelper';
+import { Ionicons } from '@expo/vector-icons';
+import IconCalendar from '../../../assets/Icon/calendar.png';
+import { setGuestDataAction } from '../../../actions/Transactions/TransactionAction';
 
 class SeriesPackageBooking extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class SeriesPackageBooking extends Component {
         GuestAllocation: {
           Adult: 0,
           Child: 0,
-          Infant: 0
+          Infant: 0,
         },
         RoomAllocation: {
           SharingRoomQty: 0,
@@ -42,30 +42,30 @@ class SeriesPackageBooking extends Component {
           ExtraBedQty: 0,
           ChildExtraBedQty: 0,
           SharingBedQty: 0,
-          NoBed: 0
+          NoBed: 0,
         },
         IsSplitStaffCommission: null,
         IsPrintInvoice: null,
         TourNote: null,
         Guests: [],
-        Supplements: []
+        Supplements: [],
       },
       dataDetailPackages: null,
-      errorGuestAllocation: "",
-      errorRoomAllocation: "",
-      errorStafCommission: "",
-      errorPrintInvoice: ""
+      errorGuestAllocation: '',
+      errorRoomAllocation: '',
+      errorStafCommission: '',
+      errorPrintInvoice: '',
     };
   }
 
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
 
     this.setState({
-      dataDetailPackages: this.props.setPackageData
+      dataDetailPackages: this.props.setPackageData,
     });
     const sortAdditional = this.props.supplement
       ? this.props.supplement.sort(x => (x.IsMandatory == true ? -1 : 1))
@@ -82,15 +82,15 @@ class SeriesPackageBooking extends Component {
             IsMandatory: obj.IsMandatory,
             IsInfantCount: obj.IsInfantCount,
             Value: obj.UnitCost,
-            Qty: 0
+            Qty: 0,
           };
         })
       : [];
     this.setState({
       Booking: {
         ...this.state.Booking,
-        Supplements: newSuppements
-      }
+        Supplements: newSuppements,
+      },
     });
   }
 
@@ -100,14 +100,14 @@ class SeriesPackageBooking extends Component {
       RoomAllocation,
       IsSplitStaffCommission,
       IsPrintInvoice,
-      Supplements
+      Supplements,
     } = this.state.Booking;
     let isError = false;
     const errors = {
-      errorGuestAllocation: "",
-      errorRoomAllocation: "",
-      errorStafCommission: "",
-      errorPrintInvoice: ""
+      errorGuestAllocation: '',
+      errorRoomAllocation: '',
+      errorStafCommission: '',
+      errorPrintInvoice: '',
     };
     const MinPax = this.props.setPackageData
       ? this.props.setPackageData.MinPax
@@ -122,45 +122,46 @@ class SeriesPackageBooking extends Component {
       RoomAllocation.ChildExtraBedQty +
       RoomAllocation.SharingBedQty +
       RoomAllocation.NoBed;
-    const QuotaPax =
-      this.props.setPackageData.BookingDetailSum.FixedPackage.MinimumGuest -
-      this.props.setPackageData.BookingDetailSum.FixedPackage.ConfirmedGuest;
+    const QuotaPax = this.props.setPackageData
+      ? this.props.setPackageData.BookingDetailSum.FixedPackage.MinimumGuest -
+        this.props.setPackageData.BookingDetailSum.FixedPackage.ConfirmedGuest
+      : 0;
     if (totalGuest == 0) {
       isError = true;
-      errors.errorGuestAllocation = "Please input guest ammount";
+      errors.errorGuestAllocation = 'Please input guest ammount';
     } else if (QuotaPax != 0) {
       if (totalGuest > QuotaPax) {
         isError = true;
-        errors.errorGuestAllocation = "Guest cannot more than available pax";
+        errors.errorGuestAllocation = 'Guest cannot more than available pax';
       }
     }
     if (GuestAllocation.Adult == 0) {
       isError = true;
-      errors.errorGuestAllocation = "Please input at least 1 adult";
+      errors.errorGuestAllocation = 'Please input at least 1 adult';
     }
 
     if (MinPax > totalGuest) {
       isError = true;
-      errors.errorGuestAllocation = "Please input guest minimum " + MinPax;
+      errors.errorGuestAllocation = 'Please input guest minimum ' + MinPax;
     }
 
     if (totalRoom == 0) {
       isError = true;
-      errors.errorRoomAllocation = "Please input room option";
+      errors.errorRoomAllocation = 'Please input room option';
     } else if (totalRoom != totalGuest) {
       isError = true;
-      errors.errorRoomAllocation = "Room option not same with total guest";
+      errors.errorRoomAllocation = 'Room option not same with total guest';
     }
     if (this.state.dataDetailPackages.Commissions != null) {
       if (this.state.dataDetailPackages.Commissions.length != 0) {
         if (IsSplitStaffCommission == null) {
           isError = true;
-          errors.errorStafCommission = "Please selected split staff commission";
+          errors.errorStafCommission = 'Please selected split staff commission';
         }
 
         if (IsPrintInvoice == null && IsSplitStaffCommission == false) {
           isError = true;
-          errors.errorPrintInvoice = "Please selected print invoice";
+          errors.errorPrintInvoice = 'Please selected print invoice';
         }
       }
     }
@@ -176,7 +177,7 @@ class SeriesPackageBooking extends Component {
 
     this.setState({
       ...this.state,
-      ...errors
+      ...errors,
     });
     return isError;
   };
@@ -185,35 +186,24 @@ class SeriesPackageBooking extends Component {
     dispatch: PropTypes.func,
     navigation: PropTypes.object,
     data: PropTypes.object,
-    supplement: PropTypes.array
+    supplement: PropTypes.array,
   };
 
   handlePressguest = async () => {
     let Guests = [];
     const { Adult, Child, Infant } = this.state.Booking.GuestAllocation;
-    for (let i = 0; i < Adult; i++) Guests.push(new Guest("ADULT"));
-    for (let i = 0; i < Child; i++) Guests.push(new Guest("CHILD"));
-    for (let i = 0; i < Infant; i++) Guests.push(new Guest("INFANT"));
+    for (let i = 0; i < Adult; i++) Guests.push(new Guest('ADULT'));
+    for (let i = 0; i < Child; i++) Guests.push(new Guest('CHILD'));
+    for (let i = 0; i < Infant; i++) Guests.push(new Guest('INFANT'));
 
     const error = this.validate();
     if (!error) {
       const data = {
         Booking: this.state.Booking,
-        Guest: Guests
+        Guest: Guests,
       };
       await this.props.setGuestDataAction(data);
-      this.props.navigation.navigate("GuestList");
-      // this.setState(
-      //   {
-      //     Booking: {
-      //       ...this.state.Booking,
-      //       Guests: Guests
-      //     }
-      //   },
-      //   () => {
-      //     this.props.navigation.navigate("GuestList");
-      //   }
-      // );
+      this.props.navigation.navigate('Guest', { screen: 'GuestList' });
     }
   };
 
@@ -227,8 +217,8 @@ class SeriesPackageBooking extends Component {
     this.setState({
       Booking: {
         ...this.state.Booking,
-        Supplements: Supplements
-      }
+        Supplements: Supplements,
+      },
     });
   };
 
@@ -241,8 +231,8 @@ class SeriesPackageBooking extends Component {
     this.setState({
       Booking: {
         ...this.state.Booking,
-        Supplements: Supplements
-      }
+        Supplements: Supplements,
+      },
     });
   };
 
@@ -253,8 +243,8 @@ class SeriesPackageBooking extends Component {
       this.setState({
         Booking: {
           ...this.state.Booking,
-          Supplements: Supplements
-        }
+          Supplements: Supplements,
+        },
       });
     } else {
       let Supplements = [...this.state.Booking.Supplements];
@@ -264,8 +254,8 @@ class SeriesPackageBooking extends Component {
       this.setState({
         Booking: {
           ...this.state.Booking,
-          Supplements: Supplements
-        }
+          Supplements: Supplements,
+        },
       });
     }
   };
@@ -276,9 +266,9 @@ class SeriesPackageBooking extends Component {
         ...this.state.Booking,
         [Sub1]: {
           ...this.state.Booking[Sub1],
-          [Sub2]: parseInt(value)
-        }
-      }
+          [Sub2]: parseInt(value),
+        },
+      },
     });
   };
 
@@ -287,8 +277,10 @@ class SeriesPackageBooking extends Component {
   };
 
   handleReadMore = () => {
-    this.props.navigation.navigate("ImportantInformation", {
-      Desc: this.props.setPackageData.Descriptions
+    this.props.navigation.navigate('ImportantInformation', {
+      Desc: this.props.setPackageData
+        ? this.props.setPackageData.Descriptions
+        : '',
     });
   };
 
@@ -297,9 +289,11 @@ class SeriesPackageBooking extends Component {
       this.state.Booking.GuestAllocation.Adult +
       this.state.Booking.GuestAllocation.Child;
     // const price = this.props.data.Prices ? this.props.data.Prices : "";
-    const price = this.props.setPackageData.Prices
+    const price = this.props.setPackageData
       ? this.props.setPackageData.Prices
-      : "";
+        ? this.props.setPackageData.Prices
+        : ''
+      : '';
     const PriceAdd =
       this.state.Booking.Supplements.length != 0
         ? this.state.Booking.Supplements.map(i =>
@@ -311,7 +305,7 @@ class SeriesPackageBooking extends Component {
                 : GuestForAddMandatory * i.Value
               : i.Qty * i.Value
           )
-        : "";
+        : '';
     const TotalAdd =
       PriceAdd.length != 0
         ? PriceAdd.reduce(function(val, val2) {
@@ -329,14 +323,14 @@ class SeriesPackageBooking extends Component {
               style={[
                 stylesGlobal.row100,
                 styles.paddingHorizontal20,
-                stylesGlobal.paddingBottom10
+                stylesGlobal.paddingBottom10,
               ]}
             >
               <View style={stylesGlobal.width50}>
                 <Text style={[stylesGlobal.text20, stylesGlobal.textBold]}>
                   {this.state.dataDetailPackages
                     ? this.state.dataDetailPackages.BookingDetailSum.Title
-                    : ""}
+                    : ''}
                 </Text>
               </View>
               <View style={[stylesGlobal.width50, stylesGlobal.rowEnd]}>
@@ -353,7 +347,7 @@ class SeriesPackageBooking extends Component {
                 stylesGlobal.row100,
                 styles.paddingHorizontal20,
                 stylesGlobal.alignItemsCenter,
-                stylesGlobal.paddingBottom10
+                stylesGlobal.paddingBottom10,
               ]}
             >
               <View
@@ -366,18 +360,18 @@ class SeriesPackageBooking extends Component {
                 />
               </View>
               <Text>
-                {" "}
+                {' '}
                 {this.state.dataDetailPackages
                   ? viewDate(
                       this.state.dataDetailPackages.BookingDetailSum.StartDate
                     )
-                  : ""}
-                {" -"}{" "}
+                  : ''}
+                {' -'}{' '}
                 {this.state.dataDetailPackages
                   ? viewDate(
                       this.state.dataDetailPackages.BookingDetailSum.EndDate
                     )
-                  : ""}
+                  : ''}
               </Text>
             </View>
             <View style={styles.paddingHorizontal20}>
@@ -387,7 +381,7 @@ class SeriesPackageBooking extends Component {
                     style={[
                       styles.cardWarningMinPax,
                       styles.paddingHorizontal10,
-                      styles.rowCenter
+                      styles.rowCenter,
                     ]}
                   >
                     <Ionicons
@@ -407,7 +401,7 @@ class SeriesPackageBooking extends Component {
                     stylesGlobal.paddingTop20,
                     stylesGlobal.paddingHorizontal20,
                     stylesGlobal.text20,
-                    stylesGlobal.textBold
+                    stylesGlobal.textBold,
                   ]}
                 >
                   Guest Detail
@@ -439,20 +433,20 @@ class SeriesPackageBooking extends Component {
                       value={this.state.Booking.GuestAllocation.Adult}
                       onChangeText={text => {
                         if (isNaN(parseInt(text))) text = 0;
-                        this.handleChange("GuestAllocation", "Adult", text);
+                        this.handleChange('GuestAllocation', 'Adult', text);
                       }}
                       Decrement={() => {
                         if (this.state.Booking.GuestAllocation.Adult != 0)
                           this.handleChange(
-                            "GuestAllocation",
-                            "Adult",
+                            'GuestAllocation',
+                            'Adult',
                             this.state.Booking.GuestAllocation.Adult - 1
                           );
                       }}
                       Increment={() =>
                         this.handleChange(
-                          "GuestAllocation",
-                          "Adult",
+                          'GuestAllocation',
+                          'Adult',
                           this.state.Booking.GuestAllocation.Adult + 1
                         )
                       }
@@ -468,20 +462,20 @@ class SeriesPackageBooking extends Component {
                       value={this.state.Booking.GuestAllocation.Child}
                       onChangeText={text => {
                         if (isNaN(parseInt(text))) text = 0;
-                        this.handleChange("GuestAllocation", "Child", text);
+                        this.handleChange('GuestAllocation', 'Child', text);
                       }}
                       Decrement={() => {
                         if (this.state.Booking.GuestAllocation.Child != 0)
                           this.handleChange(
-                            "GuestAllocation",
-                            "Child",
+                            'GuestAllocation',
+                            'Child',
                             this.state.Booking.GuestAllocation.Child - 1
                           );
                       }}
                       Increment={() =>
                         this.handleChange(
-                          "GuestAllocation",
-                          "Child",
+                          'GuestAllocation',
+                          'Child',
                           this.state.Booking.GuestAllocation.Child + 1
                         )
                       }
@@ -497,20 +491,20 @@ class SeriesPackageBooking extends Component {
                       value={this.state.Booking.GuestAllocation.Infant}
                       onChangeText={text => {
                         if (isNaN(parseInt(text))) text = 0;
-                        this.handleChange("GuestAllocation", "Infant", text);
+                        this.handleChange('GuestAllocation', 'Infant', text);
                       }}
                       Decrement={() => {
                         if (this.state.Booking.GuestAllocation.Infant != 0)
                           this.handleChange(
-                            "GuestAllocation",
-                            "Infant",
+                            'GuestAllocation',
+                            'Infant',
                             this.state.Booking.GuestAllocation.Infant - 1
                           );
                       }}
                       Increment={() =>
                         this.handleChange(
-                          "GuestAllocation",
-                          "Infant",
+                          'GuestAllocation',
+                          'Infant',
                           this.state.Booking.GuestAllocation.Infant + 1
                         )
                       }
@@ -528,7 +522,7 @@ class SeriesPackageBooking extends Component {
                     stylesGlobal.paddingTop20,
                     stylesGlobal.paddingHorizontal20,
                     stylesGlobal.text18,
-                    stylesGlobal.textBold
+                    stylesGlobal.textBold,
                   ]}
                 >
                   Room Option
@@ -562,8 +556,8 @@ class SeriesPackageBooking extends Component {
                         onChangeText={text => {
                           if (isNaN(parseInt(text))) text = 0;
                           this.handleChange(
-                            "RoomAllocation",
-                            "SharingRoomQty",
+                            'RoomAllocation',
+                            'SharingRoomQty',
                             text
                           );
                         }}
@@ -573,16 +567,16 @@ class SeriesPackageBooking extends Component {
                             0
                           )
                             this.handleChange(
-                              "RoomAllocation",
-                              "SharingRoomQty",
+                              'RoomAllocation',
+                              'SharingRoomQty',
                               this.state.Booking.RoomAllocation.SharingRoomQty -
                                 1
                             );
                         }}
                         Increment={() =>
                           this.handleChange(
-                            "RoomAllocation",
-                            "SharingRoomQty",
+                            'RoomAllocation',
+                            'SharingRoomQty',
                             this.state.Booking.RoomAllocation.SharingRoomQty + 1
                           )
                         }
@@ -590,12 +584,12 @@ class SeriesPackageBooking extends Component {
                         heightCard="30%"
                         subtext={
                           price.CurrencyId +
-                          " " +
+                          ' ' +
                           convertRoundPrice(
                             price.SharingRoomPrice,
                             price.CurrencyId
                           ) +
-                          " /Pax"
+                          ' /Pax'
                         }
                       />
                     </View>
@@ -611,8 +605,8 @@ class SeriesPackageBooking extends Component {
                         onChangeText={text => {
                           if (isNaN(parseInt(text))) text = 0;
                           this.handleChange(
-                            "RoomAllocation",
-                            "SingleRoomQty",
+                            'RoomAllocation',
+                            'SingleRoomQty',
                             text
                           );
                         }}
@@ -621,16 +615,16 @@ class SeriesPackageBooking extends Component {
                             this.state.Booking.RoomAllocation.SingleRoomQty != 0
                           )
                             this.handleChange(
-                              "RoomAllocation",
-                              "SingleRoomQty",
+                              'RoomAllocation',
+                              'SingleRoomQty',
                               this.state.Booking.RoomAllocation.SingleRoomQty -
                                 1
                             );
                         }}
                         Increment={() =>
                           this.handleChange(
-                            "RoomAllocation",
-                            "SingleRoomQty",
+                            'RoomAllocation',
+                            'SingleRoomQty',
                             this.state.Booking.RoomAllocation.SingleRoomQty + 1
                           )
                         }
@@ -638,12 +632,12 @@ class SeriesPackageBooking extends Component {
                         heightCard="30%"
                         subtext={
                           price.CurrencyId +
-                          " " +
+                          ' ' +
                           convertRoundPrice(
                             price.SingleRoomPrice,
                             price.CurrencyId
                           ) +
-                          " /Pax"
+                          ' /Pax'
                         }
                       />
                     </View>
@@ -659,8 +653,8 @@ class SeriesPackageBooking extends Component {
                         onChangeText={text => {
                           if (isNaN(parseInt(text))) text = 0;
                           this.handleChange(
-                            "RoomAllocation",
-                            "SharingBedQty",
+                            'RoomAllocation',
+                            'SharingBedQty',
                             text
                           );
                         }}
@@ -669,16 +663,16 @@ class SeriesPackageBooking extends Component {
                             this.state.Booking.RoomAllocation.SharingBedQty != 0
                           )
                             this.handleChange(
-                              "RoomAllocation",
-                              "SharingBedQty",
+                              'RoomAllocation',
+                              'SharingBedQty',
                               this.state.Booking.RoomAllocation.SharingBedQty -
                                 1
                             );
                         }}
                         Increment={() =>
                           this.handleChange(
-                            "RoomAllocation",
-                            "SharingBedQty",
+                            'RoomAllocation',
+                            'SharingBedQty',
                             this.state.Booking.RoomAllocation.SharingBedQty + 1
                           )
                         }
@@ -686,12 +680,12 @@ class SeriesPackageBooking extends Component {
                         heightCard="30%"
                         subtext={
                           price.CurrencyId +
-                          " " +
+                          ' ' +
                           convertRoundPrice(
                             price.SharingBedPrice,
                             price.CurrencyId
                           ) +
-                          " /Pax"
+                          ' /Pax'
                         }
                       />
                     </View>
@@ -707,8 +701,8 @@ class SeriesPackageBooking extends Component {
                         onChangeText={text => {
                           if (isNaN(parseInt(text))) text = 0;
                           this.handleChange(
-                            "RoomAllocation",
-                            "ExtraBedQty",
+                            'RoomAllocation',
+                            'ExtraBedQty',
                             text
                           );
                         }}
@@ -717,15 +711,15 @@ class SeriesPackageBooking extends Component {
                             this.state.Booking.RoomAllocation.ExtraBedQty != 0
                           )
                             this.handleChange(
-                              "RoomAllocation",
-                              "ExtraBedQty",
+                              'RoomAllocation',
+                              'ExtraBedQty',
                               this.state.Booking.RoomAllocation.ExtraBedQty - 1
                             );
                         }}
                         Increment={() =>
                           this.handleChange(
-                            "RoomAllocation",
-                            "ExtraBedQty",
+                            'RoomAllocation',
+                            'ExtraBedQty',
                             this.state.Booking.RoomAllocation.ExtraBedQty + 1
                           )
                         }
@@ -733,12 +727,12 @@ class SeriesPackageBooking extends Component {
                         heightCard="30%"
                         subtext={
                           price.CurrencyId +
-                          " " +
+                          ' ' +
                           convertRoundPrice(
                             price.AdultExtraBedPrice,
                             price.CurrencyId
                           ) +
-                          " /Pax"
+                          ' /Pax'
                         }
                       />
                     </View>
@@ -756,8 +750,8 @@ class SeriesPackageBooking extends Component {
                         onChangeText={text => {
                           if (isNaN(parseInt(text))) text = 0;
                           this.handleChange(
-                            "RoomAllocation",
-                            "ChildExtraBedQty",
+                            'RoomAllocation',
+                            'ChildExtraBedQty',
                             text
                           );
                         }}
@@ -767,16 +761,16 @@ class SeriesPackageBooking extends Component {
                               .ChildExtraBedQty != 0
                           )
                             this.handleChange(
-                              "RoomAllocation",
-                              "ChildExtraBedQty",
+                              'RoomAllocation',
+                              'ChildExtraBedQty',
                               this.state.Booking.RoomAllocation
                                 .ChildExtraBedQty - 1
                             );
                         }}
                         Increment={() =>
                           this.handleChange(
-                            "RoomAllocation",
-                            "ChildExtraBedQty",
+                            'RoomAllocation',
+                            'ChildExtraBedQty',
                             this.state.Booking.RoomAllocation.ChildExtraBedQty +
                               1
                           )
@@ -785,12 +779,12 @@ class SeriesPackageBooking extends Component {
                         heightCard="30%"
                         subtext={
                           price.CurrencyId +
-                          " " +
+                          ' ' +
                           convertRoundPrice(
                             price.ChildExtraBedPrice,
                             price.CurrencyId
                           ) +
-                          " /Pax"
+                          ' /Pax'
                         }
                       />
                     </View>
@@ -805,20 +799,20 @@ class SeriesPackageBooking extends Component {
                         value={this.state.Booking.RoomAllocation.NoBed}
                         onChangeText={text => {
                           if (isNaN(parseInt(text))) text = 0;
-                          this.handleChange("RoomAllocation", "NoBed", text);
+                          this.handleChange('RoomAllocation', 'NoBed', text);
                         }}
                         Decrement={() => {
                           if (this.state.Booking.RoomAllocation.NoBed != 0)
                             this.handleChange(
-                              "RoomAllocation",
-                              "NoBed",
+                              'RoomAllocation',
+                              'NoBed',
                               this.state.Booking.RoomAllocation.NoBed - 1
                             );
                         }}
                         Increment={() =>
                           this.handleChange(
-                            "RoomAllocation",
-                            "NoBed",
+                            'RoomAllocation',
+                            'NoBed',
                             this.state.Booking.RoomAllocation.NoBed + 1
                           )
                         }
@@ -826,12 +820,12 @@ class SeriesPackageBooking extends Component {
                         heightCard="30%"
                         subtext={
                           price.CurrencyId +
-                          " " +
+                          ' ' +
                           convertRoundPrice(
                             price.NoBedPrice,
                             price.CurrencyId
                           ) +
-                          " /Pax"
+                          ' /Pax'
                         }
                       />
                     </View>
@@ -847,7 +841,7 @@ class SeriesPackageBooking extends Component {
                       stylesGlobal.paddingTop20,
                       stylesGlobal.paddingHorizontal20,
                       stylesGlobal.text18,
-                      stylesGlobal.textBold
+                      stylesGlobal.textBold,
                     ]}
                   >
                     Additional Items
@@ -900,9 +894,9 @@ class SeriesPackageBooking extends Component {
                             heightCard="30%"
                             subtext={
                               Add.CurrencyId +
-                              " " +
+                              ' ' +
                               convertRoundPrice(Add.Value, Add.CurrencyId) +
-                              " /Pax"
+                              ' /Pax'
                             }
                             disable={Add.IsMandatory}
                           />
@@ -924,7 +918,7 @@ class SeriesPackageBooking extends Component {
                           stylesGlobal.paddingTop20,
                           stylesGlobal.paddingHorizontal20,
                           stylesGlobal.text18,
-                          stylesGlobal.textBold
+                          stylesGlobal.textBold,
                         ]}
                       >
                         Tour Commission
@@ -958,7 +952,7 @@ class SeriesPackageBooking extends Component {
                           stylesGlobal.width100,
                           styles.marginBottom10,
                           stylesGlobal.paddingHorizontal20,
-                          stylesGlobal.paddingBottom20
+                          stylesGlobal.paddingBottom20,
                         ]}
                       >
                         <Text style={[styles.text14Wrap, styles.bold12]}>
@@ -969,10 +963,10 @@ class SeriesPackageBooking extends Component {
                           style={[
                             stylesGlobal.row100,
                             styles.containerDropDown,
-                            stylesGlobal.marginBottom20
+                            stylesGlobal.marginBottom20,
                           ]}
                         >
-                          {Platform.OS === "ios" ? (
+                          {Platform.OS === 'ios' ? (
                             <IOSPicker
                               mode="modal"
                               textStyle={styles.textPicker}
@@ -980,15 +974,15 @@ class SeriesPackageBooking extends Component {
                               selectedValue={
                                 this.state.Booking.IsSplitStaffCommission ==
                                 true ? (
-                                  "Yes"
+                                  'Yes'
                                 ) : this.state.Booking.IsSplitStaffCommission ==
                                   false ? (
-                                  "No"
+                                  'No'
                                 ) : (
                                   <Text
                                     style={[
                                       stylesGlobal.text14,
-                                      styles.colorgreylight2
+                                      styles.colorgreylight2,
                                     ]}
                                   >
                                     Choose Commission Options
@@ -999,8 +993,8 @@ class SeriesPackageBooking extends Component {
                                 this.setState({
                                   Booking: {
                                     ...this.state.Booking,
-                                    IsSplitStaffCommission: itemValue
-                                  }
+                                    IsSplitStaffCommission: itemValue,
+                                  },
                                 });
                               }}
                             >
@@ -1025,8 +1019,8 @@ class SeriesPackageBooking extends Component {
                                 this.setState({
                                   Booking: {
                                     ...this.state.Booking,
-                                    IsSplitStaffCommission: itemValue
-                                  }
+                                    IsSplitStaffCommission: itemValue,
+                                  },
                                 });
                               }}
                             >
@@ -1055,10 +1049,10 @@ class SeriesPackageBooking extends Component {
                             <View
                               style={[
                                 stylesGlobal.row100,
-                                styles.containerDropDown
+                                styles.containerDropDown,
                               ]}
                             >
-                              {Platform.OS === "ios" ? (
+                              {Platform.OS === 'ios' ? (
                                 <IOSPicker
                                   mode="modal"
                                   textStyle={styles.textPicker}
@@ -1066,15 +1060,15 @@ class SeriesPackageBooking extends Component {
                                   selectedValue={
                                     this.state.Booking.IsPrintInvoice ==
                                     true ? (
-                                      "Yes"
+                                      'Yes'
                                     ) : this.state.Booking.IsPrintInvoice ==
                                       false ? (
-                                      "No"
+                                      'No'
                                     ) : (
                                       <Text
                                         style={[
                                           stylesGlobal.text14,
-                                          styles.colorgreylight2
+                                          styles.colorgreylight2,
                                         ]}
                                       >
                                         Choose Commission Options
@@ -1085,8 +1079,8 @@ class SeriesPackageBooking extends Component {
                                     this.setState({
                                       Booking: {
                                         ...this.state.Booking,
-                                        IsPrintInvoice: itemValue
-                                      }
+                                        IsPrintInvoice: itemValue,
+                                      },
                                     });
                                   }}
                                 >
@@ -1111,8 +1105,8 @@ class SeriesPackageBooking extends Component {
                                     this.setState({
                                       Booking: {
                                         ...this.state.Booking,
-                                        IsPrintInvoice: itemValue
-                                      }
+                                        IsPrintInvoice: itemValue,
+                                      },
                                     });
                                   }}
                                 >
@@ -1136,7 +1130,7 @@ class SeriesPackageBooking extends Component {
                               style={[
                                 stylesGlobal.row100,
                                 stylesGlobal.padding10,
-                                styles.backgroundWaring
+                                styles.backgroundWaring,
                               ]}
                             >
                               <Icon
@@ -1155,27 +1149,29 @@ class SeriesPackageBooking extends Component {
                             <View
                               style={[
                                 stylesGlobal.row100,
-                                stylesGlobal.padding10
+                                stylesGlobal.padding10,
                               ]}
                             >
                               <View style={styles.col50}>
                                 <Text style={styles.text12}>
-                                  Agent Commission{" "}
+                                  Agent Commission{' '}
                                 </Text>
                               </View>
                               <View
                                 style={[
                                   styles.col50,
-                                  stylesGlobal.alignItemsEnd
+                                  stylesGlobal.alignItemsEnd,
                                 ]}
                               >
                                 <Text style={styles.text12}>
-                                  {price.CurrencyId}{" "}
-                                  {convertRoundPrice(
-                                    this.props.setPackageData.Commissions[0]
-                                      .Value,
-                                    price.CurrencyId
-                                  )}
+                                  {price.CurrencyId}{' '}
+                                  {this.props.setPackageData
+                                    ? convertRoundPrice(
+                                        this.props.setPackageData.Commissions[0]
+                                          .Value,
+                                        price.CurrencyId
+                                      )
+                                    : 0}
                                 </Text>
                               </View>
                             </View>
@@ -1184,49 +1180,53 @@ class SeriesPackageBooking extends Component {
                               <View
                                 style={[
                                   stylesGlobal.row100,
-                                  stylesGlobal.padding10
+                                  stylesGlobal.padding10,
                                 ]}
                               >
                                 <View style={styles.col50}>
                                   <Text style={styles.text12}>
-                                    Agent Commission{" "}
+                                    Agent Commission{' '}
                                   </Text>
                                 </View>
                                 <View
                                   style={[
                                     styles.col50,
-                                    stylesGlobal.alignItemsEnd
+                                    stylesGlobal.alignItemsEnd,
                                   ]}
                                 >
                                   <Text style={styles.text12}>
-                                    {price.CurrencyId}{" "}
-                                    {convertRoundPrice(
-                                      this.props.setPackageData.Commissions[0]
-                                        .Value,
-                                      price.CurrencyId
-                                    )}
+                                    {price.CurrencyId}{' '}
+                                    {this.props.setPackageData
+                                      ? convertRoundPrice(
+                                          this.props.setPackageData
+                                            .Commissions[0].Value,
+                                          price.CurrencyId
+                                        )
+                                      : 0}
                                   </Text>
                                 </View>
                               </View>
                               <View
                                 style={[
                                   stylesGlobal.row100,
-                                  stylesGlobal.padding10
+                                  stylesGlobal.padding10,
                                 ]}
                               >
                                 <View style={styles.col50}>
                                   <Text style={styles.text12}>
-                                    Staff Commission{" "}
+                                    Staff Commission{' '}
                                   </Text>
                                 </View>
                                 <View style={styles.col50}>
                                   <Text style={styles.text12}>
-                                    {price.CurrencyId}{" "}
-                                    {convertRoundPrice(
-                                      this.props.setPackageData.Commissions[1]
-                                        .Value,
-                                      price.CurrencyId
-                                    )}
+                                    {price.CurrencyId}{' '}
+                                    {this.props.setPackageData
+                                      ? convertRoundPrice(
+                                          this.props.setPackageData
+                                            .Commissions[1].Value,
+                                          price.CurrencyId
+                                        )
+                                      : 0}
                                   </Text>
                                 </View>
                               </View>
@@ -1235,29 +1235,31 @@ class SeriesPackageBooking extends Component {
                             <View
                               style={[
                                 stylesGlobal.row100,
-                                stylesGlobal.padding10
+                                stylesGlobal.padding10,
                               ]}
                             >
                               <View style={styles.col50}>
                                 <Text style={styles.text12}>
-                                  Total Commission{" "}
+                                  Total Commission{' '}
                                 </Text>
                               </View>
                               <View
                                 style={[
                                   styles.col50,
-                                  stylesGlobal.alignItemsEnd
+                                  stylesGlobal.alignItemsEnd,
                                 ]}
                               >
                                 <Text style={styles.text12}>
-                                  {price.CurrencyId}{" "}
-                                  {convertRoundPrice(
-                                    this.props.setPackageData.Commissions[0]
-                                      .Value +
-                                      ththis.props.setPackageData.Commissions[1]
-                                        .Value,
-                                    price.CurrencyId
-                                  )}
+                                  {price.CurrencyId}{' '}
+                                  {this.props.setPackageData
+                                    ? convertRoundPrice(
+                                        this.props.setPackageData.Commissions[0]
+                                          .Value +
+                                          ththis.props.setPackageData
+                                            .Commissions[1].Value,
+                                        price.CurrencyId
+                                      )
+                                    : 0}
                                 </Text>
                               </View>
                             </View>
@@ -1275,7 +1277,7 @@ class SeriesPackageBooking extends Component {
           <View style={stylesGlobal.row100}>
             <View style={[stylesGlobal.width60, stylesGlobal.padding20]}>
               <Text style={[stylesGlobal.textWhite, stylesGlobal.text10]}>
-                Total Price{" "}
+                Total Price{' '}
               </Text>
               <View style={stylesGlobal.width100}>
                 <Text style={styles.right}>
@@ -1283,10 +1285,10 @@ class SeriesPackageBooking extends Component {
                     style={[
                       stylesGlobal.text20,
                       stylesGlobal.textSemiBold,
-                      stylesGlobal.textWhite
+                      stylesGlobal.textWhite,
                     ]}
                   >
-                    {price.CurrencyId}{" "}
+                    {price.CurrencyId}{' '}
                     {(
                       this.state.Booking.RoomAllocation.SharingBedQty *
                         price.SharingBedPrice +
@@ -1303,7 +1305,7 @@ class SeriesPackageBooking extends Component {
                       TotalAdd
                     )
                       .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
                       .toLocaleString(price.CurrencyId)}
                   </Text>
                 </Text>
@@ -1329,10 +1331,10 @@ class SeriesPackageBooking extends Component {
 
 const mapStateToProps = state => ({
   setPackageData: state.transactionReducer.setPackageData,
-  packageStatus: state.transactionReducer.packageStatusFromHomeToList
+  packageStatus: state.transactionReducer.packageStatusFromHomeToList,
 });
 export default connect(mapStateToProps, {
-  setGuestDataAction
+  setGuestDataAction,
 })(SeriesPackageBooking);
 
 // export default SeriesPackageBooking;

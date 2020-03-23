@@ -24,6 +24,8 @@ import {
   getAccommodationByServiceItemIdApi,
 } from '../../api/accommodationApi';
 
+import store from '../../config/store';
+
 export const resetAccommodationProfileAction = () => {
   return dispatch => {
     return dispatch({
@@ -33,10 +35,12 @@ export const resetAccommodationProfileAction = () => {
 };
 
 export const getAccommodationProfileAction = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ACCOMMODATION,
-      payload: getAccommodationProfileApi(data),
+      payload: getAccommodationProfileApi(data, authToken),
     });
   };
 };
@@ -51,73 +55,89 @@ export const setCityAccommodationAction = CityId => {
 };
 
 export const getAccommodationRatingAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ACCOMMODATION_RATINGS,
-      payload: getAccommodationRatingApi(),
+      payload: getAccommodationRatingApi(authToken),
     });
   };
 };
 
 export const getAccommodationAreaAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ACCOMMODATION_AREAS,
-      payload: getAccommodationAreaApi(),
+      payload: getAccommodationAreaApi(authToken),
     });
   };
 };
 
 export const getAccommodationLocationAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ACCOMMODATION_LOCATIONS,
-      payload: getAccommodationLocationApi(),
+      payload: getAccommodationLocationApi(authToken),
     });
   };
 };
 
 export const getAccommodationTypeAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ACCOMMODATION_TYPES,
-      payload: getAccommodationTypeApi(),
+      payload: getAccommodationTypeApi(authToken),
     });
   };
 };
 
 export const getAccommodationFacilitiesAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ACCOMMODATION_FACILITIES,
-      payload: getAccommodationFacilitiesApi(),
+      payload: getAccommodationFacilitiesApi(authToken),
     });
   };
 };
 
 export const getAccommodationByIdAction = Id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ACCOMMODATION_BY_ID,
-      payload: getAccommodationByIdApi(Id),
+      payload: getAccommodationByIdApi(Id, authToken),
     });
   };
 };
 
 export const getAccommodationRoomsAction = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ACCOMMODATION_ROOMS,
-      payload: getAccommodationRoomsApi(data),
+      payload: getAccommodationRoomsApi(data, authToken),
     });
   };
 };
 
 export const getAccommodationByServiceItemIdAction = Id => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
   return dispatch => {
     return dispatch({
       type: GET_ACCOMMODATION_BY_SERVICE_ITEM_ID,
-      payload: getAccommodationByServiceItemIdApi(Id),
+      payload: getAccommodationByServiceItemIdApi(Id, authToken),
     });
   };
 };

@@ -30,7 +30,7 @@ import iconFixed from '../../assets/Icon/series_package.png';
 import iconCustom from '../../assets/Icon/custom_package.png';
 import { LinearGradient } from 'expo-linear-gradient';
 import { setPackageStatusFromHomeToListAction } from '../../actions/Transactions/TransactionAction';
-// import {setToken} from '../../actions/General/generalAction';
+import { setToken } from '../../actions/UserAuth/userAuthAction';
 
 class home extends Component {
   constructor(props) {
@@ -71,8 +71,8 @@ class home extends Component {
     this.setState({
       loading: true,
     });
-    // const userToken = JSON.parse (await AsyncStorage.getItem ('token'));
-    // this.props.setToken (userToken);
+    const userToken = await AsyncStorage.getItem('token');
+    this.props.setToken(userToken);
     handleAndroidBackButton(exitAlert);
     await this.getCountryLoc();
 
@@ -191,7 +191,6 @@ class home extends Component {
     this.props.navigation.navigate('CustomPackageOption', {
       screen: 'CustomPackageOptionStack',
     });
-    // this.props.navigation.navigate('TourSummaryCustomReady');
   };
 
   handlePressFilter = () => {
@@ -293,5 +292,5 @@ const mapStateToProps = state => ({
 // export default connect(mapStateToProps)(home);
 export default connect(mapStateToProps, {
   setPackageStatusFromHomeToListAction,
-  // setToken,
+  setToken,
 })(home);

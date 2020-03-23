@@ -41,9 +41,9 @@ class login extends Component {
     super(props);
     this.state = {
       Login: {
-        CompanyCode: '30000',
-        Username: 'sales008',
-        Password: '12345Aa~',
+        CompanyCode: '',
+        Username: '',
+        Password: '',
       },
       errorCompanyCode: '',
       errorUsername: '',
@@ -130,18 +130,11 @@ class login extends Component {
       // this.setState({ loading: true });
       // const { Login } = this.state;
       let auth = {
-        CompanyCode: '30000',
-        Username: 'sales008',
-        Password: '12345Aa~',
+        CompanyCode: this.state.Login.CompanyCode,
+        Username: this.state.Login.Username,
+        Password: this.state.Login.Password,
       };
       this.props.postLogin(auth);
-      // this.props.dispatch(
-      //   login_start(
-      //     this.state.Login.CompanyCode,
-      //     this.state.Login.Username,
-      //     this.state.Login.Password
-      //   )
-      // );
     }
   };
 
@@ -166,6 +159,7 @@ class login extends Component {
     AsyncStorage.setItem('token', token);
     AsyncStorage.setItem('expiredToken', expiredToken);
   };
+
   componentDidUpdate() {
     if (this.props.loginStatus) {
       this.test();
@@ -175,17 +169,6 @@ class login extends Component {
       Alert.alert('Failed', this.props.messages, [{ text: 'OK' }]);
       this.props.resetLoginStatus();
     }
-
-    // if (this.props.loginStatus) {
-    //   this.setState({ loading: false });
-    //   this.handlePressHome();
-    //   this.props.resetLoginStatus();
-    // }
-    // if (this.props.loginStatus) {
-    //   Alert.alert("Failed", this.props.messages, [{ text: "OK" }]);
-    //   this.setState({ loading: false });
-    //   this.props.resetLoginStatus();
-    // }
   }
 
   showUpdateVersion = () => {
@@ -211,17 +194,7 @@ class login extends Component {
   };
 
   handlePressHome = () => {
-    // const userToken = AsyncStorage.getItem("token");
-    // Alert.alert("Masuk localstor", userToken, [{ text: "OK" }]);
-    this.props.navigation.navigate('Home');
-
-    // Alert.alert("Masuk Home", "Homeypad", [
-    //   {
-    //     text: "Update"
-    //     // onPress: () => this.updateVersion()
-    //   },
-    //   { text: "Cancel" }
-    // ]);
+    this.props.navigation.navigate('App');
   };
 
   render() {
@@ -354,6 +327,7 @@ const mapStateToProps = state => ({
   expiredToken: state.authReducer.expiredToken,
   token: state.authReducer.token,
 });
+
 export default connect(mapStateToProps, {
   postLogin,
   resetLoginStatus,

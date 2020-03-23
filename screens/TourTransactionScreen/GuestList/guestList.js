@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   ScrollView,
   View,
@@ -6,26 +6,26 @@ import {
   BackHandler,
   Platform,
   Alert,
-  TouchableOpacity
-} from "react-native";
-import { Container } from "../../../components/container/index";
-import { NormalButton, ClearButton } from "../../../components/button";
-import styles from "../styles";
-import stylesGlobal from "../../../components/styles";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { SeperatorRepeat } from "../../../components/list";
-import { TextWarning } from "../../../components/text";
-import { Card } from "../../../components/card";
+  TouchableOpacity,
+} from 'react-native';
+import { Container } from '../../../components/container/index';
+import { NormalButton, ClearButton } from '../../../components/button';
+import styles from '../styles';
+import stylesGlobal from '../../../components/styles';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { SeperatorRepeat } from '../../../components/list';
+import { TextWarning } from '../../../components/text';
+import { Card } from '../../../components/card';
 // import {
 //   post_demo_fix_packages,
 //   reset_post_demo_price,
 // } from '../../actions/fixPackagesAction';
-import { resetTransactionAction } from "../../../actions/Transactions/TransactionAction";
-import { createTransactionItemSeries } from "../../../helper/transactionHelper";
-import { LinearGradient } from "expo-linear-gradient";
-import { ModalBottom } from "../../../components/modal";
-import AnimatedEllipsis from "react-native-animated-ellipsis";
+import { resetTransactionAction } from '../../../actions/Transactions/TransactionAction';
+import { createTransactionItemSeries } from '../../../helper/transactionHelper';
+import { LinearGradient } from 'expo-linear-gradient';
+import { ModalBottom } from '../../../components/modal';
+import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
 class guestList extends Component {
   constructor(props) {
@@ -36,12 +36,12 @@ class guestList extends Component {
         RoomAllocation: {},
         IsSplitStaffCommission: false,
         IsPrintInvoice: false,
-        TourNote: "",
+        TourNote: '',
         Guests: null,
         AdditionalItem: null,
         Supplements: null,
         StartDate: new Date(),
-        EndDate: new Date()
+        EndDate: new Date(),
         // GuestAllocation: this.props.guestData.Booking.GuestAllocation,
         // RoomAllocation: this.props.guestData.Booking.RoomAllocation,
         // IsSplitStaffCommission: this.props.guestData.Booking
@@ -55,13 +55,13 @@ class guestList extends Component {
         // EndDate: this.props.guestData.Booking.EndDate
       },
       loading: false,
-      errorValidation: "",
-      changeSplit: ""
+      errorValidation: '',
+      changeSplit: '',
     };
   }
 
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
@@ -87,8 +87,8 @@ class guestList extends Component {
         AdditionalItem: guestData.Booking.AdditionalItem,
         Supplements: guestData.Booking.Supplements,
         StartDate: guestData.Booking.StartDate,
-        EndDate: guestData.Booking.EndDate
-      }
+        EndDate: guestData.Booking.EndDate,
+      },
     });
   };
 
@@ -96,7 +96,7 @@ class guestList extends Component {
     const guest = this.state.Booking.Guests[0];
     let isError = false;
     const errors = {
-      errorValidation: ""
+      errorValidation: '',
     };
 
     if (
@@ -105,12 +105,12 @@ class guestList extends Component {
       guest.IdentityNbr == null
     ) {
       isError = true;
-      errors.errorValidation = "This field is required";
+      errors.errorValidation = 'This field is required';
     }
 
     this.setState({
       ...this.state,
-      ...errors
+      ...errors,
     });
     return isError;
   };
@@ -120,23 +120,23 @@ class guestList extends Component {
     dispatch: PropTypes.func,
     IdPackages: PropTypes.number,
     ispostDemoFixedPackages: PropTypes.string,
-    postDemofixedPackages: PropTypes.string
+    postDemofixedPackages: PropTypes.string,
   };
 
   addGuest = data => {
     this.setState({
       Booking: {
         ...this.state.Booking,
-        Guests: data
-      }
+        Guests: data,
+      },
     });
   };
 
   handlePressDetail = i => {
-    this.props.navigation.navigate("GuestDetail", {
+    this.props.navigation.navigate('GuestDetail', {
       onSelect: this.addGuest,
       index: i,
-      guests: this.state.Booking.Guests
+      guests: this.state.Booking.Guests,
     });
   };
 
@@ -153,17 +153,20 @@ class guestList extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.ispostDemoFixedPackages === "success") {
+    if (nextProps.ispostDemoFixedPackages === 'success') {
       this.setState({ loading: false });
-      this.props.navigation.navigate("TourSummary", {
-        Guest: this.state.Booking
+      this.props.navigation.navigate('Summary', {
+        screen: 'TourSummarySeries',
+        params: {
+          Guest: this.state.Booking,
+        },
       });
       this.props.dispatch(reset_post_demo_price());
       return false;
-    } else if (nextProps.ispostDemoFixedPackages === "failed") {
+    } else if (nextProps.ispostDemoFixedPackages === 'failed') {
       this.setState({ loading: false });
       this.props.dispatch(reset_post_demo_price());
-      Alert.alert("Failed", nextProps.postDemofixedPackages, [{ text: "OK" }]);
+      Alert.alert('Failed', nextProps.postDemofixedPackages, [{ text: 'OK' }]);
       return false;
     } else return true;
   }
@@ -192,7 +195,7 @@ class guestList extends Component {
                             ? num + 1
                             : 1;
 
-                        return guest.GuestCategory == "ADULT" ? (
+                        return guest.GuestCategory == 'ADULT' ? (
                           <View key={i}>
                             <View style={styles.bottom}>
                               {num == 1 ? (
@@ -202,7 +205,7 @@ class guestList extends Component {
                                       stylesGlobal.paddingTop20,
                                       stylesGlobal.text18,
                                       stylesGlobal.textBold,
-                                      stylesGlobal.paddingHorizontal20
+                                      stylesGlobal.paddingHorizontal20,
                                     ]}
                                   >
                                     {guest.GuestCategory}
@@ -210,7 +213,7 @@ class guestList extends Component {
                                   <View
                                     style={[
                                       stylesGlobal.width100,
-                                      stylesGlobal.hidden
+                                      stylesGlobal.hidden,
                                     ]}
                                   >
                                     <SeperatorRepeat
@@ -226,38 +229,38 @@ class guestList extends Component {
                                 <View
                                   style={[
                                     stylesGlobal.row100,
-                                    stylesGlobal.paddingHorizontal20
+                                    stylesGlobal.paddingHorizontal20,
                                   ]}
                                 >
                                   <View
                                     style={[
                                       stylesGlobal.width70,
-                                      stylesGlobal.rowStart
+                                      stylesGlobal.rowStart,
                                     ]}
                                   >
                                     <Text
                                       style={stylesGlobal.paddingVeritical10}
                                     >
                                       {num +
-                                        ". " +
+                                        '. ' +
                                         (guest.FirstName
                                           ? guest.GuestTitle +
-                                            " " +
+                                            ' ' +
                                             guest.FirstName +
-                                            " " +
+                                            ' ' +
                                             guest.LastName
-                                          : "Guest")}
+                                          : 'Guest')}
                                     </Text>
                                   </View>
                                   <View
                                     style={[
                                       stylesGlobal.width30,
-                                      stylesGlobal.alignItemEnd
+                                      stylesGlobal.alignItemEnd,
                                     ]}
                                   >
                                     <ClearButton
                                       text={
-                                        guest.FirstName ? "Edit" : "Fill Detail"
+                                        guest.FirstName ? 'Edit' : 'Fill Detail'
                                       }
                                       textColor={styles.$goldcolor}
                                       bold
@@ -270,38 +273,38 @@ class guestList extends Component {
                                 <View
                                   style={[
                                     stylesGlobal.row100,
-                                    stylesGlobal.paddingHorizontal20
+                                    stylesGlobal.paddingHorizontal20,
                                   ]}
                                 >
                                   <View
                                     style={[
                                       stylesGlobal.width70,
-                                      stylesGlobal.rowStart
+                                      stylesGlobal.rowStart,
                                     ]}
                                   >
                                     <Text
                                       style={stylesGlobal.paddingVeritical10}
                                     >
                                       {num +
-                                        ". " +
+                                        '. ' +
                                         (guest.FirstName
                                           ? guest.GuestTitle +
-                                            " " +
+                                            ' ' +
                                             guest.FirstName +
-                                            " " +
+                                            ' ' +
                                             guest.LastName
-                                          : "Guest")}
+                                          : 'Guest')}
                                     </Text>
                                   </View>
                                   <View
                                     style={[
                                       stylesGlobal.width30,
-                                      stylesGlobal.alignItemEnd
+                                      stylesGlobal.alignItemEnd,
                                     ]}
                                   >
                                     <ClearButton
                                       text={
-                                        guest.FirstName ? "Edit" : "Fill Detail"
+                                        guest.FirstName ? 'Edit' : 'Fill Detail'
                                       }
                                       textColor={styles.$goldcolor}
                                       bold
@@ -336,8 +339,8 @@ class guestList extends Component {
                               guest.GuestCategory
                             ? num + 1
                             : 1;
-                        return guest.GuestCategory == "CHILD" ||
-                          guest.GuestCategory == "CHILDREN" ? (
+                        return guest.GuestCategory == 'CHILD' ||
+                          guest.GuestCategory == 'CHILDREN' ? (
                           <View key={i}>
                             <View style={styles.bottom}>
                               {num == 1 ? (
@@ -347,7 +350,7 @@ class guestList extends Component {
                                       stylesGlobal.paddingTop20,
                                       stylesGlobal.text18,
                                       stylesGlobal.textBold,
-                                      stylesGlobal.paddingHorizontal20
+                                      stylesGlobal.paddingHorizontal20,
                                     ]}
                                   >
                                     {guest.GuestCategory}
@@ -355,7 +358,7 @@ class guestList extends Component {
                                   <View
                                     style={[
                                       stylesGlobal.width100,
-                                      stylesGlobal.hidden
+                                      stylesGlobal.hidden,
                                     ]}
                                   >
                                     <SeperatorRepeat
@@ -371,38 +374,38 @@ class guestList extends Component {
                                 <View
                                   style={[
                                     stylesGlobal.row100,
-                                    stylesGlobal.paddingHorizontal20
+                                    stylesGlobal.paddingHorizontal20,
                                   ]}
                                 >
                                   <View
                                     style={[
                                       stylesGlobal.width70,
-                                      stylesGlobal.rowStart
+                                      stylesGlobal.rowStart,
                                     ]}
                                   >
                                     <Text
                                       style={stylesGlobal.paddingVeritical10}
                                     >
                                       {num +
-                                        ". " +
+                                        '. ' +
                                         (guest.FirstName
                                           ? guest.GuestTitle +
-                                            " " +
+                                            ' ' +
                                             guest.FirstName +
-                                            " " +
+                                            ' ' +
                                             guest.LastName
-                                          : "Guest")}
+                                          : 'Guest')}
                                     </Text>
                                   </View>
                                   <View
                                     style={[
                                       stylesGlobal.width30,
-                                      stylesGlobal.alignItemEnd
+                                      stylesGlobal.alignItemEnd,
                                     ]}
                                   >
                                     <ClearButton
                                       text={
-                                        guest.FirstName ? "Edit" : "Fill Detail"
+                                        guest.FirstName ? 'Edit' : 'Fill Detail'
                                       }
                                       textColor={styles.$goldcolor}
                                       bold
@@ -415,36 +418,36 @@ class guestList extends Component {
                                 <View
                                   style={[
                                     stylesGlobal.row100,
-                                    stylesGlobal.paddingHorizontal20
+                                    stylesGlobal.paddingHorizontal20,
                                   ]}
                                 >
                                   <View
                                     style={[
                                       stylesGlobal.width70,
-                                      stylesGlobal.rowStart
+                                      stylesGlobal.rowStart,
                                     ]}
                                   >
                                     <Text>
                                       {num +
-                                        ". " +
+                                        '. ' +
                                         (guest.FirstName
                                           ? guest.GuestTitle +
-                                            " " +
+                                            ' ' +
                                             guest.FirstName +
-                                            " " +
+                                            ' ' +
                                             guest.LastName
-                                          : "Guest")}
+                                          : 'Guest')}
                                     </Text>
                                   </View>
                                   <View
                                     style={[
                                       stylesGlobal.width30,
-                                      stylesGlobal.alignItemEnd
+                                      stylesGlobal.alignItemEnd,
                                     ]}
                                   >
                                     <ClearButton
                                       text={
-                                        guest.FirstName ? "Edit" : "Fill Detail"
+                                        guest.FirstName ? 'Edit' : 'Fill Detail'
                                       }
                                       textColor={styles.$goldcolor}
                                       bold
@@ -475,7 +478,7 @@ class guestList extends Component {
                               guest.GuestCategory
                             ? num + 1
                             : 1;
-                        return guest.GuestCategory == "INFANT" ? (
+                        return guest.GuestCategory == 'INFANT' ? (
                           <View key={i}>
                             <View style={styles.bottom}>
                               {num == 1 ? (
@@ -485,7 +488,7 @@ class guestList extends Component {
                                       stylesGlobal.paddingTop20,
                                       stylesGlobal.text18,
                                       stylesGlobal.textBold,
-                                      stylesGlobal.paddingHorizontal20
+                                      stylesGlobal.paddingHorizontal20,
                                     ]}
                                   >
                                     {guest.GuestCategory}
@@ -493,7 +496,7 @@ class guestList extends Component {
                                   <View
                                     style={[
                                       stylesGlobal.width100,
-                                      stylesGlobal.hidden
+                                      stylesGlobal.hidden,
                                     ]}
                                   >
                                     <SeperatorRepeat
@@ -509,36 +512,36 @@ class guestList extends Component {
                                 <View
                                   style={[
                                     stylesGlobal.row100,
-                                    stylesGlobal.paddingHorizontal20
+                                    stylesGlobal.paddingHorizontal20,
                                   ]}
                                 >
                                   <View
                                     style={[
                                       stylesGlobal.width70,
-                                      stylesGlobal.rowStart
+                                      stylesGlobal.rowStart,
                                     ]}
                                   >
                                     <Text>
                                       {num +
-                                        ". " +
+                                        '. ' +
                                         (guest.FirstName
                                           ? guest.GuestTitle +
-                                            " " +
+                                            ' ' +
                                             guest.FirstName +
-                                            " " +
+                                            ' ' +
                                             guest.LastName
-                                          : "Guest")}
+                                          : 'Guest')}
                                     </Text>
                                   </View>
                                   <View
                                     style={[
                                       stylesGlobal.width30,
-                                      stylesGlobal.alignItemEnd
+                                      stylesGlobal.alignItemEnd,
                                     ]}
                                   >
                                     <ClearButton
                                       text={
-                                        guest.FirstName ? "Edit" : "Fill Detail"
+                                        guest.FirstName ? 'Edit' : 'Fill Detail'
                                       }
                                       textColor={styles.$goldcolor}
                                       bold
@@ -551,36 +554,36 @@ class guestList extends Component {
                                 <View
                                   style={[
                                     stylesGlobal.row100,
-                                    stylesGlobal.paddingHorizontal20
+                                    stylesGlobal.paddingHorizontal20,
                                   ]}
                                 >
                                   <View
                                     style={[
                                       stylesGlobal.width70,
-                                      stylesGlobal.rowStart
+                                      stylesGlobal.rowStart,
                                     ]}
                                   >
                                     <Text>
                                       {num +
-                                        ". " +
+                                        '. ' +
                                         (guest.FirstName
                                           ? guest.GuestTitle +
-                                            " " +
+                                            ' ' +
                                             guest.FirstName +
-                                            " " +
+                                            ' ' +
                                             guest.LastName
-                                          : "Guest")}
+                                          : 'Guest')}
                                     </Text>
                                   </View>
                                   <View
                                     style={[
                                       stylesGlobal.width30,
-                                      stylesGlobal.alignItemEnd
+                                      stylesGlobal.alignItemEnd,
                                     ]}
                                   >
                                     <ClearButton
                                       text={
-                                        guest.FirstName ? "Edit" : "Fill Detail"
+                                        guest.FirstName ? 'Edit' : 'Fill Detail'
                                       }
                                       textColor={styles.$goldcolor}
                                       bold
@@ -609,7 +612,7 @@ class guestList extends Component {
           onPress={this.handlePressSummary}
         >
           <LinearGradient
-            colors={["#e6ca6b", "#ffd734"]}
+            colors={['#e6ca6b', '#ffd734']}
             style={[styles.footer, styles.topRadius]}
             start={[0, 0]}
             end={[1, 0]}
@@ -635,7 +638,7 @@ const mapStateToProps = state => ({
   // postDemofixedPackages: state.fixPackagesReducer.postDemofixedPackages,
   guestData: state.transactionReducer.setGuestData,
   packageStatus: state.transactionReducer.packageStatusFromHomeToList,
-  setGuestDataStatus: state.transactionReducer.setGuestDataStatus
+  setGuestDataStatus: state.transactionReducer.setGuestDataStatus,
 });
 
 export default connect(mapStateToProps, { resetTransactionAction })(guestList);

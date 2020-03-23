@@ -9,33 +9,40 @@ import {
   GET_RESTAURANT_PROFILE_BY_SERVICE_ITEM_URL,
 } from './apiUrl';
 
-const getRestaurantByFilterApi = data => {
+const getRestaurantByFilterApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(
     `${GET_RESTAURANT_BY_FILTER_URL}?cityId=${data.cityId}&ratingIds=${data.ratingIds}&locationIds=${data.locationIds}&specializationId=${data.specializationId}&menuClassId=${data.menuClassId}&facilityIds=${data.facilityIds}&requestedDate=${data.requestedDate}&pax=${data.pax}`
   );
 };
 
-const getRestaurantRatingApi = () => {
+const getRestaurantRatingApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_RESTAURANT_RATING_URL);
 };
 
-const getRestaurantSpecializationsApi = () => {
+const getRestaurantSpecializationsApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_RESTAURANT_SPECIALIZATIONS_URL);
 };
 
-const getRestaurantMenuClassesApi = () => {
+const getRestaurantMenuClassesApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_RESTAURANT_MENU_CLASSES_URL);
 };
 
-const getRestaurantMenuByIdApi = data => {
+const getRestaurantMenuByIdApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${GET_RESTAURANT_MENU_BY_ID_URL}?profileId=${data}`);
 };
 
-const getMenuByIdApi = id => {
+const getMenuByIdApi = (id, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${GET_MENU_BY_ID_URL}/${id}`);
 };
 
-const getRestaurantProfileByServiceItemApi = id => {
+const getRestaurantProfileByServiceItemApi = (id, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${GET_RESTAURANT_PROFILE_BY_SERVICE_ITEM_URL}/${id}`);
 };
 
