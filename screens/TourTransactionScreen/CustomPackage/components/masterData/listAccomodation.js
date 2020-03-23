@@ -38,7 +38,7 @@ import {
 import { Seperator } from '../../../../../components/list';
 import IconClose from '../../../../../assets/Icon/close.png';
 import { handleFilterImagePrimary } from '../../../../../helper/checkingHelper';
-import dummyListAccommodation from '../../../../../helper/dummy';
+import { dummyListAccommodation } from '../../../../../helper/dummy';
 
 class listAccomodation extends Component {
   static propTypes = {

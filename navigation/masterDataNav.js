@@ -13,8 +13,6 @@ import ListRestaurant from '../screens/TourTransactionScreen/CustomPackage/compo
 //import TransportasiUnitDetail from '../screens/TourTransactionScreen/CustomPackage/components/masterData/transportasiUnitDetail';
 //import RestaurantDetail from '../screens/TourTransactionScreen/CustomPackage/components/masterData/restaurantDetail';
 import MapView from '../screens/TourTransactionScreen/CustomPackage/components/masterData/mapView';
-import { createStackNavigator } from '@react-navigation/stack';
-import ListAccomodation from '../screens/TourTransactionScreen/CustomPackage/components/masterData/listAccomodation';
 import ListCustomer from '../screens/Common/listCustomer';
 import ListUserCustomer from '../screens/Common/listUserCustomer';
 
