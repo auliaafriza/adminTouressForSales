@@ -4,7 +4,7 @@ import CustomPackageOption from '../screens/TourTransactionScreen/CustomPackage/
 import RoomAllocation from '../screens/TourTransactionScreen/CustomPackage/RoomAllocation';
 import AccommodationSummary from '../screens/TourTransactionScreen/CustomPackage/AccommodationSummary';
 import TourOperatorList from '../screens/TourTransactionScreen/CustomPackage/components/operatorList/operatorList';
-// import TourSummaryCustomReady from "../screens/TourTransactionScreen/TourSummary/tourSummaryCustomReady";
+import TourSummaryCustomReady from '../screens/TourTransactionScreen/TourSummary/tourSummaryCustomReady';
 const Stack = createStackNavigator();
 
 export default function customNav({ navigation, route }) {

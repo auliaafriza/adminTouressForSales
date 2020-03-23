@@ -37,7 +37,7 @@ import {
 import IconMap from '../../../../../assets/Icon/map_hotel.png';
 import IconMapIOS from '../../../../../assets/Icon/map_hotelIOS.png';
 import { transactionItem } from '../../../../../helper/transactionHelper';
-import dummyProfileAccommodation from '../../../../../helper/dummy';
+import { dummyProfileAccommodation } from '../../../../../helper/dummy';
 
 class accomodationDetail extends Component {
   constructor(props) {
