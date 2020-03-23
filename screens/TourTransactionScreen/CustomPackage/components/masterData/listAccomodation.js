@@ -40,6 +40,7 @@ import IconClose from '../../../../../assets/Icon/close.png';
 import { handleFilterImagePrimary } from '../../../../../helper/checkingHelper';
 import { dummyListAccommodation } from '../../../../../helper/dummy';
 
+import { Loading } from '../../../../../components/loading';
 class listAccomodation extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
@@ -166,15 +167,22 @@ class listAccomodation extends Component {
       this.props.resetAccommodationProfileAction();
       this.setState({
         loading: false,
-        ListAccommodation: this.props.listAccomodation.AccommodationResults,
-        accommodationRatings: this.props.listAccomodation.FilterParameters
-          .AccommodationRatings,
-        accommodationFacilities: this.props.listAccomodation.FilterParameters
-          .AccommodationProfileFacilities,
-        accommodationTypes: this.props.listAccomodation.FilterParameters
-          .AccommodationTypes,
-        accommodationLocations: this.props.listAccomodation.FilterParameters
-          .AccommodationLocations,
+        ListAccommodation: this.props.listAccomodation
+          ? this.props.listAccomodation.AccommodationResults
+          : [],
+        accommodationRatings: this.props.listAccomodation
+          ? this.props.listAccomodation.FilterParameters.AccommodationRatings
+          : [],
+        accommodationFacilities: this.props.listAccomodation
+          ? this.props.listAccomodation.FilterParameters
+              .AccommodationProfileFacilities
+          : [],
+        accommodationTypes: this.props.listAccomodation
+          ? this.props.listAccomodation.FilterParameters.AccommodationTypes
+          : [],
+        accommodationLocations: this.props.listAccomodation
+          ? this.props.listAccomodation.FilterParameters.AccommodationLocations
+          : [],
       });
       return false;
     } else if (this.props.isAccomodation === 'failed') {
@@ -279,6 +287,9 @@ class listAccomodation extends Component {
       Dimensions.get('window').width - Dimensions.get('window').width * 0.1;
     return (
       <Container>
+        {this.state.loading ? (
+          <Loading sizeloading="large" colorloading={styles.$goldcolor} />
+        ) : null}
         <ScrollView
           style={[stylesGlobal.containerScroll, stylesGlobal.paddingVertical80]}
         >
@@ -768,8 +779,16 @@ class listAccomodation extends Component {
                         numberStar={Star}
                         isPromo={hotel.IsPromo}
                         typeCard="Hotel"
-                        estimatedPrice={hotel.EstimatedTotalPrice.Price}
-                        currency={hotel.EstimatedTotalPrice.CurrencyId}
+                        estimatedPrice={
+                          hotel.EstimatedTotalPrice
+                            ? hotel.EstimatedTotalPrice.Price
+                            : 0
+                        }
+                        currency={
+                          hotel.EstimatedTotalPrice
+                            ? hotel.EstimatedTotalPrice.CurrencyId
+                            : 'IDR'
+                        }
                       />
                     );
                   })
@@ -839,7 +858,7 @@ class listAccomodation extends Component {
 }
 
 const mapStateToProps = state => ({
-  listAccomodation: state.accommodationReducer.accomodation,
+  listAccomodation: state.accommodationReducer.listAccomodation,
   isAccomodation: state.accommodationReducer.isAccomodation,
   accomodationFilter: state.accommodationReducer.accomodationFilter,
   isAccomodationFilter: state.accommodationReducer.isAccomodationFilter,

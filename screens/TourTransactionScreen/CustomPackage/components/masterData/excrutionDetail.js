@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -13,17 +13,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {Ionicons} from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-import {LinearGradient} from 'expo-linear-gradient';
-import MapView, {Marker} from 'react-native-maps';
-import {connect} from 'react-redux';
-import {Container} from '../../../../../components/container/index';
+import { LinearGradient } from 'expo-linear-gradient';
+import MapView, { Marker } from 'react-native-maps';
+import { connect } from 'react-redux';
+import { Container } from '../../../../../components/container/index';
 import styles from './styles';
-import {NormalButton} from '../../../../../components/button/index';
-import {ModalDuration} from '../../../../../components/modal';
-import {Card} from '../../../../../components/card/index';
-import {SeperatorRepeat} from '../../../../../components/list/index';
+import { NormalButton } from '../../../../../components/button/index';
+import { ModalDuration } from '../../../../../components/modal';
+import { Card } from '../../../../../components/card/index';
+import { SeperatorRepeat } from '../../../../../components/list/index';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import IMAGES from '../../../../../assets/images/NoImage.png';
@@ -32,7 +32,7 @@ import {
   getExcursionById,
   resetStatusExcursion,
 } from '../../../../../actions/excrusion/excrusionAction';
-import {Loading} from '../../../../../components/loading';
+import { Loading } from '../../../../../components/loading';
 import {
   convertToStringDate,
   convertToStringTime,
@@ -93,16 +93,16 @@ class excrutionDetail extends Component {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     const Id = navigation.getParam('Id', 'null');
     await this.props.getExcursionById(Id);
-    let address = this.props.data.Address ? this.props.data.Address : '';
-    address
-      ? this.getLocation(address)
-      : this.setState({
-          lat: null,
-          long: null,
-        });
+    // let address = this.props.data.Address ? this.props.data.Address : '';
+    // address
+    //   ? this.getLocation(address)
+    //   : this.setState({
+    //       lat: null,
+    //       long: null,
+    //     });
   }
 
   getLocation = async address => {
@@ -230,7 +230,8 @@ class excrutionDetail extends Component {
     });
   };
 
-  _showDateTimePicker = () => this.setState({startDateTimePickerVisible: true});
+  _showDateTimePicker = () =>
+    this.setState({ startDateTimePickerVisible: true });
 
   closeModal = () => {
     this.setState({
@@ -310,7 +311,7 @@ class excrutionDetail extends Component {
       this.props.SummaryProgram
     );
     this.props.setSummaryProgramAction(SP);
-    this.setState({loading: false});
+    this.setState({ loading: false });
     this.props.navigation.pop();
     this.props.navigation.pop();
   };
@@ -422,7 +423,8 @@ class excrutionDetail extends Component {
     }
   };
 
-  hideDateTimePicked = () => this.setState({startDateTimePickerVisible: false});
+  hideDateTimePicked = () =>
+    this.setState({ startDateTimePickerVisible: false });
 
   render() {
     const Data = this.props.data ? this.props.data : '';
@@ -447,7 +449,7 @@ class excrutionDetail extends Component {
         <Animated.View
           style={[
             styles.headerTransparent,
-            {height: headerHeight, backgroundColor: backgroundColorAnimate},
+            { height: headerHeight, backgroundColor: backgroundColorAnimate },
           ]}
         >
           <LinearGradient
@@ -482,7 +484,7 @@ class excrutionDetail extends Component {
           style={styles.scrollStyle}
           scrollEventThrottle={16}
           onScroll={Animated.event([
-            {nativeEvent: {contentOffset: {y: this.state.scrollY}}},
+            { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
           ])}
         >
           <Container widthContainer={containerWidth}>
@@ -498,7 +500,7 @@ class excrutionDetail extends Component {
                 <ModalDuration
                   onPressClose={this.closeModal}
                   onPressTime={() => {
-                    this.setState({startDateTimePickerVisible: true});
+                    this.setState({ startDateTimePickerVisible: true });
                   }}
                   DateTime={moment(this.state.Mov.ActivityData.Startime).format(
                     'HH : mm '
@@ -527,7 +529,7 @@ class excrutionDetail extends Component {
             {Data ? (
               Data.ImageUrl != undefined && Data.ImageUrl != '' ? (
                 <Image
-                  source={{uri: Data.ImageUrl}}
+                  source={{ uri: Data.ImageUrl }}
                   resizeMode="cover"
                   style={styles.carouselImage}
                 />
@@ -709,10 +711,10 @@ class excrutionDetail extends Component {
 const mapStateToProps = state => ({
   data: state.excrusionReducer.excrusionById,
   isData: state.excrusionReducer.getExcursionByIdStatus,
-  SummaryProgram: state.transportationReducer.SummaryProgram,
-  dailyProgram: state.transportationReducer.DailyProgram,
+  SummaryProgram: state.transactionReducer.SummaryProgram,
+  dailyProgram: state.transactionReducer.DailyProgram,
   MovementList: state.generalReducer.allMovementTypes,
-  driving: state.transportationReducer.driving,
+  driving: state.transactionReducer.driving,
   // token: state.userAuthReducer.token,
 });
 

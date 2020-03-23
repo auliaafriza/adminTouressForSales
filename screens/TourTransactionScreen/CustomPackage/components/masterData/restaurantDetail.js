@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Container} from '../../../../../components/container';
+import React, { Component } from 'react';
+import { Container } from '../../../../../components/container';
 import {
   View,
   Text,
@@ -13,21 +13,21 @@ import {
   TouchableWithoutFeedback,
   Platform,
 } from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
-import MapView, {Marker} from 'react-native-maps';
-import {SeperatorRepeat} from '../../../../../components/list/index';
-import {Card} from '../../../../../components/card/index';
+import { LinearGradient } from 'expo-linear-gradient';
+import MapView, { Marker } from 'react-native-maps';
+import { SeperatorRepeat } from '../../../../../components/list/index';
+import { Card } from '../../../../../components/card/index';
 import styles from './styles';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {Loading} from '../../../../../components/loading';
+import { Loading } from '../../../../../components/loading';
 import IMAGES from '../../../../../assets/images/NoImage.png';
 import IconClock from '../../../../../assets/Icon/clock.png';
-import {ModalDuration} from '../../../../../components/modal';
+import { ModalDuration } from '../../../../../components/modal';
 import moment from 'moment';
-import {changeTimeNew} from '../../../../../helper/timeHelper';
-import {Ionicons, Entypo} from '@expo/vector-icons';
+import { changeTimeNew } from '../../../../../helper/timeHelper';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 import {
   addDailyDetails,
   afterAddActivityAndDriving,
@@ -36,15 +36,17 @@ import {
   changeTimeSummaryProgramAfterAddActivity,
   getDrivingAddress,
 } from '../../../../../helper/dailyProgram';
-import {
-  set_daily_program,
-  set_summary_program,
-} from '../../../../../actions/customAction';
 import IconMapIOS from '../../../../../assets/Icon/map_restaurantIOS.png';
-import {getDurationAPI} from '../../../../../api/itemItenerarySaga';
-import {set_driving} from '../../../../../actions/itemIteneraryAction';
+import {
+  setSummaryProgramAction,
+  setDailyProgramAction,
+} from '../../../../../actions/Transactions/TransactionAction';
+import {
+  setDrivingAction,
+  getDurationAction,
+} from '../../../../../actions/transportation/transportationAction';
 import stylesGlobal from '../../../../../components/styles';
-import {get_restaurant_by_id} from '../../../../../actions/itemProfileAction';
+import { getRestaurantMenuById } from '../../../../../actions/restaurant/restaurantAction';
 class restaurantDetail extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
@@ -74,22 +76,22 @@ class restaurantDetail extends Component {
   }
 
   async componentDidMount() {
-    this.setState({loading: true});
-    await this.props.dispatch(get_restaurant_by_id(this.props.route.params.Id));
+    this.setState({ loading: true });
+    await this.props.getRestaurantMenuById(this.props.route.params.Id);
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
 
-    let address = this.state.Mov
-      ? this.state.Mov.Item
-        ? this.state.Mov.Item.Address
-          ? this.state.Mov.Item.Address
-          : ''
-        : ''
-      : '';
-    this.getLocation(address);
-    this.setState({loading: false});
+    // let address = this.state.Mov
+    //   ? this.state.Mov.Item
+    //     ? this.state.Mov.Item.Address
+    //       ? this.state.Mov.Item.Address
+    //       : ''
+    //     : ''
+    //   : '';
+    // this.getLocation(address);
+    this.setState({ loading: false });
   }
 
   getLocation = async address => {
@@ -181,7 +183,8 @@ class restaurantDetail extends Component {
     });
   };
 
-  _showDateTimePicker = () => this.setState({startDateTimePickerVisible: true});
+  _showDateTimePicker = () =>
+    this.setState({ startDateTimePickerVisible: true });
 
   closeModal = () => {
     this.setState({
@@ -203,12 +206,10 @@ class restaurantDetail extends Component {
               DP[i].Movements[j - 1].Item,
               DP[i].Movements[j + 1].Item
             );
-            item = await getDurationAPI(this.props.token, data);
+            item = await this.props.getDurationAction(data);
             if (item.Duration != undefined) {
-              this.props.dispatch(
-                await set_driving(
-                  setObjectDuration(this.props.driving, data, item)
-                )
+              await this.props.setDrivingAction(
+                setObjectDuration(this.props.driving, data, item)
               );
               DP[i].Movements[j].Duration = item.Duration.value;
               DP[i].Movements[j].DurationText = item.Duration.text;
@@ -255,13 +256,13 @@ class restaurantDetail extends Component {
       this.state.Mov.indexMov,
       this.props.MovementList
     );
-    await this.props.dispatch(await set_daily_program(DP));
+    await this.props.setDailyProgramAction(DP);
     let SP = await changeTimeSummaryProgramAfterAddActivity(
       DP,
       this.props.SummaryProgram
     );
-    this.props.dispatch(set_summary_program(SP));
-    this.setState({loading: false});
+    this.props.setSummaryProgramAction(SP);
+    this.setState({ loading: false });
     this.props.navigation.pop();
     this.props.navigation.pop();
   };
@@ -271,13 +272,14 @@ class restaurantDetail extends Component {
   //   this.hideDateTimePicked();
   // };
 
-  hideDateTimePicked = () => this.setState({startDateTimePickerVisible: false});
+  hideDateTimePicked = () =>
+    this.setState({ startDateTimePickerVisible: false });
 
   textButton = text => {
     if (this.state.namaButton == 'Read More') {
-      this.setState({Desc: text, namaButton: 'Read Less'});
+      this.setState({ Desc: text, namaButton: 'Read Less' });
     } else {
-      this.setState({Desc: text.slice(0, 30), namaButton: 'Read More'});
+      this.setState({ Desc: text.slice(0, 30), namaButton: 'Read More' });
     }
   };
 
@@ -302,7 +304,7 @@ class restaurantDetail extends Component {
         <Animated.View
           style={[
             styles.headerTransparent,
-            {height: headerHeight, backgroundColor: backgroundColorAnimate},
+            { height: headerHeight, backgroundColor: backgroundColorAnimate },
           ]}
         >
           <LinearGradient
@@ -342,7 +344,7 @@ class restaurantDetail extends Component {
           scrollEventThrottle={16}
           onScroll={Animated.event([
             {
-              nativeEvent: {contentOffset: {y: this.state.scrollY}},
+              nativeEvent: { contentOffset: { y: this.state.scrollY } },
             },
           ])}
         >
@@ -418,7 +420,7 @@ class restaurantDetail extends Component {
                 <ModalDuration
                   onPressClose={this.closeModal}
                   onPressTime={() => {
-                    this.setState({startDateTimePickerVisible: true});
+                    this.setState({ startDateTimePickerVisible: true });
                   }}
                   DateTime={moment(this.state.Mov.ActivityData.Startime).format(
                     'HH : mm '
@@ -446,7 +448,7 @@ class restaurantDetail extends Component {
             {this.state.Mov.Item &&
             this.state.Mov.Item.RestaurantProfileImages ? (
               <Image
-                source={{uri: this.state.Mov.Item.RestaurantProfileImages[0]}}
+                source={{ uri: this.state.Mov.Item.RestaurantProfileImages[0] }}
                 resizeMode="cover"
                 style={styles.carouselImage}
               />
@@ -611,7 +613,7 @@ class restaurantDetail extends Component {
                             >
                               {menu.ImageUrl ? (
                                 <Image
-                                  source={{uri: menu.ImageUrl}}
+                                  source={{ uri: menu.ImageUrl }}
                                   style={[
                                     stylesGlobal.width100,
                                     stylesGlobal.backgroundColorGrey,
@@ -685,13 +687,19 @@ class restaurantDetail extends Component {
 }
 
 const mapStateToProps = state => ({
-  isData: state.itemProfileReducer.isDataMeal,
-  data: state.itemProfileReducer.dataMeal,
-  dailyProgram: state.cusPackagesReducer.DailyProgram,
-  SummaryProgram: state.cusPackagesReducer.SummaryProgram,
+  isData: state.restaurantReducer.getMenuByIdStatus,
+  data: state.restaurantReducer.menu,
+  dailyProgram: state.transactionReducer.DailyProgram,
+  SummaryProgram: state.transactionReducer.SummaryProgram,
   MovementList: state.generalReducer.movementMode,
-  driving: state.itemIteneraryReducer.driving,
-  token: state.userAuthReducer.token,
+  driving: state.transactionReducer.driving,
+  // token: state.userAuthReducer.token,
 });
 
-export default connect(mapStateToProps)(restaurantDetail);
+export default connect(mapStateToProps, {
+  getRestaurantMenuById,
+  setDrivingAction,
+  getDurationAction,
+  setSummaryProgramAction,
+  setDailyProgramAction,
+})(restaurantDetail);

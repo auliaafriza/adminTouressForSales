@@ -27,7 +27,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import IMAGES from '../../../../../assets/images/NoImage.png';
 import {
-  getAccommodationByIdApi,
+  getAccommodationByIdAction,
   getAccommodationRoomsApi,
 } from '../../../../../actions/accommodation/accommodationAction';
 import {
@@ -95,7 +95,7 @@ class accomodationDetail extends Component {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
-    this.props.getAccommodationByIdApi(this.state.Hotel.Id);
+    this.props.getAccommodationByIdAction(this.state.Hotel.Id);
     const {
       StartDate,
       EndDate,
@@ -264,8 +264,7 @@ class accomodationDetail extends Component {
                 {/* {this.state.loading
                   ? <View style={[styles.marginTop10, styles.marginBottom10]}>
                       <RoundedLoading width={300} height={30} />
-                    </View> */}
-                :
+                    </View> :*/}
                 <Text
                   style={[
                     styles.text20,
@@ -561,6 +560,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getAccommodationByIdApi,
+  getAccommodationByIdAction,
   getAccommodationRoomsApi,
 })(accomodationDetail);

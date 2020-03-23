@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -11,14 +11,14 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import {Container} from '../../../../../components/container';
-import {SeperatorRepeat} from '../../../../../components/list';
-import {Card} from '../../../../../components/card';
+import { Container } from '../../../../../components/container';
+import { SeperatorRepeat } from '../../../../../components/list';
+import { Card } from '../../../../../components/card';
 import styles from './styles';
-import {LinearGradient} from 'expo-linear-gradient';
-import {Ionicons, Entypo} from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import IMAGES from '../../../../../assets/images/NoImage.png';
@@ -27,7 +27,7 @@ import BedOnly from '../../../../../assets/images/room-only.png';
 import Breakfast from '../../../../../assets/images/breakfast.png';
 import FullBoard from '../../../../../assets/images/fullboard.png';
 import HalfBoard from '../../../../../assets/images/halfboard.png';
-import {Loading} from '../../../../../components/loading';
+import { Loading } from '../../../../../components/loading';
 import stylesGlobal from '../../../../../components/styles';
 class hotelAndRoomDetail extends Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class hotelAndRoomDetail extends Component {
   };
 
   handleAccomodation = () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     this.props.navigation.pop();
     this.props.navigation.pop();
     this.props.navigation.pop();
@@ -101,7 +101,7 @@ class hotelAndRoomDetail extends Component {
         <Animated.View
           style={[
             styles.headerTransparent,
-            {height: headerHeight, backgroundColor: backgroundColorAnimate},
+            { height: headerHeight, backgroundColor: backgroundColorAnimate },
           ]}
         >
           <LinearGradient
@@ -132,7 +132,7 @@ class hotelAndRoomDetail extends Component {
           <ScrollView
             scrollEventThrottle={16}
             onScroll={Animated.event([
-              {nativeEvent: {contentOffset: {y: this.state.scrollY}}},
+              { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
             ])}
           >
             <Container
@@ -143,7 +143,7 @@ class hotelAndRoomDetail extends Component {
                 this.state.Room.ImageUrl != undefined &&
                 this.state.Room.ImageUrl != '' ? (
                   <Image
-                    source={{uri: this.state.Room.ImageUrl}}
+                    source={{ uri: this.state.Room.ImageUrl }}
                     resizeMode="cover"
                     style={styles.carouselImage}
                   />
@@ -323,7 +323,7 @@ class hotelAndRoomDetail extends Component {
 }
 
 const mapStateToProps = state => ({
-  dataRoom: state.itemProfileReducer.dataRoom,
+  dataRoom: state.accommodationReducer.accommodationRooms,
 });
 
 export default connect(mapStateToProps)(hotelAndRoomDetail);

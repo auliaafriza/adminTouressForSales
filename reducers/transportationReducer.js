@@ -27,9 +27,9 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.GET_AIRPORT:
-      return {...state};
+      return { ...state };
     case types.GET_AIRPORT_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_AIRPORT_FULFILLED:
       return {
         ...state,
@@ -52,9 +52,9 @@ const reducer = (state = initialState, action) => {
     }
 
     case types.GET_DRIVING:
-      return {...state};
+      return { ...state };
     case types.GET_DRIVING_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_DRIVING_FULFILLED:
       return {
         ...state,
@@ -77,9 +77,9 @@ const reducer = (state = initialState, action) => {
     }
 
     case types.GET_LIST_AIRPORT:
-      return {...state};
+      return { ...state };
     case types.GET_LIST_AIRPORT_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_LIST_AIRPORT_FULFILLED:
       return {
         ...state,
@@ -97,9 +97,9 @@ const reducer = (state = initialState, action) => {
     // GET_TRANSPORTATION_PROFILE_RATINGS
     //---------------------------------
     case types.GET_TRANSPORTATION_PROFILE_RATINGS:
-      return {...state};
+      return { ...state };
     case types.GET_TRANSPORTATION_PROFILE_RATINGS_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_TRANSPORTATION_PROFILE_RATINGS_FULFILLED:
       return {
         ...state,
@@ -120,9 +120,9 @@ const reducer = (state = initialState, action) => {
     // GET_TRANSPORTATION_PROFILE_CATEGORIES
     //---------------------------------
     case types.GET_TRANSPORTATION_PROFILE_CATEGORIES:
-      return {...state};
+      return { ...state };
     case types.GET_TRANSPORTATION_PROFILE_CATEGORIES_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_TRANSPORTATION_PROFILE_CATEGORIES_FULFILLED:
       return {
         ...state,
@@ -143,9 +143,9 @@ const reducer = (state = initialState, action) => {
     // GET_TRANSPORTATION_PROFILES
     //---------------------------------
     case types.GET_TRANSPORTATION_PROFILES:
-      return {...state};
+      return { ...state };
     case types.GET_TRANSPORTATION_PROFILES_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_TRANSPORTATION_PROFILES_FULFILLED:
       return {
         ...state,
@@ -166,9 +166,9 @@ const reducer = (state = initialState, action) => {
     // GET_TRANSPORTATION_TYPES
     //---------------------------------
     case types.GET_TRANSPORTATION_TYPES:
-      return {...state};
+      return { ...state };
     case types.GET_TRANSPORTATION_TYPES_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_TRANSPORTATION_TYPES_FULFILLED:
       return {
         ...state,
@@ -189,9 +189,9 @@ const reducer = (state = initialState, action) => {
     // GET_TRANSPORTATION_SEAT_TYPES
     //---------------------------------
     case types.GET_TRANSPORTATION_SEAT_TYPES:
-      return {...state};
+      return { ...state };
     case types.GET_TRANSPORTATION_SEAT_TYPES_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_TRANSPORTATION_SEAT_TYPES_FULFILLED:
       return {
         ...state,
@@ -212,9 +212,9 @@ const reducer = (state = initialState, action) => {
     // GET_TRANSPORTATION_UNITS_FILTER
     //---------------------------------
     case types.GET_TRANSPORTATION_UNITS_FILTER:
-      return {...state};
+      return { ...state };
     case types.GET_TRANSPORTATION_UNITS_FILTER_PENDING:
-      return {...state, loadingTransportationUnitsFilter: true};
+      return { ...state, loadingTransportationUnitsFilter: true };
     case types.GET_TRANSPORTATION_UNITS_FILTER_FULFILLED:
       return {
         ...state,
@@ -235,7 +235,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         getTransportationProfileRatingStatus: '',
-        // getTransportationProfileCategoryStatus: '',
+        getTransportationProfileCategoryStatus: '',
         getTransportationTypeStatus: '',
         getTransportationSeatTypeStatus: '',
       };

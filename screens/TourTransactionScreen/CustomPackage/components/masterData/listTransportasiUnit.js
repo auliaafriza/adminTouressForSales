@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Container} from '../../../../../components/container';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Container } from '../../../../../components/container';
 import {
   ScrollView,
   View,
@@ -16,23 +16,23 @@ import styles from './styles';
 import stylesGlobal from '../../../../../components/styles';
 import PropTypes from 'prop-types';
 import {
-  get_transport,
-  reset_get_transport,
-} from '../../../../../actions/itemIteneraryAction';
+  getTransportationUnitsFilter,
+  resetStatusTransportationUnitsFilter,
+} from '../../../../../actions/transportation/transportationAction';
 
-import {SearchBar} from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 import {
   ClearButtonWithIcon,
   NormalButton,
 } from '../../../../../components/button';
-import {Loading} from '../../../../../components/loading';
-import {CardAccomodation} from '../../../../../components/card';
+import { Loading } from '../../../../../components/loading';
+import { CardAccomodation } from '../../../../../components/card';
 
-import {Seperator} from '../../../../../components/list';
-import {ModalSort} from '../../../../../components/modal/';
+import { Seperator } from '../../../../../components/list';
+import { ModalSort } from '../../../../../components/modal/';
 
-import {isThereExcursionMeal} from '../../../../../helper/dailyProgram';
-import {transactionItem} from '../../../../../helper/transactionHelper';
+import { isThereExcursionMeal } from '../../../../../helper/dailyProgram';
+import { transactionItem } from '../../../../../helper/transactionHelper';
 
 class listTransportasiUnit extends Component {
   static propTypes = {
@@ -47,16 +47,16 @@ class listTransportasiUnit extends Component {
     CustomDetails: PropTypes.array,
     Returns: PropTypes.array,
     Departures: PropTypes.array,
-    SummaryProgram: PropTypes.array
+    SummaryProgram: PropTypes.array,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       Filter: {
-        transportRating: "",
-        transportType: "",
-        transportCapacities: ""
+        transportRating: '',
+        transportType: '',
+        transportCapacities: '',
       },
       labelratingId: null,
       labelseatTypeId: null,
@@ -65,7 +65,7 @@ class listTransportasiUnit extends Component {
       Item: {
         itemTransport: null,
         serviceItem: null,
-        hoursItem: null
+        hoursItem: null,
       },
       modalVisible: false,
       modalVisibleSort: false,
@@ -75,29 +75,29 @@ class listTransportasiUnit extends Component {
       transport: null,
       hiddenTransfer: false,
       listTransport: [],
-      searchText: ""
+      searchText: '',
     };
   }
 
   openModal = () => {
-    this.setState({modalVisible: true});
+    this.setState({ modalVisible: true });
   };
 
   openModalSort = () => {
-    this.setState({modalVisibleSort: true});
+    this.setState({ modalVisibleSort: true });
   };
 
   closeModal = () => {
-    this.setState({modalVisible: false, modalVisibleSort: false});
+    this.setState({ modalVisible: false, modalVisibleSort: false });
   };
 
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
     this.cekHidden();
-    let valueTo = this.state.Mov.TypeMovement.to.split(",");
+    let valueTo = this.state.Mov.TypeMovement.to.split(',');
     let item = transactionItem(
       this.props.CustomDetails,
       this.props.SummaryProgram,
@@ -105,18 +105,16 @@ class listTransportasiUnit extends Component {
       this.props.Departures,
       this.props.Returns
     );
-    this.props.dispatch(
-      get_transport(
-        this.state.Mov.TypeMovement.from,
-        valueTo[0],
-        "",
-        "",
-        "",
-        this.state.Mov.ActivityData.Startime.slice(0, -9),
-        item
-      )
-    );
-    // get_transport('KUTA', 'KUTA', '', '', '', '2018-11-05')
+    const data = {
+      fromCity: this.state.Mov.TypeMovement.from,
+      toCities: valueTo[0],
+      RatingId: '',
+      seatTypeId: '',
+      typeId: '',
+      requestedDate: this.state.Mov.ActivityData.Startime.slice(0, -9),
+      dataDemoPrice: item,
+    };
+    this.props.getTransportationUnitsFilter(data);
   }
 
   cekHidden = async () => {
@@ -124,18 +122,18 @@ class listTransportasiUnit extends Component {
     let dayIndex = this.props.route.params.dayIndex;
     let moveIndex = this.props.route.params.moveIndex;
     let status = await isThereExcursionMeal(DP, dayIndex, moveIndex);
-    this.setState({hiddenTransfer: status});
+    this.setState({ hiddenTransfer: status });
   };
 
   componentDidUpdate() {
     if (this.props.isTransport === 'success') {
-      this.setState({listTransport: this.props.listTransport});
-      this.props.dispatch(reset_get_transport());
-      this.setState({loading: false});
+      this.setState({ listTransport: this.props.listTransport });
+      this.props.resetStatusTransportationUnitsFilter();
+      this.setState({ loading: false });
       return false;
-    } else if (this.props.isTransport === "failed") {
-      this.props.dispatch(reset_get_transport());
-      this.setState({loading: false});
+    } else if (this.props.isTransport === 'failed') {
+      this.props.resetStatusTransportationUnitsFilter();
+      this.setState({ loading: false });
       return false;
     } else return true;
   }
@@ -144,10 +142,10 @@ class listTransportasiUnit extends Component {
     await this.setState({
       Item: {
         ...this.state.Item,
-        itemTransport: item
-      }
+        itemTransport: item,
+      },
     });
-    this.props.navigation.navigate("TransportasiUnitDetail", {
+    this.props.navigation.navigate('TransportasiUnitDetail', {
       Item: this.state.Item,
       Mov: this.state.Mov,
       hiddenTransfer: this.state.hiddenTransfer,
@@ -157,14 +155,14 @@ class listTransportasiUnit extends Component {
   };
 
   handleSort = type => {
-    if (type === "High") {
+    if (type === 'High') {
       this.props.listTransport.sort(function(a, b) {
         if (a.TransportationSeatTypeId < b.TransportationSeatTypeId) return 1;
         else if (a.TransportationSeatTypeId > b.TransportationSeatTypeId)
           return -1;
       });
     }
-    if (type === "Low") {
+    if (type === 'Low') {
       this.props.listTransport.sort(function(a, b) {
         if (a.TransportationSeatTypeId < b.TransportationSeatTypeId) return -1;
         else if (a.TransportationSeatTypeId > b.TransportationSeatTypeId)
@@ -173,7 +171,7 @@ class listTransportasiUnit extends Component {
     }
     this.setState({
       modalVisible: false,
-      modalVisibleSort: false
+      modalVisibleSort: false,
     });
   };
 
@@ -194,12 +192,12 @@ class listTransportasiUnit extends Component {
     this.setState({
       listTransport: updatedList,
       modalVisible: false,
-      modalVisibleSort: false
+      modalVisibleSort: false,
     });
   };
 
   _handleSearch = value => {
-    this.setState({searchText: value});
+    this.setState({ searchText: value });
     let updatedList = this.props.listTransport;
     updatedList = updatedList.filter(v => {
       if (v.Name.toLowerCase().indexOf(value.toLowerCase()) > -1) {
@@ -207,7 +205,7 @@ class listTransportasiUnit extends Component {
       }
       return false;
     });
-    this.setState({listTransport: updatedList});
+    this.setState({ listTransport: updatedList });
   };
 
   render() {
@@ -245,9 +243,9 @@ class listTransportasiUnit extends Component {
               {this.state.modalVisibleSort ? (
                 <ModalSort
                   text1="Highest Passenger"
-                  onPressPopuler={() => this.handleSort("High")}
+                  onPressPopuler={() => this.handleSort('High')}
                   text2="Lowest Passenger"
-                  onPressHigh={() => this.handleSort("Low")}
+                  onPressHigh={() => this.handleSort('Low')}
                   type="dua"
                   onPress={this.closeModal}
                 />
@@ -255,7 +253,7 @@ class listTransportasiUnit extends Component {
                 <View style={[styles.innerContainer, styles.bottom]}>
                   <Text style={styles.bold14}>Filter:</Text>
                   <Text>Transportation Rating</Text>
-                  {Platform.OS === "ios" ? (
+                  {Platform.OS === 'ios' ? (
                     <IOSPicker
                       mode="modal"
                       textStyle={styles.textblack}
@@ -263,19 +261,19 @@ class listTransportasiUnit extends Component {
                       selectedValue={
                         this.state.Filter.transportRating
                           ? this.state.labelratingId == 0
-                            ? "Transportation Rating"
+                            ? 'Transportation Rating'
                             : this.props.transportRatingFilter[
                                 this.state.labelratingId - 1
                               ].Name
-                          : "Transportation Rating"
+                          : 'Transportation Rating'
                       }
                       onValueChange={(itemValue, itemIndex) => {
                         this.setState({
                           Filter: {
                             ...this.state.Filter,
-                            transportRating: itemValue
+                            transportRating: itemValue,
                           },
-                          labelratingId: itemIndex
+                          labelratingId: itemIndex,
                         });
                       }}
                     >
@@ -304,8 +302,8 @@ class listTransportasiUnit extends Component {
                         this.setState({
                           Filter: {
                             ...this.state.Filter,
-                            transportRating: itemValue
-                          }
+                            transportRating: itemValue,
+                          },
                         });
                       }}
                     >
@@ -331,7 +329,7 @@ class listTransportasiUnit extends Component {
                     heightSepar={1}
                   />
                   <Text>Transportation Types</Text>
-                  {Platform.OS === "ios" ? (
+                  {Platform.OS === 'ios' ? (
                     <IOSPicker
                       mode="modal"
                       textStyle={styles.textblack}
@@ -339,19 +337,19 @@ class listTransportasiUnit extends Component {
                       selectedValue={
                         this.state.Filter.transportType
                           ? this.state.labelseatTypeId == 0
-                            ? "Transportation Type"
+                            ? 'Transportation Type'
                             : this.props.transportTypeFilter[
                                 this.state.labelseatTypeId - 1
                               ].Name
-                          : "Transportation Type"
+                          : 'Transportation Type'
                       }
                       onValueChange={(itemValue, itemIndex) => {
                         this.setState({
                           Filter: {
                             ...this.state.Filter,
-                            transportType: itemValue
+                            transportType: itemValue,
                           },
-                          labelseatTypeId: itemIndex
+                          labelseatTypeId: itemIndex,
                         });
                       }}
                     >
@@ -378,8 +376,8 @@ class listTransportasiUnit extends Component {
                         this.setState({
                           Filter: {
                             ...this.state.Filter,
-                            transportType: itemValue
-                          }
+                            transportType: itemValue,
+                          },
                         });
                       }}
                     >
@@ -403,7 +401,7 @@ class listTransportasiUnit extends Component {
                     heightSepar={1}
                   />
                   <Text>Transportation Capacities</Text>
-                  {Platform.OS === "ios" ? (
+                  {Platform.OS === 'ios' ? (
                     <IOSPicker
                       mode="modal"
                       textStyle={styles.textblack}
@@ -411,19 +409,19 @@ class listTransportasiUnit extends Component {
                       selectedValue={
                         this.state.Filter.transportCapacities
                           ? this.state.labeltypeId == 0
-                            ? "Transportation Capacities"
+                            ? 'Transportation Capacities'
                             : this.props.transportSeatFilter[
                                 this.state.labeltypeId - 1
                               ].Name
-                          : "Transportation Capacities"
+                          : 'Transportation Capacities'
                       }
                       onValueChange={(itemValue, itemIndex) => {
                         this.setState({
                           Filter: {
                             ...this.state.Filter,
-                            transportCapacities: itemValue
+                            transportCapacities: itemValue,
                           },
-                          labeltypeId: itemIndex
+                          labeltypeId: itemIndex,
                         });
                       }}
                     >
@@ -450,8 +448,8 @@ class listTransportasiUnit extends Component {
                         this.setState({
                           Filter: {
                             ...this.state.Filter,
-                            transportCapacities: itemValue
-                          }
+                            transportCapacities: itemValue,
+                          },
                         });
                       }}
                     >
@@ -510,7 +508,7 @@ class listTransportasiUnit extends Component {
               area="istanbul"
               address="Oruç Reis Mahallesi Vadi Caddesi Giyimkent Sitesi Katlı İş Merkezi No:274, Esenler İstanbul Türkiye, 34235, Turki"
             /> */}
-          <Container paddingtopcontainer={Platform.OS === "ios" ? 20 : 40}>
+          <Container paddingtopcontainer={Platform.OS === 'ios' ? 20 : 40}>
             {this.state.listTransport
               .filter(trans => {
                 if (
@@ -519,7 +517,7 @@ class listTransportasiUnit extends Component {
                     trans.TransportationItemServiceTypes[0].ServiceType ==
                       'Transfer') ||
                   trans.TransportationItemServiceTypes[0].ServiceType ==
-                    "Transfer_with_guide"
+                    'Transfer_with_guide'
                 ) {
                   return false;
                 }
@@ -545,11 +543,7 @@ class listTransportasiUnit extends Component {
                     currency={
                       trans.EstimatedTotalPrice
                         ? trans.EstimatedTotalPrice.CurrencyId
-<<<<<<< Updated upstream
-                        : ""
-=======
                         : ''
->>>>>>> Stashed changes
                     }
                   />
                 );
@@ -570,7 +564,7 @@ class listTransportasiUnit extends Component {
             backgroundColor="transparent"
           />
           <SearchBar
-            clearIcon={{color: 'red'}}
+            clearIcon={{ color: 'red' }}
             searchIcon={true}
             onChangeText={this._handleSearch}
             placeholder="Type Here..."
@@ -621,16 +615,20 @@ class listTransportasiUnit extends Component {
 }
 
 const mapStateToProps = state => ({
-  listTransport: state.itemIteneraryReducer.transport,
-  isTransport: state.itemIteneraryReducer.isTransport,
-  transportRatingFilter: state.itemIteneraryReducer.transportRatingFilter,
-  transportSeatFilter: state.itemIteneraryReducer.transportSeatFilter,
-  transportTypeFilter: state.itemIteneraryReducer.transportTypeFilter,
-  DailyProgram: state.cusPackagesReducer.DailyProgram,
+  listTransport: state.transportationReducer.transportationUnitsFilter,
+  isTransport: state.transportationReducer.getTransportationUnitsFilterStatus,
+  transportRatingFilter:
+    state.transportationReducer.transportationProfileRatings,
+  transportSeatFilter: state.transportationReducer.transportationSeatTypes,
+  transportTypeFilter: state.transportationReducer.transportationTypes,
+  DailyProgram: state.transactionReducer.DailyProgram,
   CustomDetails: state.transactionReducer.CustomDetails,
-  Returns: state.cusPackagesReducer.Returns,
-  Departures: state.cusPackagesReducer.Departures,
-  SummaryProgram: state.cusPackagesReducer.SummaryProgram
+  Returns: state.transactionReducer.Returns,
+  Departures: state.transactionReducer.Departures,
+  SummaryProgram: state.transactionReducer.SummaryProgram,
 });
 
-export default connect(mapStateToProps)(listTransportasiUnit);
+export default connect(mapStateToProps, {
+  getTransportationUnitsFilter,
+  resetStatusTransportationUnitsFilter,
+})(listTransportasiUnit);

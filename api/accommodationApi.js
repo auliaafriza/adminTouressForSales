@@ -1,9 +1,16 @@
 import apiClient from './apiClient';
-import {ACCOMMODATION_PROFILE_URL, GET_ACCOMMODATION_ROOMS_URL} from './apiUrl';
+import {
+  ACCOMMODATION_PROFILE_URL,
+  GET_ACCOMMODATION_ROOMS_URL,
+} from './apiUrl';
 
 export const getAccommodationProfileApi = data => {
+  // return apiClient.post(
+  //   `${ACCOMMODATION_PROFILE_URL}/v2/Filter/ShowPrice?cityId=${data.cityId}&ratingId=${data.ratingId}&areaId=${data.areaId}&locationId=${data.locationId}&typeId=${data.typeId}&facilityId=${data.facilityId}&promoOnly=${data.promoOnly}&requestedDate=${data.requestedDate}&useExtraBed=${data.useExtraBed}&useChildExtraBed=${data.useChildExtraBed}&useSharingBed=${data.useSharingBed}&sharingRoomPax=${data.sharingRoomPax}&singleRoomPax=${data.singleRoomPax}&checkOutDate=${data.checkOutDate}`,
+  //   data.dataDemoPrice
+  // );
   return apiClient.post(
-    `${ACCOMMODATION_PROFILE_URL}/v2/Filter/ShowPrice?cityId=${data.cityId}&ratingId=${data.ratingId}&areaId=${data.areaId}&locationId=${data.locationId}&typeId=${data.typeId}&facilityId=${data.facilityId}&promoOnly=${data.promoOnly}&requestedDate=${data.requestedDate}&useExtraBed=${data.useExtraBed}&useChildExtraBed=${data.useChildExtraBed}&useSharingBed=${data.useSharingBed}&sharingRoomPax=${data.sharingRoomPax}&singleRoomPax=${data.singleRoomPax}&checkOutDate=${data.checkOutDate}`,
+    `${ACCOMMODATION_PROFILE_URL}/v2/ByCity/ShowPrice?city=${data.cityId}&requestedDate=${data.requestedDate}&useExtraBed=${data.useExtraBed}&useChildExtraBed=${data.useChildExtraBed}&useSharingBed=${data.useSharingBed}&sharingRoomPax=${data.sharingRoomPax}&singleRoomPax=${data.singleRoomPax}&checkOutDate=${data.checkOutDate}`,
     data.dataDemoPrice
   );
 };

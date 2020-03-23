@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Modal,
@@ -10,13 +10,13 @@ import {
   StatusBar,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Container} from '../../../../../components/container';
+import { Container } from '../../../../../components/container';
 import styles from './styles';
 import stylesGlobal from '../../../../../components/styles';
-import {CardItenary} from '../../../../../components/card';
-import {ModalItinerary, ModalDuration} from '../../../../../components/modal';
+import { CardItenary } from '../../../../../components/card';
+import { ModalItinerary, ModalDuration } from '../../../../../components/modal';
 import moment from 'moment';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   viewTime,
   changeTimeNew,
@@ -25,7 +25,7 @@ import {
   viewDay,
   convertToStringDate,
 } from '../../../../../helper/timeHelper';
-import {isDurationFromText} from '../../../../../helper/checkingHelper';
+import { isDurationFromText } from '../../../../../helper/checkingHelper';
 
 import {
   setSummaryProgramAction,
@@ -47,7 +47,7 @@ import {
   getDrivingAddress,
 } from '../../../../../helper/dailyProgram';
 // import { AmountGuide } from '../../helper/tourGuides';
-import {Loading} from '../../../../../components/loading';
+import { Loading } from '../../../../../components/loading';
 
 import {
   setDrivingAction,
@@ -125,7 +125,7 @@ class TourSchedule extends Component {
 
   getItineraryDay = index => {
     setTimeout(() => {
-      this.scrollerTop.scrollTo({x: w * index - 1});
+      this.scrollerTop.scrollTo({ x: w * index - 1 });
     }, 1);
   };
   componentDidMount() {
@@ -139,7 +139,7 @@ class TourSchedule extends Component {
 
   rmActivity = async (i, j) => {
     let newDP = await deleteActivity(j, i, this.props.DailyProgram);
-    this.setState({loading: true});
+    this.setState({ loading: true });
     newDP = await this.getDriving(newDP, j);
     newDP = await fixafterDelete(this.props.DailyProgram, newDP, j, i);
     await this.props.setDailyProgramAction(newDP);
@@ -148,7 +148,7 @@ class TourSchedule extends Component {
       this.props.SummaryProgram
     );
     this.props.setSummaryProgramAction(SP);
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   openModal = (i, indexDay) => {
@@ -237,10 +237,10 @@ class TourSchedule extends Component {
   };
 
   rmTransport = async (i, indexDay) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     let DP = deleteTransportation(this.props.DailyProgram, indexDay, i);
     await this.props.setDailyProgramAction(DP);
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   addActivity = (par, indexDay) => {
@@ -366,7 +366,7 @@ class TourSchedule extends Component {
               DP[i].Movements[j - 1].Item,
               DP[i].Movements[j + 1].Item
             );
-            item = await getDurationAPI(this.props.token, data);
+            item = await this.props.getDurationAction(data);
             if (item.Duration != undefined) {
               this.props.setDrivingAction(
                 await setObjectDuration(this.props.driving, data, item)
@@ -442,12 +442,12 @@ class TourSchedule extends Component {
   };
 
   hideDateTimePicked = () => {
-    this.setState({startDateTimePickerVisible: false});
+    this.setState({ startDateTimePickerVisible: false });
   };
 
   shouldComponentUpdate(nextProps) {
     if (nextProps.isDataDetail === 'success') {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       this.props.navigation.navigate('masterData', {
         screen: 'DetailAccommodation',
         params: {
@@ -459,7 +459,7 @@ class TourSchedule extends Component {
       return false;
     }
     if (nextProps.isData === 'success') {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       this.props.navigation.navigate('DetailInformation', {
         data: nextProps.dataExcrusion,
         type: this.state.type,
@@ -468,7 +468,7 @@ class TourSchedule extends Component {
       return false;
     }
     if (nextProps.isDataRestaurant === 'success') {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       this.props.navigation.navigate('DetailInformation', {
         data: nextProps.dataRestaurant,
         type: this.state.type,
@@ -480,7 +480,7 @@ class TourSchedule extends Component {
       nextProps.isDataRestaurant === 'failed' ||
       nextProps.isDataRestaurant === 'failed'
     ) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       this.state.type != 'EAT' && this.state.type != 'RECREATION'
         ? this.props.navigation.navigate('masterData', {
             screen: 'DetailAccommodation',
@@ -508,11 +508,11 @@ class TourSchedule extends Component {
     } else {
       this.props.getAccommodationByServiceItemIdAction(ID);
     }
-    this.setState({dataHotel: data, type: type});
+    this.setState({ dataHotel: data, type: type });
   };
 
   handleLeftScroll = i => {
-    this.scrollerTop.scrollTo({x: w * i});
+    this.scrollerTop.scrollTo({ x: w * i });
     this.setState({
       Mov: {
         ...this.state.Mov,
@@ -522,7 +522,7 @@ class TourSchedule extends Component {
   };
 
   handleNextScroll = i => {
-    this.scrollerTop.scrollTo({x: w * i});
+    this.scrollerTop.scrollTo({ x: w * i });
     this.setState({
       Mov: {
         ...this.state.Mov,
@@ -612,7 +612,7 @@ class TourSchedule extends Component {
                 type="edit"
                 onPressClose={this.closeModal}
                 onPressTime={() => {
-                  this.setState({startDateTimePickerVisible: true});
+                  this.setState({ startDateTimePickerVisible: true });
                 }}
                 isEdit={
                   this.state.Mov.ActivityData.MovementName == 'FREETIME'
@@ -650,7 +650,7 @@ class TourSchedule extends Component {
               <ModalDuration
                 onPressClose={this.closeModal}
                 onPressTime={() => {
-                  this.setState({startDateTimePickerVisible: true});
+                  this.setState({ startDateTimePickerVisible: true });
                 }}
                 DateTime={viewTime(this.state.Mov.ActivityData.Startime)}
                 isTimePickerVisible={this.state.startDateTimePickerVisible}
