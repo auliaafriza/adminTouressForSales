@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   Text,
   ScrollView,
@@ -15,13 +15,13 @@ import {
   Dimensions,
 } from 'react-native';
 import IOSPicker from 'react-native-ios-picker';
-import {Container} from '../../../../../components/container';
-import {CardAccomodation} from '../../../../../components/card';
+import { Container } from '../../../../../components/container';
+import { CardAccomodation } from '../../../../../components/card';
 import styles from './styles';
 import stylesGlobal from '../../../../../components/styles';
-// import { RoundedLoading } from "../../../../../components/loading";
-import {SearchBar} from 'react-native-elements';
-import {viewDateSlash} from '../../../../../helper/timeHelper';
+import { RoundedLoading } from '../../../../../components/loading';
+import { SearchBar } from 'react-native-elements';
+import { viewDateSlash } from '../../../../../helper/timeHelper';
 // import {
 //   get_accomodation,
 //   // reset_accomodation_filter,
@@ -40,9 +40,9 @@ import {
   ClearButtonWithIcon,
   NormalButton,
 } from '../../../../../components/button';
-import {Seperator} from '../../../../../components/list';
+import { Seperator } from '../../../../../components/list';
 import IconClose from '../../../../../assets/Icon/close.png';
-import {handleFilterImagePrimary} from '../../../../../helper/checkingHelper';
+import { handleFilterImagePrimary } from '../../../../../helper/checkingHelper';
 import dummyListAccommodation from '../../../../../helper/dummy';
 
 class listAccomodation extends Component {
@@ -55,8 +55,8 @@ class listAccomodation extends Component {
     isAccomodationFilter: PropTypes.string,
   };
 
-  constructor (props) {
-    super (props);
+  constructor(props) {
+    super(props);
     this.state = {
       Filter: {
         ratingId: '',
@@ -100,9 +100,9 @@ class listAccomodation extends Component {
     accommodationLocations: PropTypes.array,
   };
 
-  componentDidMount () {
-    BackHandler.addEventListener ('hardwareBackPress', () => {
-      this.props.navigation.pop (); // works best when the goBack is async
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
 
@@ -144,32 +144,32 @@ class listAccomodation extends Component {
         //tambahan estimated price
         dataDemoPrice: dataDemoPrice,
       };
-      this.props.setCityAccommodationAction (CityId);
-      this.props.getAccommodationProfileAction (data);
-      this.props.getAccommodationFacilitiesAction ();
-      this.props.getAccommodationLocationAction ();
-      this.props.getAccommodationRatingAction ();
-      this.props.getAccommodationTypeAction ();
+      this.props.setCityAccommodationAction(CityId);
+      this.props.getAccommodationProfileAction(data);
+      this.props.getAccommodationFacilitiesAction();
+      this.props.getAccommodationLocationAction();
+      this.props.getAccommodationRatingAction();
+      this.props.getAccommodationTypeAction();
     } else {
       if (this.props.listAccomodation) {
         if (this.props.listAccomodation.AccommodationResults) {
-          this.setState ({
+          this.setState({
             ListAccommodation: this.props.listAccomodation.AccommodationResults,
             loading: false,
           });
         } else {
-          this.props.getAccommodationProfileAction (data);
+          this.props.getAccommodationProfileAction(data);
         }
       } else {
-        this.props.getAccommodationProfileAction (data);
+        this.props.getAccommodationProfileAction(data);
       }
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     if (this.props.isAccomodation === 'success') {
-      this.props.resetAccommodationProfileAction ();
-      this.setState ({
+      this.props.resetAccommodationProfileAction();
+      this.setState({
         loading: false,
         ListAccommodation: this.props.listAccomodation.AccommodationResults,
         accommodationRatings: this.props.listAccomodation.FilterParameters
@@ -183,8 +183,8 @@ class listAccomodation extends Component {
       });
       return false;
     } else if (this.props.isAccomodation === 'failed') {
-      this.props.resetAccommodationProfileAction ();
-      this.setState ({
+      this.props.resetAccommodationProfileAction();
+      this.setState({
         loading: false,
         ListAccommodation: dummyListAccommodation,
       });
@@ -193,29 +193,29 @@ class listAccomodation extends Component {
   }
 
   openModal = () => {
-    this.setState ({modalVisible: true});
+    this.setState({ modalVisible: true });
   };
 
   openModalSort = () => {
-    this.setState ({modalVisibleSort: true});
+    this.setState({ modalVisibleSort: true });
   };
 
   closeModal = () => {
-    this.setState ({modalVisible: false});
-    this.setState ({modalVisibleSort: false});
-    this.setState ({
+    this.setState({ modalVisible: false });
+    this.setState({ modalVisibleSort: false });
+    this.setState({
       ListAccommodation: this.props.listAccomodation.AccommodationResults,
     });
   };
 
   handlePressCustom = () => {
-    this.props.navigation.navigate ('CustomPackageOption', {
+    this.props.navigation.navigate('CustomPackageOption', {
       screen: 'CustomPackageOptionStack',
     });
   };
 
   handlePressDetail = hotel => {
-    this.props.navigation.navigate ('AccomodationDetail', {
+    this.props.navigation.navigate('AccomodationDetail', {
       hotel: hotel,
       Parameter: this.state.Parameter,
     });
@@ -223,18 +223,18 @@ class listAccomodation extends Component {
 
   handleSort = type => {
     if (type === 'High') {
-      this.props.listAccomodation.AccommodationResults.sort (function (a, b) {
+      this.props.listAccomodation.AccommodationResults.sort(function(a, b) {
         if (a.AccommodationRating.Id < b.AccommodationRating.Id) return 1;
         else if (a.AccommodationRating.Id > b.AccommodationRating.Id) return -1;
       });
     }
     if (type === 'Low') {
-      this.props.listAccomodation.AccommodationResults.sort (function (a, b) {
+      this.props.listAccomodation.AccommodationResults.sort(function(a, b) {
         if (a.AccommodationRating.Id < b.AccommodationRating.Id) return -1;
         else if (a.AccommodationRating.Id > b.AccommodationRating.Id) return 1;
       });
     }
-    this.setState ({
+    this.setState({
       modalVisible: false,
       modalVisibleSort: false,
     });
@@ -242,7 +242,7 @@ class listAccomodation extends Component {
 
   handleFilter = value => {
     let updatedList = this.props.listAccomodation.AccommodationResults;
-    updatedList = updatedList.filter (v => {
+    updatedList = updatedList.filter(v => {
       if (v.AccommodationLocations.Id == value.locationsId) {
         return true;
       }
@@ -260,7 +260,7 @@ class listAccomodation extends Component {
       }
       return false;
     });
-    this.setState ({
+    this.setState({
       ListAccommodation: updatedList,
       modalVisible: false,
       modalVisibleSort: false,
@@ -268,20 +268,20 @@ class listAccomodation extends Component {
   };
 
   _handleSearch = value => {
-    this.setState ({searchText: value});
+    this.setState({ searchText: value });
     let updatedList = this.props.listAccomodation.AccommodationResults;
-    updatedList = updatedList.filter (v => {
-      if (v.Name.toLowerCase ().indexOf (value.toLowerCase ()) > -1) {
+    updatedList = updatedList.filter(v => {
+      if (v.Name.toLowerCase().indexOf(value.toLowerCase()) > -1) {
         return true;
       }
       return false;
     });
-    this.setState ({ListAccommodation: updatedList});
+    this.setState({ ListAccommodation: updatedList });
   };
 
-  render () {
+  render() {
     const width90 =
-      Dimensions.get ('window').width - Dimensions.get ('window').width * 0.1;
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.1;
     return (
       <Container>
         <ScrollView
@@ -293,455 +293,457 @@ class listAccomodation extends Component {
               transparent={true}
               visible={this.state.modalVisibleSort || this.state.modalVisible}
               onRequestClose={() => {
-                this.setModalVisible (
+                this.setModalVisible(
                   !this.state.modalVisibleSort || this.state.modalVisible
                 );
               }}
             >
               <View style={styles.modalContainer}>
-                {this.state.modalVisibleSort
-                  ? <View
+                {this.state.modalVisibleSort ? (
+                  <View
+                    style={[styles.innerContainerSort, stylesGlobal.padding20]}
+                  >
+                    <Text
                       style={[
-                        styles.innerContainerSort,
-                        stylesGlobal.padding20,
+                        stylesGlobal.text18,
+                        stylesGlobal.textBold,
+                        stylesGlobal.marginBottom20,
+                        stylesGlobal.marginTop10,
                       ]}
                     >
-                      <Text
-                        style={[
-                          stylesGlobal.text18,
-                          stylesGlobal.textBold,
-                          stylesGlobal.marginBottom20,
-                          stylesGlobal.marginTop10,
-                        ]}
-                      >
-                        Sort
-                      </Text>
-                      <TouchableOpacity
-                        onPress={this.closeModal}
-                        style={[stylesGlobal.containerIcon20, styles.iconClose]}
-                      >
-                        <Image
-                          style={[
-                            stylesGlobal.imageIcon,
-                            stylesGlobal.tintColorRed,
-                          ]}
-                          source={IconClose}
-                          resizeMode="contain"
-                        />
-                      </TouchableOpacity>
-                      <Seperator
-                        colorSepar={styles.$blacklightcolor}
-                        widthsepar="100%"
-                        heightSepar={1}
-                      />
-                      <TouchableOpacity
-                        onPress={() => this.handleSort ('High')}
-                      >
-                        <Text
-                          style={[
-                            stylesGlobal.text14,
-                            stylesGlobal.textBold,
-                            stylesGlobal.marginBottom20,
-                            stylesGlobal.marginTop10,
-                          ]}
-                        >
-                          Highest Star
-                        </Text>
-                      </TouchableOpacity>
-                      <Seperator
-                        colorSepar={styles.$blacklightcolor}
-                        heightSepar={1}
-                        widthsepar="100%"
-                      />
-                      <TouchableOpacity onPress={() => this.handleSort ('Low')}>
-                        <Text
-                          style={[
-                            stylesGlobal.text14,
-                            stylesGlobal.textBold,
-                            stylesGlobal.marginBottom20,
-                            stylesGlobal.marginTop10,
-                          ]}
-                        >
-                          Lower Star
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  : <View
-                      style={[styles.innerContainer, stylesGlobal.padding20]}
+                      Sort
+                    </Text>
+                    <TouchableOpacity
+                      onPress={this.closeModal}
+                      style={[stylesGlobal.containerIcon20, styles.iconClose]}
                     >
+                      <Image
+                        style={[
+                          stylesGlobal.imageIcon,
+                          stylesGlobal.tintColorRed,
+                        ]}
+                        source={IconClose}
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
+                    <Seperator
+                      colorSepar={styles.$blacklightcolor}
+                      widthsepar="100%"
+                      heightSepar={1}
+                    />
+                    <TouchableOpacity onPress={() => this.handleSort('High')}>
                       <Text
                         style={[
-                          stylesGlobal.text18,
+                          stylesGlobal.text14,
                           stylesGlobal.textBold,
                           stylesGlobal.marginBottom20,
                           stylesGlobal.marginTop10,
                         ]}
                       >
-                        Filter
+                        Highest Star
                       </Text>
-                      <TouchableOpacity
-                        onPress={this.closeModal}
-                        style={[stylesGlobal.containerIcon20, styles.iconClose]}
+                    </TouchableOpacity>
+                    <Seperator
+                      colorSepar={styles.$blacklightcolor}
+                      heightSepar={1}
+                      widthsepar="100%"
+                    />
+                    <TouchableOpacity onPress={() => this.handleSort('Low')}>
+                      <Text
+                        style={[
+                          stylesGlobal.text14,
+                          stylesGlobal.textBold,
+                          stylesGlobal.marginBottom20,
+                          stylesGlobal.marginTop10,
+                        ]}
                       >
-                        <Image
-                          style={[
-                            stylesGlobal.imageIcon,
-                            stylesGlobal.tintColorRed,
-                          ]}
-                          source={IconClose}
-                          resizeMode="contain"
+                        Lower Star
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <View style={[styles.innerContainer, stylesGlobal.padding20]}>
+                    <Text
+                      style={[
+                        stylesGlobal.text18,
+                        stylesGlobal.textBold,
+                        stylesGlobal.marginBottom20,
+                        stylesGlobal.marginTop10,
+                      ]}
+                    >
+                      Filter
+                    </Text>
+                    <TouchableOpacity
+                      onPress={this.closeModal}
+                      style={[stylesGlobal.containerIcon20, styles.iconClose]}
+                    >
+                      <Image
+                        style={[
+                          stylesGlobal.imageIcon,
+                          stylesGlobal.tintColorRed,
+                        ]}
+                        source={IconClose}
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
+                    <Text
+                      style={[
+                        stylesGlobal.textSemiBold,
+                        stylesGlobal.marginBottom10,
+                      ]}
+                    >
+                      Location of Accomodation
+                    </Text>
+                    <View
+                      style={[
+                        stylesGlobal.row100,
+                        styles.containerDropDown,
+                        stylesGlobal.marginBottom10,
+                      ]}
+                    >
+                      {Platform.OS === 'ios' ? (
+                        <IOSPicker
+                          mode="modal"
+                          textStyle={styles.textPicker}
+                          style={styles.dropdownIos}
+                          selectedValue={
+                            this.state.Filter.locationsId
+                              ? this.state.labellocationsId == 0
+                                ? 'Location Of Accomodation'
+                                : this.state.accommodationLocations[
+                                    this.state.labellocationsId - 1
+                                  ].Name
+                              : 'Location Of Accomodation'
+                          }
+                          onValueChange={(itemValue, itemIndex) => {
+                            this.setState({
+                              Filter: {
+                                ...this.state.Filter,
+                                locationsId: itemValue,
+                              },
+                              labellocationsId: itemIndex,
+                            });
+                          }}
+                        >
+                          <Picker.Item
+                            label="Location Of Accomodation"
+                            value=""
+                            color={styles.$greylight2color}
+                            style={stylesGlobal.text14}
+                          />
+                          {this.state.accommodationLocations
+                            ? this.state.accommodationLocations.map(
+                                (loc, i) => {
+                                  return (
+                                    <Picker.Item
+                                      label={loc.Name}
+                                      value={loc.Id}
+                                      key={i}
+                                      style={styles.textPicker}
+                                    />
+                                  );
+                                }
+                              )
+                            : null}
+                        </IOSPicker>
+                      ) : (
+                        <Picker
+                          mode="dialog"
+                          textStyle={styles.textPicker}
+                          style={styles.containerDropDownAndroid}
+                          selectedValue={this.state.Filter.locationsId}
+                          onValueChange={itemValue => {
+                            this.setState({
+                              Filter: {
+                                ...this.state.Filter,
+                                locationsId: itemValue,
+                              },
+                            });
+                          }}
+                        >
+                          <Picker.Item
+                            label="Location Of Accomodation"
+                            value=""
+                            color={styles.$greylight2color}
+                            style={stylesGlobal.text14}
+                          />
+                          {this.state.accommodationLocations
+                            ? this.state.accommodationLocations.map(
+                                (loc, i) => {
+                                  return (
+                                    <Picker.Item
+                                      label={loc.Name}
+                                      value={loc.Id}
+                                      key={i}
+                                    />
+                                  );
+                                }
+                              )
+                            : null}
+                        </Picker>
+                      )}
+                    </View>
+                    <Text
+                      style={[
+                        stylesGlobal.textSemiBold,
+                        stylesGlobal.marginBottom10,
+                        stylesGlobal.marginTop10,
+                      ]}
+                    >
+                      Accomodation Of Type
+                    </Text>
+                    <View
+                      style={[
+                        stylesGlobal.row100,
+                        styles.containerDropDown,
+                        stylesGlobal.marginBottom10,
+                      ]}
+                    >
+                      {Platform.OS === 'ios' ? (
+                        <IOSPicker
+                          mode="modal"
+                          textStyle={styles.textPicker}
+                          style={styles.dropdownIos}
+                          selectedValue={
+                            this.state.Filter.typeId
+                              ? this.state.labeltypeId == 0
+                                ? 'Accomodation Of Type'
+                                : this.state.accommodationTypes[
+                                    this.state.labeltypeId - 1
+                                  ].Name
+                              : 'Accomodation Of Type'
+                          }
+                          onValueChange={(itemValue, itemIndex) => {
+                            this.setState({
+                              Filter: {
+                                ...this.state.Filter,
+                                typeId: itemValue,
+                              },
+                              labeltypeId: itemIndex,
+                            });
+                          }}
+                        >
+                          <Picker.Item
+                            label="Accomodation Of Type"
+                            value=""
+                            color={styles.$greylight2color}
+                            style={stylesGlobal.text14}
+                          />
+                          {this.state.accommodationTypes
+                            ? this.state.accommodationTypes.map(
+                                (type, index) => {
+                                  return (
+                                    <Picker.Item
+                                      label={type.Name}
+                                      value={type.Id}
+                                      key={index}
+                                      style={styles.textPicker}
+                                    />
+                                  );
+                                }
+                              )
+                            : null}
+                        </IOSPicker>
+                      ) : (
+                        <Picker
+                          mode="dialog"
+                          textStyle={styles.textPicker}
+                          style={styles.containerDropDownAndroid}
+                          selectedValue={this.state.Filter.typeId}
+                          onValueChange={itemValue => {
+                            this.setState({
+                              Filter: {
+                                ...this.state.Filter,
+                                typeId: itemValue,
+                              },
+                            });
+                          }}
+                        >
+                          <Picker.Item
+                            label="Accomodation Of Type"
+                            value=""
+                            color={styles.$greylight2color}
+                            style={stylesGlobal.text14}
+                          />
+                          {this.state.accommodationTypes
+                            ? this.state.accommodationTypes.map(
+                                (type, index) => {
+                                  return (
+                                    <Picker.Item
+                                      label={type.Name}
+                                      value={type.Id}
+                                      key={index}
+                                    />
+                                  );
+                                }
+                              )
+                            : null}
+                        </Picker>
+                      )}
+                    </View>
+                    <Text
+                      style={[
+                        stylesGlobal.textSemiBold,
+                        stylesGlobal.marginBottom10,
+                        stylesGlobal.marginTop10,
+                      ]}
+                    >
+                      Facilities
+                    </Text>
+                    <View
+                      style={[
+                        stylesGlobal.row100,
+                        styles.containerDropDown,
+                        stylesGlobal.marginBottom10,
+                      ]}
+                    >
+                      {Platform.OS === 'ios' ? (
+                        <IOSPicker
+                          mode="modal"
+                          textStyle={styles.textPicker}
+                          style={styles.dropdownIos}
+                          selectedValue={
+                            this.state.Filter.facilityId
+                              ? this.state.labelfacilityId == 0
+                                ? 'Facilities'
+                                : this.state.accommodationFacilities[
+                                    this.state.labelfacilityId - 1
+                                  ].Name
+                              : 'Facilities'
+                          }
+                          onValueChange={(itemValue, itemIndex) => {
+                            this.setState({
+                              Filter: {
+                                ...this.state.Filter,
+                                facilityId: itemValue,
+                              },
+                              labelfacilityId: itemIndex,
+                            });
+                          }}
+                        >
+                          <Picker.Item
+                            label="Facilities"
+                            value=""
+                            color={styles.$greylight2color}
+                            style={stylesGlobal.text14}
+                          />
+                          {this.state.accommodationFacilities
+                            ? this.state.accommodationFacilities.map(
+                                (fac, i) => {
+                                  return (
+                                    <Picker.Item
+                                      label={fac.Name}
+                                      value={fac.Id}
+                                      key={i}
+                                      style={styles.textPicker}
+                                    />
+                                  );
+                                }
+                              )
+                            : null}
+                        </IOSPicker>
+                      ) : (
+                        <Picker
+                          mode="dialog"
+                          textStyle={styles.textPicker}
+                          style={styles.containerDropDownAndroid}
+                          selectedValue={this.state.Filter.facilityId}
+                          onValueChange={itemValue => {
+                            this.setState({
+                              Filter: {
+                                ...this.state.Filter,
+                                facilityId: itemValue,
+                              },
+                            });
+                          }}
+                        >
+                          <Picker.Item
+                            label="Facilities"
+                            value=""
+                            color={styles.$greylight2color}
+                            style={stylesGlobal.text14}
+                          />
+                          {this.state.accommodationFacilities
+                            ? this.state.accommodationFacilities.map(
+                                (fac, i) => {
+                                  return (
+                                    <Picker.Item
+                                      label={fac.Name}
+                                      value={fac.Id}
+                                      key={i}
+                                    />
+                                  );
+                                }
+                              )
+                            : null}
+                        </Picker>
+                      )}
+                    </View>
+                    <View style={[styles.row100, stylesGlobal.rowEnd]}>
+                      <View
+                        style={[
+                          stylesGlobal.width50,
+                          styles.paddingHorizontal10,
+                        ]}
+                      >
+                        <NormalButton
+                          text="RESET"
+                          buttonWidth="100%"
+                          buttonHeight={35}
+                          buttonColor="white"
+                          textColor={styles.$goldcolor}
+                          colorBorder={styles.$goldcolor}
+                          onPress={this.handleReset}
                         />
-                      </TouchableOpacity>
-                      <Text
-                        style={[
-                          stylesGlobal.textSemiBold,
-                          stylesGlobal.marginBottom10,
-                        ]}
-                      >
-                        Location of Accomodation
-                      </Text>
+                      </View>
                       <View
                         style={[
-                          stylesGlobal.row100,
-                          styles.containerDropDown,
-                          stylesGlobal.marginBottom10,
+                          stylesGlobal.width50,
+                          styles.paddingHorizontal10,
                         ]}
                       >
-                        {Platform.OS === 'ios'
-                          ? <IOSPicker
-                              mode="modal"
-                              textStyle={styles.textPicker}
-                              style={styles.dropdownIos}
-                              selectedValue={
-                                this.state.Filter.locationsId
-                                  ? this.state.labellocationsId == 0
-                                      ? 'Location Of Accomodation'
-                                      : this.state.accommodationLocations[
-                                          this.state.labellocationsId - 1
-                                        ].Name
-                                  : 'Location Of Accomodation'
-                              }
-                              onValueChange={(itemValue, itemIndex) => {
-                                this.setState ({
-                                  Filter: {
-                                    ...this.state.Filter,
-                                    locationsId: itemValue,
-                                  },
-                                  labellocationsId: itemIndex,
-                                });
-                              }}
-                            >
-                              <Picker.Item
-                                label="Location Of Accomodation"
-                                value=""
-                                color={styles.$greylight2color}
-                                style={stylesGlobal.text14}
-                              />
-                              {this.state.accommodationLocations
-                                ? this.state.accommodationLocations.map (
-                                    (loc, i) => {
-                                      return (
-                                        <Picker.Item
-                                          label={loc.Name}
-                                          value={loc.Id}
-                                          key={i}
-                                          style={styles.textPicker}
-                                        />
-                                      );
-                                    }
-                                  )
-                                : null}
-                            </IOSPicker>
-                          : <Picker
-                              mode="dialog"
-                              textStyle={styles.textPicker}
-                              style={styles.containerDropDownAndroid}
-                              selectedValue={this.state.Filter.locationsId}
-                              onValueChange={itemValue => {
-                                this.setState ({
-                                  Filter: {
-                                    ...this.state.Filter,
-                                    locationsId: itemValue,
-                                  },
-                                });
-                              }}
-                            >
-                              <Picker.Item
-                                label="Location Of Accomodation"
-                                value=""
-                                color={styles.$greylight2color}
-                                style={stylesGlobal.text14}
-                              />
-                              {this.state.accommodationLocations
-                                ? this.state.accommodationLocations.map (
-                                    (loc, i) => {
-                                      return (
-                                        <Picker.Item
-                                          label={loc.Name}
-                                          value={loc.Id}
-                                          key={i}
-                                        />
-                                      );
-                                    }
-                                  )
-                                : null}
-                            </Picker>}
+                        <NormalButton
+                          text="DONE"
+                          buttonWidth="100%"
+                          buttonHeight={35}
+                          textColor="white"
+                          buttonColor={styles.$goldcolor}
+                          onPress={() => this.handleFilter(this.state.Filter)}
+                        />
                       </View>
-                      <Text
-                        style={[
-                          stylesGlobal.textSemiBold,
-                          stylesGlobal.marginBottom10,
-                          stylesGlobal.marginTop10,
-                        ]}
-                      >
-                        Accomodation Of Type
-                      </Text>
-                      <View
-                        style={[
-                          stylesGlobal.row100,
-                          styles.containerDropDown,
-                          stylesGlobal.marginBottom10,
-                        ]}
-                      >
-                        {Platform.OS === 'ios'
-                          ? <IOSPicker
-                              mode="modal"
-                              textStyle={styles.textPicker}
-                              style={styles.dropdownIos}
-                              selectedValue={
-                                this.state.Filter.typeId
-                                  ? this.state.labeltypeId == 0
-                                      ? 'Accomodation Of Type'
-                                      : this.state.accommodationTypes[
-                                          this.state.labeltypeId - 1
-                                        ].Name
-                                  : 'Accomodation Of Type'
-                              }
-                              onValueChange={(itemValue, itemIndex) => {
-                                this.setState ({
-                                  Filter: {
-                                    ...this.state.Filter,
-                                    typeId: itemValue,
-                                  },
-                                  labeltypeId: itemIndex,
-                                });
-                              }}
-                            >
-                              <Picker.Item
-                                label="Accomodation Of Type"
-                                value=""
-                                color={styles.$greylight2color}
-                                style={stylesGlobal.text14}
-                              />
-                              {this.state.accommodationTypes
-                                ? this.state.accommodationTypes.map (
-                                    (type, index) => {
-                                      return (
-                                        <Picker.Item
-                                          label={type.Name}
-                                          value={type.Id}
-                                          key={index}
-                                          style={styles.textPicker}
-                                        />
-                                      );
-                                    }
-                                  )
-                                : null}
-                            </IOSPicker>
-                          : <Picker
-                              mode="dialog"
-                              textStyle={styles.textPicker}
-                              style={styles.containerDropDownAndroid}
-                              selectedValue={this.state.Filter.typeId}
-                              onValueChange={itemValue => {
-                                this.setState ({
-                                  Filter: {
-                                    ...this.state.Filter,
-                                    typeId: itemValue,
-                                  },
-                                });
-                              }}
-                            >
-                              <Picker.Item
-                                label="Accomodation Of Type"
-                                value=""
-                                color={styles.$greylight2color}
-                                style={stylesGlobal.text14}
-                              />
-                              {this.state.accommodationTypes
-                                ? this.state.accommodationTypes.map (
-                                    (type, index) => {
-                                      return (
-                                        <Picker.Item
-                                          label={type.Name}
-                                          value={type.Id}
-                                          key={index}
-                                        />
-                                      );
-                                    }
-                                  )
-                                : null}
-                            </Picker>}
-                      </View>
-                      <Text
-                        style={[
-                          stylesGlobal.textSemiBold,
-                          stylesGlobal.marginBottom10,
-                          stylesGlobal.marginTop10,
-                        ]}
-                      >
-                        Facilities
-                      </Text>
-                      <View
-                        style={[
-                          stylesGlobal.row100,
-                          styles.containerDropDown,
-                          stylesGlobal.marginBottom10,
-                        ]}
-                      >
-                        {Platform.OS === 'ios'
-                          ? <IOSPicker
-                              mode="modal"
-                              textStyle={styles.textPicker}
-                              style={styles.dropdownIos}
-                              selectedValue={
-                                this.state.Filter.facilityId
-                                  ? this.state.labelfacilityId == 0
-                                      ? 'Facilities'
-                                      : this.state.accommodationFacilities[
-                                          this.state.labelfacilityId - 1
-                                        ].Name
-                                  : 'Facilities'
-                              }
-                              onValueChange={(itemValue, itemIndex) => {
-                                this.setState ({
-                                  Filter: {
-                                    ...this.state.Filter,
-                                    facilityId: itemValue,
-                                  },
-                                  labelfacilityId: itemIndex,
-                                });
-                              }}
-                            >
-                              <Picker.Item
-                                label="Facilities"
-                                value=""
-                                color={styles.$greylight2color}
-                                style={stylesGlobal.text14}
-                              />
-                              {this.state.accommodationFacilities
-                                ? this.state.accommodationFacilities.map (
-                                    (fac, i) => {
-                                      return (
-                                        <Picker.Item
-                                          label={fac.Name}
-                                          value={fac.Id}
-                                          key={i}
-                                          style={styles.textPicker}
-                                        />
-                                      );
-                                    }
-                                  )
-                                : null}
-                            </IOSPicker>
-                          : <Picker
-                              mode="dialog"
-                              textStyle={styles.textPicker}
-                              style={styles.containerDropDownAndroid}
-                              selectedValue={this.state.Filter.facilityId}
-                              onValueChange={itemValue => {
-                                this.setState ({
-                                  Filter: {
-                                    ...this.state.Filter,
-                                    facilityId: itemValue,
-                                  },
-                                });
-                              }}
-                            >
-                              <Picker.Item
-                                label="Facilities"
-                                value=""
-                                color={styles.$greylight2color}
-                                style={stylesGlobal.text14}
-                              />
-                              {this.state.accommodationFacilities
-                                ? this.state.accommodationFacilities.map (
-                                    (fac, i) => {
-                                      return (
-                                        <Picker.Item
-                                          label={fac.Name}
-                                          value={fac.Id}
-                                          key={i}
-                                        />
-                                      );
-                                    }
-                                  )
-                                : null}
-                            </Picker>}
-                      </View>
-                      <View style={[styles.row100, stylesGlobal.rowEnd]}>
-                        <View
-                          style={[
-                            stylesGlobal.width50,
-                            styles.paddingHorizontal10,
-                          ]}
-                        >
-                          <NormalButton
-                            text="RESET"
-                            buttonWidth="100%"
-                            buttonHeight={35}
-                            buttonColor="white"
-                            textColor={styles.$goldcolor}
-                            colorBorder={styles.$goldcolor}
-                            onPress={this.handleReset}
-                          />
-                        </View>
-                        <View
-                          style={[
-                            stylesGlobal.width50,
-                            styles.paddingHorizontal10,
-                          ]}
-                        >
-                          <NormalButton
-                            text="DONE"
-                            buttonWidth="100%"
-                            buttonHeight={35}
-                            textColor="white"
-                            buttonColor={styles.$goldcolor}
-                            onPress={() =>
-                              this.handleFilter (this.state.Filter)}
-                          />
-                        </View>
-                      </View>
-                    </View>}
+                    </View>
+                  </View>
+                )}
               </View>
             </Modal>
 
-            {this.state.loading
-              ? <View
-                  style={[
-                    stylesGlobal.width100,
-                    stylesGlobal.marginTop10,
-                    stylesGlobal.flexSize,
-                    stylesGlobal.paddingHorizontal20,
-                  ]}
-                >
-                  {/* <RoundedLoading width={width90} height={200} line={10} /> */}
-                </View>
-              : <View
-                  style={[
-                    stylesGlobal.width100,
-                    stylesGlobal.flexSize,
-                    stylesGlobal.rowStart,
-                    stylesGlobal.padding10,
-                  ]}
-                >
-                  <Text style={stylesGlobal.paddingLeft10}>
-                    Accommodation from{' '}
-                    {viewDateSlash (this.state.Parameter.StartDate)} until{' '}
-                    {viewDateSlash (this.state.Parameter.EndDate)}
-                  </Text>
-                </View>}
+            {this.state.loading ? (
+              <View
+                style={[
+                  stylesGlobal.width100,
+                  stylesGlobal.marginTop10,
+                  stylesGlobal.flexSize,
+                  stylesGlobal.paddingHorizontal20,
+                ]}
+              >
+                <RoundedLoading width={width90} height={200} line={10} />
+              </View>
+            ) : (
+              <View
+                style={[
+                  stylesGlobal.width100,
+                  stylesGlobal.flexSize,
+                  stylesGlobal.rowStart,
+                  stylesGlobal.padding10,
+                ]}
+              >
+                <Text style={stylesGlobal.paddingLeft10}>
+                  Accommodation from{' '}
+                  {viewDateSlash(this.state.Parameter.StartDate)} until{' '}
+                  {viewDateSlash(this.state.Parameter.EndDate)}
+                </Text>
+              </View>
+            )}
             <View
               style={[
                 stylesGlobal.width100,
@@ -749,15 +751,15 @@ class listAccomodation extends Component {
                 stylesGlobal.center,
               ]}
             >
-              {this.state.ListAccommodation.map ((hotel, i) => {
+              {this.state.ListAccommodation.map((hotel, i) => {
                 let DataStar = hotel.AccommodationRating || '';
-                let Star = parseInt (DataStar.Id) || '';
+                let Star = parseInt(DataStar.Id) || '';
                 return (
                   <CardAccomodation
                     widthCard="100%"
                     Img={
                       hotel.ProfileImages.length != 0
-                        ? handleFilterImagePrimary (hotel.ProfileImages)
+                        ? handleFilterImagePrimary(hotel.ProfileImages)
                         : hotel.ImageUrl
                     }
                     Title={hotel.Name}
@@ -766,7 +768,7 @@ class listAccomodation extends Component {
                     namabutton="SEE DETAIL"
                     ProfileFacilities={hotel.ProfileFacilities}
                     key={i}
-                    onPress={() => this.handlePressDetail (hotel)}
+                    onPress={() => this.handlePressDetail(hotel)}
                     numberStar={Star}
                     isPromo={hotel.IsPromo}
                     typeCard="Hotel"
@@ -790,7 +792,7 @@ class listAccomodation extends Component {
             backgroundColor="transparent"
           />
           <SearchBar
-            clearIcon={{color: 'red'}}
+            clearIcon={{ color: 'red' }}
             searchIcon={true}
             onChangeText={this._handleSearch}
             placeholder="Type Here..."
@@ -852,7 +854,7 @@ const mapStateToProps = state => ({
   accommodationLocations: state.accommodationReducer.accommodationLocations,
 });
 
-export default connect (mapStateToProps, {
+export default connect(mapStateToProps, {
   getAccommodationProfileAction,
   resetAccommodationProfileAction,
   setCityAccommodationAction,
@@ -860,4 +862,4 @@ export default connect (mapStateToProps, {
   getAccommodationLocationAction,
   getAccommodationRatingAction,
   getAccommodationTypeAction,
-}) (listAccomodation);
+})(listAccomodation);
