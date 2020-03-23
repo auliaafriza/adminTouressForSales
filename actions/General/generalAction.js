@@ -62,9 +62,12 @@ export const getCityInCountryAction = () => {
   };
 };
 
-export const setGuestAction = () => {
-  return {
-    type: SET_GUEST,
+export const setGuestAction = data => {
+  return dispatch => {
+    return dispatch({
+      type: SET_GUEST,
+      payload: data,
+    });
   };
 };
 

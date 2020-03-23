@@ -10,6 +10,7 @@ const initialState = {
   isListCompany: '',
   dataUserIdCompany: [],
   isDataUserIdCompany: '',
+  guestData: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,7 +50,12 @@ const reducer = (state = initialState, action) => {
         loading: false,
         errors: action.payload.response.data,
       };
-
+    case types.SET_GUEST: {
+      return {
+        ...state,
+        guestData: action.payload,
+      };
+    }
     case types.GET_ALL_MOVEMENT_TYPES:
       return { ...state };
     case types.GET_ALL_MOVEMENT_TYPES_PENDING:

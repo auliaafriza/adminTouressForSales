@@ -37,9 +37,9 @@ export const getAccommodationAreaApi = (data, authToken) => {
   return apiClient.get(`/Areas/ByCity?cityId=${data.cityId}`);
 };
 
-export const getAccommodationByIdApi = (data, authToken) => {
+export const getAccommodationByIdApi = (Id, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
-  return apiClient.get(`/AccommodationProfiles?ID=${data.Id}`);
+  return apiClient.get(`/AccommodationProfiles?ID=${Id}`);
 };
 
 export const getAccommodationRoomsApi = (data, authToken) => {

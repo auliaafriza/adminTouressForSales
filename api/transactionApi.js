@@ -75,3 +75,17 @@ export const getTransactionHistoryByStatusApi = (status, authToken) => {
     `${TOUR_TRANSACTION_URL}/TransactionHistory?status=${status}`
   );
 };
+
+export const getDemoJoinTourApi = (id, item, status, authToken) => {
+  const URL =
+    status == 'Fixed'
+      ? '/TourTransactions/JoinTour'
+      : '/TourTransactions/JoinTour/VariableDate';
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.post(`${URL}/${id}`, item);
+};
+
+export const getDemoCreateTour = (item, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.post(`/TourTransactions/DemoPrice`, item);
+};

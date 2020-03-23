@@ -35,6 +35,8 @@ const initialState = {
   packageByIdStatus: null,
   packageHistoryList: [],
   packageHistoryListStatus: '',
+  postDemoStatus: '',
+  postDemo: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -418,6 +420,62 @@ const reducer = (state = initialState, action) => {
         loading: false,
         errors: action.payload.response.data,
       };
+
+    //post demo dan join tour
+    case types.POST_DEMO_JOIN_TOUR:
+      return {
+        ...state,
+      };
+    case types.POST_DEMO_JOIN_TOUR_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.POST_DEMO_JOIN_TOUR_FULFILLED:
+      return {
+        ...state,
+        postDemoStatus: 'success',
+        postDemo: action.payload.data,
+        loading: false,
+        errors: {},
+      };
+    case types.POST_DEMO_JOIN_TOUR_REJECTED:
+      return {
+        ...state,
+        postDemoStatus: 'failed',
+        loading: false,
+        errors: action.payload.response.data,
+      };
+    case types.POST_DEMO_CREATE_TOUR:
+      return {
+        ...state,
+      };
+    case types.POST_DEMO_CREATE_TOUR_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.POST_DEMO_CREATE_TOUR_FULFILLED:
+      return {
+        ...state,
+        postDemoStatus: 'success',
+        postDemo: action.payload.data,
+        loading: false,
+        errors: {},
+      };
+    case types.POST_DEMO_CREATE_TOUR_REJECTED:
+      return {
+        ...state,
+        postDemoStatus: 'failed',
+        loading: false,
+        errors: action.payload.response.data,
+      };
+    case types.RESET_STATUS_POST_DEMO: {
+      return {
+        ...state,
+        postDemoStatus: '',
+      };
+    }
     default:
       return state;
   }

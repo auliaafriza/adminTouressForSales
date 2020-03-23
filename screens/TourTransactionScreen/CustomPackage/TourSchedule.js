@@ -121,6 +121,7 @@ class TourSchedule extends Component {
     dataExcrusion: PropTypes.object,
     isDataRestaurant: PropTypes.string,
     dataRestaurant: PropTypes.object,
+    getDuration: PropTypes.object,
   };
 
   getItineraryDay = index => {
@@ -224,7 +225,13 @@ class TourSchedule extends Component {
         },
       },
     });
-
+    let item = await transactionItem(
+      this.props.DetailCustom,
+      this.props.SummaryProgram,
+      this.props.DailyProgram,
+      this.props.Departures,
+      this.props.Returns
+    );
     this.props.navigation.navigate('masterData', {
       screen: 'ListTransportasiUnit',
       params: {
@@ -232,6 +239,7 @@ class TourSchedule extends Component {
         DP: this.props.DailyProgram,
         dayIndex: indexDay,
         moveIndex: i,
+        Demo: item,
       },
     });
   };
@@ -243,8 +251,15 @@ class TourSchedule extends Component {
     this.setState({ loading: false });
   };
 
-  addActivity = (par, indexDay) => {
+  addActivity = async (par, indexDay) => {
     let typeMov = this.props.MovementList.filter(mov => mov.Name === par);
+    let item = await transactionItem(
+      this.props.DetailCustom,
+      this.props.SummaryProgram,
+      this.props.DailyProgram,
+      this.props.Departures,
+      this.props.Returns
+    );
     this.setState(
       {
         modalVisible: false,
@@ -259,6 +274,7 @@ class TourSchedule extends Component {
             screen: 'ListExcrution',
             params: {
               Mov: this.state.Mov,
+              Demo: item,
             },
           });
         else if (typeMov[0].Name == 'EAT')
@@ -266,6 +282,7 @@ class TourSchedule extends Component {
             screen: 'ListRestaurant',
             params: {
               Mov: this.state.Mov,
+              Demo: item,
             },
           });
         else if (typeMov[0].Name == 'FREETIME') {
@@ -367,6 +384,7 @@ class TourSchedule extends Component {
               DP[i].Movements[j + 1].Item
             );
             item = await this.props.getDurationAction(data);
+            item = this.props.getDuration;
             if (item.Duration != undefined) {
               this.props.setDrivingAction(
                 await setObjectDuration(this.props.driving, data, item)
@@ -1097,6 +1115,7 @@ const mapStateToProps = state => ({
   MovementList: state.generalReducer.allMovementTypes,
   isMovementMode: state.generalReducer.isMovementMode,
   DailyProgram: state.transactionReducer.DailyProgram,
+  getDuration: state.transportationReducer.getDuration,
 });
 
 export default connect(mapStateToProps, {

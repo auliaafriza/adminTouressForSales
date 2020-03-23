@@ -28,7 +28,7 @@ import PropTypes from 'prop-types';
 import IMAGES from '../../../../../assets/images/NoImage.png';
 import {
   getAccommodationByIdAction,
-  getAccommodationRoomsApi,
+  getAccommodationRoomsAction,
 } from '../../../../../actions/accommodation/accommodationAction';
 import {
   locationAccommodation,
@@ -36,7 +36,6 @@ import {
 } from '../../../../../helper/checkingHelper';
 import IconMap from '../../../../../assets/Icon/map_hotel.png';
 import IconMapIOS from '../../../../../assets/Icon/map_hotelIOS.png';
-import { transactionItem } from '../../../../../helper/transactionHelper';
 import { dummyProfileAccommodation } from '../../../../../helper/dummy';
 
 class accomodationDetail extends Component {
@@ -104,14 +103,9 @@ class accomodationDetail extends Component {
       useSharingBed,
       useSharingRoom,
       useSingleRoom,
+      dataDemoPrice,
     } = this.state.Parameter;
-    let item = transactionItem(
-      this.props.CustomDetails,
-      this.props.SummaryProgram,
-      this.props.DailyProgram,
-      this.props.Departures,
-      this.props.Returns
-    );
+
     const data = {
       profileId: this.state.Hotel.Id,
       requestedDate: StartDate,
@@ -122,9 +116,9 @@ class accomodationDetail extends Component {
       sharingRoomPax: useSharingRoom,
       singleRoomPax: useSingleRoom,
       //tambahan estimated price
-      dataDemoPrice: item,
+      dataDemoPrice: dataDemoPrice,
     };
-    this.props.getAccommodationRoomsApi(data);
+    this.props.getAccommodationRoomsAction(data);
     let address = this.state.Hotel.Address ? this.state.Hotel.Address : '';
     address
       ? this.getLocation(address)
@@ -561,5 +555,5 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getAccommodationByIdAction,
-  getAccommodationRoomsApi,
+  getAccommodationRoomsAction,
 })(accomodationDetail);

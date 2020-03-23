@@ -39,6 +39,8 @@ import {
   RESET_POST_QUOTATION,
   SET_SPECIAL_ADJUSMENT,
   GET_TRANSACTION_HISTORY_BY_STATUS,
+  POST_DEMO_JOIN_TOUR,
+  POST_DEMO_CREATE_TOUR,
 } from './actionTypes';
 
 import {
@@ -54,6 +56,8 @@ import {
   postJoinTourApi,
   getTourSummaryByIdApi,
   getTransactionHistoryByStatusApi,
+  getDemoJoinTourApi,
+  getDemoCreateTourApi,
 } from '../../api/transactionApi';
 
 import store from '../../config/store';
@@ -469,5 +473,37 @@ export const getTransactionHistoryByStatusAction = status => {
   return {
     type: GET_TRANSACTION_HISTORY_BY_STATUS,
     payload: getTransactionHistoryByStatusApi(status, authToken),
+  };
+};
+
+export const postDemoJoinTour = (id, item, status) => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
+  return dispatch => {
+    return dispatch({
+      type: POST_DEMO_JOIN_TOUR,
+      payload: getDemoJoinTourApi(id, item, status, authToken),
+    });
+  };
+};
+
+export const postDemoCreateTour = item => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
+  return dispatch => {
+    return dispatch({
+      type: POST_DEMO_CREATE_TOUR,
+      payload: getDemoCreateTourApi(item, authToken),
+    });
+  };
+};
+
+export const resetStatusPostDemo = () => {
+  return dispatch => {
+    return dispatch({
+      type: RESET_STATUS_POST_DEMO,
+    });
   };
 };

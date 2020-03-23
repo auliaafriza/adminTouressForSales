@@ -153,6 +153,7 @@ class AccommodationSummary extends Component {
     cityList: PropTypes.array,
     listAirport: PropTypes.array,
     getAirportData: PropTypes.array,
+    getDuration: PropTypes.object,
   };
 
   constructor(props) {
@@ -749,7 +750,8 @@ class AccommodationSummary extends Component {
               DP[i].Movements[j - 1].Item,
               DP[i].Movements[j + 1].Item
             );
-            item = await this.props.getDurationAction(data); //getDurationAPI(this.props.token, data);
+            item = await this.props.getDurationAction(data);
+            item = this.props.getDuration; //getDurationAPI(this.props.token, data);
             if (item.Duration != undefined) {
               this.props.setDrivingAction(
                 setObjectDuration(this.props.driving, data, item)
@@ -2665,7 +2667,7 @@ const mapStateToProps = state => ({
   driving: state.transportationReducer.driving,
   cityList: state.generalReducer.cityInCountry,
   getAirportData: state.transportationReducer.getAirportData,
-
+  getDuration: state.transportationReducer.getDuration,
   // tourOperatorListError: state.operatorReducer.tourOperatorListError,
   //   airport: state.itemIteneraryReducer.airport,
   //   driving: state.itemIteneraryReducer.driving,

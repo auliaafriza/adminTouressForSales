@@ -203,7 +203,10 @@ class SeriesPackageBooking extends Component {
         Guest: Guests,
       };
       await this.props.setGuestDataAction(data);
-      this.props.navigation.navigate('Guest', { screen: 'GuestList' });
+      this.props.navigation.navigate('Guest', {
+        screen: 'GuestList',
+        params: { type: 'series' },
+      });
     }
   };
 

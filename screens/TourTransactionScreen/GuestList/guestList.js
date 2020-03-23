@@ -21,8 +21,18 @@ import { Card } from '../../../components/card';
 //   post_demo_fix_packages,
 //   reset_post_demo_price,
 // } from '../../actions/fixPackagesAction';
-import { resetTransactionAction } from '../../../actions/Transactions/TransactionAction';
-import { createTransactionItemSeries } from '../../../helper/transactionHelper';
+import {
+  resetTransactionAction,
+  postDemoJoinTour,
+  postDemoCreateTour,
+  resetStatusPostDemo
+} from '../../../actions/Transactions/TransactionAction';
+import {
+  createTransactionItemSeries,
+  transactionItemQuotation,
+  transactionItemDemoFixPrice,
+  transactionItemDemo,
+} from '../../../helper/transactionHelper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ModalBottom } from '../../../components/modal';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
@@ -31,29 +41,7 @@ class guestList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Booking: {
-        GuestAllocation: {},
-        RoomAllocation: {},
-        IsSplitStaffCommission: false,
-        IsPrintInvoice: false,
-        TourNote: '',
-        Guests: null,
-        AdditionalItem: null,
-        Supplements: null,
-        StartDate: new Date(),
-        EndDate: new Date(),
-        // GuestAllocation: this.props.guestData.Booking.GuestAllocation,
-        // RoomAllocation: this.props.guestData.Booking.RoomAllocation,
-        // IsSplitStaffCommission: this.props.guestData.Booking
-        //   .IsSplitStaffCommission,
-        // IsPrintInvoice: this.props.guestData.Booking.IsPrintInvoice,
-        // TourNote: this.props.guestData.Booking.TourNote,
-        // Guests: this.props.guestData.Booking.Guests,
-        // AdditionalItem: this.props.guestData.Booking.AdditionalItem,
-        // Supplements: this.props.guestData.Booking.Supplements,
-        // StartDate: this.props.guestData.Booking.StartDate,
-        // EndDate: this.props.guestData.Booking.EndDate
-      },
+      Booking: null,
       loading: false,
       errorValidation: '',
       changeSplit: '',
@@ -65,15 +53,17 @@ class guestList extends Component {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
-    //  this.setDataGuest(this.props.guestData);
+    this.props.route.params.type == 'series'
+      ? this.setDataGuest(this.props.guestData)
+      : this.setDataCustom();
   }
 
-  componentDidUpdate() {
-    if (this.props.guestData !== null) {
-      this.setDataGuest(this.props.guestData);
-      this.props.resetTransactionAction();
-    }
-  }
+  // componentDidUpdate() {
+  //   if (this.props.guestData !== null) {
+  //     this.setDataGuest(this.props.guestData);
+  //     this.props.resetTransactionAction();
+  //   }
+  // }
 
   setDataGuest = guestData => {
     this.setState({
@@ -89,6 +79,12 @@ class guestList extends Component {
         StartDate: guestData.Booking.StartDate,
         EndDate: guestData.Booking.EndDate,
       },
+    });
+  };
+
+  setDataCustom = () => {
+    this.setState({
+      Booking: this.props.Guest,
     });
   };
 
@@ -121,6 +117,7 @@ class guestList extends Component {
     IdPackages: PropTypes.number,
     ispostDemoFixedPackages: PropTypes.string,
     postDemofixedPackages: PropTypes.string,
+    Guest: PropTypes.object,
   };
 
   addGuest = data => {
@@ -143,12 +140,54 @@ class guestList extends Component {
   handlePressSummary = () => {
     const error = this.validate();
     let item = null;
+    let packageStatus =
+      this.props.route.params.type == 'series'
+        ? 'Fixed'
+        : this.props.DetailCustom.Status;
     if (!error) {
       this.setState({ loading: true });
-      item = createTransactionItemSeries(this.state.Booking);
-      this.props.dispatch(
-        post_demo_fix_packages(this.props.IdPackages, item, packageStatus)
-      );
+      if (this.props.route.params.type == 'series') {
+        item = createTransactionItemSeries(this.state.Booking);
+      } else {
+        if (this.props.DetailCustom.Status == 'edit') {
+          item = await transactionItemQuotation(
+            this.props.DetailCustom,
+            this.props.SummaryProgram,
+            this.props.DailyProgram,
+            this.state.Departures,
+            this.state.Returns,
+            this.state.Guest,
+            this.props.Operator,
+            this.props.AdditionalService
+          );
+        } else if (this.props.DetailCustom.Status == 'FixedDateVariable') {
+            item = await transactionItemDemoFixPrice(
+            this.props.DetailCustom,
+            this.props.DailyProgram,
+            this.state.Guest,
+            this.props.Operator,
+            this.props.AdditionalService
+          );
+        } else {
+          item = await transactionItemDemo(
+            this.props.DetailCustom,
+            this.props.SummaryProgram,
+            this.props.DailyProgram,
+            this.state.Departures,
+            this.state.Returns,
+            this.state.Guest,
+            this.props.Operator,
+            this.props.AdditionalService
+          );
+        }
+      }
+      this.props.route.params.type == 'series' || this.props.DetailCustom.Status == 'FixedDateVariable'
+        ? this.props.postDemoJoinTour(
+            this.props.IdPackages,
+            item,
+            packageStatus
+          )
+        : this.props.postDemoCreateTour(item);
     }
   };
 
@@ -161,11 +200,11 @@ class guestList extends Component {
           Guest: this.state.Booking,
         },
       });
-      this.props.dispatch(reset_post_demo_price());
+      this.props.resetStatusPostDemo();
       return false;
     } else if (nextProps.ispostDemoFixedPackages === 'failed') {
       this.setState({ loading: false });
-      this.props.dispatch(reset_post_demo_price());
+      this.props.resetStatusPostDemo();
       Alert.alert('Failed', nextProps.postDemofixedPackages, [{ text: 'OK' }]);
       return false;
     } else return true;
@@ -634,11 +673,18 @@ class guestList extends Component {
 
 const mapStateToProps = state => ({
   // IdPackages: state.fixPackagesReducer.id,
-  // ispostDemoFixedPackages: state.fixPackagesReducer.ispostDemoFixedPackages,
-  // postDemofixedPackages: state.fixPackagesReducer.postDemofixedPackages,
+  ispostDemoFixedPackages: state.transactionReducer.postDemoStatus,
+  postDemofixedPackages: state.transactionReducer.postDemo,
   guestData: state.transactionReducer.setGuestData,
   packageStatus: state.transactionReducer.packageStatusFromHomeToList,
   setGuestDataStatus: state.transactionReducer.setGuestDataStatus,
+  Guest: state.generalReducer.guestData,
+  IdPackages: state.transactionReducer.packageIdFromSystem,
 });
 
-export default connect(mapStateToProps, { resetTransactionAction })(guestList);
+export default connect(mapStateToProps, {
+  resetTransactionAction,
+  postDemoJoinTour,
+  postDemoCreateTour,
+  resetStatusPostDemo
+})(guestList);

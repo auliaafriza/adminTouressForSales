@@ -32,7 +32,6 @@ import { Seperator } from '../../../../../components/list';
 import { ModalSort } from '../../../../../components/modal/';
 
 import { isThereExcursionMeal } from '../../../../../helper/dailyProgram';
-import { transactionItem } from '../../../../../helper/transactionHelper';
 
 class listTransportasiUnit extends Component {
   static propTypes = {
@@ -98,13 +97,7 @@ class listTransportasiUnit extends Component {
     });
     this.cekHidden();
     let valueTo = this.state.Mov.TypeMovement.to.split(',');
-    let item = transactionItem(
-      this.props.CustomDetails,
-      this.props.SummaryProgram,
-      this.props.DailyProgram,
-      this.props.Departures,
-      this.props.Returns
-    );
+    let item = this.props.route.params.Demo ? this.props.route.params.Demo : [];
     const data = {
       fromCity: this.state.Mov.TypeMovement.from,
       toCities: valueTo[0],
@@ -151,6 +144,7 @@ class listTransportasiUnit extends Component {
       hiddenTransfer: this.state.hiddenTransfer,
       dayIndex: this.props.route.params.dayIndex,
       moveIndex: this.props.route.params.moveIndex,
+      Demo: this.props.route.params.Demo,
     });
   };
 

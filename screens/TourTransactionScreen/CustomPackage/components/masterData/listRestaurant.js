@@ -31,7 +31,6 @@ import {
 import { convertToStringDate } from '../../../../../helper/timeHelper';
 import { Seperator } from '../../../../../components/list';
 import { handleFilterImagePrimary } from '../../../../../helper/checkingHelper';
-import { transactionItem } from '../../../../../helper/transactionHelper';
 
 class listRestaurant extends Component {
   static propTypes = {
@@ -96,13 +95,7 @@ class listRestaurant extends Component {
     } = this.state.Filter;
     const { dayIndex, indexMov } = this.state.Mov;
     const { GuestAllocation } = this.props.CustomDetails;
-    let item = transactionItem(
-      this.props.CustomDetails,
-      this.props.SummaryProgram,
-      this.props.DailyProgram,
-      this.props.Departures,
-      this.props.Returns
-    );
+    let item = this.props.route.params.Demo ? this.props.route.params.Demo : [];
     const data = {
       cityId: this.props.DailyProgram[dayIndex].Movements[indexMov].Destination,
       ratingIds: ratingIds,
@@ -150,6 +143,7 @@ class listRestaurant extends Component {
         this.props.navigation.navigate('RestaurantDetail', {
           Mov: this.state.Mov,
           Id: item.Id,
+          Demo: this.props.route.params.Demo,
         });
       }
     );

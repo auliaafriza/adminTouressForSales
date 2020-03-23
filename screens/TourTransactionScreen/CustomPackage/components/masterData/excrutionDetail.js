@@ -71,6 +71,7 @@ class excrutionDetail extends Component {
     MovementList: PropTypes.array,
     token: PropTypes.string,
     driving: PropTypes.array,
+    getDuration: PropTypes.object,
   };
 
   constructor(props) {
@@ -254,6 +255,7 @@ class excrutionDetail extends Component {
               DP[i].Movements[j + 1].Item
             );
             item = await this.props.getDurationAction(data);
+            item = this.props.getDuration;
             if (item.Duration != undefined) {
               await this.props.setDrivingAction(
                 setObjectDuration(this.props.driving, data, item)
@@ -715,6 +717,7 @@ const mapStateToProps = state => ({
   dailyProgram: state.transactionReducer.DailyProgram,
   MovementList: state.generalReducer.allMovementTypes,
   driving: state.transactionReducer.driving,
+  getDuration: state.transportationReducer.getDuration,
   // token: state.userAuthReducer.token,
 });
 

@@ -58,6 +58,7 @@ class restaurantDetail extends Component {
     token: PropTypes.string,
     driving: PropTypes.array,
     data: PropTypes.array,
+    getDuration: PropTypes.object,
   };
 
   constructor(props) {
@@ -207,6 +208,7 @@ class restaurantDetail extends Component {
               DP[i].Movements[j + 1].Item
             );
             item = await this.props.getDurationAction(data);
+            item = this.props.getDuration;
             if (item.Duration != undefined) {
               await this.props.setDrivingAction(
                 setObjectDuration(this.props.driving, data, item)
@@ -693,6 +695,7 @@ const mapStateToProps = state => ({
   SummaryProgram: state.transactionReducer.SummaryProgram,
   MovementList: state.generalReducer.movementMode,
   driving: state.transactionReducer.driving,
+  getDuration: state.transportationReducer.getDuration,
   // token: state.userAuthReducer.token,
 });
 

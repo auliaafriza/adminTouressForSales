@@ -163,7 +163,10 @@ class tourOperatorList extends Component {
     }
     await this.props.setGuestAction(Guests);
     // this.setState({ loading: false });
-    this.props.navigation.navigate('Guest', { screen: 'GuestList' });
+    this.props.navigation.navigate('Guest', {
+      screen: 'GuestList',
+      params: { type: 'custom' },
+    });
   };
   render() {
     return (

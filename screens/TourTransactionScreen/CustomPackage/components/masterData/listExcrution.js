@@ -37,7 +37,6 @@ import {
 import { Seperator } from '../../../../../components/list';
 import { copyObject } from '../../../../../helper/dailyProgram';
 import { handleFilterImagePrimary } from '../../../../../helper/checkingHelper';
-import { transactionItem } from '../../../../../helper/transactionHelper';
 
 class listExcrution extends Component {
   static propTypes = {
@@ -124,6 +123,7 @@ class listExcrution extends Component {
           this.props.navigation.navigate('ExcrutionDetail', {
             Id: att.ServiceItemId,
             Mov: this.state.Mov,
+            Demo: this.props.route.params.Demo,
           });
         }
       } else if (inArr >= 0 && inDep < 0) {
@@ -134,6 +134,7 @@ class listExcrution extends Component {
           this.props.navigation.navigate('ExcrutionDetail', {
             Id: att.ServiceItemId,
             Mov: this.state.Mov,
+            Demo: this.props.route.params.Demo,
           });
         } else
           Alert.alert(
@@ -165,6 +166,7 @@ class listExcrution extends Component {
             this.props.navigation.navigate('ExcrutionDetail', {
               Id: att.ServiceItemId,
               Mov: this.state.Mov,
+              Demo: this.props.route.params.Demo,
             });
           }
         } else if (inArr < this.state.Mov.indexMov) {
@@ -175,6 +177,7 @@ class listExcrution extends Component {
             this.props.navigation.navigate('ExcrutionDetail', {
               Id: att.ServiceItemId,
               Mov: this.state.Mov,
+              Demo: this.props.route.params.Demo,
             });
           } else
             Alert.alert(
@@ -190,18 +193,21 @@ class listExcrution extends Component {
           this.props.navigation.navigate('ExcrutionDetail', {
             Id: att.ServiceItemId,
             Mov: this.state.Mov,
+            Demo: this.props.route.params.Demo,
           });
         }
       } else {
         this.props.navigation.navigate('ExcrutionDetail', {
           Id: att.ServiceItemId,
           Mov: this.state.Mov,
+          Demo: this.props.route.params.Demo,
         });
       }
     } else {
       this.props.navigation.navigate('ExcrutionDetail', {
         Id: att.ServiceItemId,
         Mov: this.state.Mov,
+        Demo: this.props.route.params.Demo,
       });
     }
   };
@@ -213,13 +219,7 @@ class listExcrution extends Component {
     });
     const { dayIndex, indexMov } = this.state.Mov;
     const { GuestAllocation } = this.props.CustomDetails;
-    let item = transactionItem(
-      this.props.CustomDetails,
-      this.props.SummaryProgram,
-      this.props.DailyProgram,
-      this.props.Departures,
-      this.props.Returns
-    );
+    let item = this.props.route.params.Demo ? this.props.route.params.Demo : [];
     const data = {
       cityId: this.props.DailyProgram[dayIndex].Movements[indexMov].Destination,
       attractionTypeId: this.state.Filter.typeId,
