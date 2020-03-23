@@ -62,6 +62,7 @@ import {
 import SegmentTourNote from './components/segmentTourNote';
 import dummayDemo from './components/orderedItemDetail/demoPrice';
 import SegmentSpecialAdjusment from './components/segmentSpecialAdjusment';
+import { RoundedLoading } from '../../../components/loading';
 
 class summaryCustom extends Component {
   constructor(props) {
@@ -81,7 +82,9 @@ class summaryCustom extends Component {
       modalNoteVisible: false,
       modalQuotationSaved: false,
       isQuotationSave: false,
-      specialAdjusment: this.props.specialAdjusment,
+      specialAdjusment: this.props.specialAdjusment
+        ? this.props.specialAdjusment
+        : [],
     };
   }
   static propTypes = {
@@ -111,7 +114,9 @@ class summaryCustom extends Component {
       return true;
     });
     const id = this.props.route.params.id;
-    const type = this.props.route.params.type;
+    const type = this.props.route.params.type
+      ? this.props.route.params.type
+      : '';
     if (type === 'myBooking') {
       this.props.getTourSummaryByIdAction(id);
     } else {
@@ -311,9 +316,17 @@ class summaryCustom extends Component {
     });
   };
 
-  handlePressSpecialAdjusmentDetail = () => {
+  handlePressSpecialAdjusmentDetail = async () => {
     this.props.navigation.navigate('SpecialAdjusmentDetail', {
-      data: this.props.specialAdjusment,
+      data: this.state.specialAdjusment,
+      // onUpdate: handleSetSpecialAdjusment()
+      onUpdate: await this.handleSetSpecialAdjusment,
+    });
+  };
+
+  handleSetSpecialAdjusment = async specialAdjusment => {
+    await this.setState({
+      specialAdjusment,
     });
   };
   render() {
@@ -326,6 +339,7 @@ class summaryCustom extends Component {
         : dummayDemo;
     const modalNoteHeight = Dimensions.get('window').height * 0.7;
     const generateOrderItemData = generateOrderedItem(Data.DailyPrograms);
+    const type = this.props.route.params.type;
     // const generateGuestData = generateGuestList(Data.TourGuestSum);
     return (
       <Container>
@@ -489,112 +503,125 @@ class summaryCustom extends Component {
             </View>
           </View>
         </ModalBottom>
-
-        <ScrollView
-          style={[
-            styles.containerScroll,
-            stylesGlobal.paddingTop20,
-            styles.paddingBottom120,
-          ]}
-        >
-          <Container>
-            <View style={[styles.colNoPadding, stylesGlobal.alignItemsStart]}>
-              <Text
-                style={[
-                  styles.text16Gold,
-                  styles.colPadding20,
-                  stylesGlobal.marginBottom10,
-                ]}
-              >
-                Please recheck your order before payment
-              </Text>
-              <Text
-                style={[
-                  styles.colPadding20,
-                  styles.bold16,
-                  stylesGlobal.marginBottom10,
-                ]}
-              >
-                {Data.BookingDetailSum
-                  ? Data.BookingDetailSum.TourOperatorProfile
-                    ? Data.BookingDetailSum.TourOperatorProfile.Name
-                    : ''
-                  : ''}
-              </Text>
-              <Text style={[styles.colPadding20, styles.bold14]}>
-                Total Payable
-              </Text>
-            </View>
-            <View style={[styles.rowNoPadding, styles.marginTopnegatif10]}>
-              <View style={styles.col70}>
+        {this.props.loading ? (
+          <View style={stylesGlobal.marginTop50}>
+            <RoundedLoading
+              width={stylesGlobal.width90}
+              height={200}
+              line={10}
+            />
+          </View>
+        ) : (
+          <ScrollView
+            style={[
+              styles.containerScroll,
+              stylesGlobal.paddingTop20,
+              styles.paddingBottom120,
+            ]}
+          >
+            <Container>
+              <View style={[styles.colNoPadding, stylesGlobal.alignItemsStart]}>
                 <Text
-                  style={[styles.colPadding20, stylesGlobal.alignContentStart]}
+                  style={[
+                    styles.text16Gold,
+                    styles.colPadding20,
+                    stylesGlobal.marginBottom10,
+                  ]}
                 >
-                  <Text
-                    style={[
-                      stylesGlobal.textBold,
-                      stylesGlobal.text20,
-                      stylesGlobal.paddingLeft5,
-                    ]}
-                  >
-                    {Data.BookingDetailSum
-                      ? Data.BookingDetailSum.CurrencyId
-                      : ''}
-                  </Text>
-                  <Text style={styles.text40Bold}>
-                    {Data.BookingDetailSum
-                      ? convertRoundPrice(
-                          Data.BookingDetailSum.TourTotalPrice,
-                          Data.BookingDetailSum.CurrencyId
-                        )
-                      : ''}
-                  </Text>
+                  Please recheck your order before payment
                 </Text>
-              </View>
-              <View style={styles.col30}>
                 <Text
                   style={[
                     styles.colPadding20,
-                    stylesGlobal.borderRadius10,
-                    stylesGlobal.backgroundColorGold,
-                    styles.paddingHorizontal15,
-                    stylesGlobal.hidden,
+                    styles.bold16,
+                    stylesGlobal.marginBottom10,
                   ]}
                 >
-                  UNPAID
+                  {Data.BookingDetailSum
+                    ? Data.BookingDetailSum.TourOperatorProfile
+                      ? Data.BookingDetailSum.TourOperatorProfile.Name
+                      : ''
+                    : ''}
+                </Text>
+                <Text style={[styles.colPadding20, styles.bold14]}>
+                  Total Payable
                 </Text>
               </View>
-            </View>
-            <View style={[styles.colNoPadding, styles.containerDataTour]}>
-              <Text style={[styles.text16, stylesGlobal.textAlignCenter]}>
-                This Booking will be expired on
-              </Text>
-              <Text style={[styles.bold16, stylesGlobal.textAlignCenter]}>
-                {moment(Data.BookingDetailSum.PaymentTerms[0].DueDate).format(
-                  'DD MMM YYYY'
-                )}
-              </Text>
-            </View>
-            <View style={[styles.colNoPadding, stylesGlobal.alignItemsCenter]}>
-              <Card widthCard="90%">
-                <Text
-                  style={[
-                    stylesGlobal.paddingHorizontal20,
-                    styles.bold20,
-                    stylesGlobal.paddingTop20,
-                  ]}
-                >
-                  Tour Detail
-                </Text>
-                <View style={[stylesGlobal.width100, stylesGlobal.hidden]}>
-                  <SeperatorRepeat
-                    repeat={31}
-                    widthsepar={8}
-                    heightSepar={1}
-                    colorSepar="#777"
-                  />
+              <View style={[styles.rowNoPadding, styles.marginTopnegatif10]}>
+                <View style={styles.col70}>
+                  <Text
+                    style={[
+                      styles.colPadding20,
+                      stylesGlobal.alignContentStart,
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        stylesGlobal.textBold,
+                        stylesGlobal.text20,
+                        stylesGlobal.paddingLeft5,
+                      ]}
+                    >
+                      {Data.BookingDetailSum
+                        ? Data.BookingDetailSum.CurrencyId
+                        : ''}
+                    </Text>
+                    <Text style={styles.text40Bold}>
+                      {Data.BookingDetailSum
+                        ? convertRoundPrice(
+                            Data.BookingDetailSum.TourTotalPrice,
+                            Data.BookingDetailSum.CurrencyId
+                          )
+                        : ''}
+                    </Text>
+                  </Text>
                 </View>
-                {/* <View
+                <View style={styles.col30}>
+                  <Text
+                    style={[
+                      styles.colPadding20,
+                      stylesGlobal.borderRadius10,
+                      stylesGlobal.backgroundColorGold,
+                      styles.paddingHorizontal15,
+                      stylesGlobal.hidden,
+                    ]}
+                  >
+                    UNPAID
+                  </Text>
+                </View>
+              </View>
+              <View style={[styles.colNoPadding, styles.containerDataTour]}>
+                <Text style={[styles.text16, stylesGlobal.textAlignCenter]}>
+                  This Booking will be expired on
+                </Text>
+                <Text style={[styles.bold16, stylesGlobal.textAlignCenter]}>
+                  {moment(Data.BookingDetailSum.PaymentTerms[0].DueDate).format(
+                    'DD MMM YYYY'
+                  )}
+                </Text>
+              </View>
+              <View
+                style={[styles.colNoPadding, stylesGlobal.alignItemsCenter]}
+              >
+                <Card widthCard="90%">
+                  <Text
+                    style={[
+                      stylesGlobal.paddingHorizontal20,
+                      styles.bold20,
+                      stylesGlobal.paddingTop20,
+                    ]}
+                  >
+                    Tour Detail
+                  </Text>
+                  <View style={[stylesGlobal.width100, stylesGlobal.hidden]}>
+                    <SeperatorRepeat
+                      repeat={31}
+                      widthsepar={8}
+                      heightSepar={1}
+                      colorSepar="#777"
+                    />
+                  </View>
+                  {/* <View
                   style={[
                     styles.row100,
                     stylesGlobal.paddingHorizontal20,
@@ -613,517 +640,129 @@ class summaryCustom extends Component {
                     </Text>
                   </View>
                 </View> */}
-                <View
-                  style={[
-                    styles.row100,
-                    stylesGlobal.paddingHorizontal20,
-                    stylesGlobal.marginBottom10,
-                  ]}
-                >
-                  <View style={styles.col30}>
-                    <Text style={styles.text16}>Tour Name </Text>
-                  </View>
-                  <View style={styles.col5}>
-                    <Text style={styles.text16}>:</Text>
-                  </View>
-                  <View style={[styles.col65, stylesGlobal.alignItemsEnd]}>
-                    <Text style={styles.text16}>
-                      {Data.BookingDetailSum ? Data.BookingDetailSum.Title : ''}
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={[
-                    styles.rowNoPadding,
-                    styles.colPadding20,
-                    stylesGlobal.marginBottom10,
-                  ]}
-                >
-                  <View style={styles.col30}>
-                    <Text style={styles.text16}>Date </Text>
-                  </View>
-                  <View style={styles.col5}>
-                    <Text style={styles.text16}>:</Text>
-                  </View>
-                  <View style={[styles.col65, stylesGlobal.alignItemsEnd]}>
-                    <Text style={styles.text16}>
-                      {Data.BookingDetailSum
-                        ? moment(Data.BookingDetailSum.StartDate).format(
-                            'DD MMM'
-                          )
-                        : ''}
-                      -{' '}
-                      {Data.BookingDetailSum
-                        ? moment(Data.BookingDetailSum.EndDate).format(
-                            'DD MMM YYYY'
-                          )
-                        : ''}
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={[
-                    styles.rowNoPadding,
-                    styles.colPadding20,
-                    stylesGlobal.marginBottom10,
-                  ]}
-                >
-                  <View style={styles.col30}>
-                    <Text style={styles.text16}>Destination</Text>
-                  </View>
-                  <View style={styles.col5}>
-                    <Text style={styles.text16}>:</Text>
-                  </View>
-                  <View style={[styles.col65, stylesGlobal.alignItemsEnd]}>
-                    <Text style={styles.text16}>
-                      {Data.BookingDetailSum
-                        ? Data.BookingDetailSum.City
-                          ? Data.BookingDetailSum.City.Name
-                          : ''
-                        : ''}
-                      ,
-                      {Data.BookingDetailSum
-                        ? Data.BookingDetailSum.Country
-                          ? Data.BookingDetailSum.Country.Name
-                          : ''
-                        : ''}
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={[
-                    styles.rowNoPadding,
-                    styles.colPadding20,
-                    stylesGlobal.marginBottom10,
-                  ]}
-                >
-                  <View style={styles.col30}>
-                    <Text style={styles.text16}>Total Guest</Text>
-                  </View>
-                  <View style={styles.col5}>
-                    <Text style={styles.text16}>:</Text>
-                  </View>
-                  <View style={[styles.col65, stylesGlobal.alignItemsEnd]}>
-                    <Text style={styles.text16}>
-                      {Data.BookingDetailSum
-                        ? Data.BookingDetailSum.TotalGuest
-                        : ''}{' '}
-                      Guest
-                    </Text>
-                  </View>
-                </View>
-              </Card>
-              <Card widthCard="90%">
-                <Text
-                  style={[
-                    styles.colPadding20,
-                    styles.bold20,
-                    stylesGlobal.paddingTop20,
-                  ]}
-                >
-                  Payment
-                </Text>
-                <View style={[stylesGlobal.width100, stylesGlobal.hidden]}>
-                  <SeperatorRepeat
-                    repeat={31}
-                    widthsepar={8}
-                    heightSepar={1}
-                    colorSepar="#777"
-                  />
-                </View>
-                {Data.BookingDetailSum
-                  ? Data.BookingDetailSum.PaymentTerms
-                    ? Data.BookingDetailSum.PaymentTerms.map((pay, i) => {
-                        return (
-                          <View
-                            style={[
-                              styles.rowNoPadding,
-                              styles.colPadding20,
-                              stylesGlobal.marginBottom10,
-                            ]}
-                            key={i}
-                          >
-                            <View style={stylesGlobal.width70}>
-                              <Text style={styles.text16}>
-                                {i + 1}. {pay.Description} (
-                                {pay.PaymentPercentage}%)
-                              </Text>
-                              <Text style={styles.text14Red}>
-                                Expired date:{' '}
-                                {moment(pay.DueDate).format('DD MMM YYYY')}
-                              </Text>
-                            </View>
-                            <View
-                              style={[styles.col30, stylesGlobal.alignItemsEnd]}
-                            >
-                              <Text style={styles.bold16}>
-                                {pay.CurrencyId}{' '}
-                                {convertRoundPrice(
-                                  pay.PaymentValue,
-                                  pay.CurrencyId
-                                )}
-                              </Text>
-                            </View>
-                          </View>
-                        );
-                      })
-                    : null
-                  : null}
-              </Card>
-              <Card widthCard="90%">
-                <Text
-                  style={[
-                    styles.colPadding20,
-                    styles.bold20,
-                    stylesGlobal.paddingTop20,
-                  ]}
-                >
-                  Price Detail
-                </Text>
-                <View style={[stylesGlobal.width100, stylesGlobal.hidden]}>
-                  <SeperatorRepeat
-                    repeat={31}
-                    widthsepar={8}
-                    heightSepar={1}
-                    colorSepar="#777"
-                  />
-                </View>
-                {Data.TourPriceSum ? (
-                  Data.TourPriceSum.SharingRoomSum.Pax != 0 ? (
-                    <View
-                      style={[
-                        styles.rowNoPadding,
-                        styles.colPadding20,
-                        stylesGlobal.marginBottom10,
-                      ]}
-                    >
-                      <View style={styles.col45}>
-                        <Text style={styles.text16}>Sharing Room</Text>
-                        <Text style={styles.text14Red}>
-                          {Data.TourPriceSum.SharingRoomSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.SharingRoomSum.PricePerPax,
-                            Data.TourPriceSum.SharingRoomSum.Currency
-                          )}
-                          /Pax
-                        </Text>
-                      </View>
-                      <View style={styles.col15}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.SharingRoomSum.Pax} Pax
-                        </Text>
-                      </View>
-                      <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.SharingRoomSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.SharingRoomSum.TotalPrice,
-                            Data.TourPriceSum.SharingRoomSum.Currency
-                          )}
-                        </Text>
-                      </View>
+                  <View
+                    style={[
+                      styles.row100,
+                      stylesGlobal.paddingHorizontal20,
+                      stylesGlobal.marginBottom10,
+                    ]}
+                  >
+                    <View style={styles.col30}>
+                      <Text style={styles.text16}>Tour Name </Text>
                     </View>
-                  ) : null
-                ) : null}
-
-                {Data.TourPriceSum ? (
-                  Data.TourPriceSum.SingleRoomSum.Pax != 0 ? (
-                    <View
-                      style={[
-                        styles.rowNoPadding,
-                        styles.colPadding20,
-                        stylesGlobal.marginBottom10,
-                      ]}
-                    >
-                      <View style={styles.col45}>
-                        <Text style={styles.text16}>Single Room</Text>
-                        <Text style={styles.text14Red}>
-                          {Data.TourPriceSum.SingleRoomSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.SingleRoomSum.PricePerPax,
-                            Data.TourPriceSum.SingleRoomSum.Currency
-                          )}
-                          /Pax
-                        </Text>
-                      </View>
-                      <View style={styles.col15}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.SingleRoomSum.Pax} Pax
-                        </Text>
-                      </View>
-                      <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.SingleRoomSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.SingleRoomSum.TotalPrice,
-                            Data.TourPriceSum.SingleRoomSum.Currency
-                          )}
-                        </Text>
-                      </View>
+                    <View style={styles.col5}>
+                      <Text style={styles.text16}>:</Text>
                     </View>
-                  ) : null
-                ) : null}
-
-                {Data.TourPriceSum ? (
-                  Data.TourPriceSum.ChildExtraBedSum.Pax != 0 ? (
-                    <View
-                      style={[
-                        styles.rowNoPadding,
-                        styles.colPadding20,
-                        stylesGlobal.marginBottom10,
-                      ]}
-                    >
-                      <View style={styles.col45}>
-                        <Text style={styles.text16}>Sharing Room</Text>
-                        <Text style={styles.text14Red}>
-                          {Data.TourPriceSum.ChildExtraBedSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.ChildExtraBedSum.PricePerPax,
-                            Data.TourPriceSum.ChildExtraBedSum.Currency
-                          )}
-                          /Pax
-                        </Text>
-                      </View>
-                      <View style={styles.col15}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.ChildExtraBedSum.Pax} Pax
-                        </Text>
-                      </View>
-                      <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.ChildExtraBedSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.ChildExtraBedSum.TotalPrice,
-                            Data.TourPriceSum.ChildExtraBedSum.Currency
-                          )}
-                        </Text>
-                      </View>
+                    <View style={[styles.col65, stylesGlobal.alignItemsEnd]}>
+                      <Text style={styles.text16}>
+                        {Data.BookingDetailSum
+                          ? Data.BookingDetailSum.Title
+                          : ''}
+                      </Text>
                     </View>
-                  ) : null
-                ) : null}
-
-                {Data.TourPriceSum ? (
-                  Data.TourPriceSum.ChildSharingRoomSum.Pax != 0 ? (
-                    <View
-                      style={[
-                        styles.rowNoPadding,
-                        styles.colPadding20,
-                        stylesGlobal.marginBottom10,
-                      ]}
-                    >
-                      <View style={styles.col45}>
-                        <Text>Child Sharing Room</Text>
-                        <Text style={styles.text14Red}>
-                          {Data.TourPriceSum.ChildSharingRoomSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.ChildSharingRoomSum.PricePerPax,
-                            Data.TourPriceSum.ChildSharingRoomSum.Currency
-                          )}
-                          /Pax
-                        </Text>
-                      </View>
-                      <View style={styles.col15}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.ChildSharingRoomSum.Pax} Pax
-                        </Text>
-                      </View>
-                      <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.ChildSharingRoomSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.ChildSharingRoomSum.TotalPrice,
-                            Data.TourPriceSum.ChildSharingRoomSum.Currency
-                          )}
-                        </Text>
-                      </View>
+                  </View>
+                  <View
+                    style={[
+                      styles.rowNoPadding,
+                      styles.colPadding20,
+                      stylesGlobal.marginBottom10,
+                    ]}
+                  >
+                    <View style={styles.col30}>
+                      <Text style={styles.text16}>Date </Text>
                     </View>
-                  ) : null
-                ) : null}
-
-                {Data.TourPriceSum ? (
-                  Data.TourPriceSum.ChildSingleRoomSum.Pax != 0 ? (
-                    <View
-                      style={[
-                        styles.rowNoPadding,
-                        styles.colPadding20,
-                        stylesGlobal.marginBottom10,
-                      ]}
-                    >
-                      <View style={styles.col45}>
-                        <Text style={styles.text16}>Child Single Room</Text>
-                        <Text style={styles.text14Red}>
-                          {Data.TourPriceSum.ChildSingleRoomSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.ChildSingleRoomSum.PricePerPax,
-                            Data.TourPriceSum.ChildSingleRoomSum.Currency
-                          )}
-                          /Pax
-                        </Text>
-                      </View>
-                      <View style={styles.col15}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.ChildSingleRoomSum.Pax} Pax
-                        </Text>
-                      </View>
-                      <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.ChildSingleRoomSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.ChildSingleRoomSum.TotalPrice,
-                            Data.TourPriceSum.ChildSingleRoomSum.Currency
-                          )}
-                        </Text>
-                      </View>
+                    <View style={styles.col5}>
+                      <Text style={styles.text16}>:</Text>
                     </View>
-                  ) : null
-                ) : null}
-
-                {Data.TourPriceSum ? (
-                  Data.TourPriceSum.ExtraBedSum.Pax != 0 ? (
-                    <View
-                      style={[
-                        styles.rowNoPadding,
-                        styles.colPadding20,
-                        stylesGlobal.marginBottom10,
-                      ]}
-                    >
-                      <View style={styles.col45}>
-                        <Text style={styles.text16}>Extra Bed</Text>
-                        <Text style={styles.text14Red}>
-                          {Data.TourPriceSum.ExtraBedSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.ExtraBedSum.PricePerPax,
-                            Data.TourPriceSum.ExtraBedSum.Currency
-                          )}
-                          /Pax
-                        </Text>
-                      </View>
-                      <View style={styles.col15}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.ExtraBedSum.Pax} Pax
-                        </Text>
-                      </View>
-                      <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.ExtraBedSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.ExtraBedSum.TotalPrice,
-                            Data.TourPriceSum.ExtraBedSum.Currency
-                          )}
-                        </Text>
-                      </View>
+                    <View style={[styles.col65, stylesGlobal.alignItemsEnd]}>
+                      <Text style={styles.text16}>
+                        {Data.BookingDetailSum
+                          ? moment(Data.BookingDetailSum.StartDate).format(
+                              'DD MMM'
+                            )
+                          : ''}
+                        -{' '}
+                        {Data.BookingDetailSum
+                          ? moment(Data.BookingDetailSum.EndDate).format(
+                              'DD MMM YYYY'
+                            )
+                          : ''}
+                      </Text>
                     </View>
-                  ) : null
-                ) : null}
-
-                {Data.TourPriceSum ? (
-                  Data.TourPriceSum.NoBedSum.Pax != 0 ? (
-                    <View
-                      style={[
-                        styles.rowNoPadding,
-                        styles.colPadding20,
-                        stylesGlobal.marginBottom10,
-                      ]}
-                    >
-                      <View style={styles.col45}>
-                        <Text style={styles.text16}>Baby Crib</Text>
-                        <Text style={styles.text14Red}>
-                          {Data.TourPriceSum.NoBedSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.NoBedSum.PricePerPax,
-                            Data.TourPriceSum.NoBedSum.Currency
-                          )}
-                          /Pax
-                        </Text>
-                      </View>
-                      <View style={styles.col15}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.NoBedSum.Pax} Pax
-                        </Text>
-                      </View>
-                      <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.NoBedSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.NoBedSum.TotalPrice,
-                            Data.TourPriceSum.NoBedSum.Currency
-                          )}
-                        </Text>
-                      </View>
+                  </View>
+                  <View
+                    style={[
+                      styles.rowNoPadding,
+                      styles.colPadding20,
+                      stylesGlobal.marginBottom10,
+                    ]}
+                  >
+                    <View style={styles.col30}>
+                      <Text style={styles.text16}>Destination</Text>
                     </View>
-                  ) : null
-                ) : null}
-
-                {Data.TourPriceSum ? (
-                  Data.TourPriceSum.SharingBedSum.Pax != 0 ? (
-                    <View
-                      style={[
-                        styles.rowNoPadding,
-                        styles.colPadding20,
-                        stylesGlobal.marginBottom10,
-                      ]}
-                    >
-                      <View style={styles.col45}>
-                        <Text style={styles.text16}>Sharing Bed</Text>
-                        <Text style={styles.text14Red}>
-                          {Data.TourPriceSum.SharingBedSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.SharingBedSum.PricePerPax,
-                            Data.TourPriceSum.SharingBedSum.Currency
-                          )}
-                          /Pax
-                        </Text>
-                      </View>
-                      <View style={styles.col15}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.SharingBedSum.Pax} Pax
-                        </Text>
-                      </View>
-                      <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                        <Text style={styles.bold16}>
-                          {Data.TourPriceSum.SharingBedSum.Currency}{' '}
-                          {convertRoundPrice(
-                            Data.TourPriceSum.SharingBedSum.TotalPrice,
-                            Data.TourPriceSum.SharingBedSum.Currency
-                          )}
-                        </Text>
-                      </View>
+                    <View style={styles.col5}>
+                      <Text style={styles.text16}>:</Text>
                     </View>
-                  ) : null
-                ) : null}
-                {Data.BookingDetailSum ? (
-                  Data.BookingDetailSum.FoC ? (
-                    Data.BookingDetailSum.FoC.Qty == 0 ||
-                    Data.AdditionalServices.length == 0 ? null : (
-                      <View
-                        style={[
-                          styles.rowNoPadding,
-                          styles.colPadding20,
-                          stylesGlobal.marginBottom10,
-                        ]}
-                      >
-                        <Text style={styles.bold18}>Additionals</Text>
-                      </View>
-                    )
-                  ) : Data.AdditionalServices ? (
-                    Data.AdditionalServices.length != 0 ? (
-                      <View
-                        style={[
-                          styles.rowNoPadding,
-                          styles.colPadding20,
-                          stylesGlobal.marginBottom10,
-                        ]}
-                      >
-                        <Text style={styles.bold18}>Additionals</Text>
-                      </View>
-                    ) : null
-                  ) : null
-                ) : null}
-
-                <View style={styles.center}>
-                  {Data.AdditionalServices
-                    ? Data.AdditionalServices.length != 0
-                      ? Data.AdditionalServices.map((add, i) => {
+                    <View style={[styles.col65, stylesGlobal.alignItemsEnd]}>
+                      <Text style={styles.text16}>
+                        {Data.BookingDetailSum
+                          ? Data.BookingDetailSum.City
+                            ? Data.BookingDetailSum.City.Name
+                            : ''
+                          : ''}
+                        ,
+                        {Data.BookingDetailSum
+                          ? Data.BookingDetailSum.Country
+                            ? Data.BookingDetailSum.Country.Name
+                            : ''
+                          : ''}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={[
+                      styles.rowNoPadding,
+                      styles.colPadding20,
+                      stylesGlobal.marginBottom10,
+                    ]}
+                  >
+                    <View style={styles.col30}>
+                      <Text style={styles.text16}>Total Guest</Text>
+                    </View>
+                    <View style={styles.col5}>
+                      <Text style={styles.text16}>:</Text>
+                    </View>
+                    <View style={[styles.col65, stylesGlobal.alignItemsEnd]}>
+                      <Text style={styles.text16}>
+                        {Data.BookingDetailSum
+                          ? Data.BookingDetailSum.TotalGuest
+                          : ''}{' '}
+                        Guest
+                      </Text>
+                    </View>
+                  </View>
+                </Card>
+                <Card widthCard="90%">
+                  <Text
+                    style={[
+                      styles.colPadding20,
+                      styles.bold20,
+                      stylesGlobal.paddingTop20,
+                    ]}
+                  >
+                    Payment
+                  </Text>
+                  <View style={[stylesGlobal.width100, stylesGlobal.hidden]}>
+                    <SeperatorRepeat
+                      repeat={31}
+                      widthsepar={8}
+                      heightSepar={1}
+                      colorSepar="#777"
+                    />
+                  </View>
+                  {Data.BookingDetailSum
+                    ? Data.BookingDetailSum.PaymentTerms
+                      ? Data.BookingDetailSum.PaymentTerms.map((pay, i) => {
                           return (
                             <View
                               style={[
@@ -1133,34 +772,27 @@ class summaryCustom extends Component {
                               ]}
                               key={i}
                             >
-                              <View style={styles.col45}>
-                                <Text>{add.AdditionalServicesName}</Text>
-                                <Text style={styles.text12Red}>
-                                  {add.OriginalCountries[0].Currency}{' '}
-                                  {convertRoundPrice(
-                                    add.OriginalCountries[0].Amount,
-                                    add.OriginalCountries[0].Currency
-                                  )}
-                                  / unit
+                              <View style={stylesGlobal.width70}>
+                                <Text style={styles.text16}>
+                                  {i + 1}. {pay.Description} (
+                                  {pay.PaymentPercentage}%)
                                 </Text>
-                              </View>
-                              <View style={styles.col15}>
-                                <Text style={styles.bold16}>
-                                  {add.Quantity} unit
+                                <Text style={styles.text14Red}>
+                                  Expired date:{' '}
+                                  {moment(pay.DueDate).format('DD MMM YYYY')}
                                 </Text>
                               </View>
                               <View
                                 style={[
-                                  styles.col40,
+                                  styles.col30,
                                   stylesGlobal.alignItemsEnd,
                                 ]}
                               >
                                 <Text style={styles.bold16}>
-                                  {add.OriginalCountries[0].Currency}{' '}
+                                  {pay.CurrencyId}{' '}
                                   {convertRoundPrice(
-                                    add.Quantity *
-                                      add.OriginalCountries[0].Amount,
-                                    add.OriginalCountries[0].Currency
+                                    pay.PaymentValue,
+                                    pay.CurrencyId
                                   )}
                                 </Text>
                               </View>
@@ -1169,9 +801,348 @@ class summaryCustom extends Component {
                         })
                       : null
                     : null}
+                </Card>
+                <Card widthCard="90%">
+                  <Text
+                    style={[
+                      styles.colPadding20,
+                      styles.bold20,
+                      stylesGlobal.paddingTop20,
+                    ]}
+                  >
+                    Price Detail
+                  </Text>
+                  <View style={[stylesGlobal.width100, stylesGlobal.hidden]}>
+                    <SeperatorRepeat
+                      repeat={31}
+                      widthsepar={8}
+                      heightSepar={1}
+                      colorSepar="#777"
+                    />
+                  </View>
+                  {Data.TourPriceSum ? (
+                    Data.TourPriceSum.SharingRoomSum.Pax != 0 ? (
+                      <View
+                        style={[
+                          styles.rowNoPadding,
+                          styles.colPadding20,
+                          stylesGlobal.marginBottom10,
+                        ]}
+                      >
+                        <View style={styles.col45}>
+                          <Text style={styles.text16}>Sharing Room</Text>
+                          <Text style={styles.text14Red}>
+                            {Data.TourPriceSum.SharingRoomSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.SharingRoomSum.PricePerPax,
+                              Data.TourPriceSum.SharingRoomSum.Currency
+                            )}
+                            /Pax
+                          </Text>
+                        </View>
+                        <View style={styles.col15}>
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.SharingRoomSum.Pax} Pax
+                          </Text>
+                        </View>
+                        <View
+                          style={[styles.col40, stylesGlobal.alignItemsEnd]}
+                        >
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.SharingRoomSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.SharingRoomSum.TotalPrice,
+                              Data.TourPriceSum.SharingRoomSum.Currency
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                    ) : null
+                  ) : null}
+
+                  {Data.TourPriceSum ? (
+                    Data.TourPriceSum.SingleRoomSum.Pax != 0 ? (
+                      <View
+                        style={[
+                          styles.rowNoPadding,
+                          styles.colPadding20,
+                          stylesGlobal.marginBottom10,
+                        ]}
+                      >
+                        <View style={styles.col45}>
+                          <Text style={styles.text16}>Single Room</Text>
+                          <Text style={styles.text14Red}>
+                            {Data.TourPriceSum.SingleRoomSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.SingleRoomSum.PricePerPax,
+                              Data.TourPriceSum.SingleRoomSum.Currency
+                            )}
+                            /Pax
+                          </Text>
+                        </View>
+                        <View style={styles.col15}>
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.SingleRoomSum.Pax} Pax
+                          </Text>
+                        </View>
+                        <View
+                          style={[styles.col40, stylesGlobal.alignItemsEnd]}
+                        >
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.SingleRoomSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.SingleRoomSum.TotalPrice,
+                              Data.TourPriceSum.SingleRoomSum.Currency
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                    ) : null
+                  ) : null}
+
+                  {Data.TourPriceSum ? (
+                    Data.TourPriceSum.ChildExtraBedSum.Pax != 0 ? (
+                      <View
+                        style={[
+                          styles.rowNoPadding,
+                          styles.colPadding20,
+                          stylesGlobal.marginBottom10,
+                        ]}
+                      >
+                        <View style={styles.col45}>
+                          <Text style={styles.text16}>Sharing Room</Text>
+                          <Text style={styles.text14Red}>
+                            {Data.TourPriceSum.ChildExtraBedSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.ChildExtraBedSum.PricePerPax,
+                              Data.TourPriceSum.ChildExtraBedSum.Currency
+                            )}
+                            /Pax
+                          </Text>
+                        </View>
+                        <View style={styles.col15}>
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.ChildExtraBedSum.Pax} Pax
+                          </Text>
+                        </View>
+                        <View
+                          style={[styles.col40, stylesGlobal.alignItemsEnd]}
+                        >
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.ChildExtraBedSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.ChildExtraBedSum.TotalPrice,
+                              Data.TourPriceSum.ChildExtraBedSum.Currency
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                    ) : null
+                  ) : null}
+
+                  {Data.TourPriceSum ? (
+                    Data.TourPriceSum.ChildSharingRoomSum.Pax != 0 ? (
+                      <View
+                        style={[
+                          styles.rowNoPadding,
+                          styles.colPadding20,
+                          stylesGlobal.marginBottom10,
+                        ]}
+                      >
+                        <View style={styles.col45}>
+                          <Text>Child Sharing Room</Text>
+                          <Text style={styles.text14Red}>
+                            {Data.TourPriceSum.ChildSharingRoomSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.ChildSharingRoomSum.PricePerPax,
+                              Data.TourPriceSum.ChildSharingRoomSum.Currency
+                            )}
+                            /Pax
+                          </Text>
+                        </View>
+                        <View style={styles.col15}>
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.ChildSharingRoomSum.Pax} Pax
+                          </Text>
+                        </View>
+                        <View
+                          style={[styles.col40, stylesGlobal.alignItemsEnd]}
+                        >
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.ChildSharingRoomSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.ChildSharingRoomSum.TotalPrice,
+                              Data.TourPriceSum.ChildSharingRoomSum.Currency
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                    ) : null
+                  ) : null}
+
+                  {Data.TourPriceSum ? (
+                    Data.TourPriceSum.ChildSingleRoomSum.Pax != 0 ? (
+                      <View
+                        style={[
+                          styles.rowNoPadding,
+                          styles.colPadding20,
+                          stylesGlobal.marginBottom10,
+                        ]}
+                      >
+                        <View style={styles.col45}>
+                          <Text style={styles.text16}>Child Single Room</Text>
+                          <Text style={styles.text14Red}>
+                            {Data.TourPriceSum.ChildSingleRoomSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.ChildSingleRoomSum.PricePerPax,
+                              Data.TourPriceSum.ChildSingleRoomSum.Currency
+                            )}
+                            /Pax
+                          </Text>
+                        </View>
+                        <View style={styles.col15}>
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.ChildSingleRoomSum.Pax} Pax
+                          </Text>
+                        </View>
+                        <View
+                          style={[styles.col40, stylesGlobal.alignItemsEnd]}
+                        >
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.ChildSingleRoomSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.ChildSingleRoomSum.TotalPrice,
+                              Data.TourPriceSum.ChildSingleRoomSum.Currency
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                    ) : null
+                  ) : null}
+
+                  {Data.TourPriceSum ? (
+                    Data.TourPriceSum.ExtraBedSum.Pax != 0 ? (
+                      <View
+                        style={[
+                          styles.rowNoPadding,
+                          styles.colPadding20,
+                          stylesGlobal.marginBottom10,
+                        ]}
+                      >
+                        <View style={styles.col45}>
+                          <Text style={styles.text16}>Extra Bed</Text>
+                          <Text style={styles.text14Red}>
+                            {Data.TourPriceSum.ExtraBedSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.ExtraBedSum.PricePerPax,
+                              Data.TourPriceSum.ExtraBedSum.Currency
+                            )}
+                            /Pax
+                          </Text>
+                        </View>
+                        <View style={styles.col15}>
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.ExtraBedSum.Pax} Pax
+                          </Text>
+                        </View>
+                        <View
+                          style={[styles.col40, stylesGlobal.alignItemsEnd]}
+                        >
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.ExtraBedSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.ExtraBedSum.TotalPrice,
+                              Data.TourPriceSum.ExtraBedSum.Currency
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                    ) : null
+                  ) : null}
+
+                  {Data.TourPriceSum ? (
+                    Data.TourPriceSum.NoBedSum.Pax != 0 ? (
+                      <View
+                        style={[
+                          styles.rowNoPadding,
+                          styles.colPadding20,
+                          stylesGlobal.marginBottom10,
+                        ]}
+                      >
+                        <View style={styles.col45}>
+                          <Text style={styles.text16}>Baby Crib</Text>
+                          <Text style={styles.text14Red}>
+                            {Data.TourPriceSum.NoBedSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.NoBedSum.PricePerPax,
+                              Data.TourPriceSum.NoBedSum.Currency
+                            )}
+                            /Pax
+                          </Text>
+                        </View>
+                        <View style={styles.col15}>
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.NoBedSum.Pax} Pax
+                          </Text>
+                        </View>
+                        <View
+                          style={[styles.col40, stylesGlobal.alignItemsEnd]}
+                        >
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.NoBedSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.NoBedSum.TotalPrice,
+                              Data.TourPriceSum.NoBedSum.Currency
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                    ) : null
+                  ) : null}
+
+                  {Data.TourPriceSum ? (
+                    Data.TourPriceSum.SharingBedSum.Pax != 0 ? (
+                      <View
+                        style={[
+                          styles.rowNoPadding,
+                          styles.colPadding20,
+                          stylesGlobal.marginBottom10,
+                        ]}
+                      >
+                        <View style={styles.col45}>
+                          <Text style={styles.text16}>Sharing Bed</Text>
+                          <Text style={styles.text14Red}>
+                            {Data.TourPriceSum.SharingBedSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.SharingBedSum.PricePerPax,
+                              Data.TourPriceSum.SharingBedSum.Currency
+                            )}
+                            /Pax
+                          </Text>
+                        </View>
+                        <View style={styles.col15}>
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.SharingBedSum.Pax} Pax
+                          </Text>
+                        </View>
+                        <View
+                          style={[styles.col40, stylesGlobal.alignItemsEnd]}
+                        >
+                          <Text style={styles.bold16}>
+                            {Data.TourPriceSum.SharingBedSum.Currency}{' '}
+                            {convertRoundPrice(
+                              Data.TourPriceSum.SharingBedSum.TotalPrice,
+                              Data.TourPriceSum.SharingBedSum.Currency
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                    ) : null
+                  ) : null}
                   {Data.BookingDetailSum ? (
                     Data.BookingDetailSum.FoC ? (
-                      Data.BookingDetailSum.FoC.Qty == 0 ? null : (
+                      Data.BookingDetailSum.FoC.Qty == 0 ||
+                      Data.AdditionalServices.length == 0 ? null : (
                         <View
                           style={[
                             styles.rowNoPadding,
@@ -1179,327 +1150,425 @@ class summaryCustom extends Component {
                             stylesGlobal.marginBottom10,
                           ]}
                         >
-                          <View style={styles.col45}>
-                            <Text>Free of Charge (FOC)</Text>
-                          </View>
-                          <View style={styles.col15}>
-                            <Text style={styles.bold16}>
-                              {Data.BookingDetailSum.FoC.Qty} Pax
-                            </Text>
-                          </View>
-                          <View
-                            style={[styles.col40, stylesGlobal.alignItemsEnd]}
-                          >
-                            <Text style={styles.bold16}>
-                              {Data.BookingDetailSum.CurrencyId}{' '}
-                              {convertRoundPrice(
-                                0,
-                                Data.BookingDetailSum.CurrencyId
-                              )}
-                            </Text>
-                          </View>
+                          <Text style={styles.bold18}>Additionals</Text>
                         </View>
                       )
+                    ) : Data.AdditionalServices ? (
+                      Data.AdditionalServices.length != 0 ? (
+                        <View
+                          style={[
+                            styles.rowNoPadding,
+                            styles.colPadding20,
+                            stylesGlobal.marginBottom10,
+                          ]}
+                        >
+                          <Text style={styles.bold18}>Additionals</Text>
+                        </View>
+                      ) : null
                     ) : null
                   ) : null}
-                </View>
 
-                <View
-                  style={[
-                    stylesGlobal.row100,
-                    stylesGlobal.padding20,
-                    styles.cardRadiusBottomTotalPrice,
-                  ]}
-                >
-                  <View style={styles.rowNoPadding}>
-                    <View style={styles.col60}>
-                      <Text style={styles.bold18}>Total Price</Text>
-                    </View>
-                    <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                      <Text style={styles.bold18}>
-                        {Data.BookingDetailSum
-                          ? Data.BookingDetailSum.CurrencyId
-                          : ''}{' '}
-                        {Data.BookingDetailSum
-                          ? convertRoundPrice(
-                              Data.BookingDetailSum.TourTotalPrice,
-                              Data.BookingDetailSum.CurrencyId
-                            )
-                          : ''}
-                      </Text>
-                    </View>
+                  <View style={styles.center}>
+                    {Data.AdditionalServices
+                      ? Data.AdditionalServices.length != 0
+                        ? Data.AdditionalServices.map((add, i) => {
+                            return (
+                              <View
+                                style={[
+                                  styles.rowNoPadding,
+                                  styles.colPadding20,
+                                  stylesGlobal.marginBottom10,
+                                ]}
+                                key={i}
+                              >
+                                <View style={styles.col45}>
+                                  <Text>{add.AdditionalServicesName}</Text>
+                                  <Text style={styles.text12Red}>
+                                    {add.OriginalCountries[0].Currency}{' '}
+                                    {convertRoundPrice(
+                                      add.OriginalCountries[0].Amount,
+                                      add.OriginalCountries[0].Currency
+                                    )}
+                                    / unit
+                                  </Text>
+                                </View>
+                                <View style={styles.col15}>
+                                  <Text style={styles.bold16}>
+                                    {add.Quantity} unit
+                                  </Text>
+                                </View>
+                                <View
+                                  style={[
+                                    styles.col40,
+                                    stylesGlobal.alignItemsEnd,
+                                  ]}
+                                >
+                                  <Text style={styles.bold16}>
+                                    {add.OriginalCountries[0].Currency}{' '}
+                                    {convertRoundPrice(
+                                      add.Quantity *
+                                        add.OriginalCountries[0].Amount,
+                                      add.OriginalCountries[0].Currency
+                                    )}
+                                  </Text>
+                                </View>
+                              </View>
+                            );
+                          })
+                        : null
+                      : null}
+                    {Data.BookingDetailSum ? (
+                      Data.BookingDetailSum.FoC ? (
+                        Data.BookingDetailSum.FoC.Qty == 0 ? null : (
+                          <View
+                            style={[
+                              styles.rowNoPadding,
+                              styles.colPadding20,
+                              stylesGlobal.marginBottom10,
+                            ]}
+                          >
+                            <View style={styles.col45}>
+                              <Text>Free of Charge (FOC)</Text>
+                            </View>
+                            <View style={styles.col15}>
+                              <Text style={styles.bold16}>
+                                {Data.BookingDetailSum.FoC.Qty} Pax
+                              </Text>
+                            </View>
+                            <View
+                              style={[styles.col40, stylesGlobal.alignItemsEnd]}
+                            >
+                              <Text style={styles.bold16}>
+                                {Data.BookingDetailSum.CurrencyId}{' '}
+                                {convertRoundPrice(
+                                  0,
+                                  Data.BookingDetailSum.CurrencyId
+                                )}
+                              </Text>
+                            </View>
+                          </View>
+                        )
+                      ) : null
+                    ) : null}
                   </View>
-                </View>
-              </Card>
-              <SegmentSpecialAdjusment
-                handlePressSpecialAdjusmentDetail={() =>
-                  this.handlePressSpecialAdjusmentDetail()
-                }
-                specialAdjusmentList={this.state.specialAdjusment}
-              />
 
-              <View style={[styles.row100, styles.colPadding20]}>
-                <View style={stylesGlobal.width50}>
-                  <Text
+                  <View
                     style={[
-                      stylesGlobal.marginBottom20,
-                      stylesGlobal.text18,
-                      stylesGlobal.textBold,
+                      stylesGlobal.row100,
+                      stylesGlobal.padding20,
+                      styles.cardRadiusBottomTotalPrice,
                     ]}
                   >
-                    What we'll do
-                  </Text>
-                </View>
-              </View>
-              <View style={[styles.rowNoPadding, stylesGlobal.paddingBottom20]}>
-                <ScrollView horizontal={true}>
-                  {Data.DailyPrograms
-                    ? Data.DailyPrograms.map((move, i) => {
-                        return (
-                          <CardMediaNew
-                            type="daily"
-                            title={
-                              move.TourDestinations.length != 0
-                                ? move.TourDestinations[0].Destination
-                                : ''
-                            }
-                            subtitle={`${move.Day}`}
-                            duration={moment(move.Date).format('DD MMM YYYY')}
-                            image={
-                              move.TourDestinations.length != 0
-                                ? move.TourDestinations[0].ImageUrl
-                                : null
-                            }
-                            key={i}
-                            onPress={() =>
-                              this.handlePressItinerary(
-                                Data.DailyPrograms,
-                                i,
-                                Data.BookingDetailSum.PackageType
+                    <View style={styles.rowNoPadding}>
+                      <View style={styles.col60}>
+                        <Text style={styles.bold18}>Total Price</Text>
+                      </View>
+                      <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
+                        <Text style={styles.bold18}>
+                          {Data.BookingDetailSum
+                            ? Data.BookingDetailSum.CurrencyId
+                            : ''}{' '}
+                          {Data.BookingDetailSum
+                            ? convertRoundPrice(
+                                Data.BookingDetailSum.TourTotalPrice,
+                                Data.BookingDetailSum.CurrencyId
                               )
-                            }
-                          />
-                        );
-                      })
-                    : null}
-                </ScrollView>
-              </View>
-              {/* Segment Ordered Item List */}
-              <CardOrderedItem
-                orderedItemData={generateOrderItemData}
-                onPress={this.handlePressOrderedItem}
-                packageType={Data.BookingDetailSum.PackageType}
-              />
+                            : ''}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </Card>
+                <SegmentSpecialAdjusment
+                  handlePressSpecialAdjusmentDetail={() =>
+                    this.handlePressSpecialAdjusmentDetail()
+                  }
+                  specialAdjusmentList={this.state.specialAdjusment}
+                />
 
-              {/* END Segment Ordered Item */}
-              {/* Guest List */}
-              {/* <SegmentGuestList
+                <View style={[styles.row100, styles.colPadding20]}>
+                  <View style={stylesGlobal.width50}>
+                    <Text
+                      style={[
+                        stylesGlobal.marginBottom20,
+                        stylesGlobal.text18,
+                        stylesGlobal.textBold,
+                      ]}
+                    >
+                      What we'll do
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={[styles.rowNoPadding, stylesGlobal.paddingBottom20]}
+                >
+                  <ScrollView horizontal={true}>
+                    {Data.DailyPrograms
+                      ? Data.DailyPrograms.map((move, i) => {
+                          return (
+                            <CardMediaNew
+                              type="daily"
+                              title={
+                                move.TourDestinations.length != 0
+                                  ? move.TourDestinations[0].Destination
+                                  : ''
+                              }
+                              subtitle={`${move.Day}`}
+                              duration={moment(move.Date).format('DD MMM YYYY')}
+                              image={
+                                move.TourDestinations.length != 0
+                                  ? move.TourDestinations[0].ImageUrl
+                                  : null
+                              }
+                              key={i}
+                              onPress={() =>
+                                this.handlePressItinerary(
+                                  Data.DailyPrograms,
+                                  i,
+                                  Data.BookingDetailSum.PackageType
+                                )
+                              }
+                            />
+                          );
+                        })
+                      : null}
+                  </ScrollView>
+                </View>
+                {/* Segment Ordered Item List */}
+                <CardOrderedItem
+                  orderedItemData={generateOrderItemData}
+                  onPress={this.handlePressOrderedItem}
+                  packageType={Data.BookingDetailSum.PackageType}
+                />
+
+                {/* END Segment Ordered Item */}
+                {/* Guest List */}
+                {/* <SegmentGuestList
                 guestListData={generateGuestData}
                 totalPax={Data.BookingDetailSum.TotalGuest}
               /> */}
-              {/* END Guest List */}
+                {/* END Guest List */}
 
-              {/* Tour Note */}
-              <SegmentTourNote
-                onChangeText={text =>
-                  this.setState({
-                    ...this.state,
-                    TourNote: text,
-                  })
-                }
-                tourNote={this.state.TourNote}
-              />
-              {/* Tour Note */}
-              <Card widthCard="90%">
-                <Text
-                  style={[
-                    styles.colPadding20,
-                    styles.bold20,
-                    stylesGlobal.paddingTop20,
-                  ]}
-                >
-                  Customer on Behalf
-                </Text>
+                {/* Tour Note */}
+                <SegmentTourNote
+                  onChangeText={text =>
+                    this.setState({
+                      ...this.state,
+                      TourNote: text,
+                    })
+                  }
+                  tourNote={
+                    type === 'myBooking' ? Data.TourNote : this.state.TourNote
+                  }
+                />
+                {/* Tour Note */}
+                <Card widthCard="90%">
+                  <Text
+                    style={[
+                      styles.colPadding20,
+                      styles.bold20,
+                      stylesGlobal.paddingTop20,
+                    ]}
+                  >
+                    Customer on Behalf
+                  </Text>
 
-                <View style={[stylesGlobal.width100, stylesGlobal.hidden]}>
-                  <SeperatorRepeat
-                    repeat={31}
-                    widthsepar={8}
-                    heightSepar={1}
-                    colorSepar="#777"
-                  />
-                </View>
-                <View
-                  style={[
-                    styles.colNoPadding1,
-                    styles.containerDataTour1,
-                    stylesGlobal.row100,
-                  ]}
-                >
-                  <View style={[stylesGlobal.width25, stylesGlobal.center]}>
-                    <Image
-                      style={[
-                        stylesGlobal.containerIcon30,
-                        stylesGlobal.tintColorGrey,
-                      ]}
-                      source={imageicon}
+                  <View style={[stylesGlobal.width100, stylesGlobal.hidden]}>
+                    <SeperatorRepeat
+                      repeat={31}
+                      widthsepar={8}
+                      heightSepar={1}
+                      colorSepar="#777"
                     />
                   </View>
-                  <View style={stylesGlobal.width50}>
-                    <Text
-                      style={[stylesGlobal.textd16, stylesGlobal.colorGrey]}
-                    >
-                      {this.state.Company.Name
-                        ? this.state.Company.Name
-                        : 'Add your customer account'}
-                    </Text>
-                    {this.state.Company.Name ? (
-                      this.state.Company.FirstName ? (
-                        <Text
-                          style={[stylesGlobal.textd16, stylesGlobal.colorGrey]}
-                        >
-                          {this.state.Company.FirstName}{' '}
-                          {this.state.Company.LastName}
-                        </Text>
-                      ) : (
-                        <Text
-                          style={[stylesGlobal.textd16, stylesGlobal.colorGrey]}
-                        >
-                          {this.state.Company.Username}
-                        </Text>
-                      )
-                    ) : null}
-                  </View>
-                  <View style={[stylesGlobal.width25, stylesGlobal.center]}>
-                    <TouchableOpacity
-                      style={
-                        this.state.Company.Name
-                          ? stylesGlobal.width100
-                          : styles.iconFrameAdd
-                      }
-                      onPress={this.handleCompany}
-                    >
-                      {this.state.Company.Name ? (
-                        <Text
-                          style={[
-                            stylesGlobal.text12,
-                            stylesGlobal.textGold,
-                            stylesGlobal.textBold,
-                            styles.colPadding20,
-                          ]}
-                        >
-                          Change
-                        </Text>
-                      ) : (
-                        <Image
-                          style={[
-                            stylesGlobal.imageIcon,
-                            styles.tintColorWhite,
-                          ]}
-                          source={IconAdd}
-                          resizeMode="contain"
-                        />
-                      )}
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </Card>
-              {this.props.DemoPrice ? (
-                this.props.DemoPrice.BookingTemplateDescriptionBindingModels ? (
-                  this.props.DemoPrice.BookingTemplateDescriptionBindingModels
-                    .length != 0 ? (
-                    <Card widthCard="90%">
-                      <Text
+                  <View
+                    style={[
+                      styles.colNoPadding1,
+                      styles.containerDataTour1,
+                      stylesGlobal.row100,
+                    ]}
+                  >
+                    <View style={[stylesGlobal.width25, stylesGlobal.center]}>
+                      <Image
                         style={[
-                          stylesGlobal.paddingHorizontal20,
-                          stylesGlobal.paddingTop20,
-                          styles.bold20,
+                          stylesGlobal.containerIcon30,
+                          stylesGlobal.tintColorGrey,
                         ]}
+                        source={imageicon}
+                      />
+                    </View>
+                    <View style={stylesGlobal.width50}>
+                      <Text
+                        style={[stylesGlobal.textd16, stylesGlobal.colorGrey]}
                       >
-                        Additional Informations
+                        {type === 'myBooking'
+                          ? Data.BookingDetailSum
+                            ? Data.BookingDetailSum.Company
+                              ? Data.BookingDetailSum.Company.Name
+                              : ''
+                            : ''
+                          : this.state.Company.Name
+                          ? this.state.Company.Name
+                          : 'Add your customer account'}
                       </Text>
-                      <View
-                        style={[stylesGlobal.width100, stylesGlobal.hidden]}
-                      >
-                        <SeperatorRepeat
-                          repeat={31}
-                          widthsepar={8}
-                          heightSepar={1}
-                          colorSepar="#777"
-                        />
-                      </View>
-                      {this.props.DemoPrice.BookingTemplateDescriptionBindingModels.map(
-                        (Desc, i) => {
-                          return (
-                            <View
-                              key={i}
+                      {this.state.Company.Name ? (
+                        this.state.Company.FirstName ? (
+                          <Text
+                            style={[
+                              stylesGlobal.textd16,
+                              stylesGlobal.colorGrey,
+                            ]}
+                          >
+                            {this.state.Company.FirstName}{' '}
+                            {this.state.Company.LastName}
+                          </Text>
+                        ) : (
+                          <Text
+                            style={[
+                              stylesGlobal.textd16,
+                              stylesGlobal.colorGrey,
+                            ]}
+                          >
+                            {this.state.Company.Username}
+                          </Text>
+                        )
+                      ) : null}
+                    </View>
+                    <View style={[stylesGlobal.width25, stylesGlobal.center]}>
+                      {type !== 'myBooking' && (
+                        <TouchableOpacity
+                          style={
+                            this.state.Company.Name
+                              ? stylesGlobal.width100
+                              : styles.iconFrameAdd
+                          }
+                          onPress={this.handleCompany}
+                        >
+                          {this.state.Company.Name ? (
+                            <Text
                               style={[
-                                styles.bottom,
-                                styles.marginBottom20,
-                                stylesGlobal.paddingHorizontal20,
+                                stylesGlobal.text12,
+                                stylesGlobal.textGold,
+                                stylesGlobal.textBold,
+                                styles.colPadding20,
                               ]}
                             >
-                              <Text style={stylesGlobal.text16}>
-                                {Desc.Subtitle}
-                              </Text>
+                              Change
+                            </Text>
+                          ) : (
+                            <Image
+                              style={[
+                                stylesGlobal.imageIcon,
+                                styles.tintColorWhite,
+                              ]}
+                              source={IconAdd}
+                              resizeMode="contain"
+                            />
+                          )}
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  </View>
+                </Card>
+                {this.props.DemoPrice ? (
+                  this.props.DemoPrice
+                    .BookingTemplateDescriptionBindingModels ? (
+                    this.props.DemoPrice.BookingTemplateDescriptionBindingModels
+                      .length != 0 ? (
+                      <Card widthCard="90%">
+                        <Text
+                          style={[
+                            stylesGlobal.paddingHorizontal20,
+                            stylesGlobal.paddingTop20,
+                            styles.bold20,
+                          ]}
+                        >
+                          Additional Informations
+                        </Text>
+                        <View
+                          style={[stylesGlobal.width100, stylesGlobal.hidden]}
+                        >
+                          <SeperatorRepeat
+                            repeat={31}
+                            widthsepar={8}
+                            heightSepar={1}
+                            colorSepar="#777"
+                          />
+                        </View>
+                        {this.props.DemoPrice.BookingTemplateDescriptionBindingModels.map(
+                          (Desc, i) => {
+                            return (
+                              <View
+                                key={i}
+                                style={[
+                                  styles.bottom,
+                                  styles.marginBottom20,
+                                  stylesGlobal.paddingHorizontal20,
+                                ]}
+                              >
+                                <Text style={stylesGlobal.text16}>
+                                  {Desc.Subtitle}
+                                </Text>
 
-                              <AutoHeightWebView
-                                customScript={`document.body.style.background = 'transparent';`}
-                                customStyle={`* {font-family: 'Roboto'; text-align: justify;  padding-left: 5px; 
+                                <AutoHeightWebView
+                                  customScript={`document.body.style.background = 'transparent';`}
+                                  customStyle={`* {font-family: 'Roboto'; text-align: justify;  padding-left: 5px; 
                   padding-right: 5px; text-justify: auto; overflow-wrap: break-word; padding-bottom: 5px} 
                   p { font-size: 14px; padding-bottom: 5px}
                   `}
-                                heightOffset={5}
-                                files={[
-                                  {
-                                    href: 'cssfileaddress',
-                                    type: 'text/css',
-                                    rel: 'stylesheet',
-                                  },
-                                ]}
-                                scalesPageToFit={
-                                  Platform.OS == 'android' ? true : false
-                                }
-                                style={[
-                                  stylesGlobal.width100,
-                                  styles.marginBottom20,
-                                ]}
-                                source={{ html: Desc.Content }}
-                              />
-                            </View>
-                          );
-                        }
-                      )}
-                    </Card>
+                                  heightOffset={5}
+                                  files={[
+                                    {
+                                      href: 'cssfileaddress',
+                                      type: 'text/css',
+                                      rel: 'stylesheet',
+                                    },
+                                  ]}
+                                  scalesPageToFit={
+                                    Platform.OS == 'android' ? true : false
+                                  }
+                                  style={[
+                                    stylesGlobal.width100,
+                                    styles.marginBottom20,
+                                  ]}
+                                  source={{ html: Desc.Content }}
+                                />
+                              </View>
+                            );
+                          }
+                        )}
+                      </Card>
+                    ) : null
                   ) : null
-                ) : null
-              ) : null}
-            </View>
-          </Container>
-        </ScrollView>
-
-        <TouchableOpacity style={[styles.footer, stylesGlobal.center]}>
-          <LinearGradient
-            colors={['#353535', '#252525']}
-            style={[styles.footer, stylesGlobal.center]}
-            start={[0, 0]}
-            end={[1, 0]}
-          >
-            <View style={stylesGlobal.row100}>
-              <View style={stylesGlobal.width50}>
-                <NormalButton
-                  textSize={14}
-                  text="Create as Quotation"
-                  buttonWidth="98%"
-                  buttonHeight={40}
-                  textColor={styles.$goldcolor}
-                  buttonColor="transparent"
-                  colorBorder={styles.$goldcolor}
-                  onPress={this.handleQuotation}
-                />
+                ) : null}
               </View>
-              <View style={stylesGlobal.width50}>
-                {/* {this.props.DetailCustom.Status == 'edit' ? (
+            </Container>
+          </ScrollView>
+        )}
+
+        {type !== 'myBooking' ? (
+          <TouchableOpacity style={[styles.footer, stylesGlobal.center]}>
+            <LinearGradient
+              colors={['#353535', '#252525']}
+              style={[styles.footer, stylesGlobal.center]}
+              start={[0, 0]}
+              end={[1, 0]}
+            >
+              <View style={stylesGlobal.row100}>
+                <View style={stylesGlobal.width50}>
+                  <NormalButton
+                    textSize={14}
+                    text="Create as Quotation"
+                    buttonWidth="98%"
+                    buttonHeight={40}
+                    textColor={styles.$goldcolor}
+                    buttonColor="transparent"
+                    colorBorder={styles.$goldcolor}
+                    onPress={this.handleQuotation}
+                  />
+                </View>
+                <View style={stylesGlobal.width50}>
+                  {/* {this.props.DetailCustom.Status == 'edit' ? (
                   <NormalButton
                     textSize={14}
                     buttonWidth="98%"
@@ -1511,21 +1580,44 @@ class summaryCustom extends Component {
                     onPress={this.handleAcceptQuotation}
                   />
                 ) : ( */}
-                <NormalButton
-                  textSize={16}
-                  buttonWidth="98%"
-                  buttonHeight={40}
-                  text="Book Now"
-                  buttonColor={styles.$goldcolor}
-                  colorBorder={styles.$goldcolor}
-                  textColor="#252525"
-                  onPress={this.handleCreate}
-                />
-                {/* )} */}
+                  <NormalButton
+                    textSize={16}
+                    buttonWidth="98%"
+                    buttonHeight={40}
+                    text="Book Now"
+                    buttonColor={styles.$goldcolor}
+                    colorBorder={styles.$goldcolor}
+                    textColor="#252525"
+                    onPress={this.handleCreate}
+                  />
+                  {/* )} */}
+                </View>
               </View>
-            </View>
-          </LinearGradient>
-        </TouchableOpacity>
+            </LinearGradient>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={[styles.footer, stylesGlobal.center]}>
+            <LinearGradient
+              colors={['#353535', '#252525']}
+              style={[styles.footer, stylesGlobal.center]}
+              start={[0, 0]}
+              end={[1, 0]}
+            >
+              <View style={stylesGlobal.center}>
+                <NormalButton
+                  textSize={14}
+                  text="Save Special Adjusment"
+                  buttonWidth="90%"
+                  buttonHeight={40}
+                  textColor={styles.$goldcolor}
+                  buttonColor="transparent"
+                  colorBorder={styles.$goldcolor}
+                  onPress={this.handleQuotation}
+                />
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
+        )}
       </Container>
     );
   }
@@ -1547,6 +1639,7 @@ const mapStateToProps = state => ({
   isUpdateSpecialAdjusment: state.transactionReducer.isUpdateSpecialAdjusment,
   packageById: state.transactionReducer.packageById,
   packageByIdStatus: state.transactionReducer.packageByIdStatus,
+  loading: state.transactionReducer.loading,
 });
 
 export default connect(mapStateToProps, {

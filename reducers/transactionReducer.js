@@ -33,6 +33,8 @@ const initialState = {
   isUpdateSpecialAdjusment: null,
   packageById: {},
   packageByIdStatus: null,
+  packageHistoryList: [],
+  packageHistoryListStatus: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -69,6 +71,8 @@ const reducer = (state = initialState, action) => {
         isUpdateSpecialAdjusment: null,
         packageById: {},
         packageByIdStatus: null,
+        packageHistoryList: [],
+        packageHistoryListStatus: '',
       };
     case types.SET_PACKAGE_STATUS_FROM_HOME_TO_LIST:
       return {
@@ -391,6 +395,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         packageByIdStatus: false,
+        loading: false,
+        errors: action.payload.response.data,
+      };
+
+    case types.GET_TRANSACTION_HISTORY_BY_STATUS:
+      return { ...state };
+    case types.GET_TRANSACTION_HISTORY_BY_STATUS_PENDING:
+      return { ...state, loading: true };
+    case types.GET_TRANSACTION_HISTORY_BY_STATUS_FULFILLED:
+      return {
+        ...state,
+        packageHistoryList: action.payload.data,
+        packageHistoryListStatus: 'success',
+        loading: false,
+        errors: null,
+      };
+    case types.GET_TRANSACTION_HISTORY_BY_STATUS_REJECTED:
+      return {
+        ...state,
+        packageHistoryListStatus: 'failed',
         loading: false,
         errors: action.payload.response.data,
       };

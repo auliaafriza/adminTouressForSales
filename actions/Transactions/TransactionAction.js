@@ -38,6 +38,7 @@ import {
   GET_TOUR_SUMMARY_BY_ID,
   RESET_POST_QUOTATION,
   SET_SPECIAL_ADJUSMENT,
+  GET_TRANSACTION_HISTORY_BY_STATUS,
 } from './actionTypes';
 
 import {
@@ -52,6 +53,7 @@ import {
   postEditQuotationApi,
   postJoinTourApi,
   getTourSummaryByIdApi,
+  getTransactionHistoryByStatusApi,
 } from '../../api/transactionApi';
 
 export const getReadyPackageListAction = data => {
@@ -423,5 +425,12 @@ export const setSpecialAdjusmentAction = data => {
       type: SET_SPECIAL_ADJUSMENT,
       payload: data,
     });
+  };
+};
+
+export const getTransactionHistoryByStatusAction = status => {
+  return {
+    type: GET_TRANSACTION_HISTORY_BY_STATUS,
+    payload: getTransactionHistoryByStatusApi(status),
   };
 };

@@ -31,6 +31,7 @@ class specialAdjusmentDetail extends Component {
     listAdjusment[index] = data;
     this.setState(listAdjusment);
     this.props.setSpecialAdjusmentAction(listAdjusment);
+    this.props.route.params.onUpdate(listAdjusment);
   };
 
   handleAddSpecialAdjusment = () => {
@@ -48,6 +49,7 @@ class specialAdjusmentDetail extends Component {
     listAdjusment.push(data);
     this.setState({ listAdjusment });
     this.props.setSpecialAdjusmentAction(listAdjusment);
+    this.props.route.params.onUpdate(listAdjusment);
   };
   handleEditSpecialAdjusment = (index, value, name) => {
     let { listAdjusment } = this.state;
@@ -57,6 +59,7 @@ class specialAdjusmentDetail extends Component {
     listAdjusment[index] = data;
     this.setState(listAdjusment);
     this.props.setSpecialAdjusmentAction(listAdjusment);
+    this.props.route.params.onUpdate(listAdjusment);
   };
 
   handleDecrease = index => {
@@ -67,6 +70,7 @@ class specialAdjusmentDetail extends Component {
     listAdjusment[index] = data;
     this.setState(listAdjusment);
     this.props.setSpecialAdjusmentAction(listAdjusment);
+    this.props.route.params.onUpdate(listAdjusment);
   };
   handleIncrease = index => {
     let { listAdjusment } = this.state;
@@ -76,6 +80,7 @@ class specialAdjusmentDetail extends Component {
     listAdjusment[index] = data;
     this.setState(listAdjusment);
     this.props.setSpecialAdjusmentAction(listAdjusment);
+    this.props.route.params.onUpdate(listAdjusment);
   };
   handleCheckBox = (index, name, value) => {
     let { listAdjusment } = this.state;
@@ -94,6 +99,7 @@ class specialAdjusmentDetail extends Component {
     listAdjusment[index] = data;
     this.setState(listAdjusment);
     this.props.setSpecialAdjusmentAction(listAdjusment);
+    this.props.route.params.onUpdate(listAdjusment);
   };
 
   render() {

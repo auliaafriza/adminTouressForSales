@@ -61,3 +61,9 @@ export const getTourSummaryByIdApi = tourTransactionId => {
     `${TOUR_TRANSACTION_URL}/TransactionSummary?id=${tourTransactionId}`
   );
 };
+
+export const getTransactionHistoryByStatusApi = status => {
+  return apiClient.get(
+    `${TOUR_TRANSACTION_URL}/TransactionHistory?status=${status}`
+  );
+};

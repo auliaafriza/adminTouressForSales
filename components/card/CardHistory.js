@@ -1,13 +1,13 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
-import stylesGlobal from "../styles";
-import PropTypes from "prop-types";
-import { SeperatorRepeat } from "../list";
-import Card from "./Card";
-import { RibbonGold } from "../ribbon";
+import React from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import styles from './styles';
+import stylesGlobal from '../styles';
+import PropTypes from 'prop-types';
+import { SeperatorRepeat } from '../list';
+import Card from './Card';
+import { RibbonGold } from '../ribbon';
 
-import IMAGES from "./../../assets/images/NoImage.png";
+import IMAGES from './../../assets/images/NoImage.png';
 
 const CardHistory = ({
   Nobooking,
@@ -22,7 +22,7 @@ const CardHistory = ({
   personResponsible,
   bookingCreated,
   startTour,
-  customer
+  customer,
 }) => {
   const imagestyle = [styles.imagesBG];
   if (imageHeight) {
@@ -42,7 +42,7 @@ const CardHistory = ({
           style={[
             stylesGlobal.paddingHorizontal20,
             stylesGlobal.paddingBottom20,
-            stylesGlobal.paddingTop20
+            stylesGlobal.paddingTop20,
           ]}
         >
           <View style={stylesGlobal.row100}>
@@ -51,14 +51,14 @@ const CardHistory = ({
                 style={[
                   stylesGlobal.text18,
                   stylesGlobal.paddingBottom10,
-                  stylesGlobal.textBold
+                  stylesGlobal.textBold,
                 ]}
               >
                 {`#${Nobooking}`}
               </Text>
             </View>
             <View style={[stylesGlobal.width50]}>
-              {label === "Cancelled" ? (
+              {label === 'Cancelled' ? (
                 <RibbonGold
                   label={label}
                   color1="#ff7961"
@@ -67,7 +67,7 @@ const CardHistory = ({
                   color="#ba000d"
                   colorFont="white"
                 />
-              ) : label === "On-Hold" ? (
+              ) : label === 'OnHold' ? (
                 <RibbonGold
                   label="Booking On Hold"
                   color1="black"
@@ -77,7 +77,7 @@ const CardHistory = ({
                   colorFont="#e6ca6b"
                   widthlabel={80}
                 />
-              ) : label === "Created" ? (
+              ) : label === 'Created' ? (
                 <RibbonGold
                   label={label}
                   color1="#5ce8df"
@@ -86,7 +86,7 @@ const CardHistory = ({
                   color="#00b5ad"
                   colorFont="white"
                 />
-              ) : label === "SP Confirm" || label === "DP Confirm" ? (
+              ) : label === 'SP Confirm' || label === 'DP Confirm' ? (
                 <RibbonGold
                   label={label}
                   color1="#ffa24e"
@@ -96,7 +96,7 @@ const CardHistory = ({
                   colorFont="white"
                   widthlabel={80}
                 />
-              ) : label === "Completed" ? (
+              ) : label === 'Completed' ? (
                 <RibbonGold
                   label={label}
                   widthlabel={80}
@@ -106,7 +106,7 @@ const CardHistory = ({
                   color="#00599e"
                   colorFont="white"
                 />
-              ) : label === "Quotation" ? (
+              ) : label === 'Quotation' ? (
                 <RibbonGold
                   label={label}
                   widthlabel={80}
@@ -116,7 +116,7 @@ const CardHistory = ({
                   color="#700096"
                   colorFont="white"
                 />
-              ) : label === "accepted" ? (
+              ) : label === 'accepted' ? (
                 <RibbonGold
                   label="Quotation Accepted"
                   widthlabel={140}
@@ -129,10 +129,10 @@ const CardHistory = ({
               ) : (
                 <RibbonGold
                   label={label}
-                  color1="#fffd9b"
+                  color3="#75BDAE"
                   color2={styles.$goldcolor}
-                  color3="#b2993d"
-                  color="#b2993d"
+                  color3="#75BDAE"
+                  color="#38AF95"
                   colorFont="black"
                   widthlabel={80}
                 />
@@ -143,7 +143,7 @@ const CardHistory = ({
             style={[
               stylesGlobal.text18,
               stylesGlobal.textBold,
-              stylesGlobal.paddingBottom10
+              stylesGlobal.paddingBottom10,
             ]}
           >
             {Title}
@@ -192,7 +192,7 @@ CardHistory.propTypes = {
   imageHeight: PropTypes.string,
   imageWidth: PropTypes.string,
   label: PropTypes.string,
-  isRead: PropTypes.bool
+  isRead: PropTypes.bool,
 };
 
 export default CardHistory;

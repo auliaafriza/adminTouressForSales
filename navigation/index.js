@@ -8,7 +8,7 @@ import general from './general';
 import masterData from './masterDataNav';
 import TourSummaryCustomReady from '../screens/TourTransactionScreen/TourSummary/tourSummaryCustomReady';
 import SpecialAdjusmentDetail from '../screens/TourTransactionScreen/TourSummary/components/specialAdjusmentDetail/specialAdjusmentDetail';
-
+import MyBookingScreen from '../screens/MyBookingScreen/MyBookingScreen';
 const Stack = createStackNavigator();
 
 export default function seriesNav({ navigation, route }) {
@@ -28,6 +28,7 @@ export default function seriesNav({ navigation, route }) {
         name="SpecialAdjusmentDetail"
         component={SpecialAdjusmentDetail}
       />
+      {/* <Stack.Screen name="MyBooking" component={MyBookingScreen} /> */}
       {/* <Stack.Screen name="ListAirlineTicket" component={ListAirlineTicket} />
       <Stack.Screen name="ListAirport" component={ListAirport} />
       <Stack.Screen name="ListCity" component={ListCity} />

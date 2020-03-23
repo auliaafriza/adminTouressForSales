@@ -51,4 +51,17 @@ export default EStyleSheet.create({
   paddingTop50: {
     paddingTop: 50,
   },
+  col20: {
+    width: '40%',
+  },
+  rowNoPadding: {
+    paddingHorizontal: 5,
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1,
+    width: '100%',
+  },
+  colPadding20: {
+    padding: 20,
+  },
 });
