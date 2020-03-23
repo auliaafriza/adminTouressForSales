@@ -339,10 +339,75 @@ export const setGuestQoutationAction = data => {
 };
 
 export const resetGuestQoutationAction = () => {
-  return dispatch => {
-    return dispatch({
-      type: RESET_GUEST_QUOTATION,
-    });
+  return {
+    type: RESET_GUEST_QUOTATION,
+  };
+};
+
+// export const postCreateCustomAction = data => {
+//   return {
+//     type: POST_CREATE_CUSTOM,
+//     payload: postCreateCustomApi(data),
+//   };
+// };
+
+export const postCreateCustomOnBeHalfAction = data => {
+  return {
+    type: POST_CREATE_CUSTOM_ON_BE_HALF,
+    payload: postCreateCustomOnBeHalfApi(data),
+  };
+};
+
+export const postEditQuotationAction = (tourTransactionId, data) => {
+  return {
+    type: POST_EDIT_QUOTATION,
+    payload: postEditQuotationApi(tourTransactionId, data),
+  };
+};
+
+// export const postEditQuotationAction = (tourTransactionId, data) => {
+//   return {
+//     type: POST_EDIT_QUOTATION,
+//     payload: postEditQuotationApi(tourTransactionId, data),
+//   };
+// };
+
+export const resetPostCreateCustomAction = () => {
+  return {
+    type: RESET_POST_CREATE_CUSTOM,
+  };
+};
+// export const postJoinTourAction = (data, type, packageId) => {
+//   return {
+//     type: POST_JOIN_TOUR,
+//     payload: postJoinTourApi(data, type, packageId),
+//   };
+// };
+
+export const postJoinTourAction = (data, type, packageId) => {
+  return {
+    type: POST_JOIN_TOUR,
+    payload: postJoinTourApi(data, type, packageId),
+  };
+};
+
+export const getTourSummaryByIdAction = tourTransactionId => {
+  return {
+    type: GET_TOUR_SUMMARY_BY_ID,
+    payload: getTourSummaryByIdApi(tourTransactionId),
+  };
+};
+
+export const resetPostQuotationAction = () => {
+  return {
+    type: RESET_POST_QUOTATION,
+  };
+};
+
+export const setSpecialAdjusmentAction = data => {
+  return {
+    type: SET_SPECIAL_ADJUSMENT,
+    payload: data,
   };
 };
 

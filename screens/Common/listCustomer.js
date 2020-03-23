@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   VirtualizedList,
   FlatList,
@@ -11,23 +11,27 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import {SearchBar} from 'react-native-elements';
-import {ListItemCountryAndCity} from '../../components/list';
-import {connect} from 'react-redux';
+import { SearchBar } from 'react-native-elements';
+import { ListItemCountryAndCity } from '../../components/list';
+import { connect } from 'react-redux';
 import styles from './styles';
 import {
-  get_list_company,
-  reset_list_company,
-} from '../../actions/transactionAction';
+  getListCustomerAction,
+  resetListCustomerAction,
+} from '../../actions/General/generalAction';
+// import {
+//   get_list_company,
+//   reset_list_company,
+// } from '../../actions/transactionAction';
 import stylesGlobal from '../../components/styles';
-import styless from '../summary/styles';
-import {Loading} from '../../components/loading';
+import styless from './styles';
+import { Loading } from '../../components/loading';
 import IconAdd from '../../assets/Icon/add.png';
 import imageicon from '../../assets/Icon/user.png';
 // import { get_userid_by_companycode } from '../../actions/companyAction';
 class listCustomer extends Component {
-  constructor (props) {
-    super (props);
+  constructor(props) {
+    super(props);
     this.state = {
       onSelect: this.props.route.params.onSelect,
       ListCompany: this.props.ListCompany,
@@ -46,23 +50,26 @@ class listCustomer extends Component {
   };
 
   componentDidMount = async () => {
-    BackHandler.addEventListener ('hardwareBackPress', () => {
-      this.props.navigation.pop (); // works best when the goBack is async
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
-    this.setState ({loading: true});
-    this.props.dispatch (get_list_company ());
+    this.setState({ loading: true });
+    this.props.getListCustomerAction();
+    // this.props.dispatch(get_list_company());
   };
 
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate(nextProps) {
     if (nextProps.isListCompany === 'success') {
-      this.setState ({loading: false});
-      this.setState ({ListCompany: nextProps.ListCompany});
-      this.props.dispatch (reset_list_company ());
+      this.setState({ loading: false });
+      this.setState({ ListCompany: nextProps.ListCompany });
+      this.props.resetListCustomerAction();
+      // this.props.dispatch(reset_list_company());
       return false;
     } else if (nextProps.isListCompany === 'failed') {
-      this.setState ({loading: false});
-      this.props.dispatch (reset_list_company ());
+      this.setState({ loading: false });
+      this.props.resetListCustomerAction();
+      // this.props.dispatch(reset_list_company());
       return false;
     } else return true;
   }
@@ -70,7 +77,7 @@ class listCustomer extends Component {
   selectedCountry = results => {
     // await this.props.dispatch(get_userid_by_companycode(results.Code));
     // this.backToSummary(results);
-    this.props.navigation.navigate ('ListUserCustomer', {
+    this.props.navigation.navigate('ListUserCustomer', {
       code: results.Code,
       name: results.Name,
       onSelect: this.state.onSelect,
@@ -78,32 +85,32 @@ class listCustomer extends Component {
   };
 
   _handleSearch = value => {
-    this.setState ({searchText: value});
+    this.setState({ searchText: value });
     let updatedList = this.props.ListCompany;
-    updatedList = updatedList.filter (v => {
+    updatedList = updatedList.filter(v => {
       if (
-        v.Name.toLowerCase ().indexOf (value.toLowerCase ()) > -1 ||
+        v.Name.toLowerCase().indexOf(value.toLowerCase()) > -1 ||
         v.Code == value
       ) {
         return true;
       }
       return false;
     });
-    this.setState ({ListCompany: updatedList});
+    this.setState({ ListCompany: updatedList });
   };
 
   RegisCustomer = () => {
-    this.props.navigation.navigate ('RegisterCustomer', {
+    this.props.navigation.navigate('RegisterCustomer', {
       onSelectData: this.selectedCountry,
     });
   };
 
-  render () {
+  render() {
     return (
       <SafeAreaView style={stylesGlobal.styleSafeAreaWhite}>
-        {this.state.loading
-          ? <Loading sizeloading="large" colorloading={styles.$goldcolor} />
-          : null}
+        {this.props.loading ? (
+          <Loading sizeloading="large" colorloading={styles.$goldcolor} />
+        ) : null}
         <View
           style={[styles.header, styles.headerTop, stylesGlobal.paddingTop10]}
         >
@@ -113,7 +120,7 @@ class listCustomer extends Component {
             backgroundColor="white"
           />
           <SearchBar
-            clearIcon={{color: 'red'}}
+            clearIcon={{ color: 'red' }}
             searchIcon={true}
             onChangeText={this._handleSearch}
             placeholder="Type Here..."
@@ -164,64 +171,11 @@ class listCustomer extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          {this.state.ListCompany.length == 0
-            ? this.state.value
-                ? <Text>
-                    {this.state.value} not recorded in Agent Company list
-                  </Text>
-                : <VirtualizedList
-                    initialNumToRender={5}
-                    data={this.state.ListCompany}
-                    getItemCount={data => data.length}
-                    contentContainerStyle={styles.scrollingStyle}
-                    style={[
-                      stylesGlobal.width100,
-                      stylesGlobal.paddingBottom80,
-                    ]}
-                    disableVirtualization
-                    pagingEnabled
-                    getItem={(data, index) => data[index]}
-                    keyExtractor={(item, index) => {
-                      return item.key;
-                    }}
-                    maxToRenderPerBatch={1}
-                    renderItem={({item, index}) => {
-                      return (
-                        <ListItemCountryAndCity
-                          item={item}
-                          key={index}
-                          type="customer"
-                          onPress={() => this.selectedCountry (item)}
-                        />
-                      );
-                    }}
-                    onMomentumScrollBegin={() => {
-                      this.setState ({refreshing: true});
-                    }}
-                    onMomentumScrollEnd={() => {
-                      this.setState ({refreshing: false});
-                    }}
-                    onEndReached={() => {
-                      this.setState ({refreshing: false});
-                    }}
-                    refreshing={true}
-                    onEndReachedThreshold={0.5}
-                    ListFooterComponent={() => {
-                      if (!this.state.refreshing) {
-                        return null;
-                      } else if (this.state.ListCompany.length == 0) {
-                        return null;
-                      }
-                      return (
-                        <Loading
-                          sizeloading="large"
-                          colorloading={styles.$goldcolor}
-                          positionLoad="relative"
-                        />
-                      );
-                    }}
-                  />
-            : <VirtualizedList
+          {this.state.ListCompany.length == 0 ? (
+            this.state.value ? (
+              <Text>{this.state.value} not recorded in Agent Company list</Text>
+            ) : (
+              <VirtualizedList
                 initialNumToRender={5}
                 data={this.state.ListCompany}
                 getItemCount={data => data.length}
@@ -234,24 +188,24 @@ class listCustomer extends Component {
                   return item.key;
                 }}
                 maxToRenderPerBatch={1}
-                renderItem={({item, index}) => {
+                renderItem={({ item, index }) => {
                   return (
                     <ListItemCountryAndCity
                       item={item}
                       key={index}
                       type="customer"
-                      onPress={() => this.selectedCountry (item)}
+                      onPress={() => this.selectedCountry(item)}
                     />
                   );
                 }}
                 onMomentumScrollBegin={() => {
-                  this.setState ({refreshing: true});
+                  this.setState({ refreshing: true });
                 }}
                 onMomentumScrollEnd={() => {
-                  this.setState ({refreshing: false});
+                  this.setState({ refreshing: false });
                 }}
                 onEndReached={() => {
-                  this.setState ({refreshing: false});
+                  this.setState({ refreshing: false });
                 }}
                 refreshing={true}
                 onEndReachedThreshold={0.5}
@@ -269,7 +223,59 @@ class listCustomer extends Component {
                     />
                   );
                 }}
-              />}
+              />
+            )
+          ) : (
+            <VirtualizedList
+              initialNumToRender={5}
+              data={this.state.ListCompany}
+              getItemCount={data => data.length}
+              contentContainerStyle={styles.scrollingStyle}
+              style={[stylesGlobal.width100, stylesGlobal.paddingBottom80]}
+              disableVirtualization
+              pagingEnabled
+              getItem={(data, index) => data[index]}
+              keyExtractor={(item, index) => {
+                return item.key;
+              }}
+              maxToRenderPerBatch={1}
+              renderItem={({ item, index }) => {
+                return (
+                  <ListItemCountryAndCity
+                    item={item}
+                    key={index}
+                    type="customer"
+                    onPress={() => this.selectedCountry(item)}
+                  />
+                );
+              }}
+              onMomentumScrollBegin={() => {
+                this.setState({ refreshing: true });
+              }}
+              onMomentumScrollEnd={() => {
+                this.setState({ refreshing: false });
+              }}
+              onEndReached={() => {
+                this.setState({ refreshing: false });
+              }}
+              refreshing={true}
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={() => {
+                if (!this.state.refreshing) {
+                  return null;
+                } else if (this.state.ListCompany.length == 0) {
+                  return null;
+                }
+                return (
+                  <Loading
+                    sizeloading="large"
+                    colorloading={styles.$goldcolor}
+                    positionLoad="relative"
+                  />
+                );
+              }}
+            />
+          )}
           {/* <FlatList
             data={this.state.ListCompany}
             renderItem={({ item }) => (
@@ -288,9 +294,13 @@ class listCustomer extends Component {
 }
 
 const mapStateToProps = state => ({
-  ListCompany: state.transactionReducer.ListCompany,
-  isListCompany: state.transactionReducer.isListCompany,
-  isDataUserIdCompany: state.companyProfileReducer.isDataUserIdCompany,
+  ListCompany: state.generalReducer.ListCompany,
+  isListCompany: state.generalReducer.isListCompany,
+  // isDataUserIdCompany: state.companyProfileReducer.isDataUserIdCompany,
+  loading: state.generalReducer.loading,
 });
 
-export default connect (mapStateToProps) (listCustomer);
+export default connect(mapStateToProps, {
+  getListCustomerAction,
+  resetListCustomerAction,
+})(listCustomer);

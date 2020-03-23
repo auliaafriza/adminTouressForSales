@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import ListAccomodation from '../screens/TourTransactionScreen/CustomPackage/components/masterData/listAccomodation';
 import AccomodationDetail from '../screens/TourTransactionScreen/CustomPackage/components/masterData/accomodationDetail';
 import HotelAndRoomDetail from '../screens/TourTransactionScreen/CustomPackage/components/masterData/hotelAndRoomDetail';
@@ -13,10 +13,14 @@ import ListRestaurant from '../screens/TourTransactionScreen/CustomPackage/compo
 //import TransportasiUnitDetail from '../screens/TourTransactionScreen/CustomPackage/components/masterData/transportasiUnitDetail';
 //import RestaurantDetail from '../screens/TourTransactionScreen/CustomPackage/components/masterData/restaurantDetail';
 import MapView from '../screens/TourTransactionScreen/CustomPackage/components/masterData/mapView';
+import { createStackNavigator } from '@react-navigation/stack';
+import ListAccomodation from '../screens/TourTransactionScreen/CustomPackage/components/masterData/listAccomodation';
+import ListCustomer from '../screens/Common/listCustomer';
+import ListUserCustomer from '../screens/Common/listUserCustomer';
 
 const Stack = createStackNavigator();
 
-export default function masterDataNav({navigation, route}) {
+export default function masterDataNav({ navigation, route }) {
   return (
     <Stack.Navigator headerMode="screen">
       <Stack.Screen name="ListAccomodation" component={ListAccomodation} />
@@ -38,6 +42,9 @@ export default function masterDataNav({navigation, route}) {
       /> */}
       {/* <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} /> */}
       <Stack.Screen name="MapView" component={MapView} />
+      {/* <Stack.Screen name="ListAccomodation" component={ListAccomodation} /> */}
+      <Stack.Screen name="ListCustomer" component={ListCustomer} />
+      <Stack.Screen name="ListUserCustomer" component={ListUserCustomer} />
     </Stack.Navigator>
   );
 }

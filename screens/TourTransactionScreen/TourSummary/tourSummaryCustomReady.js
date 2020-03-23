@@ -110,7 +110,13 @@ class summaryCustom extends Component {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
-    this.props.setSpecialAdjusmentAction(dummayDemo.AdditionalItems);
+    const id = this.props.route.params.id;
+    const type = this.props.route.params.type;
+    if (type === 'myBooking') {
+      this.props.getTourSummaryByIdAction(id);
+    } else {
+      this.props.setSpecialAdjusmentAction(dummayDemo.AdditionalItems);
+    }
   }
 
   handleGuest = () => {
@@ -191,15 +197,15 @@ class summaryCustom extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    // if (this.props.isUpdateSpecialAdjusment) {
-    //   this.props.setSpecialAdjusmentAction(this.props.specialAdjusment);
-    //   this.props.resetTransactionAction();
-    //   return false;
-    // } else if (this.props.isUpdateSpecialAdjusment !== null) {
-    //   Alert.alert('Failed', this.props.messages, [{ text: 'OK' }]);
-    //   this.props.resetTransactionAction();
-    //   return false;
-    // }
+    if (this.props.packageByIdStatus) {
+      // this.props.setSpecialAdjusmentAction(this.props.specialAdjusment);
+      this.props.resetTransactionAction();
+      return false;
+    } else if (this.props.packageByIdStatus !== null) {
+      // Alert.alert('Failed', this.props.messages, [{ text: 'OK' }]);
+      this.props.resetTransactionAction();
+      return false;
+    }
 
     if (nextProps.isCreateTour === 'success') {
       this.setState({ loading: false });
@@ -241,12 +247,19 @@ class summaryCustom extends Component {
   };
 
   handleCompany = async () => {
-    this.props.navigation.navigate('General', {
+    this.props.navigation.navigate('masterData', {
       screen: 'ListCustomer',
       params: {
         onSelect: await this.onSelectCustomer,
       },
     });
+
+    // this.props.navigation.navigate('General', {
+    //   screen: 'ListCustomer',
+    //   params: {
+    //     onSelect: await this.onSelectCustomer,
+    //   },
+    // });
   };
 
   handleOpenNoteModal = () => {
@@ -302,14 +315,15 @@ class summaryCustom extends Component {
     this.props.navigation.navigate('SpecialAdjusmentDetail', {
       data: this.props.specialAdjusment,
     });
-
-    // this.props.navigation.navigate ('CustomPackageOption', {
-    //       screen: 'CustomPackageOptionStack',
-    //     });
   };
   render() {
     // const Data = this.props.DemoPrice ? this.props.DemoPrice : "";
-    const Data = dummayDemo;
+    const Data =
+      this.props.route.params.type === 'myBooking'
+        ? this.props.packageByIdStatus
+          ? this.props.packageById
+          : dummayDemo
+        : dummayDemo;
     const modalNoteHeight = Dimensions.get('window').height * 0.7;
     const generateOrderItemData = generateOrderedItem(Data.DailyPrograms);
     // const generateGuestData = generateGuestList(Data.TourGuestSum);
@@ -1531,6 +1545,8 @@ const mapStateToProps = state => ({
   //   additionalService: state.additionalServiceReducer.additionalService,
   specialAdjusment: state.transactionReducer.setSpecialAdjusment,
   isUpdateSpecialAdjusment: state.transactionReducer.isUpdateSpecialAdjusment,
+  packageById: state.transactionReducer.packageById,
+  packageByIdStatus: state.transactionReducer.packageByIdStatus,
 });
 
 export default connect(mapStateToProps, {
