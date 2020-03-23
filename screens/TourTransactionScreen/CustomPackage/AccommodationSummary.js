@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Container} from '../../../components/container';
-import {CardMedia} from '../../../components/card';
+import React, { Component } from 'react';
+import { Container } from '../../../components/container';
+import { CardMedia } from '../../../components/card';
 import CardFlight from './components/CardFlight';
 import CardAccommodation from './components/CardAccommodation';
 import {
@@ -12,12 +12,12 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import styles from './styles';
 import stylesGlobal from '../../../components/styles';
-import {NormalButton} from '../../../components/button';
+import { NormalButton } from '../../../components/button';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   viewDate,
   viewTime,
@@ -69,7 +69,7 @@ import {
   changeDurationMainPrograms,
   checkNearFlight,
 } from '../../../helper/itineraryBuilder';
-import {helperNextDay} from '../../../helper/helperNextDay';
+import { helperNextDay } from '../../../helper/helperNextDay';
 import {
   setSummaryProgramAction,
   setDeparturesItineraryAction,
@@ -83,14 +83,14 @@ import {
   getAllMovementTypesAction,
   getCityInCountryAction,
 } from '../../../actions/General/generalAction';
-import {transactionItem} from '../../../helper/transactionHelper';
-import {findName} from '../../../helper/checkingHelper';
+import { transactionItem } from '../../../helper/transactionHelper';
+import { findName } from '../../../helper/checkingHelper';
 import {
   deleteGroupTicket,
   findIndexGroupTicket,
 } from '../../../helper/groupTicketing';
 
-import {Loading} from '../../../components/loading';
+import { Loading } from '../../../components/loading';
 import {
   splitFlightTransit,
   getAirlineTicketFirstIndex,
@@ -108,7 +108,7 @@ import {
   // isNullFirstDestination,
   setPlaceInArrivalDepartureByHeadLine,
 } from './services/settingDestination';
-import {resetAccommodationProfileAction} from '../../../actions/accommodation/accommodationAction';
+import { resetAccommodationProfileAction } from '../../../actions/accommodation/accommodationAction';
 import {
   setDrivingAction,
   setAirportAction,
@@ -299,7 +299,7 @@ class AccommodationSummary extends Component {
         }
       }
     }
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   hideDateTimePicked = () => {
@@ -328,7 +328,7 @@ class AccommodationSummary extends Component {
     });
   };
   validate = type => {
-    const {SummaryProgram} = this.state;
+    const { SummaryProgram } = this.state;
     let isError = false;
     const REQUIRED = 'This field is required';
     const errors = {
@@ -616,7 +616,7 @@ class AccommodationSummary extends Component {
   };
 
   handleNewAccommodation = index => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const error = this.validate('Accommodation');
     if (!error) {
       let headline = {
@@ -641,11 +641,11 @@ class AccommodationSummary extends Component {
         Alert.alert(errorMaxDestination);
       }
     }
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   addMoreDestination = () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const error = this.validate('Accommodation');
     if (!error) {
       let isNextGT = this.state.Returns[0].Ticket.ServiceItemId
@@ -669,11 +669,11 @@ class AccommodationSummary extends Component {
       this.props.setSummaryProgramAction(SP);
       this.props.setReturnsItineraryAction(newReturns);
     }
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   delDestination = (index, headLineProg) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     // let error = checkDeleteAccommodation(this.state.SummaryProgram, index);
     let data = delSummaryProgram(
       this.state.Departures[this.state.Departures.length - 1],
@@ -704,7 +704,7 @@ class AccommodationSummary extends Component {
     //this.props.dispatch(set_summary_program(headLineProg.MainPrograms));
     //this.props.dispatch(set_returns_itenerary(headLineProg.Returns));
     // //this.props.dispatch(set_daily_program(data.dailyProgram));
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   confirmAlertDelete = index => {
@@ -724,13 +724,13 @@ class AccommodationSummary extends Component {
           text: 'Yes',
           onPress: () => this.delDestination(index, headline),
         },
-        {text: 'No'},
+        { text: 'No' },
       ]);
     } else {
       Alert.alert(
         'Failed',
         'Accommodation cannot be deleted because it is tied to flight ticket',
-        [{text: 'Ok'}]
+        [{ text: 'Ok' }]
       );
     }
   };
@@ -895,14 +895,14 @@ class AccommodationSummary extends Component {
         this.props.Departures,
         this.props.Returns
       );
-      this.setState({loading: true});
+      this.setState({ loading: true });
       this.props.getOperatorListAction(item);
       //this.props.dispatch(get_operator_list(item));
     }
   };
 
   handleListAccomodation = index => {
-    const {SummaryProgram} = this.state;
+    const { SummaryProgram } = this.state;
     const error = this.validate('Destination');
     const errorDeparture = this.validate('Departures');
     // const errorReturns = this.validate('Returns');
@@ -1000,7 +1000,7 @@ class AccommodationSummary extends Component {
       room,
       hotel
     );
-    this.setState({SummaryProgram: SP});
+    this.setState({ SummaryProgram: SP });
     this.props.setSummaryProgramAction(SP);
     //this.props.dispatch(set_summary_program(SP));
   };
@@ -1015,7 +1015,7 @@ class AccommodationSummary extends Component {
             text: 'Yes',
             onPress: () => this.handleCity(index),
           },
-          {text: 'No'},
+          { text: 'No' },
         ]
       );
     } else {
@@ -1051,14 +1051,14 @@ class AccommodationSummary extends Component {
     //   this.props.airport,
     //   this.props.cityList
     // );
-    await this.setState({SummaryProgram: headline.MainPrograms});
+    await this.setState({ SummaryProgram: headline.MainPrograms });
     this.props.setSummaryProgramAction(headline.MainPrograms);
     //this.props.dispatch(set_summary_program(headline.MainPrograms));
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   delConnecFlight = async index => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     let SP = delConectionFlight(
       this.state.Departures[1],
       this.state.SummaryProgram,
@@ -1069,7 +1069,7 @@ class AccommodationSummary extends Component {
     });
     this.props.setSummaryProgramAction(SP);
     //this.props.dispatch(await set_summary_program(SP));
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   connectionFlight = (index, data) => {
@@ -1100,7 +1100,7 @@ class AccommodationSummary extends Component {
   };
 
   onSelectCity = async (index, city) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     let data = await changeDestinationSummaryProgram(
       this.state.Departures[1],
       this.state.Returns[0],
@@ -1148,11 +1148,11 @@ class AccommodationSummary extends Component {
     //this.props.dispatch(set_departures_itenerary(headline.Departures));
     //this.props.dispatch(set_returns_itenerary(headline.Returns));
     //this.props.dispatch(set_summary_program(headline.MainPrograms));
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   handleAirport = (data, index, type) => {
-    this.setState({airportType: type, oldAirport: data});
+    this.setState({ airportType: type, oldAirport: data });
     this.props.navigation.navigate('General', {
       screen: 'ListAirport',
       params: {
@@ -1164,7 +1164,7 @@ class AccommodationSummary extends Component {
   };
 
   onSelectFirstCity = async (index, city) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     let data = await changeDestinationSummaryProgram(
       this.state.Departures[1],
       this.state.Returns[0],
@@ -1187,16 +1187,16 @@ class AccommodationSummary extends Component {
     //this.props.setDeparturesItineraryAction (newDepartures);
     this.props.setReturnsItineraryAction(newReturns);
     this.props.setSummaryProgramAction(data.SP);
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   onSelectAirport = async (data, index, airport) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     if (index != null) {
       let mainProgram = changeAirport(data, index, airport);
-      this.setState({MainPrograms: mainProgram});
+      this.setState({ MainPrograms: mainProgram });
       this.props.dispatch(set_summary_program(mainProgram));
-      this.setState({loading: false});
+      this.setState({ loading: false });
     } else {
       let ArrDep = changeAirport(data, null, airport);
       let arrayDepartures = [];
@@ -1206,9 +1206,9 @@ class AccommodationSummary extends Component {
         ArrDep.TransferType = 'Movement_departure';
         arrayDepartures.push(ArrDep);
         arrayDepartures.push(this.state.Departures[1]);
-        this.setState({Departures: arrayDepartures});
+        this.setState({ Departures: arrayDepartures });
         await this.props.setDeparturesItineraryAction(arrayDepartures);
-        this.setState({loading: false});
+        this.setState({ loading: false });
       } else if (this.state.airportType == 'firstArrival') {
         let city = this.props.cityList.find(item => item.Id == airport.City.Id);
         ArrDep.TransferType = 'Movement_arrival';
@@ -1218,22 +1218,25 @@ class AccommodationSummary extends Component {
           Departures: arrayDepartures,
         });
         await this.props.setDeparturesItineraryAction(arrayDepartures);
-        this.onSelectFirstCity(this.state.SummaryProgram.length - 1, city);
-        this.setState({loading: false});
+        await this.onSelectFirstCity(
+          this.state.SummaryProgram.length - 1,
+          city
+        );
+        this.setState({ loading: false });
       } else if (this.state.airportType == 'lastDeparture') {
         ArrDep.TransferType = 'Movement_departure';
         arrayReturns.push(ArrDep);
         arrayReturns.push(this.state.Returns[1]);
-        this.setState({Returns: arrayReturns});
+        this.setState({ Returns: arrayReturns });
         await this.props.setReturnsItineraryAction(arrayReturns);
-        this.setState({loading: false});
+        this.setState({ loading: false });
       } else {
         ArrDep.TransferType = 'Movement_arrival';
         arrayReturns.push(this.state.Returns[0]);
         arrayReturns.push(ArrDep);
-        this.setState({Returns: arrayReturns});
+        this.setState({ Returns: arrayReturns });
         await this.props.setReturnsItineraryAction(arrayReturns);
-        this.setState({loading: false});
+        this.setState({ loading: false });
       }
     }
   };
@@ -1256,7 +1259,7 @@ class AccommodationSummary extends Component {
       //this.props.dispatch(set_summary_program(data.MainPrograms));
       //this.props.dispatch(set_returns_itenerary(newReturns));
     } else {
-      Alert.alert('Failed', data.errorMessage, [{text: 'OK'}]);
+      Alert.alert('Failed', data.errorMessage, [{ text: 'OK' }]);
     }
   };
   // handleChangeDuration = (value, i) => {
@@ -1418,7 +1421,7 @@ class AccommodationSummary extends Component {
       date
     );
 
-    this.setState({SummaryProgram: SP}, () => {
+    this.setState({ SummaryProgram: SP }, () => {
       this.props.setSummaryProgramAction(SP);
       //this.props.dispatch(set_summary_program(SP));
       this.hideDateTimePicked();
@@ -1428,7 +1431,7 @@ class AccommodationSummary extends Component {
   handleTimeSP = (index, time) => {
     let type = this.state.isTimeInPickerVisible[index] ? 'in' : 'out';
     let SP = changeChecInCheckOut(this.state.SummaryProgram, index, time, type);
-    this.setState({SummaryProgram: SP}, () => {
+    this.setState({ SummaryProgram: SP }, () => {
       this.props.setSummaryProgramAction(SP);
       //this.props.dispatch(set_summary_program(SP));
       this.hideDateTimePicked();
@@ -1437,7 +1440,7 @@ class AccommodationSummary extends Component {
 
   handleTimeConnectionFlight = (index, time) => {
     let SP = changeTimeConnectionFlight(this.state.SummaryProgram, index, time);
-    this.setState({SummaryProgram: SP});
+    this.setState({ SummaryProgram: SP });
     this.props.setSummaryProgramAction(SP);
     //this.props.dispatch(set_summary_program(SP));
     this.hideDateTimePicked();
@@ -1458,7 +1461,7 @@ class AccommodationSummary extends Component {
     );
     let departure = setDateDeparture(this.state.Returns[0], SP);
     let newReturns = [departure, this.state.Returns[1]];
-    this.setState({SummaryProgram: SP, Returns: newReturns});
+    this.setState({ SummaryProgram: SP, Returns: newReturns });
     this.props.setSummaryProgramAction(SP);
     this.props.setReturnsItineraryAction(newReturns);
     //this.props.dispatch(set_summary_program(SP));
@@ -1482,17 +1485,17 @@ class AccommodationSummary extends Component {
 
   shouldComponentUpdate(nextProps) {
     if (nextProps.isTourOperator) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       // this.props.navigation.navigate('AddAdditionalService', {
       //   type: 'custom',
       // });
-      this.props.navigation.navigate('TourOperatorList', {type: 'custom'});
+      this.props.navigation.navigate('TourOperatorList', { type: 'custom' });
       this.props.resetOperatorListAction();
       //this.props.dispatch(reset_operator_list());
       return false;
     } else if (nextProps.isTourOperator) {
-      this.setState({loading: false});
-      Alert.alert('Failed', nextProps.tourOperatorListError, [{text: 'OK'}]);
+      this.setState({ loading: false });
+      Alert.alert('Failed', nextProps.tourOperatorListError, [{ text: 'OK' }]);
       this.props.resetOperatorListAction();
       //this.props.dispatch(reset_operator_list());
       return false;
@@ -1527,8 +1530,8 @@ class AccommodationSummary extends Component {
       newReturns[1].Ticket.FlightNumber = text;
     }
 
-    this.setState({Departures: newDeparture});
-    this.setState({Returns: newReturns});
+    this.setState({ Departures: newDeparture });
+    this.setState({ Returns: newReturns });
   };
 
   handleChangeNote = (text, type, dateDepar, dateArr) => {
@@ -1663,7 +1666,7 @@ class AccommodationSummary extends Component {
   };
 
   handleMultipleDestination = () => {
-    this.setState({loadingButton: true});
+    this.setState({ loadingButton: true });
     let mainProgram = addLastDestinationSummaryProgram(
       this.state.Returns,
       this.state.SummaryProgram
@@ -1681,11 +1684,11 @@ class AccommodationSummary extends Component {
     this.props.setReturnsItineraryAction(newReturns);
     //this.props.dispatch(set_returns_itenerary(newReturns));
     //this.props.dispatch(set_summary_program(mainProgram));
-    this.setState({loadingButton: false});
+    this.setState({ loadingButton: false });
   };
 
   handleSingleDestination = () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     let headline = deleteLastDestinationSummaryProgram(
       this.state.SummaryProgram,
       this.state.Returns
@@ -1758,7 +1761,7 @@ class AccommodationSummary extends Component {
   };
 
   handleDiscardTicket = (serviceItemId, isDeleteAllGroupTicket) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     let headline = {
       Departures: this.state.Departures,
       MainPrograms: this.state.SummaryProgram,
@@ -1775,20 +1778,20 @@ class AccommodationSummary extends Component {
     //this.props.dispatch(set_departures_itenerary(headlineProgram.Departures));
     //this.props.dispatch(set_summary_program(headlineProgram.MainPrograms));
     //this.props.dispatch(set_returns_itenerary(headlineProgram.Returns));
-    this.setState({loading: false});
+    this.setState({ loading: false });
   };
 
   render() {
-    const {Departures, SummaryProgram, Returns} = this.state;
+    const { Departures, SummaryProgram, Returns } = this.state;
     return (
       <Container>
         {/* <ModalBottom height="50%" visible={this.state.loading} isCenter={true}>
           <Text style={stylesGlobal.text14}>{this.state.textLoading}</Text>
           <AnimatedEllipsis />
         </ModalBottom> */}
-        {/* {this.state.loading ? (
+        {this.state.loading ? (
           <Loading sizeloading="large" colorloading={styles.$goldcolor} />
-        ) : null} */}
+        ) : null}
 
         <View style={styles.header}>
           <View style={styles.tabNavigation}>
@@ -1834,7 +1837,7 @@ class AccommodationSummary extends Component {
             onScroll={Animated.event([
               {
                 nativeEvent: {
-                  contentOffset: {y: this.state.scrollY},
+                  contentOffset: { y: this.state.scrollY },
                 },
               },
             ])}
@@ -2657,7 +2660,7 @@ const mapStateToProps = state => ({
   isTourOperator: state.operatorReducer.isTourOperator,
   tourOperatorListError: state.operatorReducer.errors,
   airport: state.transportationReducer.airport,
-  // listAirport: state.transportationReducer.listAirport,
+  listAirport: state.transportationReducer.listAirport,
   listAirportByRegion: state.transportationReducer.listAirportByRegion,
   driving: state.transportationReducer.driving,
   cityList: state.generalReducer.cityInCountry,

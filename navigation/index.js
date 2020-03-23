@@ -13,10 +13,7 @@ const Stack = createStackNavigator();
 
 export default function seriesNav({ navigation, route }) {
   return (
-    <Stack.Navigator
-      initialRouteName="TourSummaryCustomReady"
-      headerMode="screen"
-    >
+    <Stack.Navigator initialRouteName="Home" headerMode="none">
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="PackageList" component={ListScreen} />
       <Stack.Screen name="PackagesDetail" component={DetailSeriesPackage} />

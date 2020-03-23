@@ -3,7 +3,7 @@ import * as types from '../actions/accommodation/actionTypes';
 const initialState = {
   loading: false,
   listAccomodation: [],
-  isAccomodation: null,
+  isAccomodation: '',
   accomodationFilter: [],
   isAccomodationFilter: null,
   cityAccommodation: [],
@@ -22,27 +22,28 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.GET_ACCOMMODATION:
-      return {...state};
+      return { ...state };
     case types.GET_ACCOMMODATION_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_ACCOMMODATION_FULFILLED:
       return {
         ...state,
         listAccomodation: action.payload.data,
         loading: false,
         errors: null,
+        isAccomodation: 'success',
       };
     case types.GET_ACCOMMODATION_REJECTED:
       return {
         ...state,
         loading: false,
         errors: action.payload.response.data,
+        isAccomodation: 'failed',
       };
     case types.RESET_ACCOMMODATION_PROFILE: {
       return {
         ...state,
-        listAccomodation: [],
-        isAccomodation: null,
+        isAccomodation: '',
       };
     }
     case types.SET_CITY_ACCOMMODATION: {
@@ -53,9 +54,9 @@ const reducer = (state = initialState, action) => {
     }
 
     case types.GET_ACCOMMODATION_RATINGS:
-      return {...state};
+      return { ...state };
     case types.GET_ACCOMMODATION_RATINGS_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_ACCOMMODATION_RATINGS_FULFILLED:
       return {
         ...state,
@@ -70,9 +71,9 @@ const reducer = (state = initialState, action) => {
         errors: action.payload.response.data,
       };
     case types.GET_ACCOMMODATION_LOCATIONS:
-      return {...state};
+      return { ...state };
     case types.GET_ACCOMMODATION_LOCATIONS_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_ACCOMMODATION_LOCATIONS_FULFILLED:
       return {
         ...state,
@@ -88,9 +89,9 @@ const reducer = (state = initialState, action) => {
       };
 
     case types.GET_ACCOMMODATION_TYPES:
-      return {...state};
+      return { ...state };
     case types.GET_ACCOMMODATION_TYPES_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_ACCOMMODATION_TYPES_FULFILLED:
       return {
         ...state,
@@ -106,9 +107,9 @@ const reducer = (state = initialState, action) => {
       };
 
     case types.GET_ACCOMMODATION_FACILITIES:
-      return {...state};
+      return { ...state };
     case types.GET_ACCOMMODATION_FACILITIES_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_ACCOMMODATION_FACILITIES_FULFILLED:
       return {
         ...state,
@@ -126,9 +127,9 @@ const reducer = (state = initialState, action) => {
     // GET_ACCOMMODATION_ROOMS
     //---------------------------------
     case types.GET_ACCOMMODATION_ROOMS:
-      return {...state};
+      return { ...state };
     case types.GET_ACCOMMODATION_ROOMS_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_ACCOMMODATION_ROOMS_FULFILLED:
       return {
         ...state,
@@ -149,9 +150,9 @@ const reducer = (state = initialState, action) => {
     // GET_ACCOMMODATION_PROFILE
     //---------------------------------
     case types.GET_ACCOMMODATION_BY_ID:
-      return {...state};
+      return { ...state };
     case types.GET_ACCOMMODATION_BY_ID_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_ACCOMMODATION_BY_ID_FULFILLED:
       return {
         ...state,
@@ -170,9 +171,9 @@ const reducer = (state = initialState, action) => {
       };
     //get  accommodation by service item id
     case types.GET_ACCOMMODATION_BY_SERVICE_ITEM_ID:
-      return {...state};
+      return { ...state };
     case types.GET_ACCOMMODATION_BY_SERVICE_ITEM_ID_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_ACCOMMODATION_BY_SERVICE_ITEM_ID_FULFILLED:
       return {
         ...state,

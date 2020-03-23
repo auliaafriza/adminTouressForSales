@@ -21,9 +21,9 @@ const reducer = (state = initialState, action) => {
     // GET_EXCURSION_TYPES
     //---------------------------------
     case types.GET_EXCURSION_TYPES:
-      return {...state};
+      return { ...state };
     case types.GET_EXCURSION_TYPES_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_EXCURSION_TYPES_FULFILLED:
       return {
         ...state,
@@ -44,9 +44,9 @@ const reducer = (state = initialState, action) => {
     // GET_EXCURSION_BY_FILTER
     //---------------------------------
     case types.GET_EXCURSION_BY_FILTER:
-      return {...state};
+      return { ...state };
     case types.GET_EXCURSION_BY_FILTER_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_EXCURSION_BY_FILTER_FULFILLED:
       return {
         ...state,
@@ -67,9 +67,9 @@ const reducer = (state = initialState, action) => {
     // GET_EXCURSION_BY_ID
     //---------------------------------
     case types.GET_EXCURSION_BY_ID:
-      return {...state};
+      return { ...state };
     case types.GET_EXCURSION_BY_ID_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_EXCURSION_BY_ID_FULFILLED:
       return {
         ...state,
@@ -95,9 +95,9 @@ const reducer = (state = initialState, action) => {
       };
     //get detail excrusion
     case types.GET_EXCRUSION_DETAIL:
-      return {...state};
+      return { ...state };
     case types.GET_EXCRUSION_DETAIL_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_EXCRUSION_DETAIL_REJECTED:
       return {
         ...state,

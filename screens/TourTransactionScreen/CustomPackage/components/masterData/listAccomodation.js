@@ -19,14 +19,9 @@ import { Container } from '../../../../../components/container';
 import { CardAccomodation } from '../../../../../components/card';
 import styles from './styles';
 import stylesGlobal from '../../../../../components/styles';
-import { RoundedLoading } from '../../../../../components/loading';
+// import { RoundedLoading } from '../../../../../components/loading';
 import { SearchBar } from 'react-native-elements';
 import { viewDateSlash } from '../../../../../helper/timeHelper';
-// import {
-//   get_accomodation,
-//   // reset_accomodation_filter,
-//   reset_accomodation,
-//   set_city_accommodation,
 import {
   getAccommodationProfileAction,
   resetAccommodationProfileAction,
@@ -726,7 +721,7 @@ class listAccomodation extends Component {
                   stylesGlobal.paddingHorizontal20,
                 ]}
               >
-                <RoundedLoading width={width90} height={200} line={10} />
+                {/* <RoundedLoading width={width90} height={200} line={10} /> */}
               </View>
             ) : (
               <View
@@ -751,32 +746,34 @@ class listAccomodation extends Component {
                 stylesGlobal.center,
               ]}
             >
-              {this.state.ListAccommodation.map((hotel, i) => {
-                let DataStar = hotel.AccommodationRating || '';
-                let Star = parseInt(DataStar.Id) || '';
-                return (
-                  <CardAccomodation
-                    widthCard="100%"
-                    Img={
-                      hotel.ProfileImages.length != 0
-                        ? handleFilterImagePrimary(hotel.ProfileImages)
-                        : hotel.ImageUrl
-                    }
-                    Title={hotel.Name}
-                    Address={hotel.City ? hotel.City.Name : ''} // Address={hotel.Address}
-                    statusRoom={hotel.IsInstantConfirmation}
-                    namabutton="SEE DETAIL"
-                    ProfileFacilities={hotel.ProfileFacilities}
-                    key={i}
-                    onPress={() => this.handlePressDetail(hotel)}
-                    numberStar={Star}
-                    isPromo={hotel.IsPromo}
-                    typeCard="Hotel"
-                    estimatedPrice={hotel.EstimatedTotalPrice.Price}
-                    currency={hotel.EstimatedTotalPrice.CurrencyId}
-                  />
-                );
-              })}
+              {this.state.ListAccommodation
+                ? this.state.ListAccommodation.map((hotel, i) => {
+                    let DataStar = hotel.AccommodationRating || '';
+                    let Star = parseInt(DataStar.Id) || '';
+                    return (
+                      <CardAccomodation
+                        widthCard="100%"
+                        Img={
+                          hotel.ProfileImages.length != 0
+                            ? handleFilterImagePrimary(hotel.ProfileImages)
+                            : hotel.ImageUrl
+                        }
+                        Title={hotel.Name}
+                        Address={hotel.City ? hotel.City.Name : ''} // Address={hotel.Address}
+                        statusRoom={hotel.IsInstantConfirmation}
+                        namabutton="SEE DETAIL"
+                        ProfileFacilities={hotel.ProfileFacilities}
+                        key={i}
+                        onPress={() => this.handlePressDetail(hotel)}
+                        numberStar={Star}
+                        isPromo={hotel.IsPromo}
+                        typeCard="Hotel"
+                        estimatedPrice={hotel.EstimatedTotalPrice.Price}
+                        currency={hotel.EstimatedTotalPrice.CurrencyId}
+                      />
+                    );
+                  })
+                : null}
             </View>
             <View
               style={[stylesGlobal.marginBottom80, stylesGlobal.width100]}

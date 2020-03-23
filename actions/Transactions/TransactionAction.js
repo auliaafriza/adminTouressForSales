@@ -345,3 +345,85 @@ export const resetGuestQoutationAction = () => {
     });
   };
 };
+
+// export const postCreateCustomAction = data => {
+//   return {
+//     type: POST_CREATE_CUSTOM,
+//     payload: postCreateCustomApi(data),
+//   };
+// };
+
+export const postCreateCustomOnBeHalfAction = data => {
+  return dispatch => {
+    return dispatch({
+      type: POST_CREATE_CUSTOM_ON_BE_HALF,
+      payload: postCreateCustomOnBeHalfApi(data),
+    });
+  };
+};
+
+export const postEditQuotationAction = (tourTransactionId, data) => {
+  return dispatch => {
+    return dispatch({
+      type: POST_EDIT_QUOTATION,
+      payload: postEditQuotationApi(tourTransactionId, data),
+    });
+  };
+};
+
+// export const postEditQuotationAction = (tourTransactionId, data) => {
+//   return {
+//     type: POST_EDIT_QUOTATION,
+//     payload: postEditQuotationApi(tourTransactionId, data),
+//   };
+// };
+
+export const resetPostCreateCustomAction = () => {
+  return dispatch => {
+    return dispatch({
+      type: RESET_POST_CREATE_CUSTOM,
+    });
+  };
+};
+
+// export const postJoinTourAction = (data, type, packageId) => {
+//   return {
+//     type: POST_JOIN_TOUR,
+//     payload: postJoinTourApi(data, type, packageId),
+//   };
+// };
+
+export const postJoinTourAction = (data, type, packageId) => {
+  return dispatch => {
+    return dispatch({
+      type: POST_JOIN_TOUR,
+      payload: postJoinTourApi(data, type, packageId),
+    });
+  };
+};
+
+export const getTourSummaryByIdAction = (tourTransactionId, data) => {
+  return dispatch => {
+    return dispatch({
+      type: GET_TOUR_SUMMARY_BY_ID,
+      payload: getTourSummaryByIdApi(tourTransactionId, data),
+    });
+  };
+};
+
+export const resetPostQuotationAction = () => {
+  return dispatch => {
+    return dispatch({
+      type: RESET_POST_QUOTATION,
+    });
+  };
+};
+
+export const setSpecialAdjusmentAction = data => {
+  return dispatch => {
+    return dispatch({
+      type: SET_SPECIAL_ADJUSMENT,
+      payload: data,
+    });
+  };
+};

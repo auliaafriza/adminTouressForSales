@@ -188,10 +188,10 @@ class home extends Component {
   };
 
   handlePressCustom = () => {
-    // this.props.navigation.navigate('CustomPackageOption', {
-    //   screen: 'CustomPackageOptionStack',
-    // });
-    this.props.navigation.navigate('TourSummaryCustomReady');
+    this.props.navigation.navigate('CustomPackageOption', {
+      screen: 'CustomPackageOptionStack',
+    });
+    // this.props.navigation.navigate('TourSummaryCustomReady');
   };
 
   handlePressFilter = () => {
