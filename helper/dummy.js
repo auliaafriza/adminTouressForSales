@@ -1,8 +1,7 @@
 export const dummy = {
   Departures: [
     {
-      Address:
-        'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
+      Address: 'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
       City: {
         Id: 'JAKARTA',
         Name: 'Jakarta',
@@ -11,15 +10,13 @@ export const dummy = {
           Id: 'JAKARTA',
           Code: null,
           Name: 'Jakarta',
-          ImageUrl:
-            'http://agenfiforlif.mc468.com/wp-content/uploads/2016/06/DKI-Jakarta.jpg',
+          ImageUrl: 'http://agenfiforlif.mc468.com/wp-content/uploads/2016/06/DKI-Jakarta.jpg',
         },
         Country: {
           Id: 'ID',
           Code: '+62',
           Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
         },
         UTC: 7,
       },
@@ -34,8 +31,7 @@ export const dummy = {
       NextDay: false,
     },
     {
-      Address:
-        'Jalan Pajajaran No.156, Husen Sastranegara, Cicendo, Kota Bandung, Jawa Barat 40174',
+      Address: 'Jalan Pajajaran No.156, Husen Sastranegara, Cicendo, Kota Bandung, Jawa Barat 40174',
       City: {
         Id: 'BANDUNG',
         Name: 'Bandung',
@@ -44,15 +40,13 @@ export const dummy = {
           Id: 'JABAR',
           Code: null,
           Name: 'Jawa Barat',
-          ImageUrl:
-            'https://dolandolen.com/wp-content/uploads/2015/08/nusa-tenggara-barat-cover.jpg',
+          ImageUrl: 'https://dolandolen.com/wp-content/uploads/2015/08/nusa-tenggara-barat-cover.jpg',
         },
         Country: {
           Id: 'ID',
           Code: '+62',
           Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
         },
         UTC: 7,
       },
@@ -91,8 +85,7 @@ export const dummy = {
         RoomType: 'Double/Twin Sharing',
         SeqNumber: null,
         ServiceItemId: 4030,
-        ImageUrl:
-          'https://touressapi.azurewebsites.net/Content/imgSrc/Accommodations/aston-tropicana-gallery-Deluxe-Twin.jpg',
+        ImageUrl: 'https://touressapi.azurewebsites.net/Content/imgSrc/Accommodations/aston-tropicana-gallery-Deluxe-Twin.jpg',
       },
       City: {
         Id: 'BANDUNG',
@@ -102,15 +95,13 @@ export const dummy = {
           Id: 'JABAR',
           Code: null,
           Name: 'Jawa Barat',
-          ImageUrl:
-            'https://dolandolen.com/wp-content/uploads/2015/08/nusa-tenggara-barat-cover.jpg',
+          ImageUrl: 'https://dolandolen.com/wp-content/uploads/2015/08/nusa-tenggara-barat-cover.jpg',
         },
         Country: {
           Id: 'ID',
           Code: '+62',
           Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
         },
         UTC: 7,
       },
@@ -125,8 +116,7 @@ export const dummy = {
   ],
   Returns: [
     {
-      Address:
-        'Jalan Pajajaran No.156, Husen Sastranegara, Cicendo, Kota Bandung, Jawa Barat 40174',
+      Address: 'Jalan Pajajaran No.156, Husen Sastranegara, Cicendo, Kota Bandung, Jawa Barat 40174',
       City: {
         Id: 'BANDUNG',
         Name: 'Bandung',
@@ -135,15 +125,13 @@ export const dummy = {
           Id: 'JABAR',
           Code: null,
           Name: 'Jawa Barat',
-          ImageUrl:
-            'https://dolandolen.com/wp-content/uploads/2015/08/nusa-tenggara-barat-cover.jpg',
+          ImageUrl: 'https://dolandolen.com/wp-content/uploads/2015/08/nusa-tenggara-barat-cover.jpg',
         },
         Country: {
           Id: 'ID',
           Code: '+62',
           Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
         },
         UTC: 7,
       },
@@ -158,8 +146,7 @@ export const dummy = {
       NextDay: false,
     },
     {
-      Address:
-        'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
+      Address: 'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
       City: {
         Id: 'JAKARTA',
         Name: 'Jakarta',
@@ -168,15 +155,13 @@ export const dummy = {
           Id: 'JAKARTA',
           Code: null,
           Name: 'Jakarta',
-          ImageUrl:
-            'http://agenfiforlif.mc468.com/wp-content/uploads/2016/06/DKI-Jakarta.jpg',
+          ImageUrl: 'http://agenfiforlif.mc468.com/wp-content/uploads/2016/06/DKI-Jakarta.jpg',
         },
         Country: {
           Id: 'ID',
           Code: '+62',
           Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
         },
         UTC: 7,
       },
@@ -288,8 +273,7 @@ export const dataDummy = {
       },
     },
     {
-      Address:
-        'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
+      Address: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
       City: {
         Id: 'KUTA',
         ImageUrl: null,
@@ -321,8 +305,7 @@ export const dataDummy = {
       AccommodationSummary: {
         CheckIn: '2019-12-30T14:35:00',
         CheckOut: '2019-12-31T10:00:00',
-        Address:
-          'Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali 80361 BALI - INDONESIA',
+        Address: 'Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali 80361 BALI - INDONESIA',
         AccommodationProfileId: 23,
         Allocations: {
           ChildExtraBedPax: 0,
@@ -341,25 +324,21 @@ export const dataDummy = {
         RoomType: 'Double/Twin Sharing',
         SeqNumber: null,
         ServiceItemId: 6277,
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
       },
       City: {
         Id: 'KUTA',
         Name: 'Kuta',
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
         UTC: 8,
         Region: {
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
           Id: 'BALI',
           Name: 'Bali',
         },
         Country: {
           Code: '+62',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
           Id: 'ID',
           Name: 'Indonesia',
         },
@@ -373,8 +352,7 @@ export const dataDummy = {
       NextDay: false,
     },
     {
-      Address:
-        'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
+      Address: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
       City: {
         Id: 'KUTA',
         ImageUrl: null,
@@ -431,8 +409,7 @@ export const dataDummy = {
       AccommodationSummary: {
         CheckIn: '2019-12-31T18:35:00',
         CheckOut: '2020-01-01T10:00:00',
-        Address:
-          'Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali 80361 BALI - INDONESIA',
+        Address: 'Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali 80361 BALI - INDONESIA',
         AccommodationProfileId: 23,
         Allocations: {
           ChildExtraBedPax: 0,
@@ -451,25 +428,21 @@ export const dataDummy = {
         RoomType: 'Double/Twin Sharing',
         SeqNumber: null,
         ServiceItemId: 6277,
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
       },
       City: {
         Id: 'SURABAYA',
         Name: 'Surabaya',
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
         UTC: 8,
         Region: {
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
           Id: 'BALI',
           Name: 'Bali',
         },
         Country: {
           Code: '+62',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
           Id: 'ID',
           Name: 'Indonesia',
         },
@@ -483,8 +456,7 @@ export const dataDummy = {
       NextDay: false,
     },
     {
-      Address:
-        'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
+      Address: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
       City: {
         Id: 'KUTA',
         ImageUrl: null,
@@ -541,8 +513,7 @@ export const dataDummy = {
       AccommodationSummary: {
         CheckIn: '2019-12-31T18:35:00',
         CheckOut: '2020-01-01T10:00:00',
-        Address:
-          'Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali 80361 BALI - INDONESIA',
+        Address: 'Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali 80361 BALI - INDONESIA',
         AccommodationProfileId: 23,
         Allocations: {
           ChildExtraBedPax: 0,
@@ -561,25 +532,21 @@ export const dataDummy = {
         RoomType: 'Double/Twin Sharing',
         SeqNumber: null,
         ServiceItemId: 6277,
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
       },
       City: {
         Id: 'SURABAYA',
         Name: 'Surabaya',
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
         UTC: 8,
         Region: {
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
           Id: 'BALI',
           Name: 'Bali',
         },
         Country: {
           Code: '+62',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
           Id: 'ID',
           Name: 'Indonesia',
         },
@@ -595,23 +562,19 @@ export const dataDummy = {
   ],
   Returns: [
     {
-      Address:
-        'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
+      Address: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
       City: {
         Id: 'KUTA',
         Name: 'Kuta',
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
         Region: {
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
           Id: 'BALI',
           Name: 'Bali',
         },
         Country: {
           Code: '+62',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+          ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
           Id: 'ID',
           Name: 'Indonesia',
         },
@@ -725,8 +688,7 @@ export const dataFlight = [
               Id: 'ID',
               Name: 'Indonesia',
             },
-            AddressString:
-              'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
+            AddressString: 'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
             Coordinate: null,
           },
           IsPopular: false,
@@ -736,8 +698,7 @@ export const dataFlight = [
           Id: 1,
           Name: 'Ngurah Rai International Airport',
           Code: 'DPS',
-          Address:
-            'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
+          Address: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
           CityId: 'KUTA',
           PlaceType: 'Airport',
           City: {
@@ -759,8 +720,7 @@ export const dataFlight = [
           },
           AddressObject: {
             Id: 1165,
-            Address1:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
+            Address1: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
             Address2: '',
             Address3: '',
             PostalCode: '',
@@ -782,8 +742,7 @@ export const dataFlight = [
               Id: 'ID',
               Name: 'Indonesia',
             },
-            AddressString:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
+            AddressString: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
             Coordinate: null,
           },
           IsPopular: true,
@@ -846,8 +805,7 @@ export const dataFlight = [
                   Id: 'ID',
                   Name: 'Indonesia',
                 },
-                AddressString:
-                  'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
+                AddressString: 'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
                 Coordinate: null,
               },
               IsPopular: false,
@@ -901,8 +859,7 @@ export const dataFlight = [
                   Id: 'ID',
                   Name: 'Indonesia',
                 },
-                AddressString:
-                  'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
+                AddressString: 'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
                 Coordinate: null,
               },
               IsPopular: false,
@@ -962,8 +919,7 @@ export const dataFlight = [
                   Id: 'ID',
                   Name: 'Indonesia',
                 },
-                AddressString:
-                  'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
+                AddressString: 'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
                 Coordinate: null,
               },
               IsPopular: false,
@@ -973,8 +929,7 @@ export const dataFlight = [
               Id: 1,
               Name: 'Ngurah Rai International Airport',
               Code: 'DPS',
-              Address:
-                'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
+              Address: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
               CityId: 'KUTA',
               PlaceType: 'Airport',
               City: {
@@ -996,8 +951,7 @@ export const dataFlight = [
               },
               AddressObject: {
                 Id: 1165,
-                Address1:
-                  'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
+                Address1: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
                 Address2: '',
                 Address3: '',
                 PostalCode: '',
@@ -1019,8 +973,7 @@ export const dataFlight = [
                   Id: 'ID',
                   Name: 'Indonesia',
                 },
-                AddressString:
-                  'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
+                AddressString: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
                 Coordinate: null,
               },
               IsPopular: true,
@@ -1092,8 +1045,7 @@ export const moreDestination = [
               Id: 'ID',
               Name: 'Indonesia',
             },
-            AddressString:
-              'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
+            AddressString: 'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
             Coordinate: null,
           },
           IsPopular: false,
@@ -1103,8 +1055,7 @@ export const moreDestination = [
           Id: 1,
           Name: 'Ngurah Rai International Airport',
           Code: 'DPS',
-          Address:
-            'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
+          Address: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
           CityId: 'KUTA',
           PlaceType: 'Airport',
           City: {
@@ -1126,8 +1077,7 @@ export const moreDestination = [
           },
           AddressObject: {
             Id: 1165,
-            Address1:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
+            Address1: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
             Address2: '',
             Address3: '',
             PostalCode: '',
@@ -1149,8 +1099,7 @@ export const moreDestination = [
               Id: 'ID',
               Name: 'Indonesia',
             },
-            AddressString:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
+            AddressString: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
             Coordinate: null,
           },
           IsPopular: true,
@@ -1168,8 +1117,7 @@ export const moreDestination = [
           Id: 1,
           Name: 'Ngurah Rai International Airport',
           Code: 'DPS',
-          Address:
-            'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
+          Address: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
           CityId: 'KUTA',
           PlaceType: 'Airport',
           City: {
@@ -1191,8 +1139,7 @@ export const moreDestination = [
           },
           AddressObject: {
             Id: 1165,
-            Address1:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
+            Address1: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
             Address2: '',
             Address3: '',
             PostalCode: '',
@@ -1214,8 +1161,7 @@ export const moreDestination = [
               Id: 'ID',
               Name: 'Indonesia',
             },
-            AddressString:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
+            AddressString: 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
             Coordinate: null,
           },
           IsPopular: true,
@@ -1269,8 +1215,7 @@ export const moreDestination = [
               Id: 'ID',
               Name: 'Indonesia',
             },
-            AddressString:
-              'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
+            AddressString: 'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
             Coordinate: null,
           },
           IsPopular: false,
@@ -1332,8 +1277,7 @@ export const moreDestination = [
               Id: 'ID',
               Name: 'Indonesia',
             },
-            AddressString:
-              'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
+            AddressString: 'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
             Coordinate: null,
           },
           IsPopular: false,
@@ -1387,8 +1331,7 @@ export const moreDestination = [
               Id: 'ID',
               Name: 'Indonesia',
             },
-            AddressString:
-              'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
+            AddressString: 'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
             Coordinate: null,
           },
           IsPopular: false,
@@ -1402,1407 +1345,337 @@ export const moreDestination = [
     ],
   },
 ];
-export const dummy = {
-  Departures: [
-    {
-      Address:
-        'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
-      City: {
-        Id: 'JAKARTA',
-        Name: 'Jakarta',
-        ImageUrl: '',
-        Region: {
-          Id: 'JAKARTA',
-          Code: null,
-          Name: 'Jakarta',
-          ImageUrl:
-            'http://agenfiforlif.mc468.com/wp-content/uploads/2016/06/DKI-Jakarta.jpg',
-        },
-        Country: {
-          Id: 'ID',
-          Code: '+62',
-          Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
-        },
-        UTC: 7,
-      },
-      Date: '2019-11-01T08:00:00',
-      Day: 1,
-      Note: null,
-      Place: 'Soekarno-Hatta International Airport',
-      PlaceId: 2,
-      PlaceType: 'Airport',
-      Region: 'JABAR',
-      TransferType: 'Movement_departure',
-      NextDay: false,
-    },
-    {
-      Address:
-        'Jalan Pajajaran No.156, Husen Sastranegara, Cicendo, Kota Bandung, Jawa Barat 40174',
-      City: {
-        Id: 'BANDUNG',
-        Name: 'Bandung',
-        ImageUrl: '',
-        Region: {
-          Id: 'JABAR',
-          Code: null,
-          Name: 'Jawa Barat',
-          ImageUrl:
-            'https://dolandolen.com/wp-content/uploads/2015/08/nusa-tenggara-barat-cover.jpg',
-        },
-        Country: {
-          Id: 'ID',
-          Code: '+62',
-          Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
-        },
-        UTC: 7,
-      },
-      Date: '2019-11-01T10:00:00',
-      Day: 1,
-      Note: null,
-      Place: 'Husein Sastranegara International Airport',
-      PlaceId: 10,
-      PlaceType: 'Airport',
-      Region: 'JABAR',
-      TransferType: 'Movement_arrival',
-      NextDay: false,
-    },
-  ],
-  MainPrograms: [
-    {
-      AccommodationSummary: {
-        CheckIn: '2019-11-01T14:00:00',
-        CheckOut: '2019-11-03T10:00:00',
-        Address: 'Jl. Cihampelas No. 125-127 Bandung',
-        AccommodationProfileId: 92,
-        Allocations: {
-          ChildExtraBedPax: 0,
-          ChildSharingRoomPax: 0,
-          ChildSingleRoomPax: 0,
-          ExtraBedPax: 0,
-          NoBedPax: 0,
-          SharingBedPax: 0,
-          SharingRoomPax: 1,
-          SingleRoomPax: 0,
-        },
-        DateTime: '2019-11-01T00:00:00',
-        Name: 'Aston Tropicana Cihampelas',
-        RoomName: 'Deluxe Room',
-        RoomService: 'With_breakfast',
-        RoomType: 'Double/Twin Sharing',
-        SeqNumber: null,
-        ServiceItemId: 4030,
-        ImageUrl:
-          'https://touressapi.azurewebsites.net/Content/imgSrc/Accommodations/aston-tropicana-gallery-Deluxe-Twin.jpg',
-      },
-      City: {
-        Id: 'BANDUNG',
-        Name: 'Bandung',
-        ImageUrl: '',
-        Region: {
-          Id: 'JABAR',
-          Code: null,
-          Name: 'Jawa Barat',
-          ImageUrl:
-            'https://dolandolen.com/wp-content/uploads/2015/08/nusa-tenggara-barat-cover.jpg',
-        },
-        Country: {
-          Id: 'ID',
-          Code: '+62',
-          Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
-        },
-        UTC: 7,
-      },
-      Date: '2019-11-01T00:00:00',
-      Day: 1,
-      LeavingDate: '2019-11-03T00:00:00',
-      Note: null,
-      Region: 'JABAR',
-      TotalDays: 3,
-      NextDay: false,
-    },
-  ],
-  Returns: [
-    {
-      Address:
-        'Jalan Pajajaran No.156, Husen Sastranegara, Cicendo, Kota Bandung, Jawa Barat 40174',
-      City: {
-        Id: 'BANDUNG',
-        Name: 'Bandung',
-        ImageUrl: '',
-        Region: {
-          Id: 'JABAR',
-          Code: null,
-          Name: 'Jawa Barat',
-          ImageUrl:
-            'https://dolandolen.com/wp-content/uploads/2015/08/nusa-tenggara-barat-cover.jpg',
-        },
-        Country: {
-          Id: 'ID',
-          Code: '+62',
-          Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
-        },
-        UTC: 7,
-      },
-      Date: '2019-11-03T14:00:00',
-      Day: 2,
-      Note: null,
-      Place: 'Husein Sastranegara International Airport',
-      PlaceId: 10,
-      PlaceType: 'Airport',
-      Region: 'JABAR',
-      TransferType: 'Movement_departure',
-      NextDay: false,
-    },
-    {
-      Address:
-        'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
-      City: {
-        Id: 'JAKARTA',
-        Name: 'Jakarta',
-        ImageUrl: '',
-        Region: {
-          Id: 'JAKARTA',
-          Code: null,
-          Name: 'Jakarta',
-          ImageUrl:
-            'http://agenfiforlif.mc468.com/wp-content/uploads/2016/06/DKI-Jakarta.jpg',
-        },
-        Country: {
-          Id: 'ID',
-          Code: '+62',
-          Name: 'Indonesia',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
-        },
-        UTC: 7,
-      },
-      Date: '2019-11-03T16:00:00',
-      Day: 1,
-      Note: null,
-      Place: 'Soekarno-Hatta International Airport',
-      PlaceId: 2,
-      PlaceType: 'Airport',
-      Region: 'JABAR',
-      TransferType: 'Movement_arrival',
-      NextDay: false,
-    },
-  ],
-};
 
-export const Room = {
-  ChildExtraBedQty: 0,
-  ChildSharingRoomQty: 0,
-  ChildSingleRoomQty: 0,
-  ExtraBedQty: 0,
-  NoBed: 0,
-  SharingBedQty: 0,
-  SharingRoomQty: 1,
-  SingleRoomQty: 0,
-};
-
-export const dataDummy = {
-  Departures: [
-    {
-      Address: 'Tangerang City, Banten 19120',
-      City: {
-        Id: 'JAKARTA',
-        ImageUrl: null,
-        Name: 'Jakarta',
-        UTC: 7,
-      },
-      Date: '2019-12-30T09:00:00',
-      Day: 1,
-      NextDay: false,
-      Note: null,
-      Place: 'Soekarno-Hatta International Airport',
-      PlaceId: 2,
-      PlaceType: 'Airport',
-      Region: 'JAKARTA',
-      TransferType: 'Movement_departure',
-      Ticket: {
-        ServiceItemId: '1',
-        PNR: 'PNR123',
-        FlightNumber: '345',
-        AirlineProfileName: 'Garuda Indonesia',
-        Duration: 0,
-        IsTransit: false,
-        IsAllowedActivity: false,
-      },
-    },
-    {
-      Address: 'Jalan Ir. Haji Juanda Surabaya 61253',
-      City: {
-        Id: 'SURABAYA',
-        ImageUrl: null,
-        Name: 'Surabaya',
-        UTC: 7,
-      },
-      Date: '2019-12-30T10:00:00',
-      Day: 1,
-      NextDay: false,
-      Note: null,
-      Place: 'Juanda International Airport',
-      PlaceId: 27,
-      PlaceType: 'Airport',
-      Region: 'JAWATIMUR',
-      TransferType: 'Movement_arrival',
-      Ticket: {
-        ServiceItemId: '1',
-        PNR: 'PNR123',
-        FlightNumber: '345',
-        AirlineProfileName: 'Garuda Indonesia',
-        Duration: 14400,
-        IsTransit: true,
-        IsAllowedActivity: false,
-      },
-    },
-    {
-      Address: 'Jalan Ir. Haji Juanda Surabaya 61253',
-      City: {
-        Id: 'SURABAYA',
-        ImageUrl: null,
-        Name: 'Surabaya',
-        UTC: 7,
-      },
-      Date: '2019-12-30T13:00:00',
-      Day: 1,
-      NextDay: false,
-      Note: null,
-      Place: 'Juanda International Airport',
-      PlaceId: 27,
-      PlaceType: 'Airport',
-      Region: 'JAWATIMUR',
-      TransferType: 'Movement_departure',
-      Ticket: {
-        ServiceItemId: '1',
-        PNR: 'PNR123',
-        FlightNumber: '345',
-        AirlineProfileName: 'Garuda Indonesia',
-        Duration: 14400,
-        IsTransit: true,
-        IsAllowedActivity: false,
-      },
-    },
-    {
-      Address:
-        'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
-      City: {
-        Id: 'KUTA',
-        ImageUrl: null,
-        Name: 'Kuta',
-        UTC: 7,
-      },
-      Date: '2019-12-30T14:00:00',
-      Day: 1,
-      NextDay: false,
-      Note: null,
-      Place: 'Ngurah Rai International Airport',
-      PlaceId: 1,
-      PlaceType: 'Airport',
-      Region: 'BALI',
-      TransferType: 'Movement_arrival',
-      Ticket: {
-        ServiceItemId: '1',
-        PNR: 'PNR123',
-        FlightNumber: '345',
-        AirlineProfileName: 'Garuda Indonesia',
-        Duration: 0,
-        IsTransit: false,
-        IsAllowedActivity: false,
-      },
-    },
-  ],
-  MainPrograms: [
-    {
-      AccommodationSummary: {
-        CheckIn: '2019-12-30T14:35:00',
-        CheckOut: '2019-12-31T10:00:00',
-        Address:
-          'Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali 80361 BALI - INDONESIA',
-        AccommodationProfileId: 23,
-        Allocations: {
-          ChildExtraBedPax: 0,
-          ChildSharingRoomPax: 0,
-          ChildSingleRoomPax: 0,
-          ExtraBedPax: 0,
-          NoBedPax: 0,
-          SharingBedPax: 0,
-          SharingRoomPax: 2,
-          SingleRoomPax: 0,
-        },
-        DateTime: '2019-12-30T00:00:00',
-        Name: 'Mercure Legian',
-        RoomName: 'Deluxe Balcony',
-        RoomService: 'With_breakfast',
-        RoomType: 'Double/Twin Sharing',
-        SeqNumber: null,
-        ServiceItemId: 6277,
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
-      },
-      City: {
-        Id: 'KUTA',
-        Name: 'Kuta',
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
-        UTC: 8,
-        Region: {
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
-          Id: 'BALI',
-          Name: 'Bali',
-        },
-        Country: {
-          Code: '+62',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
-          Id: 'ID',
-          Name: 'Indonesia',
-        },
-      },
-      Date: '2019-12-30T00:00:00',
-      Day: 1,
-      LeavingDate: '2019-12-31T00:00:00',
-      Note: null,
-      Region: 'BALI',
-      TotalDays: 2,
-      NextDay: false,
-    },
-    {
-      Address:
-        'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
-      City: {
-        Id: 'KUTA',
-        ImageUrl: null,
-        Name: 'Kuta',
-        UTC: 7,
-      },
-      Date: '2019-12-31T14:00:00',
-      Day: 1,
-      NextDay: false,
-      Note: null,
-      Place: 'Ngurah Rai International Airport',
-      PlaceId: 1,
-      PlaceType: 'Airport',
-      Region: 'BALI',
-      TransferType: 'Movement_departure',
-      Ticket: {
-        ServiceItemId: '1',
-        PNR: 'PNR123',
-        FlightNumber: '345',
-        AirlineProfileName: 'Garuda Indonesia',
-        Duration: 0,
-        IsTransit: false,
-        IsAllowedActivity: false,
-      },
-    },
-    {
-      Address: 'Jalan Ir. Haji Juanda Surabaya 61253',
-      City: {
-        Id: 'SURABAYA',
-        ImageUrl: null,
-        Name: 'Surabaya',
-        UTC: 7,
-      },
-      Date: '2019-12-31T17:00:00',
-      Day: 1,
-      NextDay: false,
-      Note: null,
-      Place: 'Juanda International Airport',
-      PlaceId: 27,
-      PlaceType: 'Airport',
-      Region: 'JAWATIMUR',
-      TransferType: 'Movement_arrival',
-      Ticket: {
-        ServiceItemId: '1',
-        PNR: 'PNR123',
-        FlightNumber: '345',
-        AirlineProfileName: 'Garuda Indonesia',
-        Duration: 14400,
-        IsTransit: true,
-        IsAllowedActivity: false,
-      },
-    },
-    {
-      AccommodationSummary: {
-        CheckIn: '2019-12-31T18:35:00',
-        CheckOut: '2020-01-01T10:00:00',
-        Address:
-          'Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali 80361 BALI - INDONESIA',
-        AccommodationProfileId: 23,
-        Allocations: {
-          ChildExtraBedPax: 0,
-          ChildSharingRoomPax: 0,
-          ChildSingleRoomPax: 0,
-          ExtraBedPax: 0,
-          NoBedPax: 0,
-          SharingBedPax: 0,
-          SharingRoomPax: 2,
-          SingleRoomPax: 0,
-        },
-        DateTime: '2019-12-31T00:00:00',
-        Name: 'Mercure Legian',
-        RoomName: 'Deluxe Balcony',
-        RoomService: 'With_breakfast',
-        RoomType: 'Double/Twin Sharing',
-        SeqNumber: null,
-        ServiceItemId: 6277,
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
-      },
-      City: {
-        Id: 'SURABAYA',
-        Name: 'Surabaya',
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
-        UTC: 8,
-        Region: {
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
-          Id: 'BALI',
-          Name: 'Bali',
-        },
-        Country: {
-          Code: '+62',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
-          Id: 'ID',
-          Name: 'Indonesia',
-        },
-      },
-      Date: '2019-12-31T00:00:00',
-      Day: 1,
-      LeavingDate: '2020-01-01T00:00:00',
-      Note: null,
-      Region: 'BALI',
-      TotalDays: 2,
-      NextDay: false,
-    },
-    {
-      Address:
-        'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
-      City: {
-        Id: 'KUTA',
-        ImageUrl: null,
-        Name: 'Kuta',
-        UTC: 7,
-      },
-      Date: '2019-12-31T14:00:00',
-      Day: 1,
-      NextDay: false,
-      Note: null,
-      Place: 'Ngurah Rai International Airport',
-      PlaceId: 1,
-      PlaceType: 'Airport',
-      Region: 'BALI',
-      TransferType: 'Movement_departure',
-      Ticket: {
-        ServiceItemId: '1',
-        PNR: '',
-        FlightNumber: '345',
-        AirlineProfileName: 'Garuda Indonesia',
-        Duration: 0,
-        IsTransit: false,
-        IsAllowedActivity: false,
-      },
-    },
-    {
-      Address: 'Jalan Ir. Haji Juanda Surabaya 61253',
-      City: {
-        Id: 'SURABAYA',
-        ImageUrl: null,
-        Name: 'Surabaya',
-        UTC: 7,
-      },
-      Date: '2019-12-31T17:00:00',
-      Day: 1,
-      NextDay: false,
-      Note: null,
-      Place: 'Juanda International Airport',
-      PlaceId: 27,
-      PlaceType: 'Airport',
-      Region: 'JAWATIMUR',
-      TransferType: 'Movement_arrival',
-      Ticket: {
-        ServiceItemId: '1',
-        PNR: '',
-        FlightNumber: '345',
-        AirlineProfileName: 'Garuda Indonesia',
-        Duration: 14400,
-        IsTransit: true,
-        IsAllowedActivity: false,
-      },
-    },
-    {
-      AccommodationSummary: {
-        CheckIn: '2019-12-31T18:35:00',
-        CheckOut: '2020-01-01T10:00:00',
-        Address:
-          'Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali 80361 BALI - INDONESIA',
-        AccommodationProfileId: 23,
-        Allocations: {
-          ChildExtraBedPax: 0,
-          ChildSharingRoomPax: 0,
-          ChildSingleRoomPax: 0,
-          ExtraBedPax: 0,
-          NoBedPax: 0,
-          SharingBedPax: 0,
-          SharingRoomPax: 2,
-          SingleRoomPax: 0,
-        },
-        DateTime: '2019-12-31T00:00:00',
-        Name: 'Mercure Legian',
-        RoomName: 'Deluxe Balcony',
-        RoomService: 'With_breakfast',
-        RoomType: 'Double/Twin Sharing',
-        SeqNumber: null,
-        ServiceItemId: 6277,
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
-      },
-      City: {
-        Id: 'SURABAYA',
-        Name: 'Surabaya',
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
-        UTC: 8,
-        Region: {
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
-          Id: 'BALI',
-          Name: 'Bali',
-        },
-        Country: {
-          Code: '+62',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
-          Id: 'ID',
-          Name: 'Indonesia',
-        },
-      },
-      Date: '2019-12-31T00:00:00',
-      Day: 1,
-      LeavingDate: '2020-01-01T00:00:00',
-      Note: null,
-      Region: 'BALI',
-      TotalDays: 2,
-      NextDay: false,
-    },
-  ],
-  Returns: [
-    {
-      Address:
-        'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
-      City: {
-        Id: 'KUTA',
-        Name: 'Kuta',
-        ImageUrl:
-          'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
-        Region: {
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
-          Id: 'BALI',
-          Name: 'Bali',
-        },
-        Country: {
-          Code: '+62',
-          ImageUrl:
-            'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
-          Id: 'ID',
-          Name: 'Indonesia',
-        },
-      },
-      UTC: 8,
-      Date: '2020-01-01T12:00:00',
-      Day: 2,
-      Note: null,
-      Place: 'Ngurah Rai International Airport',
-      PlaceId: 1,
-      PlaceType: 'Airport',
-      Region: 'BALI',
-      TransferType: 'Movement_departure',
-      NextDay: false,
-      RequestFrom: 'BALI',
-      Ticket: {
-        ServiceItemId: '',
-        PNR: '',
-        FlightNumber: '345',
-        AirlineProfileName: '',
-        Duration: 0,
-        IsTransit: false,
-        IsAllowedActivity: false,
-      },
-    },
-    {
-      Address: 'Jalan Ir. Haji Juanda Surabaya 61253',
-      City: {
-        Id: 'SURABAYA',
-        ImageUrl: null,
-        Name: 'Surabaya',
-        UTC: 7,
-      },
-      Date: '2020-01-01T13:00:00',
-      Day: 1,
-      NextDay: false,
-      Note: null,
-      Place: 'Juanda International Airport',
-      PlaceId: 27,
-      PlaceType: 'Airport',
-      Region: 'JAWATIMUR',
-      TransferType: 'Movement_arrival',
-      Ticket: {
-        ServiceItemId: '1',
-        PNR: 'PNR123',
-        FlightNumber: '345',
-        AirlineProfileName: 'Garuda Indonesia',
-        Duration: 14400,
-        IsTransit: true,
-        IsAllowedActivity: false,
-      },
-    },
-  ],
-};
-
-export const dataFlight = [
+export const dummyListAccommodation = [
   {
-    Id: 1,
-    RouteName: 'CGK-DPS',
-    AirlineLogo: null,
-    AirlineName: 'Garuda Indonesia',
-    ScheduleItems: [
+    Id: 23,
+    Name: 'Mercure Legian',
+    Desc: '"Mercure Bali Legian is strategically located in the Legian area at the intersection of popular tourist destinations. It is walking distance to the surrounding places of interest such as Legian beach, Seminyak and Kuta area 51',
+    Address: '"Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali\n80361  BALI - INDONESIA"',
+    Telephone: '08364',
+    Email: 'firstmaul@yahoo.co.id',
+    Currency: 'IDR',
+    ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
+    OverView: '"Mercure Bali Legian is strategically located in the Legian area at the intersection of popular tourist destinations. It is walking distance to the surrounding places of interest such as Legian beach, Seminyak and Kuta area."',
+    IsPromo: true,
+    NeedApprovalThreshold: 0,
+    DefaultReleaseDays: 2,
+    IsInstantConfirmation: false,
+    City: {
+      Id: 'KUTA',
+      Name: 'Kuta',
+      ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
+    },
+    Region: {
+      Id: 'BALI',
+      Name: 'Bali',
+      ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
+    },
+    Country: {
+      Id: 'ID',
+      Name: 'Indonesia',
+      ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+    },
+    Company: {Code: '10001', Name: 'Berkah Tour'},
+    AccommodationType: {Id: 'HOTEL', Name: 'Hotel'},
+    AccommodationRating: {Id: '4', Name: '4 Stars'},
+    RankPriceSortNo: 1,
+    ProfileImages: [
       {
-        Id: 1,
-        FlightCode: '1234',
-        DeparturePlace: {
-          Id: 2,
-          Name: 'Soekarno-Hatta International Airport',
-          Code: 'CGK',
-          Address: 'Tangerang City, Banten 19120',
-          CityId: 'JAKARTA',
-          PlaceType: 'Airport',
-          City: {
-            UTC: 7,
-            ImageUrl: null,
-            Id: 'JAKARTA',
-            Name: 'Jakarta',
-          },
-          Region: {
-            ImageUrl: null,
-            Id: 'JAKARTA',
-            Name: 'Jakarta',
-          },
-          Country: {
-            Code: null,
-            ImageUrl: null,
-            Id: 'ID',
-            Name: 'Indonesia',
-          },
-          AddressObject: {
-            Id: 1154,
-            Address1: 'Tangerang City, Banten 19120',
-            Address2: '',
-            Address3: '',
-            PostalCode: '',
-            Landmark: '',
-            AreaId: 'JAKARTA',
-            Area: {
-              Id: 'JAKARTA',
-              Name: 'Jakarta',
-            },
-            City: {
-              Id: 'JAKARTA',
-              Name: 'Jakarta',
-            },
-            Region: {
-              Id: 'JAKARTA',
-              Name: 'Jakarta',
-            },
-            Country: {
-              Id: 'ID',
-              Name: 'Indonesia',
-            },
-            AddressString:
-              'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
-            Coordinate: null,
-          },
-          IsPopular: false,
-        },
-        DeparturePlaceTime: '2019-11-26T09:00:00',
-        ArrivalPlace: {
-          Id: 1,
-          Name: 'Ngurah Rai International Airport',
-          Code: 'DPS',
-          Address:
-            'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
-          CityId: 'KUTA',
-          PlaceType: 'Airport',
-          City: {
-            UTC: 8,
-            ImageUrl: null,
-            Id: 'KUTA',
-            Name: 'Kuta',
-          },
-          Region: {
-            ImageUrl: null,
-            Id: 'BALI',
-            Name: 'Bali',
-          },
-          Country: {
-            Code: null,
-            ImageUrl: null,
-            Id: 'ID',
-            Name: 'Indonesia',
-          },
-          AddressObject: {
-            Id: 1165,
-            Address1:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
-            Address2: '',
-            Address3: '',
-            PostalCode: '',
-            Landmark: '',
-            AreaId: 'BADUNG',
-            Area: {
-              Id: 'BADUNG',
-              Name: 'Badung',
-            },
-            City: {
-              Id: 'KUTA',
-              Name: 'Kuta',
-            },
-            Region: {
-              Id: 'BALI',
-              Name: 'Bali',
-            },
-            Country: {
-              Id: 'ID',
-              Name: 'Indonesia',
-            },
-            AddressString:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
-            Coordinate: null,
-          },
-          IsPopular: true,
-        },
-        ArrivalPlaceTime: '2019-11-26T14:00:00',
-        Duration: '3600',
-        Class: 'Economy',
-        ConnectionCount: 1,
-        Connection: [
-          {
-            Class: 'Economy',
-            FlightCode: '1234',
-            Duration: '3600',
-            IsAllowedActivity: false,
-            DeparturePlace: {
-              Id: 2,
-              Name: 'Soekarno-Hatta International Airport',
-              Code: 'CGK',
-              Address: 'Tangerang City, Banten 19120',
-              CityId: 'JAKARTA',
-              PlaceType: 'Airport',
-              City: {
-                UTC: 7,
-                ImageUrl: null,
-                Id: 'JAKARTA',
-                Name: 'Jakarta',
-              },
-              Region: {
-                ImageUrl: null,
-                Id: 'JAKARTA',
-                Name: 'Jakarta',
-              },
-              Country: {
-                Code: null,
-                ImageUrl: null,
-                Id: 'ID',
-                Name: 'Indonesia',
-              },
-              AddressObject: {
-                Id: 1154,
-                Address1: 'Tangerang City, Banten 19120',
-                Address2: '',
-                Address3: '',
-                PostalCode: '',
-                Landmark: '',
-                AreaId: 'JAKARTA',
-                Area: {
-                  Id: 'JAKARTA',
-                  Name: 'Jakarta',
-                },
-                City: {
-                  Id: 'JAKARTA',
-                  Name: 'Jakarta',
-                },
-                Region: {
-                  Id: 'JAKARTA',
-                  Name: 'Jakarta',
-                },
-                Country: {
-                  Id: 'ID',
-                  Name: 'Indonesia',
-                },
-                AddressString:
-                  'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
-                Coordinate: null,
-              },
-              IsPopular: false,
-            },
-            DepartureTime: '2019-11-26T09:00:00',
-            ArrivalPlace: {
-              Id: 27,
-              Name: 'Juanda International Airport',
-              Code: 'SUB',
-              Address: 'Jalan Ir. Haji Juanda Surabaya 61253',
-              CityId: 'SURABAYA',
-              PlaceType: 'Airport',
-              City: {
-                UTC: 7,
-                ImageUrl: null,
-                Id: 'SURABAYA',
-                Name: 'Surabaya',
-              },
-              Region: {
-                ImageUrl: null,
-                Id: 'JAWATIMUR',
-                Name: 'Jawa Timur',
-              },
-              Country: {
-                Code: null,
-                ImageUrl: null,
-                Id: 'ID',
-                Name: 'Indonesia',
-              },
-              AddressObject: {
-                Id: 799,
-                Address1: 'Jalan Ir. Haji Juanda Surabaya 61253',
-                Address2: '',
-                Address3: '',
-                PostalCode: '',
-                Landmark: '',
-                AreaId: 'SURABAYA',
-                Area: {
-                  Id: 'SURABAYA',
-                  Name: 'Surabaya',
-                },
-                City: {
-                  Id: 'SURABAYA',
-                  Name: 'Surabaya',
-                },
-                Region: {
-                  Id: 'JAWATIMUR',
-                  Name: 'Jawa Timur',
-                },
-                Country: {
-                  Id: 'ID',
-                  Name: 'Indonesia',
-                },
-                AddressString:
-                  'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
-                Coordinate: null,
-              },
-              IsPopular: false,
-            },
-            ArrivalTime: '2019-11-26T10:00:00',
-          },
-          {
-            Class: 'Economy',
-            FlightCode: '1234',
-            Duration: '3600',
-            IsAllowedActivity: false,
-            DeparturePlace: {
-              Id: 27,
-              Name: 'Juanda International Airport',
-              Code: 'SUB',
-              Address: 'Jalan Ir. Haji Juanda Surabaya 61253',
-              CityId: 'SURABAYA',
-              PlaceType: 'Airport',
-              City: {
-                UTC: 7,
-                ImageUrl: null,
-                Id: 'SURABAYA',
-                Name: 'Surabaya',
-              },
-              Region: {
-                ImageUrl: null,
-                Id: 'JAWATIMUR',
-                Name: 'Jawa Timur',
-              },
-              Country: {
-                Code: null,
-                ImageUrl: null,
-                Id: 'ID',
-                Name: 'Indonesia',
-              },
-              AddressObject: {
-                Id: 799,
-                Address1: 'Jalan Ir. Haji Juanda Surabaya 61253',
-                Address2: '',
-                Address3: '',
-                PostalCode: '',
-                Landmark: '',
-                AreaId: 'SURABAYA',
-                Area: {
-                  Id: 'SURABAYA',
-                  Name: 'Surabaya',
-                },
-                City: {
-                  Id: 'SURABAYA',
-                  Name: 'Surabaya',
-                },
-                Region: {
-                  Id: 'JAWATIMUR',
-                  Name: 'Jawa Timur',
-                },
-                Country: {
-                  Id: 'ID',
-                  Name: 'Indonesia',
-                },
-                AddressString:
-                  'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
-                Coordinate: null,
-              },
-              IsPopular: false,
-            },
-            DepartureTime: '2019-11-26T13:00:00',
-            ArrivalPlace: {
-              Id: 1,
-              Name: 'Ngurah Rai International Airport',
-              Code: 'DPS',
-              Address:
-                'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
-              CityId: 'KUTA',
-              PlaceType: 'Airport',
-              City: {
-                UTC: 8,
-                ImageUrl: null,
-                Id: 'KUTA',
-                Name: 'Kuta',
-              },
-              Region: {
-                ImageUrl: null,
-                Id: 'BALI',
-                Name: 'Bali',
-              },
-              Country: {
-                Code: null,
-                ImageUrl: null,
-                Id: 'ID',
-                Name: 'Indonesia',
-              },
-              AddressObject: {
-                Id: 1165,
-                Address1:
-                  'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
-                Address2: '',
-                Address3: '',
-                PostalCode: '',
-                Landmark: '',
-                AreaId: 'BADUNG',
-                Area: {
-                  Id: 'BADUNG',
-                  Name: 'Badung',
-                },
-                City: {
-                  Id: 'KUTA',
-                  Name: 'Kuta',
-                },
-                Region: {
-                  Id: 'BALI',
-                  Name: 'Bali',
-                },
-                Country: {
-                  Id: 'ID',
-                  Name: 'Indonesia',
-                },
-                AddressString:
-                  'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
-                Coordinate: null,
-              },
-              IsPopular: true,
-            },
-            ArrivalTime: '2019-11-26T14:00:00',
-          },
-        ],
+        ImageId: 161,
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/e1e78237-13b0-4eda-9d5a-2475fadaf580manor-house-2359884_1280.jpg.jpg',
+        TinyImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/e1e78237-13b0-4eda-9d5a-2475fadaf580manor-house-2359884_1280.jpg_TINY.jpg',
+        ImageName: 'manor-house-2359884_1280.jpg',
+        IsPrimaryImage: false,
+      },
+      {
+        ImageId: 162,
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/a8b2ac16-200d-4369-aa65-1193005cce6capartment-1822409_1920.jpg.jpg',
+        TinyImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/a8b2ac16-200d-4369-aa65-1193005cce6capartment-1822409_1920.jpg_TINY.jpg',
+        ImageName: 'apartment-1822409_1920.jpg',
+        IsPrimaryImage: false,
+      },
+      {
+        ImageId: 163,
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg.jpg',
+        TinyImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/b98efc92-6504-454a-bfe3-e302dbe17ec0dubai-2057585_1920.jpg_TINY.jpg',
+        ImageName: 'dubai-2057585_1920.jpg',
+        IsPrimaryImage: true,
       },
     ],
+    ProfileContracts: [],
+    AccommodationLocations: [
+      {Id: 'CITYCENTER', Name: 'City Center'},
+      {Id: 'NEARBEACH', Name: 'Near Beach'},
+    ],
+    ProfileFacilities: [
+      {Id: 'MEETINGROOMS', Name: 'Meeting Rooms'},
+      {Id: 'PUBLICPARKINGAREA', Name: 'Public Parking Area'},
+      {Id: 'SWIMMINGPOOL', Name: 'Swimming Pool'},
+      {Id: 'WIFI', Name: 'Wi Fi'},
+    ],
+    AccommodationSegment: [{SegmentId: 66, Id: null, Name: 'Business'}],
+    Contracts: null,
+    Area: {Id: 'KUTA', Name: 'Kuta'},
+    AddressObject: {
+      Id: 1619,
+      Address1: 'Jalan Legian No.328, Legian, Kuta, Badung Regency, Bali 80361',
+      Address2: '',
+      Address3: '',
+      PostalCode: '',
+      Landmark: '',
+      AreaId: 'KUTA',
+      Area: {Id: 'KUTA', Name: 'Kuta'},
+      City: {Id: 'KUTA', Name: 'Kuta'},
+      Region: {Id: 'BALI', Name: 'Bali'},
+      Country: {Id: 'ID', Name: 'Indonesia'},
+      AddressString: 'Jalan Legian No.328, Legian, Kuta, Badung Regency, Bali 80361, Kuta, Kuta, Bali, Indonesia',
+      Coordinate: {Lat: -8.7081014, Lng: 115.1723767},
+    },
+    BillingAddress: {
+      Id: null,
+      Address1: '"Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali\n80361  BALI - INDONESIA"',
+      Address2: null,
+      Address3: null,
+      PostalCode: null,
+      Landmark: null,
+      AreaId: null,
+      Area: null,
+      City: {Id: 'KUTA', Name: 'Kuta'},
+      Region: {Id: 'BALI', Name: 'Bali'},
+      Country: {Id: 'ID', Name: 'Indonesia'},
+      AddressString: '"Jl Legian No 328 - Legian Kelod Kuta - Kuta, Bali\n80361  BALI - INDONESIA", Kuta, Bali, Indonesia',
+      Coordinate: null,
+    },
+  },
+  {
+    Id: 1297,
+    Name: 'Ramada Bali Sunset Road Kuta',
+    Desc: '"15 minutes� drive from the lively Legian, Double Six Beach and Bali Galeria Mall. It takes 20 minutes to drive to Ngurah Rai International Airport. "',
+    Address: 'Jl. Sunset Road no. 9 80361 Kuta',
+    Telephone: '6.23618E+11',
+    Email: 'ramadasun@mail.co',
+    Currency: 'IDR',
+    ImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/3918da5e-8d1c-44db-bfd1-4294b4c71c58The World's Best Beaches (1).png.jpg",
+    OverView: '"15 minutes� drive from the lively Legian, Double Six Beach and Bali Galeria Mall. It takes 20 minutes to drive to Ngurah Rai International Airport. "',
+    IsPromo: true,
+    NeedApprovalThreshold: 0,
+    DefaultReleaseDays: 2,
+    IsInstantConfirmation: false,
+    City: {
+      Id: 'KUTA',
+      Name: 'Kuta',
+      ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/City/0ed74a00-3093-4c16-987e-e64b856f1454travel-3239795_1920.jpg.jpg',
+    },
+    Region: {
+      Id: 'BALI',
+      Name: 'Bali',
+      ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/upload/beautiful-beach.jpg',
+    },
+    Country: {
+      Id: 'ID',
+      Name: 'Indonesia',
+      ImageUrl: 'http://cloud.basajans.com:8868/tripplannerdev/5104226627001_5244682653001_5214868250001-vs.jpg',
+    },
+    Company: {Code: '10000', Name: 'Connect World PTE.LTD'},
+    AccommodationType: {Id: 'HOTEL', Name: 'Hotel'},
+    AccommodationRating: {Id: '4', Name: '4 Stars'},
+    RankPriceSortNo: 2,
+    ProfileImages: [
+      {
+        ImageId: 146,
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/22c3962a-1075-4c21-91ac-5b776f4c6e46liburan indie.jpeg.jpg',
+        TinyImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/22c3962a-1075-4c21-91ac-5b776f4c6e46liburan indie.jpeg_TINY.jpg',
+        ImageName: 'liburan indie.jpeg',
+        IsPrimaryImage: false,
+      },
+      {
+        ImageId: 147,
+        ImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/1fba4260-e62a-4b03-b9b8-6a109d82fdd6The World's Best Beaches (6).png.jpg",
+        TinyImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/1fba4260-e62a-4b03-b9b8-6a109d82fdd6The World's Best Beaches (6).png_TINY.jpg",
+        ImageName: "The World's Best Beaches (6).png",
+        IsPrimaryImage: false,
+      },
+      {
+        ImageId: 148,
+        ImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/f0707dbe-7984-4c56-8d24-03937ed4bdcbThe World's Best Beaches (5).png.jpg",
+        TinyImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/f0707dbe-7984-4c56-8d24-03937ed4bdcbThe World's Best Beaches (5).png_TINY.jpg",
+        ImageName: "The World's Best Beaches (5).png",
+        IsPrimaryImage: false,
+      },
+      {
+        ImageId: 149,
+        ImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/e6e09b8c-13de-4e49-b04a-c7d03eec1156The World's Best Beaches (4).png.jpg",
+        TinyImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/e6e09b8c-13de-4e49-b04a-c7d03eec1156The World's Best Beaches (4).png_TINY.jpg",
+        ImageName: "The World's Best Beaches (4).png",
+        IsPrimaryImage: false,
+      },
+      {
+        ImageId: 150,
+        ImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/ae05d58a-8781-4580-a594-42b46908b192The World's Best Beaches (3).png.jpg",
+        TinyImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/ae05d58a-8781-4580-a594-42b46908b192The World's Best Beaches (3).png_TINY.jpg",
+        ImageName: "The World's Best Beaches (3).png",
+        IsPrimaryImage: false,
+      },
+      {
+        ImageId: 151,
+        ImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/4755f7ca-bc96-453b-b9cf-264df79e4cecThe World's Best Beaches (2).png.jpg",
+        TinyImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/4755f7ca-bc96-453b-b9cf-264df79e4cecThe World's Best Beaches (2).png_TINY.jpg",
+        ImageName: "The World's Best Beaches (2).png",
+        IsPrimaryImage: false,
+      },
+      {
+        ImageId: 152,
+        ImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/3918da5e-8d1c-44db-bfd1-4294b4c71c58The World's Best Beaches (1).png.jpg",
+        TinyImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/3918da5e-8d1c-44db-bfd1-4294b4c71c58The World's Best Beaches (1).png_TINY.jpg",
+        ImageName: "The World's Best Beaches (1).png",
+        IsPrimaryImage: true,
+      },
+      {
+        ImageId: 153,
+        ImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/f78e3519-62a6-4016-aeb9-f4b0fd9997f0The World's Best Beaches.png.jpg",
+        TinyImageUrl: "https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/f78e3519-62a6-4016-aeb9-f4b0fd9997f0The World's Best Beaches.png_TINY.jpg",
+        ImageName: "The World's Best Beaches.png",
+        IsPrimaryImage: false,
+      },
+      {
+        ImageId: 154,
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/dd8edd70-6261-4cdd-9f4b-2d117349a2dalogo-1.jpeg.jpg',
+        TinyImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/dd8edd70-6261-4cdd-9f4b-2d117349a2dalogo-1.jpeg_TINY.jpg',
+        ImageName: 'logo-1.jpeg',
+        IsPrimaryImage: false,
+      },
+    ],
+    ProfileContracts: [],
+    AccommodationLocations: [],
+    ProfileFacilities: [],
+    AccommodationSegment: [{SegmentId: 66, Id: null, Name: 'Business'}],
+    Contracts: null,
+    Area: {Id: 'KUTA', Name: 'Kuta'},
+    AddressObject: {
+      Id: 1072,
+      Address1: 'Jl. Sunset Road no. 9 80361 Kuta',
+      Address2: '',
+      Address3: '',
+      PostalCode: '',
+      Landmark: '',
+      AreaId: 'KUTA',
+      Area: {Id: 'KUTA', Name: 'Kuta'},
+      City: {Id: 'KUTA', Name: 'Kuta'},
+      Region: {Id: 'BALI', Name: 'Bali'},
+      Country: {Id: 'ID', Name: 'Indonesia'},
+      AddressString: 'Jl. Sunset Road no. 9 80361 Kuta, Kuta, Kuta, Bali, Indonesia',
+      Coordinate: {Lat: -8.7114191, Lng: 115.1855644},
+    },
+    BillingAddress: {
+      Id: null,
+      Address1: 'Jl. Sunset Road no. 9 80361 Kuta',
+      Address2: null,
+      Address3: null,
+      PostalCode: null,
+      Landmark: null,
+      AreaId: null,
+      Area: null,
+      City: {Id: 'KUTA', Name: 'Kuta'},
+      Region: {Id: 'BALI', Name: 'Bali'},
+      Country: {Id: 'ID', Name: 'Indonesia'},
+      AddressString: 'Jl. Sunset Road no. 9 80361 Kuta, Kuta, Bali, Indonesia',
+      Coordinate: null,
+    },
   },
 ];
 
-export const moreDestination = [
+export const dummyProfileAccommodation = [
   {
-    Id: 1,
-    RouteName: 'CGK-DPS-SUB',
-    AirlineLogo: null,
-    AirlineName: 'Garuda Indonesia',
-    IsRoundTrip: true,
-    ScheduleItems: [
+    CutOffDate: '2020-12-30T00:00:00',
+    StayingPeriodFrom: '2019-11-25T00:00:00',
+    StayingPeriodTo: '2020-12-30T00:00:00',
+    IsInstantConfirmation: false,
+    Id: 0,
+    AccommodationType: {
+      Id: 'DOUBLEORTWIN',
+      Name: 'Double/Twin Sharing',
+      Capacity: 2,
+    },
+    Name: 'Jangan Kasih Allotment',
+    Explanation: 'Jangan Kasih Allotment. Hanya untuk testing',
+    ImageUrl: '',
+    Currency: 'USD',
+    Price: 0.0,
+    ServiceItemId: 57473,
+    IsPromo: false,
+    MinDays: 1,
+    ExtrabedCapacity: 1,
+    NeedApprovalTreshold: 0,
+    AccommodationProfileId: 23,
+    AccommodationProfileName: 'Mercure Legian',
+    DefaultReleaseDay: 0,
+    SimpleAccommodationItemFacilities: [],
+    AccommodationItemServiceTypes: ['With_breakfast'],
+    ItemImages: [],
+  },
+  {
+    CutOffDate: '2021-01-01T00:00:00',
+    StayingPeriodFrom: '2019-12-03T00:00:00',
+    StayingPeriodTo: '2020-09-30T00:00:00',
+    IsInstantConfirmation: false,
+    Id: 0,
+    AccommodationType: {
+      Id: 'DOUBLEORTWIN',
+      Name: 'Double/Twin Sharing',
+      Capacity: 2,
+    },
+    Name: 'Deluxe Balcony',
+    Explanation: 'Deluxe Balcony',
+    ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/c47ad867-a25e-42e6-a8ec-0a750f43949bDeluxe.jpg',
+    Currency: 'USD',
+    Price: 0.0,
+    ServiceItemId: 6277,
+    IsPromo: false,
+    MinDays: 1,
+    ExtrabedCapacity: 1,
+    NeedApprovalTreshold: 0,
+    AccommodationProfileId: 23,
+    AccommodationProfileName: 'Mercure Legian',
+    DefaultReleaseDay: 0,
+    SimpleAccommodationItemFacilities: [],
+    AccommodationItemServiceTypes: ['With_breakfast'],
+    ItemImages: [
       {
-        Id: 1,
-        FlightCode: '1234',
-        DeparturePlace: {
-          Id: 2,
-          Name: 'Soekarno-Hatta International Airport',
-          Code: 'CGK',
-          Address: 'Tangerang City, Banten 19120',
-          CityId: 'JAKARTA',
-          PlaceType: 'Airport',
-          City: {
-            UTC: 7,
-            ImageUrl: null,
-            Id: 'JAKARTA',
-            Name: 'Jakarta',
-          },
-          Region: {
-            ImageUrl: null,
-            Id: 'JAKARTA',
-            Name: 'Jakarta',
-          },
-          Country: {
-            Code: null,
-            ImageUrl: null,
-            Id: 'ID',
-            Name: 'Indonesia',
-          },
-          AddressObject: {
-            Id: 1154,
-            Address1: 'Tangerang City, Banten 19120',
-            Address2: '',
-            Address3: '',
-            PostalCode: '',
-            Landmark: '',
-            AreaId: 'JAKARTA',
-            Area: {
-              Id: 'JAKARTA',
-              Name: 'Jakarta',
-            },
-            City: {
-              Id: 'JAKARTA',
-              Name: 'Jakarta',
-            },
-            Region: {
-              Id: 'JAKARTA',
-              Name: 'Jakarta',
-            },
-            Country: {
-              Id: 'ID',
-              Name: 'Indonesia',
-            },
-            AddressString:
-              'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
-            Coordinate: null,
-          },
-          IsPopular: false,
-        },
-        DeparturePlaceTime: '2019-11-26T09:00:00',
-        ArrivalPlace: {
-          Id: 1,
-          Name: 'Ngurah Rai International Airport',
-          Code: 'DPS',
-          Address:
-            'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
-          CityId: 'KUTA',
-          PlaceType: 'Airport',
-          City: {
-            UTC: 8,
-            ImageUrl: null,
-            Id: 'KUTA',
-            Name: 'Kuta',
-          },
-          Region: {
-            ImageUrl: null,
-            Id: 'BALI',
-            Name: 'Bali',
-          },
-          Country: {
-            Code: null,
-            ImageUrl: null,
-            Id: 'ID',
-            Name: 'Indonesia',
-          },
-          AddressObject: {
-            Id: 1165,
-            Address1:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
-            Address2: '',
-            Address3: '',
-            PostalCode: '',
-            Landmark: '',
-            AreaId: 'BADUNG',
-            Area: {
-              Id: 'BADUNG',
-              Name: 'Badung',
-            },
-            City: {
-              Id: 'KUTA',
-              Name: 'Kuta',
-            },
-            Region: {
-              Id: 'BALI',
-              Name: 'Bali',
-            },
-            Country: {
-              Id: 'ID',
-              Name: 'Indonesia',
-            },
-            AddressString:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
-            Coordinate: null,
-          },
-          IsPopular: true,
-        },
-        ArrivalPlaceTime: '2019-11-26T11:00:00',
-        Duration: '3600',
-        Class: 'Economy',
-        ConnectionCount: 0,
-        Connection: [],
-      },
-      {
-        Id: 2,
-        FlightCode: '1234',
-        DeparturePlace: {
-          Id: 1,
-          Name: 'Ngurah Rai International Airport',
-          Code: 'DPS',
-          Address:
-            'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362',
-          CityId: 'KUTA',
-          PlaceType: 'Airport',
-          City: {
-            UTC: 8,
-            ImageUrl: null,
-            Id: 'KUTA',
-            Name: 'Kuta',
-          },
-          Region: {
-            ImageUrl: null,
-            Id: 'BALI',
-            Name: 'Bali',
-          },
-          Country: {
-            Code: null,
-            ImageUrl: null,
-            Id: 'ID',
-            Name: 'Indonesia',
-          },
-          AddressObject: {
-            Id: 1165,
-            Address1:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621',
-            Address2: '',
-            Address3: '',
-            PostalCode: '',
-            Landmark: '',
-            AreaId: 'BADUNG',
-            Area: {
-              Id: 'BADUNG',
-              Name: 'Badung',
-            },
-            City: {
-              Id: 'KUTA',
-              Name: 'Kuta',
-            },
-            Region: {
-              Id: 'BALI',
-              Name: 'Bali',
-            },
-            Country: {
-              Id: 'ID',
-              Name: 'Indonesia',
-            },
-            AddressString:
-              'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 803621, Badung, Kuta, Bali, Indonesia',
-            Coordinate: null,
-          },
-          IsPopular: true,
-        },
-        DeparturePlaceTime: '2019-11-30T09:00:00',
-        ArrivalPlace: {
-          Id: 27,
-          Name: 'Juanda International Airport',
-          Code: 'SUB',
-          Address: 'Jalan Ir. Haji Juanda Surabaya 61253',
-          CityId: 'SURABAYA',
-          PlaceType: 'Airport',
-          City: {
-            UTC: 7,
-            ImageUrl: null,
-            Id: 'SURABAYA',
-            Name: 'Surabaya',
-          },
-          Region: {
-            ImageUrl: null,
-            Id: 'JAWATIMUR',
-            Name: 'Jawa Timur',
-          },
-          Country: {
-            Code: null,
-            ImageUrl: null,
-            Id: 'ID',
-            Name: 'Indonesia',
-          },
-          AddressObject: {
-            Id: 799,
-            Address1: 'Jalan Ir. Haji Juanda Surabaya 61253',
-            Address2: '',
-            Address3: '',
-            PostalCode: '',
-            Landmark: '',
-            AreaId: 'SURABAYA',
-            Area: {
-              Id: 'SURABAYA',
-              Name: 'Surabaya',
-            },
-            City: {
-              Id: 'SURABAYA',
-              Name: 'Surabaya',
-            },
-            Region: {
-              Id: 'JAWATIMUR',
-              Name: 'Jawa Timur',
-            },
-            Country: {
-              Id: 'ID',
-              Name: 'Indonesia',
-            },
-            AddressString:
-              'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
-            Coordinate: null,
-          },
-          IsPopular: false,
-        },
-        ArrivalPlaceTime: '2019-12-30T10:00:00',
-        Duration: '3600',
-        Class: 'Economy',
-        ConnectionCount: 0,
-        Connection: [],
-      },
-      {
-        Id: 3,
-        FlightCode: '1234',
-        DeparturePlace: {
-          Id: 27,
-          Name: 'Juanda International Airport',
-          Code: 'SUB',
-          Address: 'Jalan Ir. Haji Juanda Surabaya 61253',
-          CityId: 'SURABAYA',
-          PlaceType: 'Airport',
-          City: {
-            UTC: 7,
-            ImageUrl: null,
-            Id: 'SURABAYA',
-            Name: 'Surabaya',
-          },
-          Region: {
-            ImageUrl: null,
-            Id: 'JAWATIMUR',
-            Name: 'Jawa Timur',
-          },
-          Country: {
-            Code: null,
-            ImageUrl: null,
-            Id: 'ID',
-            Name: 'Indonesia',
-          },
-          AddressObject: {
-            Id: 799,
-            Address1: 'Jalan Ir. Haji Juanda Surabaya 61253',
-            Address2: '',
-            Address3: '',
-            PostalCode: '',
-            Landmark: '',
-            AreaId: 'SURABAYA',
-            Area: {
-              Id: 'SURABAYA',
-              Name: 'Surabaya',
-            },
-            City: {
-              Id: 'SURABAYA',
-              Name: 'Surabaya',
-            },
-            Region: {
-              Id: 'JAWATIMUR',
-              Name: 'Jawa Timur',
-            },
-            Country: {
-              Id: 'ID',
-              Name: 'Indonesia',
-            },
-            AddressString:
-              'Jalan Ir. Haji Juanda Surabaya 61253, Surabaya, Surabaya, Jawa Timur, Indonesia',
-            Coordinate: null,
-          },
-          IsPopular: false,
-        },
-        DeparturePlaceTime: '2019-12-02T09:00:00',
-        ArrivalPlace: {
-          Id: 2,
-          Name: 'Soekarno-Hatta International Airport',
-          Code: 'CGK',
-          Address: 'Tangerang City, Banten 19120',
-          CityId: 'JAKARTA',
-          PlaceType: 'Airport',
-          City: {
-            UTC: 7,
-            ImageUrl: null,
-            Id: 'JAKARTA',
-            Name: 'Jakarta',
-          },
-          Region: {
-            ImageUrl: null,
-            Id: 'JAKARTA',
-            Name: 'Jakarta',
-          },
-          Country: {
-            Code: null,
-            ImageUrl: null,
-            Id: 'ID',
-            Name: 'Indonesia',
-          },
-          AddressObject: {
-            Id: 1154,
-            Address1: 'Tangerang City, Banten 19120',
-            Address2: '',
-            Address3: '',
-            PostalCode: '',
-            Landmark: '',
-            AreaId: 'JAKARTA',
-            Area: {
-              Id: 'JAKARTA',
-              Name: 'Jakarta',
-            },
-            City: {
-              Id: 'JAKARTA',
-              Name: 'Jakarta',
-            },
-            Region: {
-              Id: 'JAKARTA',
-              Name: 'Jakarta',
-            },
-            Country: {
-              Id: 'ID',
-              Name: 'Indonesia',
-            },
-            AddressString:
-              'Tangerang City, Banten 19120, Jakarta, Jakarta, Jakarta, Indonesia',
-            Coordinate: null,
-          },
-          IsPopular: false,
-        },
-        ArrivalPlaceTime: '2019-12-02T10:00:00',
-        Duration: '3600',
-        Class: 'Economy',
-        ConnectionCount: 0,
-        Connection: [],
+        ImageId: 0,
+        ImageUrl: 'https://touressapiqa.azurewebsites.net//Content/imgSrc/Accommodations/c47ad867-a25e-42e6-a8ec-0a750f43949bDeluxe.jpg',
+        TinyImageUrl: null,
+        ImageName: 'Deluxe',
+        IsPrimaryImage: false,
       },
     ],
+  },
+  {
+    CutOffDate: '2020-10-31T00:00:00',
+    StayingPeriodFrom: '2018-01-04T00:00:00',
+    StayingPeriodTo: '2020-12-31T00:00:00',
+    IsInstantConfirmation: false,
+    Id: 0,
+    AccommodationType: {
+      Id: 'DOUBLEORTWIN',
+      Name: 'Double/Twin Sharing',
+      Capacity: 2,
+    },
+    Name: 'Superior Room',
+    Explanation: 'Superior Room',
+    ImageUrl: '',
+    Currency: 'USD',
+    Price: 0.0,
+    ServiceItemId: 27921,
+    IsPromo: false,
+    MinDays: 1,
+    ExtrabedCapacity: 1,
+    NeedApprovalTreshold: 0,
+    AccommodationProfileId: 23,
+    AccommodationProfileName: 'Mercure Legian',
+    DefaultReleaseDay: 0,
+    SimpleAccommodationItemFacilities: [],
+    AccommodationItemServiceTypes: ['With_breakfast'],
+    ItemImages: [],
   },
 ];

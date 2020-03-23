@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import MapView from 'react-native-maps';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import PropTypes from 'prop-types';
-import stylesGlobal from '../../components/styles';
+import stylesGlobal from '../../../../../components/styles';
 
 class mapView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      coords: this.props.navigation.state.params.data,
+      coords: this.props.route.params.data,
       fullAddress: '',
     };
   }

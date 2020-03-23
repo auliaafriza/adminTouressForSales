@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   FlatList,
   View,
@@ -11,21 +11,21 @@ import {
 } from 'react-native';
 import stylesGlobal from '../../components/styles';
 import styles from './styles';
-import { SearchBar } from 'react-native-elements';
-import { ListItemCountryAndCity } from '../../components/list';
-import { connect } from 'react-redux';
-import { get_language, reset_language } from '../../actions/generalAction';
-import { Container } from '../../components/container';
-import { Loading } from '../../components/loading';
-import { initialGuide } from '../../helper/tourGuides';
+import {SearchBar} from 'react-native-elements';
+import {ListItemCountryAndCity} from '../../components/list';
+import {connect} from 'react-redux';
+import {get_language, reset_language} from '../../actions/generalAction';
+import {Container} from '../../components/container';
+import {Loading} from '../../components/loading';
+import {initialGuide} from '../../helper/tourGuides';
 
 class listLanguage extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super (props);
     this.state = {
       ListLanguage: [],
       loading: false,
-      dataLanguage: this.props.navigation.state.params.data,
+      dataLanguage: this.props.route.params.data,
       searchClearIcon: false,
       searchText: '',
     };
@@ -39,26 +39,26 @@ class listLanguage extends Component {
   };
 
   componentDidMount = () => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.pop(); // works best when the goBack is async
+    BackHandler.addEventListener ('hardwareBackPress', () => {
+      this.props.navigation.pop (); // works best when the goBack is async
       return true;
     });
-    this.props.dispatch(get_language());
+    this.props.dispatch (get_language ());
   };
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     if (this.props.isLanguage == 'success') {
-      this.props.dispatch(reset_language());
-      this.filterData();
-      this.setState({ loading: false });
+      this.props.dispatch (reset_language ());
+      this.filterData ();
+      this.setState ({loading: false});
       return false;
     } else if (this.props.isLanguage == 'failed') {
-      this.props.dispatch(reset_language());
-      this.setState({
+      this.props.dispatch (reset_language ());
+      this.setState ({
         ...this.state,
         ListLanguage: [],
       });
-      this.setState({ loading: false });
+      this.setState ({loading: false});
       return false;
     } else return true;
   }
@@ -67,17 +67,17 @@ class listLanguage extends Component {
     if (this.state.dataLanguage.length != 0) {
       let updatedList = this.props.languages;
       let dataLanguage = [...this.state.dataLanguage];
-      updatedList = updatedList.filter(word => {
-        let hasil = dataLanguage.find(
+      updatedList = updatedList.filter (word => {
+        let hasil = dataLanguage.find (
           data => word.EnglishName == data.LanguageId.EnglishName
         );
         if (hasil == undefined) return true;
         else if (word.EnglishName == hasil.LanguageId.EnglishName) return false;
         else return true;
       });
-      this.setState({ ListLanguage: updatedList });
+      this.setState ({ListLanguage: updatedList});
     } else {
-      this.setState({
+      this.setState ({
         ...this.state,
         ListLanguage: this.props.languages,
       });
@@ -85,27 +85,27 @@ class listLanguage extends Component {
   };
 
   selectedLanguage = results => {
-    let dataLanguage = this.pushDataLanguage(results);
-    this.props.navigation.pop();
-    this.props.navigation.state.params.onSelect(dataLanguage);
+    let dataLanguage = this.pushDataLanguage (results);
+    this.props.navigation.pop ();
+    this.props.route.params.onSelect (dataLanguage);
   };
 
   pushDataLanguage = results => {
     let dataLanguage = [...this.state.dataLanguage];
-    let City = this.props.navigation.state.params.destination;
+    let City = this.props.route.params.destination;
     if (dataLanguage.length == 0) {
-      dataLanguage.push(
-        new initialGuide(results.Id, City, City.DateTime, City.EndTime)
+      dataLanguage.push (
+        new initialGuide (results.Id, City, City.DateTime, City.EndTime)
       );
     } else {
-      let value = dataLanguage.find(
+      let value = dataLanguage.find (
         item => item.LanguageId == results.Id && item.CityId == City.CityId
       );
       {
         value
           ? null
-          : dataLanguage.push(
-              new initialGuide(results.Id, City, City.DateTime, City.EndTime)
+          : dataLanguage.push (
+              new initialGuide (results.Id, City, City.DateTime, City.EndTime)
             );
       }
     }
@@ -114,34 +114,34 @@ class listLanguage extends Component {
 
   _onChangeSearchText = searchText => {
     if (searchText) {
-      this.setState({
-        searchClearIcon: { color: 'red' },
+      this.setState ({
+        searchClearIcon: {color: 'red'},
         searchText: searchText,
       });
     } else {
-      this.setState({ searchClearIcon: false, searchText: '' });
+      this.setState ({searchClearIcon: false, searchText: ''});
     }
   };
 
   _handleSearch = value => {
-    this._onChangeSearchText(value);
+    this._onChangeSearchText (value);
 
     let updatedList = this.props.languages;
-    updatedList = updatedList.filter(v => {
-      if (v.EnglishName.toLowerCase().indexOf(value.toLowerCase()) > -1) {
+    updatedList = updatedList.filter (v => {
+      if (v.EnglishName.toLowerCase ().indexOf (value.toLowerCase ()) > -1) {
         return true;
       }
       return false;
     });
-    this.setState({ ListLanguage: updatedList });
+    this.setState ({ListLanguage: updatedList});
   };
 
-  render() {
+  render () {
     return (
       <Container>
-        {this.state.loading ? (
-          <Loading sizeloading="large" colorloading={styles.$goldcolor} />
-        ) : null}
+        {this.state.loading
+          ? <Loading sizeloading="large" colorloading={styles.$goldcolor} />
+          : null}
         <View
           style={[styles.header, styles.headerTop, stylesGlobal.paddingTop10]}
         >
@@ -168,11 +168,11 @@ class listLanguage extends Component {
         <Container paddingtopcontainer={Platform.OS === 'ios' ? 100 : 120}>
           <FlatList
             data={this.state.ListLanguage}
-            renderItem={({ item }) => (
+            renderItem={({item}) => (
               <ListItemCountryAndCity
                 item={item}
                 type="language"
-                onPress={() => this.selectedLanguage(item)}
+                onPress={() => this.selectedLanguage (item)}
               />
             )}
             keyExtractor={item => item.Id}
@@ -189,4 +189,4 @@ const mapStateToProps = state => ({
   city: state.generalReducer.cityInCountry,
 });
 
-export default connect(mapStateToProps)(listLanguage);
+export default connect (mapStateToProps) (listLanguage);

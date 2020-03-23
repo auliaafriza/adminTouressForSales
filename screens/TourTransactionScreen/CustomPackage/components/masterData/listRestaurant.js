@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Text,
   ScrollView,
@@ -9,26 +9,29 @@ import {
   BackHandler,
   StatusBar,
   Platform,
-  Dimensions
-} from "react-native";
-import IOSPicker from "react-native-ios-picker";
-import { Container } from "../../components/container";
-import { CardAccomodation } from "../../components/card";
-import styles from "./styles";
-import stylesGlobal from "../../components/styles";
-import { ClearButtonWithIcon, NormalButton } from "../../components/button";
-import { RoundedLoading } from "../../components/loading";
-
-import { SearchBar } from "react-native-elements";
-import PropTypes from "prop-types";
+  Dimensions,
+} from 'react-native';
+import IOSPicker from 'react-native-ios-picker';
+import { Container } from '../../../../../components/container';
+import { CardAccomodation } from '../../../../../components/card';
+import styles from './styles';
+import stylesGlobal from '../../../../../components/styles';
 import {
-  get_restaurant,
-  reset_get_restaurant
-} from "../../actions/itemIteneraryAction";
-import { convertToStringDate } from "../../helper/timeHelper";
-import { Seperator } from "../../components/list";
-import { handleFilterImagePrimary } from "../../helper/checkingHelper";
-import { transactionItem } from "../../helper/transactionHelper";
+  ClearButtonWithIcon,
+  NormalButton,
+} from '../../../../../components/button';
+import { RoundedLoading } from '../../../../../components/loading';
+
+import { SearchBar } from 'react-native-elements';
+import PropTypes from 'prop-types';
+import {
+  getRestaurantByFilter,
+  resetStatusRestaurantsByFilter,
+} from '../../../../../actions/restaurant/restaurantAction';
+import { convertToStringDate } from '../../../../../helper/timeHelper';
+import { Seperator } from '../../../../../components/list';
+import { handleFilterImagePrimary } from '../../../../../helper/checkingHelper';
+import { transactionItem } from '../../../../../helper/transactionHelper';
 
 class listRestaurant extends Component {
   static propTypes = {
@@ -43,28 +46,28 @@ class listRestaurant extends Component {
     CustomDetails: PropTypes.array,
     Returns: PropTypes.array,
     Departures: PropTypes.array,
-    SummaryProgram: PropTypes.array
+    SummaryProgram: PropTypes.array,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       Filter: {
-        typeId: "",
-        classesId: "",
-        categoryId: "",
-        facilityIds: "",
-        locationIds: "",
-        menuClassId: "",
-        ratingIds: "",
-        specializationId: ""
+        typeId: '',
+        classesId: '',
+        categoryId: '',
+        facilityIds: '',
+        locationIds: '',
+        menuClassId: '',
+        ratingIds: '',
+        specializationId: '',
       },
 
       ListRestaurant: [],
-      Mov: this.props.navigation.state.params.Mov,
+      Mov: this.props.route.params.Mov,
       modalVisible: false,
       loading: true,
-      searchText: ""
+      searchText: '',
     };
   }
 
@@ -75,12 +78,12 @@ class listRestaurant extends Component {
   closeModal = () => {
     this.setState({
       modalVisible: false,
-      ListRestaurant: this.props.listRestaurant
+      ListRestaurant: this.props.listRestaurant,
     });
   };
 
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
@@ -89,7 +92,7 @@ class listRestaurant extends Component {
       locationIds,
       specializationId,
       menuClassId,
-      facilityIds
+      facilityIds,
     } = this.state.Filter;
     const { dayIndex, indexMov } = this.state.Mov;
     const { GuestAllocation } = this.props.CustomDetails;
@@ -100,27 +103,27 @@ class listRestaurant extends Component {
       this.props.Departures,
       this.props.Returns
     );
-    console.log(item);
-    this.props.dispatch(
-      get_restaurant(
-        this.props.DailyProgram[dayIndex].Movements[indexMov].Destination,
-        ratingIds,
-        locationIds,
-        specializationId,
-        menuClassId,
-        facilityIds,
-        convertToStringDate(this.props.DailyProgram[dayIndex].Date),
-        GuestAllocation.Adult + GuestAllocation.Child,
-        item
-      )
-    );
+    const data = {
+      cityId: this.props.DailyProgram[dayIndex].Movements[indexMov].Destination,
+      ratingIds: ratingIds,
+      locationIds: locationIds,
+      specializationId: specializationId,
+      menuClassId: menuClassId,
+      facilityIds: facilityIds,
+      requestedDate: convertToStringDate(
+        this.props.DailyProgram[dayIndex].Date
+      ),
+      pax: GuestAllocation.Adult + GuestAllocation.Child,
+      dataDemoPrice: item,
+    };
+    this.props.getRestaurantByFilter(data);
   }
 
   componentDidUpdate() {
-    if (this.props.isRestaurant === "success")
+    if (this.props.isRestaurant === 'success')
       this.setState(
         { ListRestaurant: this.props.listRestaurant },
-        () => this.props.dispatch(reset_get_restaurant()),
+        () => this.props.resetStatusRestaurantsByFilter(),
         this.setState({ loading: false })
       );
   }
@@ -139,14 +142,14 @@ class listRestaurant extends Component {
             Name: item.Name,
             OperationEndTime: item.OperationEndTime,
             OperationStartTime: item.OperationStartTime,
-            OptimumDuration: 1800
-          }
-        }
+            OptimumDuration: 1800,
+          },
+        },
       },
       () => {
-        this.props.navigation.navigate("RestaurantDetail", {
+        this.props.navigation.navigate('RestaurantDetail', {
           Mov: this.state.Mov,
-          Id: item.Id
+          Id: item.Id,
         });
       }
     );
@@ -161,7 +164,7 @@ class listRestaurant extends Component {
       } else {
         if (v.Menu.length > 0) {
           v.Menu.filter(menuFilter => {
-            if (menuFilter.Category == value.categoryId.split("_").join(" ")) {
+            if (menuFilter.Category == value.categoryId.split('_').join(' ')) {
               data = true;
             }
             if (menuFilter.MenuClass == value.classesId) {
@@ -190,7 +193,7 @@ class listRestaurant extends Component {
 
   render() {
     const width90 =
-      Dimensions.get("window").width - Dimensions.get("window").width * 0.1;
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.1;
     return (
       <Container>
         {/* <SearchBar
@@ -217,7 +220,7 @@ class listRestaurant extends Component {
               <View style={[styles.innerContainer, styles.bottom]}>
                 <Text style={styles.bold14}>Filter:</Text>
                 <Text>Menu Category</Text>
-                {Platform.OS === "ios" ? (
+                {Platform.OS === 'ios' ? (
                   <IOSPicker
                     mode="modal"
                     textStyle={styles.textblack}
@@ -225,14 +228,14 @@ class listRestaurant extends Component {
                     selectedValue={
                       this.state.Filter.categoryId
                         ? this.props.menuCategory
-                        : "Menu Category"
+                        : 'Menu Category'
                     }
                     onValueChange={itemValue => {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          categoryId: itemValue
-                        }
+                          categoryId: itemValue,
+                        },
                       });
                     }}
                   >
@@ -240,7 +243,7 @@ class listRestaurant extends Component {
                     {this.props.menuCategory.map(category => {
                       return (
                         <Picker.Item
-                          label={category.split("_").join(" ")}
+                          label={category.split('_').join(' ')}
                           value={category}
                           key={category}
                         />
@@ -257,8 +260,8 @@ class listRestaurant extends Component {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          categoryId: itemValue
-                        }
+                          categoryId: itemValue,
+                        },
                       });
                     }}
                   >
@@ -266,7 +269,7 @@ class listRestaurant extends Component {
                     {this.props.menuCategory.map(category => {
                       return (
                         <Picker.Item
-                          label={category.split("_").join(" ")}
+                          label={category.split('_').join(' ')}
                           value={category}
                           key={category}
                         />
@@ -280,7 +283,7 @@ class listRestaurant extends Component {
                   heightSepar={1}
                 />
                 <Text>Menu Classes</Text>
-                {Platform.OS === "ios" ? (
+                {Platform.OS === 'ios' ? (
                   <IOSPicker
                     mode="modal"
                     textStyle={styles.textblack}
@@ -288,14 +291,14 @@ class listRestaurant extends Component {
                     selectedValue={
                       this.state.Filter.classesId
                         ? this.state.Filter.classesId
-                        : "Menu Classes"
+                        : 'Menu Classes'
                     }
                     onValueChange={itemValue => {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          classesId: itemValue
-                        }
+                          classesId: itemValue,
+                        },
                       });
                     }}
                   >
@@ -316,8 +319,8 @@ class listRestaurant extends Component {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          classesId: itemValue
-                        }
+                          classesId: itemValue,
+                        },
                       });
                     }}
                   >
@@ -335,7 +338,7 @@ class listRestaurant extends Component {
                   heightSepar={1}
                 />
                 <Text>Menu Types</Text>
-                {Platform.OS === "ios" ? (
+                {Platform.OS === 'ios' ? (
                   <IOSPicker
                     mode="modal"
                     textStyle={styles.textblack}
@@ -343,14 +346,14 @@ class listRestaurant extends Component {
                     selectedValue={
                       this.state.Filter.typeId
                         ? this.state.Filter.typeId
-                        : "Menu Types"
+                        : 'Menu Types'
                     }
                     onValueChange={itemValue => {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          typeId: itemValue
-                        }
+                          typeId: itemValue,
+                        },
                       });
                     }}
                   >
@@ -375,8 +378,8 @@ class listRestaurant extends Component {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          typeId: itemValue
-                        }
+                          typeId: itemValue,
+                        },
                       });
                     }}
                   >
@@ -429,13 +432,13 @@ class listRestaurant extends Component {
                 stylesGlobal.width100,
                 stylesGlobal.marginTop10,
                 stylesGlobal.flexSize,
-                stylesGlobal.paddingHorizontal20
+                stylesGlobal.paddingHorizontal20,
               ]}
             >
               <RoundedLoading width={width90} height={150} line={10} />
             </View>
           ) : (
-            <Container paddingtopcontainer={Platform.OS === "ios" ? 20 : 40}>
+            <Container paddingtopcontainer={Platform.OS === 'ios' ? 20 : 40}>
               {this.state.ListRestaurant.map((resto, i) => {
                 return (
                   <CardAccomodation
@@ -453,36 +456,46 @@ class listRestaurant extends Component {
                     roundedText={
                       resto.Menu
                         ? resto.Menu.length != 0
-                          ? resto.Menu[0].MenuClass + " Dining"
-                          : ""
-                        : ""
+                          ? resto.Menu[0].MenuClass + ' Dining'
+                          : ''
+                        : ''
                     }
                     typeCard="Restaurant"
                     bottomText={
                       resto.Menu
                         ? resto.Menu.length != 0
                           ? resto.Menu[0].Category +
-                            " " +
+                            ' ' +
                             resto.Menu[0].TypeOfMenu
-                          : ""
-                        : ""
+                          : ''
+                        : ''
                     }
                     city={
                       resto.AddressObject
                         ? resto.AddressObject.City
                           ? resto.AddressObject.City.Name
-                          : ""
-                        : ""
+                          : ''
+                        : ''
                     }
                     estimatedPrice={
                       resto.EstimatedTotalPrice
                         ? resto.EstimatedTotalPrice.Price
-                        : ""
+                        : ''
                     }
                     currency={
                       resto.EstimatedTotalPrice
                         ? resto.EstimatedTotalPrice.CurrencyId
-                        : ""
+                        : ''
+                    }
+                    estimatedPrice={
+                      resto.EstimatedTotalPrice
+                        ? resto.EstimatedTotalPrice.Price
+                        : ''
+                    }
+                    currency={
+                      resto.EstimatedTotalPrice
+                        ? resto.EstimatedTotalPrice.CurrencyId
+                        : ''
                     }
                   />
                 );
@@ -504,7 +517,7 @@ class listRestaurant extends Component {
             backgroundColor="transparent"
           />
           <SearchBar
-            clearIcon={{ color: "red" }}
+            clearIcon={{ color: 'red' }}
             searchIcon={true}
             onChangeText={this._handleSearch}
             placeholder="Type Here..."
@@ -541,16 +554,19 @@ class listRestaurant extends Component {
 }
 
 const mapStateToProps = state => ({
-  listRestaurant: state.itemIteneraryReducer.restaurant,
-  isRestaurant: state.itemIteneraryReducer.isRestaurant,
-  menuClasses: state.itemIteneraryReducer.menuClasses,
-  menuTypes: state.itemIteneraryReducer.menuTypes,
-  menuCategory: state.itemIteneraryReducer.menuCategory,
-  DailyProgram: state.cusPackagesReducer.DailyProgram,
+  listRestaurant: state.restaurantReducer.restaurants,
+  isRestaurant: state.restaurantReducer.getRestaurantByFilterStatus,
+  menuClasses: state.restaurantReducer.menu,
+  menuTypes: state.restaurantReducer.menu,
+  menuCategory: state.restaurantReducer.menu,
+  DailyProgram: state.transactionReducer.DailyProgram,
   CustomDetails: state.transactionReducer.CustomDetails,
-  Returns: state.cusPackagesReducer.Returns,
-  Departures: state.cusPackagesReducer.Departures,
-  SummaryProgram: state.cusPackagesReducer.SummaryProgram
+  Returns: state.transactionReducer.Returns,
+  Departures: state.transactionReducer.Departures,
+  SummaryProgram: state.transactionReducer.SummaryProgram,
 });
 
-export default connect(mapStateToProps)(listRestaurant);
+export default connect(mapStateToProps, {
+  getRestaurantByFilter,
+  resetStatusRestaurantsByFilter,
+})(listRestaurant);

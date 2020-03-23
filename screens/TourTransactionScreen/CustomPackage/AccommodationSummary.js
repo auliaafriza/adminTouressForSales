@@ -108,9 +108,7 @@ import {
   // isNullFirstDestination,
   setPlaceInArrivalDepartureByHeadLine,
 } from './services/settingDestination';
-import {
-  resetAccommodationProfileAction,
-} from '../../../actions/accommodation/accommodationAction';
+import {resetAccommodationProfileAction} from '../../../actions/accommodation/accommodationAction';
 import {
   setDrivingAction,
   setAirportAction,
@@ -157,9 +155,9 @@ class AccommodationSummary extends Component {
     getAirportData: PropTypes.array,
   };
 
-  constructor (props) {
-    super (props);
-    this.FocusedTab ();
+  constructor(props) {
+    super(props);
+    this.FocusedTab();
     this.state = {
       airportType: '',
       oldAirport: null,
@@ -167,7 +165,7 @@ class AccommodationSummary extends Component {
       Departures: this.props.Departures,
       SummaryProgram: this.props.SummaryProgram,
       Day: 0,
-      arrivaldate: changeTime (new Date ()),
+      arrivaldate: changeTime(new Date()),
       errorArrivalDestination: '',
       errorArrivalDate: '',
       errorArrivalTime: '',
@@ -210,31 +208,31 @@ class AccommodationSummary extends Component {
       loadingButton: false,
       textLoading: '',
       errorAccommodation: '',
-      scrollY: new Animated.Value (0),
+      scrollY: new Animated.Value(0),
       arrayIndexFlightTicketSP: [],
     };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.backButton;
     if (this.props.isMovementMode == []) {
-      this.props.getAllMovementTypesAction ();
+      this.props.getAllMovementTypesAction();
     }
-    this.props.getCityInCountryAction ();
+    this.props.getCityInCountryAction();
   }
 
   backButton = () => {
     if (this.state.activeTab == 'itinerary') {
-      this.FocusedTab ('date');
+      this.FocusedTab('date');
     } else {
-      BackHandler.addEventListener ('hardwareBackPress', () => {
-        this.props.navigation.pop (); // works best when the goBack is async
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        this.props.navigation.pop(); // works best when the goBack is async
         return true;
       });
     }
   };
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     if (
       this.props.ReturnsStatus == 'success' ||
       this.props.DeparturesStatus == 'success' ||
@@ -245,16 +243,16 @@ class AccommodationSummary extends Component {
         MainPrograms: this.props.SummaryProgram,
         Returns: this.props.Returns,
       };
-      let isFlightSP = findIndexGroupTicket (oldHeadlineProgram);
-      this.setState ({
+      let isFlightSP = findIndexGroupTicket(oldHeadlineProgram);
+      this.setState({
         Returns: this.props.Returns,
         Departures: this.props.Departures,
         SummaryProgram: this.props.SummaryProgram,
         arrayIndexFlightTicketSP: isFlightSP,
       });
-      this.props.resetReturnsItineraryAction ();
-      this.props.resetDeparturesItineraryAction ();
-      this.props.resetSummaryProgramAction ();
+      this.props.resetReturnsItineraryAction();
+      this.props.resetDeparturesItineraryAction();
+      this.props.resetSummaryProgramAction();
       //this.props.dispatch(reset_returns_itenerary());
       //this.props.dispatch(reset_departures_itenerary());
       //this.props.dispatch(reset_summary_program());
@@ -263,7 +261,7 @@ class AccommodationSummary extends Component {
 
   FocusedTab = async type => {
     if (type == 'date') {
-      await this.setState ({
+      await this.setState({
         activeTab: type,
         colorTextDate: styles.$goldcolor,
         colorTextItinerary: '#252525',
@@ -271,16 +269,16 @@ class AccommodationSummary extends Component {
         textLoading: 'Save your itinerary',
       });
     } else {
-      const error = this.validate ('Itinerary');
-      const errorDeparture = this.validate ('Departures');
-      const errorReturns = this.validate ('Returns');
+      const error = this.validate('Itinerary');
+      const errorDeparture = this.validate('Departures');
+      const errorReturns = this.validate('Returns');
       if (!error && !errorDeparture && !errorReturns) {
         if (this.state.activeTab == 'date') {
-          this.setState ({
+          this.setState({
             loading: true,
             textLoading: 'Loading your itinerary',
           });
-          let DP = await dailyGenerate4 (
+          let DP = await dailyGenerate4(
             this.state.Departures,
             this.state.Returns,
             this.state.SummaryProgram,
@@ -289,10 +287,10 @@ class AccommodationSummary extends Component {
             false,
             this.props.cityList
           );
-          DP = await this.getDriving (DP);
-          DP = await getFunctionAfterDriving (DP);
-          await this.props.setDailyProgramAction (DP); //this.props.dispatch(await set_daily_program(DP));
-          await this.setState ({
+          DP = await this.getDriving(DP);
+          DP = await getFunctionAfterDriving(DP);
+          await this.props.setDailyProgramAction(DP); //this.props.dispatch(await set_daily_program(DP));
+          await this.setState({
             activeTab: type,
             colorTextItinerary: styles.$goldcolor,
             colorTextDate: '#252525',
@@ -301,11 +299,11 @@ class AccommodationSummary extends Component {
         }
       }
     }
-    this.setState ({loading: false});
+    this.setState({loading: false});
   };
 
   hideDateTimePicked = () => {
-    this.setState ({
+    this.setState({
       isDateOutPickerVisible: false,
       isTimeOutPickerVisible: [],
       isDateInPickerVisible: [],
@@ -338,13 +336,13 @@ class AccommodationSummary extends Component {
     };
 
     if (type == 'Accommodation') {
-      SummaryProgram.map (mainProgram => {
+      SummaryProgram.map(mainProgram => {
         if (mainProgram.AccommodationSummary != null) {
           if (
             mainProgram.AccommodationSummary.Name == null ||
             mainProgram.AccommodationSummary.Name == ''
           ) {
-            Alert.alert ('Sorry', 'Please choose accommodation first', [
+            Alert.alert('Sorry', 'Please choose accommodation first', [
               {
                 text: 'OK',
               },
@@ -356,9 +354,9 @@ class AccommodationSummary extends Component {
       });
     }
     if (type == 'Destination') {
-      SummaryProgram.map (mainProgram => {
+      SummaryProgram.map(mainProgram => {
         if (mainProgram.City.Name == null || mainProgram.City.Name == '') {
-          Alert.alert ('Sorry', 'Please choose Destination first', [
+          Alert.alert('Sorry', 'Please choose Destination first', [
             {
               text: 'OK',
             },
@@ -370,13 +368,13 @@ class AccommodationSummary extends Component {
     }
     if (type == 'Itinerary') {
       SummaryProgram.length != 0
-        ? SummaryProgram.map (SP => {
+        ? SummaryProgram.map(SP => {
             if (SP.AccommodationSummary != null) {
               if (
                 SP.AccommodationSummary.Name == null ||
                 SP.AccommodationSummary.Name == ''
               ) {
-                Alert.alert ('Sorry', 'Please choose accommodation first', [
+                Alert.alert('Sorry', 'Please choose accommodation first', [
                   {
                     text: 'OK',
                   },
@@ -391,12 +389,12 @@ class AccommodationSummary extends Component {
                   .CheckOut != null
               ) {
                 if (
-                  viewDate (
+                  viewDate(
                     SummaryProgram[SummaryProgram.length - 1]
                       .AccommodationSummary.CheckOut
-                  ) > viewDate (this.state.Returns[0].Date)
+                  ) > viewDate(this.state.Returns[0].Date)
                 ) {
-                  Alert.alert (
+                  Alert.alert(
                     'Sorry',
                     'Check out date cannot more than departure date',
                     [
@@ -409,18 +407,18 @@ class AccommodationSummary extends Component {
                   errors.errorAccommodation = REQUIRED;
                 }
                 if (
-                  viewDate (
+                  viewDate(
                     SummaryProgram[SummaryProgram.length - 1]
                       .AccommodationSummary.CheckOut
-                  ) == viewDate (this.state.Returns[0].Date)
+                  ) == viewDate(this.state.Returns[0].Date)
                 ) {
                   if (
-                    getHour (
+                    getHour(
                       SummaryProgram[SummaryProgram.length - 1]
                         .AccommodationSummary.CheckOut
-                    ) > getHour (this.state.Returns[0].Date)
+                    ) > getHour(this.state.Returns[0].Date)
                   ) {
-                    Alert.alert (
+                    Alert.alert(
                       'Sorry',
                       'Check out date cannot more than departure date',
                       [
@@ -438,10 +436,10 @@ class AccommodationSummary extends Component {
               //Cek Apakah Checkin time lebih kecil dari Arrival Time
               if (SummaryProgram[0].AccommodationSummary.CheckIn != null) {
                 if (
-                  viewDate (SummaryProgram[0].AccommodationSummary.CheckIn) <
-                  viewDate (this.state.Departures[1].Date)
+                  viewDate(SummaryProgram[0].AccommodationSummary.CheckIn) <
+                  viewDate(this.state.Departures[1].Date)
                 ) {
-                  Alert.alert (
+                  Alert.alert(
                     'Sorry',
                     'Check in date cannot less than arrival date',
                     [
@@ -454,14 +452,14 @@ class AccommodationSummary extends Component {
                   errors.errorAccommodation = REQUIRED;
                 }
                 if (
-                  viewDate (SummaryProgram[0].AccommodationSummary.CheckIn) ==
-                  viewDate (this.state.Departures[1].Date)
+                  viewDate(SummaryProgram[0].AccommodationSummary.CheckIn) ==
+                  viewDate(this.state.Departures[1].Date)
                 ) {
                   if (
-                    getHour (SummaryProgram[0].AccommodationSummary.CheckIn) <
-                    getHour (this.state.Departures[1].Date)
+                    getHour(SummaryProgram[0].AccommodationSummary.CheckIn) <
+                    getHour(this.state.Departures[1].Date)
                   ) {
-                    Alert.alert (
+                    Alert.alert(
                       'Sorry',
                       'Check in date cannot less than arrival date',
                       [
@@ -484,14 +482,14 @@ class AccommodationSummary extends Component {
     if (type == 'Departures') {
       if (this.state.Departures.length != 0) {
         if (this.state.Departures[0].Place == null) {
-          Alert.alert ('Sorry', 'Please choose first departure', [
+          Alert.alert('Sorry', 'Please choose first departure', [
             {
               text: 'OK',
             },
           ]);
           isError = true;
         } else if (this.state.Departures[1].Place == null) {
-          Alert.alert ('Sorry', 'Please choose first arrival', [
+          Alert.alert('Sorry', 'Please choose first arrival', [
             {
               text: 'OK',
             },
@@ -502,15 +500,15 @@ class AccommodationSummary extends Component {
         }
       }
       this.state.Departures.length != 0
-        ? this.state.Departures.map ((item, i) => {
+        ? this.state.Departures.map((item, i) => {
             //Cek apakah depature date dan time lebih besar dari arrival date dan time untuk first flight
             if (i % 2 == 0) {
               if (item.Date != null) {
                 if (
-                  viewDate (item.Date) >
-                  viewDate (this.state.Departures[i + 1].Date)
+                  viewDate(item.Date) >
+                  viewDate(this.state.Departures[i + 1].Date)
                 ) {
-                  Alert.alert (
+                  Alert.alert(
                     'Sorry',
                     'Depature date cannot more than arrival date',
                     [
@@ -522,14 +520,14 @@ class AccommodationSummary extends Component {
                   isError = true;
                 }
                 if (
-                  viewDate (item.Date) ==
-                  viewDate (this.state.Departures[i + 1].Date)
+                  viewDate(item.Date) ==
+                  viewDate(this.state.Departures[i + 1].Date)
                 ) {
                   if (
-                    getHour (item.Date) >
-                    getHour (this.state.Departures[i + 1].Date)
+                    getHour(item.Date) >
+                    getHour(this.state.Departures[i + 1].Date)
                   ) {
-                    Alert.alert (
+                    Alert.alert(
                       'Sorry',
                       'Departure time cannot more than arrival time',
                       [
@@ -549,14 +547,14 @@ class AccommodationSummary extends Component {
     if (type == 'Returns') {
       if (this.state.Returns.length != 0) {
         if (this.state.Returns[0].Place == null) {
-          Alert.alert ('Sorry', 'Please choose last departure', [
+          Alert.alert('Sorry', 'Please choose last departure', [
             {
               text: 'OK',
             },
           ]);
           isError = true;
         } else if (this.state.Returns[1].Place == null) {
-          Alert.alert ('Sorry', 'Please choose last arrival', [
+          Alert.alert('Sorry', 'Please choose last arrival', [
             {
               text: 'OK',
             },
@@ -567,15 +565,14 @@ class AccommodationSummary extends Component {
         }
       }
       this.state.Returns.length != 0
-        ? this.state.Returns.map ((item, i) => {
+        ? this.state.Returns.map((item, i) => {
             //Cek apakah depature date dan time lebih besar dari arrival date dan time untuk first flight
             if (i % 2 == 0) {
               if (item.Date != null) {
                 if (
-                  viewDate (item.Date) >
-                  viewDate (this.state.Returns[i + 1].Date)
+                  viewDate(item.Date) > viewDate(this.state.Returns[i + 1].Date)
                 ) {
-                  Alert.alert (
+                  Alert.alert(
                     'Sorry',
                     'Depature date cannot more than arrival date',
                     [
@@ -587,14 +584,13 @@ class AccommodationSummary extends Component {
                   isError = true;
                 }
                 if (
-                  viewDate (item.Date) ==
-                  viewDate (this.state.Returns[i + 1].Date)
+                  viewDate(item.Date) ==
+                  viewDate(this.state.Returns[i + 1].Date)
                 ) {
                   if (
-                    getHour (item.Date) >
-                    getHour (this.state.Returns[i + 1].Date)
+                    getHour(item.Date) > getHour(this.state.Returns[i + 1].Date)
                   ) {
-                    Alert.alert (
+                    Alert.alert(
                       'Sorry',
                       'Departure time cannot more than arrival time',
                       [
@@ -612,7 +608,7 @@ class AccommodationSummary extends Component {
         : (isError = false);
     }
 
-    this.setState ({
+    this.setState({
       ...this.state,
       ...errors,
     });
@@ -620,95 +616,95 @@ class AccommodationSummary extends Component {
   };
 
   handleNewAccommodation = index => {
-    this.setState ({loading: true});
-    const error = this.validate ('Accommodation');
+    this.setState({loading: true});
+    const error = this.validate('Accommodation');
     if (!error) {
       let headline = {
         Departures: this.state.Departures,
         MainPrograms: this.state.SummaryProgram,
         Returns: this.state.Returns,
       };
-      const errorMaxDestination = validasiMaximumDestination (headline, index);
+      const errorMaxDestination = validasiMaximumDestination(headline, index);
       if (!errorMaxDestination) {
-        let data = addNewAccommodation (headline, index);
+        let data = addNewAccommodation(headline, index);
 
-        let newReturns = setReturnsDate (this.state.Returns, data.MainPrograms);
-        this.setState ({
+        let newReturns = setReturnsDate(this.state.Returns, data.MainPrograms);
+        this.setState({
           Returns: newReturns,
           SummaryProgram: [],
         });
-        this.props.setSummaryProgramAction (data.MainPrograms);
-        this.props.setReturnsItineraryAction (newReturns);
+        this.props.setSummaryProgramAction(data.MainPrograms);
+        this.props.setReturnsItineraryAction(newReturns);
         //this.props.dispatch(set_summary_program(data.MainPrograms));
         //this.props.dispatch(set_returns_itenerary(newReturns));
       } else {
-        Alert.alert (errorMaxDestination);
+        Alert.alert(errorMaxDestination);
       }
     }
-    this.setState ({loading: false});
+    this.setState({loading: false});
   };
 
   addMoreDestination = () => {
-    this.setState ({loading: true});
-    const error = this.validate ('Accommodation');
+    this.setState({loading: true});
+    const error = this.validate('Accommodation');
     if (!error) {
       let isNextGT = this.state.Returns[0].Ticket.ServiceItemId
         ? this.state.Returns[0]
         : null;
 
-      let SP = addSummaryProgram (
+      let SP = addSummaryProgram(
         this.state.SummaryProgram,
         isNextGT,
         this.props.cityList
       );
-      SP = setDateSummaryProgram (
+      SP = setDateSummaryProgram(
         this.state.Departures[this.state.Departures.length - 1],
         SP
       );
-      let newReturns = setReturnsDate (this.state.Returns, SP);
-      this.setState ({
+      let newReturns = setReturnsDate(this.state.Returns, SP);
+      this.setState({
         Returns: newReturns,
         SummaryProgram: SP,
       });
-      this.props.setSummaryProgramAction (SP);
-      this.props.setReturnsItineraryAction (newReturns);
+      this.props.setSummaryProgramAction(SP);
+      this.props.setReturnsItineraryAction(newReturns);
     }
-    this.setState ({loading: false});
+    this.setState({loading: false});
   };
 
   delDestination = (index, headLineProg) => {
-    this.setState ({loading: true});
+    this.setState({loading: true});
     // let error = checkDeleteAccommodation(this.state.SummaryProgram, index);
-    let data = delSummaryProgram (
+    let data = delSummaryProgram(
       this.state.Departures[this.state.Departures.length - 1],
       this.state.Returns[0],
       this.state.SummaryProgram,
       this.props.oldDailyProgram,
       index
     );
-    let newReturns = setReturnsDate (this.state.Returns, data.summaryProgram);
+    let newReturns = setReturnsDate(this.state.Returns, data.summaryProgram);
     headLineProg.Returns = newReturns;
     headLineProg.MainPrograms = data.summaryProgram;
-    headLineProg = setPlaceInArrivalDepartureByHeadLine (
+    headLineProg = setPlaceInArrivalDepartureByHeadLine(
       headLineProg,
       this.props.airport,
       this.props.cityList
     );
 
-    this.setState ({
+    this.setState({
       Returns: headLineProg.Returns,
       SummaryProgram: headLineProg.MainPrograms,
       Departures: headLineProg.Departures,
     });
-    this.props.setDeparturesItineraryAction (headLineProg.Departures);
-    this.props.setSummaryProgramAction (headLineProg.MainPrograms);
-    this.props.setReturnsItineraryAction (headLineProg.Returns);
+    this.props.setDeparturesItineraryAction(headLineProg.Departures);
+    this.props.setSummaryProgramAction(headLineProg.MainPrograms);
+    this.props.setReturnsItineraryAction(headLineProg.Returns);
     // this.props.setDailyProgramAction(data.dailyProgram)
     //this.props.dispatch(set_departures_itenerary(headLineProg.Departures));
     //this.props.dispatch(set_summary_program(headLineProg.MainPrograms));
     //this.props.dispatch(set_returns_itenerary(headLineProg.Returns));
     // //this.props.dispatch(set_daily_program(data.dailyProgram));
-    this.setState ({loading: false});
+    this.setState({loading: false});
   };
 
   confirmAlertDelete = index => {
@@ -717,21 +713,21 @@ class AccommodationSummary extends Component {
       MainPrograms: this.state.SummaryProgram,
       Returns: this.state.Returns,
     };
-    let isValidDelete = checkSideBySideAccommodation (
+    let isValidDelete = checkSideBySideAccommodation(
       headline,
       index,
       this.props.airport
     );
     if (isValidDelete) {
-      Alert.alert ('Are you sure', 'you want to delete this accommodation?', [
+      Alert.alert('Are you sure', 'you want to delete this accommodation?', [
         {
           text: 'Yes',
-          onPress: () => this.delDestination (index, headline),
+          onPress: () => this.delDestination(index, headline),
         },
         {text: 'No'},
       ]);
     } else {
-      Alert.alert (
+      Alert.alert(
         'Failed',
         'Accommodation cannot be deleted because it is tied to flight ticket',
         [{text: 'Ok'}]
@@ -743,20 +739,20 @@ class AccommodationSummary extends Component {
     for (let i = 0; i < DP.length; i++)
       for (let j = 0; j < DP[i].Movements.length; j++) {
         if (DP[i].Movements[j].MovementName == 'DRIVING') {
-          let item = await getObjectDuration (
+          let item = await getObjectDuration(
             this.props.driving,
             DP[i].Movements[j - 1].Item,
             DP[i].Movements[j + 1].Item
           );
           if (item == null) {
-            let data = await getDrivingAddress (
+            let data = await getDrivingAddress(
               DP[i].Movements[j - 1].Item,
               DP[i].Movements[j + 1].Item
             );
-            item = await this.props.getDurationAction (data); //getDurationAPI(this.props.token, data);
+            item = await this.props.getDurationAction(data); //getDurationAPI(this.props.token, data);
             if (item.Duration != undefined) {
-              this.props.setDrivingAction (
-                setObjectDuration (this.props.driving, data, item)
+              this.props.setDrivingAction(
+                setObjectDuration(this.props.driving, data, item)
               );
               //   this.props.dispatch(
               //     await set_driving(
@@ -788,28 +784,28 @@ class AccommodationSummary extends Component {
   };
 
   getAirportbyRegion = async region => {
-    let airports = await this.getAirports (region);
+    let airports = await this.getAirports(region);
     return airports;
   };
 
   getAirportSP = async (headLineProg, index) => {
     for (let i = 0; i < headLineProg.MainPrograms.length; i++) {
       if (headLineProg.MainPrograms[i].AccommodationSummary == undefined) {
-        let nearFlight = checkNearFlight (headLineProg, index);
-        let airportIndexSP = this.getAirportbyRegion (
+        let nearFlight = checkNearFlight(headLineProg, index);
+        let airportIndexSP = this.getAirportbyRegion(
           headLineProg.MainPrograms[index].Region
         );
-        let airport = this.getAirportbyRegion (
+        let airport = this.getAirportbyRegion(
           headLineProg.MainPrograms[i].Region
         );
 
         if (airport.length > 0) {
           if (nearFlight) {
-            let isPlaceExist = airportIndexSP.find (
+            let isPlaceExist = airportIndexSP.find(
               item => item.Id === nearFlight.PlaceId
             );
             if (!isPlaceExist) {
-              headLineProg = deleteGroupTicket (
+              headLineProg = deleteGroupTicket(
                 headLineProg,
                 nearFlight.Ticket.ServiceItemId,
                 true
@@ -817,7 +813,7 @@ class AccommodationSummary extends Component {
             }
           }
 
-          let newAirport = airport.find (item => {
+          let newAirport = airport.find(item => {
             return (
               item.IsPopular == true &&
               item.Region.Id == headLineProg.MainPrograms[i].Region
@@ -839,9 +835,9 @@ class AccommodationSummary extends Component {
   };
 
   getArrDep = async air => {
-    let airport = await this.getAirports (air.Region);
+    let airport = await this.getAirports(air.Region);
     if (airport.length > 0) {
-      let newAirport = airport.find (item => {
+      let newAirport = airport.find(item => {
         return item.IsPopular == true && item.Region.Id == air.Region;
       });
       if (newAirport) {
@@ -875,13 +871,13 @@ class AccommodationSummary extends Component {
   // };
 
   getAirports = async region => {
-    let airport = await getObjectAirport (this.props.listAirport, region);
+    let airport = await getObjectAirport(this.props.listAirport, region);
     if (airport == null) {
-      airport = await this.props.getAirportAction (region);
+      airport = await this.props.getAirportAction(region);
       airport = this.props.getAirportData;
       if (airport.length > 0) {
-        this.props.setAirportAction (
-          setObjectAirport (this.props.airport, region, airport)
+        this.props.setAirportAction(
+          setObjectAirport(this.props.airport, region, airport)
         );
       }
     }
@@ -890,69 +886,72 @@ class AccommodationSummary extends Component {
 
   handlePressTourList = async () => {
     if (this.state.activeTab == 'date') {
-      this.FocusedTab ('itinerary');
+      this.FocusedTab('itinerary');
     } else {
-      let item = await transactionItem (
+      let item = await transactionItem(
         this.props.DetailCustom,
         this.props.SummaryProgram,
         this.props.DailyProgram,
         this.props.Departures,
         this.props.Returns
       );
-      this.setState ({loading: true});
-      this.props.getOperatorListAction (item);
+      this.setState({loading: true});
+      this.props.getOperatorListAction(item);
       //this.props.dispatch(get_operator_list(item));
     }
   };
 
   handleListAccomodation = index => {
     const {SummaryProgram} = this.state;
-    const error = this.validate ('Destination');
-    const errorDeparture = this.validate ('Departures');
+    const error = this.validate('Destination');
+    const errorDeparture = this.validate('Departures');
     // const errorReturns = this.validate('Returns');
     if (!error && !errorDeparture) {
       SummaryProgram[index].AccommodationSummary.Name
-        ? Alert.alert (
+        ? Alert.alert(
             'Sorry',
             'Please be careful, changing the accommodation will reset the activity item like excursion, transportation, and meal',
             [
               {
                 text: 'Ok, Continue',
-                onPress: () => this.getAccommodation (index),
+                onPress: () => this.getAccommodation(index),
               },
               {
                 text: 'Cancel',
               },
             ]
           )
-        : this.getAccommodation (index);
+        : this.getAccommodation(index);
     }
   };
 
   getAccommodation = index => {
     //this.props.dispatch(reset_accommodation_profile());
-    this.props.resetAccommodationProfileAction ();
+    this.props.resetAccommodationProfileAction();
     let cityId = this.state.SummaryProgram[index].City.Id;
-    let StartDate = convertDateFormat (
+    let StartDate = convertDateFormat(
       this.state.SummaryProgram[index].AccommodationSummary.CheckIn,
       'YYYY-MM-DDTHH:mm:ss'
     );
-    let EndDate = convertDateFormat (
+    let EndDate = convertDateFormat(
       this.state.SummaryProgram[index].AccommodationSummary.CheckOut,
       'YYYY-MM-DDTHH:mm:ss'
     );
-    let useExtraBed = this.state.SummaryProgram[index].AccommodationSummary
-      .Allocations.ExtraBedPax > 0
-      ? true
-      : false;
-    let useChildExtraBed = this.state.SummaryProgram[index].AccommodationSummary
-      .Allocations.ChildExtraBedPax > 0
-      ? true
-      : false;
-    let useSharingBed = this.state.SummaryProgram[index].AccommodationSummary
-      .Allocations.SharingBedPax > 0
-      ? true
-      : false;
+    let useExtraBed =
+      this.state.SummaryProgram[index].AccommodationSummary.Allocations
+        .ExtraBedPax > 0
+        ? true
+        : false;
+    let useChildExtraBed =
+      this.state.SummaryProgram[index].AccommodationSummary.Allocations
+        .ChildExtraBedPax > 0
+        ? true
+        : false;
+    let useSharingBed =
+      this.state.SummaryProgram[index].AccommodationSummary.Allocations
+        .SharingBedPax > 0
+        ? true
+        : false;
     let useSharingRoom = this.state.SummaryProgram[index].AccommodationSummary
       .Allocations.SharingRoomPax;
     let useSingleRoom = this.state.SummaryProgram[index].AccommodationSummary
@@ -966,14 +965,14 @@ class AccommodationSummary extends Component {
     //     useSharingBed
     //   )
     // );
-    let item = transactionItem (
+    let item = transactionItem(
       this.props.DetailCustom,
       this.props.SummaryProgram,
       this.props.DailyProgram,
       this.props.Departures,
       this.props.Returns
     );
-    this.props.navigation.navigate ('masterData', {
+    this.props.navigation.navigate('masterData', {
       screen: 'ListAccomodation',
       params: {
         Parameter: {
@@ -994,38 +993,38 @@ class AccommodationSummary extends Component {
   };
 
   onSelectAccomodation = (index, services, room, hotel) => {
-    let SP = changeAccomodation (
+    let SP = changeAccomodation(
       this.state.SummaryProgram,
       index,
       services,
       room,
       hotel
     );
-    this.setState ({SummaryProgram: SP});
-    this.props.setSummaryProgramAction (SP);
+    this.setState({SummaryProgram: SP});
+    this.props.setSummaryProgramAction(SP);
     //this.props.dispatch(set_summary_program(SP));
   };
 
   confirmChangeDestination = (index, City) => {
     if (City) {
-      Alert.alert (
+      Alert.alert(
         'Are you sure',
         'Please be careful, changing the destination will reset the accommodation, activity and flight ticket',
         [
           {
             text: 'Yes',
-            onPress: () => this.handleCity (index),
+            onPress: () => this.handleCity(index),
           },
           {text: 'No'},
         ]
       );
     } else {
-      this.handleCity (index);
+      this.handleCity(index);
     }
   };
 
   handleCity = async index => {
-    await this.props.navigation.navigate ('General', {
+    await this.props.navigation.navigate('General', {
       screen: 'ListCity',
       params: {
         onSelect: await this.onSelectCity,
@@ -1041,36 +1040,36 @@ class AccommodationSummary extends Component {
       MainPrograms: this.state.SummaryProgram,
       Returns: this.state.Returns,
     };
-    headline.MainPrograms = await addConnectionFlightManual (
+    headline.MainPrograms = await addConnectionFlightManual(
       arraySummaryProgram,
       index,
       this.props.airport
     );
-    headline = await this.getAirportSP (headline, index);
+    headline = await this.getAirportSP(headline, index);
     // let newHeadline = setPlaceInArrivalDepartureByHeadLine(
     //   headline,
     //   this.props.airport,
     //   this.props.cityList
     // );
-    await this.setState ({SummaryProgram: headline.MainPrograms});
-    this.props.setSummaryProgramAction (headline.MainPrograms);
+    await this.setState({SummaryProgram: headline.MainPrograms});
+    this.props.setSummaryProgramAction(headline.MainPrograms);
     //this.props.dispatch(set_summary_program(headline.MainPrograms));
-    this.setState ({loading: false});
+    this.setState({loading: false});
   };
 
   delConnecFlight = async index => {
-    this.setState ({loading: true});
-    let SP = delConectionFlight (
+    this.setState({loading: true});
+    let SP = delConectionFlight(
       this.state.Departures[1],
       this.state.SummaryProgram,
       index
     );
-    await this.setState ({
+    await this.setState({
       SummaryProgram: SP,
     });
-    this.props.setSummaryProgramAction (SP);
+    this.props.setSummaryProgramAction(SP);
     //this.props.dispatch(await set_summary_program(SP));
-    this.setState ({loading: false});
+    this.setState({loading: false});
   };
 
   connectionFlight = (index, data) => {
@@ -1101,8 +1100,8 @@ class AccommodationSummary extends Component {
   };
 
   onSelectCity = async (index, city) => {
-    this.setState ({loading: true});
-    let data = await changeDestinationSummaryProgram (
+    this.setState({loading: true});
+    let data = await changeDestinationSummaryProgram(
       this.state.Departures[1],
       this.state.Returns[0],
       this.state.SummaryProgram,
@@ -1117,44 +1116,44 @@ class AccommodationSummary extends Component {
     };
 
     let SP = [];
-    let connectionFlightData = this.connectionFlight (index, data);
+    let connectionFlightData = this.connectionFlight(index, data);
     if (connectionFlightData) {
       if (data.SP[index - 1].TransferType == 'Movement_arrival') {
-        SP = await deleteConnectionFlight (data.SP, index - 2);
-        SP = await addConnectionFlightManual (SP, index - 2);
+        SP = await deleteConnectionFlight(data.SP, index - 2);
+        SP = await addConnectionFlightManual(SP, index - 2);
       }
       if (data.SP[index + 1].TransferType == 'Movement_departure') {
-        SP = await deleteConnectionFlight (data.SP, index + 2);
-        SP = await addConnectionFlightManual (SP, index + 2);
+        SP = await deleteConnectionFlight(data.SP, index + 2);
+        SP = await addConnectionFlightManual(SP, index + 2);
       }
     } else {
       SP = data.SP;
     }
 
     headline.MainPrograms = SP;
-    headline.Departures[headline.Departures.length - 1] = await this.getArrDep (
+    headline.Departures[headline.Departures.length - 1] = await this.getArrDep(
       data.Arrival
     );
-    headline.Returns[0] = await this.getArrDep (data.Departure);
-    headline = await this.getAirportSP (headline, index);
+    headline.Returns[0] = await this.getArrDep(data.Departure);
+    headline = await this.getAirportSP(headline, index);
 
-    await this.setState ({
+    await this.setState({
       SummaryProgram: headline.MainPrograms,
       Departures: headline.Departures,
       Returns: headline.Returns,
     });
-    this.props.setDeparturesItineraryAction (headline.Departures);
-    this.props.setReturnsItineraryAction (headline.Returns);
-    this.props.setSummaryProgramAction (headline.MainPrograms);
+    this.props.setDeparturesItineraryAction(headline.Departures);
+    this.props.setReturnsItineraryAction(headline.Returns);
+    this.props.setSummaryProgramAction(headline.MainPrograms);
     //this.props.dispatch(set_departures_itenerary(headline.Departures));
     //this.props.dispatch(set_returns_itenerary(headline.Returns));
     //this.props.dispatch(set_summary_program(headline.MainPrograms));
-    this.setState ({loading: false});
+    this.setState({loading: false});
   };
 
   handleAirport = (data, index, type) => {
-    this.setState ({airportType: type, oldAirport: data});
-    this.props.navigation.navigate ('General', {
+    this.setState({airportType: type, oldAirport: data});
+    this.props.navigation.navigate('General', {
       screen: 'ListAirport',
       params: {
         data: data,
@@ -1165,8 +1164,8 @@ class AccommodationSummary extends Component {
   };
 
   onSelectFirstCity = async (index, city) => {
-    this.setState ({loading: true});
-    let data = await changeDestinationSummaryProgram (
+    this.setState({loading: true});
+    let data = await changeDestinationSummaryProgram(
       this.state.Departures[1],
       this.state.Returns[0],
       this.state.SummaryProgram,
@@ -1175,68 +1174,66 @@ class AccommodationSummary extends Component {
     );
 
     // let Arrival = await this.getArrDep(data.Arrival);
-    let Departure = await this.getArrDep (data.Departure);
+    let Departure = await this.getArrDep(data.Departure);
 
     // let newDepartures = [this.state.Departures[0], Arrival];
     let newReturns = [Departure, this.state.Returns[1]];
 
-    await this.setState ({
+    await this.setState({
       SummaryProgram: data.SP,
       // Departures: newDepartures,
       Returns: newReturns,
     });
     //this.props.setDeparturesItineraryAction (newDepartures);
-    this.props.setReturnsItineraryAction (newReturns);
-    this.props.setSummaryProgramAction (data.SP);
-    this.setState ({loading: false});
+    this.props.setReturnsItineraryAction(newReturns);
+    this.props.setSummaryProgramAction(data.SP);
+    this.setState({loading: false});
   };
 
   onSelectAirport = async (data, index, airport) => {
-    this.setState ({loading: true});
+    this.setState({loading: true});
     if (index != null) {
-      let mainProgram = changeAirport (data, index, airport);
-      this.setState ({MainPrograms: mainProgram});
-      this.props.dispatch (set_summary_program (mainProgram));
-      this.setState ({loading: false});
+      let mainProgram = changeAirport(data, index, airport);
+      this.setState({MainPrograms: mainProgram});
+      this.props.dispatch(set_summary_program(mainProgram));
+      this.setState({loading: false});
     } else {
-      let ArrDep = changeAirport (data, null, airport);
+      let ArrDep = changeAirport(data, null, airport);
       let arrayDepartures = [];
       let arrayReturns = [];
 
       if (this.state.airportType == 'firstDeparture') {
         ArrDep.TransferType = 'Movement_departure';
-        arrayDepartures.push (ArrDep);
-        arrayDepartures.push (this.state.Departures[1]);
-        this.setState ({Departures: arrayDepartures});
-        await this.props.setDeparturesItineraryAction (arrayDepartures);
-        this.setState ({loading: false});
+        arrayDepartures.push(ArrDep);
+        arrayDepartures.push(this.state.Departures[1]);
+        this.setState({Departures: arrayDepartures});
+        await this.props.setDeparturesItineraryAction(arrayDepartures);
+        this.setState({loading: false});
       } else if (this.state.airportType == 'firstArrival') {
-        let city = this.props.cityList.find (
-          item => item.Id == airport.City.Id
-        );
+        let city = this.props.cityList.find(item => item.Id == airport.City.Id);
         ArrDep.TransferType = 'Movement_arrival';
-        arrayDepartures.push (this.state.Departures[0]);
-        arrayDepartures.push (ArrDep);
-        this.setState ({
+        arrayDepartures.push(this.state.Departures[0]);
+        arrayDepartures.push(ArrDep);
+        this.setState({
           Departures: arrayDepartures,
         });
-        await this.props.setDeparturesItineraryAction (arrayDepartures);
-        this.onSelectFirstCity (this.state.SummaryProgram.length - 1, city);
-        this.setState ({loading: false});
+        await this.props.setDeparturesItineraryAction(arrayDepartures);
+        this.onSelectFirstCity(this.state.SummaryProgram.length - 1, city);
+        this.setState({loading: false});
       } else if (this.state.airportType == 'lastDeparture') {
         ArrDep.TransferType = 'Movement_departure';
-        arrayReturns.push (ArrDep);
-        arrayReturns.push (this.state.Returns[1]);
-        this.setState ({Returns: arrayReturns});
-        await this.props.setReturnsItineraryAction (arrayReturns);
-        this.setState ({loading: false});
+        arrayReturns.push(ArrDep);
+        arrayReturns.push(this.state.Returns[1]);
+        this.setState({Returns: arrayReturns});
+        await this.props.setReturnsItineraryAction(arrayReturns);
+        this.setState({loading: false});
       } else {
         ArrDep.TransferType = 'Movement_arrival';
-        arrayReturns.push (this.state.Returns[0]);
-        arrayReturns.push (ArrDep);
-        this.setState ({Returns: arrayReturns});
-        await this.props.setReturnsItineraryAction (arrayReturns);
-        this.setState ({loading: false});
+        arrayReturns.push(this.state.Returns[0]);
+        arrayReturns.push(ArrDep);
+        this.setState({Returns: arrayReturns});
+        await this.props.setReturnsItineraryAction(arrayReturns);
+        this.setState({loading: false});
       }
     }
   };
@@ -1247,19 +1244,19 @@ class AccommodationSummary extends Component {
       MainPrograms: this.state.SummaryProgram,
       Returns: this.state.Returns,
     };
-    let data = changeDurationMainPrograms (headline, i, value);
+    let data = changeDurationMainPrograms(headline, i, value);
     if (!data.errorMessage) {
-      let newReturns = setReturnsDate (this.state.Returns, data.MainPrograms);
-      this.setState ({
+      let newReturns = setReturnsDate(this.state.Returns, data.MainPrograms);
+      this.setState({
         Returns: newReturns,
         SummaryProgram: data.MainPrograms,
       });
-      this.props.setSummaryProgramAction (data.MainPrograms);
-      this.props.setReturnsItineraryAction (newReturns);
+      this.props.setSummaryProgramAction(data.MainPrograms);
+      this.props.setReturnsItineraryAction(newReturns);
       //this.props.dispatch(set_summary_program(data.MainPrograms));
       //this.props.dispatch(set_returns_itenerary(newReturns));
     } else {
-      Alert.alert ('Failed', data.errorMessage, [{text: 'OK'}]);
+      Alert.alert('Failed', data.errorMessage, [{text: 'OK'}]);
     }
   };
   // handleChangeDuration = (value, i) => {
@@ -1284,21 +1281,21 @@ class AccommodationSummary extends Component {
 
   handleChangeDateAirport = (Airport, type, date) => {
     if (type == 'Arrival') {
-      let Arrival = setDateArrival (Airport, date);
-      let SP = setDateSummaryProgram (Arrival, this.state.SummaryProgram);
-      let Departure = setDateDeparture (this.state.Departure, SP);
+      let Arrival = setDateArrival(Airport, date);
+      let SP = setDateSummaryProgram(Arrival, this.state.SummaryProgram);
+      let Departure = setDateDeparture(this.state.Departure, SP);
 
-      this.setState (
+      this.setState(
         {
           Departures: Arrival,
           Returns: Departure,
           SummaryProgram: SP,
         },
         () => {
-          this.hideDateTimePicked ();
-          this.props.setDeparturesItineraryAction (Arrival);
-          this.props.setSummaryProgramAction (SP);
-          this.props.setReturnsItineraryAction (Departure);
+          this.hideDateTimePicked();
+          this.props.setDeparturesItineraryAction(Arrival);
+          this.props.setSummaryProgramAction(SP);
+          this.props.setReturnsItineraryAction(Departure);
           //this.props.dispatch(set_departures_itenerary(Arrival));
           //this.props.dispatch(set_summary_program(SP));
           //this.props.dispatch(set_returns_itenerary(Departure));
@@ -1308,21 +1305,21 @@ class AccommodationSummary extends Component {
   };
 
   handleChangeTimeAirport = (Airport, time, type) => {
-    let airport = changeTimeArrivalDeparture (Airport, time);
+    let airport = changeTimeArrivalDeparture(Airport, time);
     if (type == 'firstDeparture') {
       let newDepartures = [airport, this.state.Departures[1]];
 
-      this.setState (
+      this.setState(
         {
           Departures: newDepartures,
           Returns: this.state.Returns,
           SummaryProgram: this.state.SummaryProgram,
         },
         () => {
-          this.hideDateTimePicked ();
-          this.props.setDeparturesItineraryAction (newDepartures);
-          this.props.setSummaryProgramAction (this.state.SummaryProgram);
-          this.props.setReturnsItineraryAction (this.state.Returns);
+          this.hideDateTimePicked();
+          this.props.setDeparturesItineraryAction(newDepartures);
+          this.props.setSummaryProgramAction(this.state.SummaryProgram);
+          this.props.setReturnsItineraryAction(this.state.Returns);
           //this.props.dispatch(set_departures_itenerary(newDepartures));
           //this.props.dispatch(set_returns_itenerary(this.state.Returns));
           //this.props.dispatch(set_summary_program(this.state.SummaryProgram));
@@ -1331,17 +1328,17 @@ class AccommodationSummary extends Component {
     } else if (type == 'firstArrival') {
       let newDepartures = [this.state.Departures[0], airport];
 
-      this.setState (
+      this.setState(
         {
           Departures: newDepartures,
           Returns: this.state.Returns,
           SummaryProgram: this.state.SummaryProgram,
         },
         () => {
-          this.hideDateTimePicked ();
-          this.props.setDeparturesItineraryAction (newDepartures);
-          this.props.setSummaryProgramAction (this.state.SummaryProgram);
-          this.props.setReturnsItineraryAction (this.state.Returns);
+          this.hideDateTimePicked();
+          this.props.setDeparturesItineraryAction(newDepartures);
+          this.props.setSummaryProgramAction(this.state.SummaryProgram);
+          this.props.setReturnsItineraryAction(this.state.Returns);
           //this.props.dispatch(set_departures_itenerary(newDepartures));
           //this.props.dispatch(set_returns_itenerary(this.state.Returns));
           //this.props.dispatch(set_summary_program(this.state.SummaryProgram));
@@ -1350,17 +1347,17 @@ class AccommodationSummary extends Component {
     } else if (type == 'lastDeparture') {
       let newReturns = [airport, this.state.Returns[1]];
 
-      this.setState (
+      this.setState(
         {
           Returns: newReturns,
           Departures: this.state.Departures,
           SummaryProgram: this.state.SummaryProgram,
         },
         () => {
-          this.hideDateTimePicked ();
-          this.props.setDeparturesItineraryAction (this.state.Departures);
-          this.props.setSummaryProgramAction (this.state.SummaryProgram);
-          this.props.setReturnsItineraryAction (newReturns);
+          this.hideDateTimePicked();
+          this.props.setDeparturesItineraryAction(this.state.Departures);
+          this.props.setSummaryProgramAction(this.state.SummaryProgram);
+          this.props.setReturnsItineraryAction(newReturns);
           //this.props.dispatch(set_returns_itenerary(newReturns));
           //this.props.dispatch(set_departures_itenerary(this.state.Departures));
           //this.props.dispatch(set_summary_program(this.state.SummaryProgram));
@@ -1369,17 +1366,17 @@ class AccommodationSummary extends Component {
     } else {
       let newReturns = [this.state.Returns[0], airport];
 
-      this.setState (
+      this.setState(
         {
           Returns: newReturns,
           Departures: this.state.Departures,
           SummaryProgram: this.state.SummaryProgram,
         },
         () => {
-          this.hideDateTimePicked ();
-          this.props.setDeparturesItineraryAction (this.state.Departures);
-          this.props.setSummaryProgramAction (this.state.SummaryProgram);
-          this.props.setReturnsItineraryAction (newReturns);
+          this.hideDateTimePicked();
+          this.props.setDeparturesItineraryAction(this.state.Departures);
+          this.props.setSummaryProgramAction(this.state.SummaryProgram);
+          this.props.setReturnsItineraryAction(newReturns);
 
           //this.props.dispatch(set_returns_itenerary(newReturns));
           //this.props.dispatch(set_departures_itenerary(this.state.Departures));
@@ -1392,7 +1389,7 @@ class AccommodationSummary extends Component {
   onPressTimeOut = index => {
     let Open = [...this.state.isTimeOutPickerVisible];
     Open[index] = true;
-    this.setState ({
+    this.setState({
       isTimeOutPickerVisible: Open,
     });
   };
@@ -1400,7 +1397,7 @@ class AccommodationSummary extends Component {
   onPressTime = index => {
     let Open = [...this.state.isTimeInPickerVisible];
     Open[index] = true;
-    this.setState ({
+    this.setState({
       isTimeInPickerVisible: Open,
     });
   };
@@ -1408,71 +1405,62 @@ class AccommodationSummary extends Component {
   onPressDateIn = index => {
     let Open = [...this.state.isDateInPickerVisible];
     Open[index] = true;
-    this.setState ({
+    this.setState({
       isDateInPickerVisible: Open,
     });
   };
 
   handleDateSP = (index, date) => {
-    let SP = setDateSummaryProgramByIndex (
+    let SP = setDateSummaryProgramByIndex(
       this.state.SummaryProgram,
       this.state.Departures[1],
       index,
       date
     );
 
-    this.setState ({SummaryProgram: SP}, () => {
-      this.props.setSummaryProgramAction (SP);
+    this.setState({SummaryProgram: SP}, () => {
+      this.props.setSummaryProgramAction(SP);
       //this.props.dispatch(set_summary_program(SP));
-      this.hideDateTimePicked ();
+      this.hideDateTimePicked();
     });
   };
 
   handleTimeSP = (index, time) => {
     let type = this.state.isTimeInPickerVisible[index] ? 'in' : 'out';
-    let SP = changeChecInCheckOut (
-      this.state.SummaryProgram,
-      index,
-      time,
-      type
-    );
-    this.setState ({SummaryProgram: SP}, () => {
-      this.props.setSummaryProgramAction (SP);
+    let SP = changeChecInCheckOut(this.state.SummaryProgram, index, time, type);
+    this.setState({SummaryProgram: SP}, () => {
+      this.props.setSummaryProgramAction(SP);
       //this.props.dispatch(set_summary_program(SP));
-      this.hideDateTimePicked ();
+      this.hideDateTimePicked();
     });
   };
 
   handleTimeConnectionFlight = (index, time) => {
-    let SP = changeTimeConnectionFlight (
-      this.state.SummaryProgram,
-      index,
-      time
-    );
-    this.setState ({SummaryProgram: SP});
-    this.props.setSummaryProgramAction (SP);
+    let SP = changeTimeConnectionFlight(this.state.SummaryProgram, index, time);
+    this.setState({SummaryProgram: SP});
+    this.props.setSummaryProgramAction(SP);
     //this.props.dispatch(set_summary_program(SP));
-    this.hideDateTimePicked ();
+    this.hideDateTimePicked();
   };
 
   handleTourSchedule = (index, DateSchedule) => {
-    this.props.navigation.navigate ('TourSchedule', {
+    this.props.navigation.navigate('TourSchedule', {
       indexDP: index,
       DateSchedule: DateSchedule,
     });
   };
 
   handleNextDayFlight = (isNextDay, index) => {
-    let SP = nextDayConnectionFlight (
+    let SP = nextDayConnectionFlight(
       isNextDay,
       index,
       this.state.SummaryProgram
     );
-    let departure = setDateDeparture (this.state.Returns[0], SP);
+    let departure = setDateDeparture(this.state.Returns[0], SP);
     let newReturns = [departure, this.state.Returns[1]];
-    this.setState ({SummaryProgram: SP, Returns: newReturns});
-    this.props.setSummaryProgramAction (SP);
-    this.props.setReturnsItineraryAction (newReturns);
+    this.setState({SummaryProgram: SP, Returns: newReturns});
+    this.props.setSummaryProgramAction(SP);
+    this.props.setReturnsItineraryAction(newReturns);
     //this.props.dispatch(set_summary_program(SP));
     //this.props.dispatch(set_returns_itenerary(newReturns));
   };
@@ -1484,28 +1472,28 @@ class AccommodationSummary extends Component {
       Returns: this.state.Returns,
     };
 
-    let newHeadline = helperNextDay (headline, index, airport, type);
-    this.setState ({
+    let newHeadline = helperNextDay(headline, index, airport, type);
+    this.setState({
       Departures: newHeadline.Departures,
       SummaryProgram: newHeadline.MainPrograms,
       Returns: newHeadline.Returns,
     });
   };
 
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate(nextProps) {
     if (nextProps.isTourOperator) {
-      this.setState ({loading: false});
+      this.setState({loading: false});
       // this.props.navigation.navigate('AddAdditionalService', {
       //   type: 'custom',
       // });
-      this.props.navigation.navigate ('TourOperatorList', {type: 'custom'});
-      this.props.resetOperatorListAction ();
+      this.props.navigation.navigate('TourOperatorList', {type: 'custom'});
+      this.props.resetOperatorListAction();
       //this.props.dispatch(reset_operator_list());
       return false;
     } else if (nextProps.isTourOperator) {
-      this.setState ({loading: false});
-      Alert.alert ('Failed', nextProps.tourOperatorListError, [{text: 'OK'}]);
-      this.props.resetOperatorListAction ();
+      this.setState({loading: false});
+      Alert.alert('Failed', nextProps.tourOperatorListError, [{text: 'OK'}]);
+      this.props.resetOperatorListAction();
       //this.props.dispatch(reset_operator_list());
       return false;
     } else return true;
@@ -1514,7 +1502,7 @@ class AccommodationSummary extends Component {
   onChangeFlight = (text, i) => {
     let Supplements = [...this.state.SummaryProgram];
     Supplements[i].Ticket.FlightNumber = text;
-    this.setState ({
+    this.setState({
       SummaryProgram: Supplements,
     });
   };
@@ -1522,7 +1510,7 @@ class AccommodationSummary extends Component {
   onChangeNote = (text, i) => {
     let Supplements = [...this.state.SummaryProgram];
     Supplements[i].Note = text;
-    this.setState ({
+    this.setState({
       SummaryProgram: Supplements,
     });
   };
@@ -1539,8 +1527,8 @@ class AccommodationSummary extends Component {
       newReturns[1].Ticket.FlightNumber = text;
     }
 
-    this.setState ({Departures: newDeparture});
-    this.setState ({Returns: newReturns});
+    this.setState({Departures: newDeparture});
+    this.setState({Returns: newReturns});
   };
 
   handleChangeNote = (text, type, dateDepar, dateArr) => {
@@ -1548,37 +1536,33 @@ class AccommodationSummary extends Component {
     let newReturns = this.state.Returns;
 
     if (type == 'departure') {
-      let findIndexDepar = newDeparture.findIndex (
+      let findIndexDepar = newDeparture.findIndex(
         item => item.Date === dateDepar
       );
-      let findIndexArr = newDeparture.findIndex (item => item.Date === dateArr);
+      let findIndexArr = newDeparture.findIndex(item => item.Date === dateArr);
       newDeparture[findIndexDepar].Note = text;
       newDeparture[findIndexArr].Note = text;
     } else {
-      let findIndexDepar = newDeparture.findIndex (
+      let findIndexDepar = newDeparture.findIndex(
         item => item.Date === dateDepar
       );
-      let findIndexArr = newDeparture.findIndex (item => item.Date === dateArr);
+      let findIndexArr = newDeparture.findIndex(item => item.Date === dateArr);
       newReturns[findIndexDepar].Note = text;
       newReturns[findIndexArr].Note = text;
     }
-    this.setState ({
+    this.setState({
       Departures: newDeparture,
       SummaryProgram: this.state.SummaryProgram,
       Returns: newReturns,
     });
-    this.props.setDeparturesItineraryAction (newDeparture);
-    this.props.setSummaryProgramAction (this.state.SummaryProgram);
-    this.props.setReturnsItineraryAction (newReturns);
-    //this.props.dispatch(set_returns_itenerary(newReturns));
-    //this.props.dispatch(set_departures_itenerary(newDeparture));
-    //this.props.dispatch(set_summary_program(this.state.SummaryProgram));
+    this.props.setDeparturesItineraryAction(newDeparture);
+    this.props.setSummaryProgramAction(this.state.SummaryProgram);
+    this.props.setReturnsItineraryAction(newReturns);
   };
 
   handleLastArrivalDate = (airport, date) => {
     let newDate =
-      convertToStringDate (changeTime (date)) +
-      convertToStringTime (airport.Date);
+      convertToStringDate(changeTime(date)) + convertToStringTime(airport.Date);
     let newReturns = [this.state.Departures[0], airport];
 
     let headline = {
@@ -1586,14 +1570,14 @@ class AccommodationSummary extends Component {
       MainPrograms: this.state.SummaryProgram,
       Returns: newReturns,
     };
-    let arrivalTime = this.state.Departures[0].Date.substring (11, 16);
-    let newHeadline = changeLastArrivalDate (newDate, headline, arrivalTime);
-    this.setState ({
+    let arrivalTime = this.state.Departures[0].Date.substring(11, 16);
+    let newHeadline = changeLastArrivalDate(newDate, headline, arrivalTime);
+    this.setState({
       Departures: newHeadline.Departures,
       SummaryProgram: newHeadline.MainPrograms,
       Returns: newHeadline.Returns,
     });
-    this.hideDateTimePicked ();
+    this.hideDateTimePicked();
   };
 
   handleLastArrivalTime = (airport, time) => {
@@ -1604,31 +1588,30 @@ class AccommodationSummary extends Component {
       MainPrograms: this.state.SummaryProgram,
       Returns: newReturns,
     };
-    let newHeadline = changeLastArrivalDate (airport.Date, headline, time);
-    this.setState ({
+    let newHeadline = changeLastArrivalDate(airport.Date, headline, time);
+    this.setState({
       Departures: newHeadline.Departures,
       SummaryProgram: newHeadline.MainPrograms,
       Returns: newHeadline.Returns,
     });
-    this.hideDateTimePicked ();
+    this.hideDateTimePicked();
   };
 
   handleFirstDepartureTime = (airport, time) => {
-    airport.Date = changeTimeNew (airport.Date, time);
+    airport.Date = changeTimeNew(airport.Date, time);
     let newDepartures = [airport, this.state.Departures[1]];
 
-    this.setState ({
+    this.setState({
       Departures: newDepartures,
       SummaryProgram: this.state.SummaryProgram,
       Returns: this.state.Returns,
     });
-    this.hideDateTimePicked ();
+    this.hideDateTimePicked();
   };
 
   handleFirstDepartureDate = (airport, date) => {
     let newDate =
-      convertToStringDate (changeTime (date)) +
-      convertToStringTime (airport.Date);
+      convertToStringDate(changeTime(date)) + convertToStringTime(airport.Date);
     let newDepartures = [airport, this.state.Departures[1]];
 
     let headline = {
@@ -1636,20 +1619,19 @@ class AccommodationSummary extends Component {
       MainPrograms: this.state.SummaryProgram,
       Returns: this.state.Returns,
     };
-    let arrivalTime = this.state.Departures[0].Date.substring (11, 16);
-    let newHeadline = changeFirstDepartureDate (newDate, headline, arrivalTime);
-    this.setState ({
+    let arrivalTime = this.state.Departures[0].Date.substring(11, 16);
+    let newHeadline = changeFirstDepartureDate(newDate, headline, arrivalTime);
+    this.setState({
       Departures: newHeadline.Departures,
       SummaryProgram: newHeadline.MainPrograms,
       Returns: newHeadline.Returns,
     });
-    this.hideDateTimePicked ();
+    this.hideDateTimePicked();
   };
 
   handleDepartureDate = (airport, type, date) => {
     let newDate =
-      convertToStringDate (changeTime (date)) +
-      convertToStringTime (airport.Date);
+      convertToStringDate(changeTime(date)) + convertToStringTime(airport.Date);
     let newDepartures = null;
     let newReturns = null;
     if (type == 'firstDeparture') {
@@ -1671,9 +1653,9 @@ class AccommodationSummary extends Component {
       SummaryProgram: this.state.SummaryProgram,
       Returns: newReturns,
     };
-    let arrivalTime = this.state.Departures[0].Date.substring (11, 16);
-    let newHeadline = changeFirstDepartureDate (newDate, headline, arrivalTime);
-    this.setState ({
+    let arrivalTime = this.state.Departures[0].Date.substring(11, 16);
+    let newHeadline = changeFirstDepartureDate(newDate, headline, arrivalTime);
+    this.setState({
       Departures: newHeadline.Departures,
       SummaryProgram: newHeadline.MainPrograms,
       Returns: newHeadline.Returns,
@@ -1681,42 +1663,42 @@ class AccommodationSummary extends Component {
   };
 
   handleMultipleDestination = () => {
-    this.setState ({loadingButton: true});
-    let mainProgram = addLastDestinationSummaryProgram (
+    this.setState({loadingButton: true});
+    let mainProgram = addLastDestinationSummaryProgram(
       this.state.Returns,
       this.state.SummaryProgram
     );
-    let departure = setReturnsDate (
+    let departure = setReturnsDate(
       [this.state.Returns[0], this.state.Returns[1]],
       mainProgram
     );
     let newReturns = [departure[0], departure[1]];
-    this.setState ({
+    this.setState({
       Returns: newReturns,
       SummaryProgram: [],
     });
-    this.props.setSummaryProgramAction (mainProgram);
-    this.props.setReturnsItineraryAction (newReturns);
+    this.props.setSummaryProgramAction(mainProgram);
+    this.props.setReturnsItineraryAction(newReturns);
     //this.props.dispatch(set_returns_itenerary(newReturns));
     //this.props.dispatch(set_summary_program(mainProgram));
-    this.setState ({loadingButton: false});
+    this.setState({loadingButton: false});
   };
 
   handleSingleDestination = () => {
-    this.setState ({loading: true});
-    let headline = deleteLastDestinationSummaryProgram (
+    this.setState({loading: true});
+    let headline = deleteLastDestinationSummaryProgram(
       this.state.SummaryProgram,
       this.state.Returns
     );
-    this.setState ({
+    this.setState({
       Returns: headline.Returns,
       SummaryProgram: [],
     });
-    this.props.setSummaryProgramAction (headline.MainPrograms);
-    this.props.setReturnsItineraryAction (headline.Returns);
+    this.props.setSummaryProgramAction(headline.MainPrograms);
+    this.props.setReturnsItineraryAction(headline.Returns);
     //this.props.dispatch(set_returns_itenerary(headline.Returns));
     //this.props.dispatch(set_summary_program(headline.MainPrograms));
-    this.setState ({
+    this.setState({
       loading: false,
     });
   };
@@ -1730,35 +1712,39 @@ class AccommodationSummary extends Component {
     ArrivalCity,
     dateFindIndex
   ) => {
-    const errorDeparture = this.validate (
+    const errorDeparture = this.validate(
       indexDepar === 'Arrival'
         ? 'Departures'
-        : indexDepar == 'Departure' ? 'Returns' : ''
+        : indexDepar == 'Departure'
+        ? 'Returns'
+        : ''
     );
     if (!errorDeparture) {
-      let indexArrival = isNaN (indexDepar)
+      let indexArrival = isNaN(indexDepar)
         ? indexArr
-        : this.state.SummaryProgram.find ((element, i) => {
+        : this.state.SummaryProgram.find((element, i) => {
             i > indexDepar ? (element.AccommodationSummary ? i : null) : null;
           });
-      let findIndexData = indexDepar == 'Arrival'
-        ? this.state.Departures.findIndex (item => item.Date === dateFindIndex)
-        : indexDepar == 'Departure'
-            ? this.state.Returns.findIndex (item => item.Date === dateFindIndex)
-            : null;
+      let findIndexData =
+        indexDepar == 'Arrival'
+          ? this.state.Departures.findIndex(item => item.Date === dateFindIndex)
+          : indexDepar == 'Departure'
+          ? this.state.Returns.findIndex(item => item.Date === dateFindIndex)
+          : null;
       let oldHeadlineProgram = {
         Departures: this.state.Departures,
         MainPrograms: this.state.SummaryProgram,
         Returns: this.state.Returns,
       };
-      this.props.navigation.navigate ('General', {
+      this.props.navigation.navigate('General', {
         screen: 'ListAirlineTicket',
         params: {
           DeparturePlaceId: DeparturePlaceId,
           ArrivalPlaceId: ArrivalPlaceId,
-          Qty: this.props.DetailCustom.GuestAllocation.Adult +
+          Qty:
+            this.props.DetailCustom.GuestAllocation.Adult +
             this.props.DetailCustom.GuestAllocation.Child,
-          DateTimeDeparture: viewDateStrip (this.state.Departures[0].Date),
+          DateTimeDeparture: viewDateStrip(this.state.Departures[0].Date),
           oldHeadlineProgram: oldHeadlineProgram,
           room: this.props.DetailCustom.RoomAllocation,
           indexAddListFlight: indexDepar,
@@ -1772,27 +1758,27 @@ class AccommodationSummary extends Component {
   };
 
   handleDiscardTicket = (serviceItemId, isDeleteAllGroupTicket) => {
-    this.setState ({loading: true});
+    this.setState({loading: true});
     let headline = {
       Departures: this.state.Departures,
       MainPrograms: this.state.SummaryProgram,
       Returns: this.state.Returns,
     };
-    let headlineProgram = deleteGroupTicket (
+    let headlineProgram = deleteGroupTicket(
       headline,
       serviceItemId,
       isDeleteAllGroupTicket
     );
-    this.props.setSummaryProgramAction (headlineProgram.MainPrograms);
-    this.props.setReturnsItineraryAction (headlineProgram.Returns);
-    this.props.setDeparturesItineraryAction (headlineProgram.Departures);
+    this.props.setSummaryProgramAction(headlineProgram.MainPrograms);
+    this.props.setReturnsItineraryAction(headlineProgram.Returns);
+    this.props.setDeparturesItineraryAction(headlineProgram.Departures);
     //this.props.dispatch(set_departures_itenerary(headlineProgram.Departures));
     //this.props.dispatch(set_summary_program(headlineProgram.MainPrograms));
     //this.props.dispatch(set_returns_itenerary(headlineProgram.Returns));
-    this.setState ({loading: false});
+    this.setState({loading: false});
   };
 
-  render () {
+  render() {
     const {Departures, SummaryProgram, Returns} = this.state;
     return (
       <Container>
@@ -1818,7 +1804,7 @@ class AccommodationSummary extends Component {
               radiusBorder={1}
               borderBottom={3}
               colorBorderBottom={this.state.colorTextDate}
-              onPress={() => this.FocusedTab ('date')}
+              onPress={() => this.FocusedTab('date')}
             />
             <NormalButton
               text="Itinerary Detail"
@@ -1832,798 +1818,803 @@ class AccommodationSummary extends Component {
               radiusBorder={1}
               colorBorderBottom={this.state.colorTextItinerary}
               textColor={this.state.colorTextItinerary}
-              onPress={() => this.FocusedTab ('itinerary')}
+              onPress={() => this.FocusedTab('itinerary')}
             />
           </View>
         </View>
-        {this.state.activeTab == 'date'
-          ? <ScrollView
-              style={[
-                stylesGlobal.containerScroll,
-                styles.paddingTop20,
-                styles.marginBottom60,
-              ]}
-              scrollEventThrottle={1}
-              keyboardShouldPersistTaps="never"
-              onScroll={Animated.event ([
-                {
-                  nativeEvent: {
-                    contentOffset: {y: this.state.scrollY},
-                  },
+        {this.state.activeTab == 'date' ? (
+          <ScrollView
+            style={[
+              stylesGlobal.containerScroll,
+              styles.paddingTop20,
+              styles.marginBottom60,
+            ]}
+            scrollEventThrottle={1}
+            keyboardShouldPersistTaps="never"
+            onScroll={Animated.event([
+              {
+                nativeEvent: {
+                  contentOffset: {y: this.state.scrollY},
                 },
-              ])}
-            >
-              <View style={styles.styleContainer}>
-                {this.state.Departures != null
-                  ? this.state.Departures.length != 0
-                      ? splitFlightTransit (
-                          this.state.Departures,
-                          2
-                        ).map ((item, i) => {
-                          return (
-                            <CardFlight
-                              disableDeparture={disableFlight (item[0])}
-                              disableArrival={disableFlight (item[1])}
-                              key={i}
-                              serviceItemIdDep={
-                                item[0].Ticket
-                                  ? item[0].Ticket.ServiceItemId
-                                      ? item[0].Ticket.ServiceItemId
-                                      : null
-                                  : null
-                              }
-                              serviceItemIdArr={
-                                item[1].Ticket
-                                  ? item[1].Ticket.ServiceItemId
-                                      ? item[1].Ticket.ServiceItemId
-                                      : null
-                                  : null
-                              }
-                              PNRCodeDeparture={
-                                item[0].Ticket
-                                  ? item[0].Ticket.PNR
-                                      ? item[0].Ticket.PNR
-                                      : null
-                                  : null
-                              }
-                              PNRCodeArrival={
-                                item[1].Ticket
-                                  ? item[1].Ticket.PNR
-                                      ? item[1].Ticket.PNR
-                                      : null
-                                  : null
-                              }
-                              isChangeButton={
-                                i == 0
-                                  ? item[0].Ticket
-                                      ? item[0].Ticket.ServiceItemId
-                                          ? getAirlineTicketFirstIndex (
-                                              {
-                                                Departures: this.state
-                                                  .Departures,
-                                                MainPrograms: this.state
-                                                  .SummaryProgram,
-                                                Returns: this.state.Returns,
-                                              },
-                                              item[0].Ticket
-                                                ? item[0].Ticket.ServiceItemId
-                                                    ? item[0].Ticket
-                                                        .ServiceItemId
-                                                    : null
-                                                : null
-                                            ).type == 'Departures' &&
-                                              getAirlineTicketFirstIndex (
-                                                {
-                                                  Departures: this.state
-                                                    .Departures,
-                                                  MainPrograms: this.state
-                                                    .SummaryProgram,
-                                                  Returns: this.state.Returns,
-                                                },
-                                                item[0].Ticket
-                                                  ? item[0].Ticket.ServiceItemId
-                                                      ? item[0].Ticket
-                                                          .ServiceItemId
-                                                      : null
-                                                  : null
-                                              ).index == 0
-                                              ? true
-                                              : false
-                                          : false
-                                      : false
-                                  : false
-                              }
-                              isFirstFlight={true}
-                              isFlight={
-                                i == 0
-                                  ? this.props.DetailCustom.GroupCapacity ===
-                                      'LARGE'
-                                      ? true
-                                      : false
-                                  : false
-                              }
-                              onPressDiscardTicket={() =>
-                                this.handleDiscardTicket (
-                                  item[0].Ticket
-                                    ? item[0].Ticket.ServiceItemId
-                                        ? item[0].Ticket.ServiceItemId
-                                        : null
-                                    : null,
-                                  false
-                                )}
-                              onPressTicket={() =>
-                                this.handleTicket (
-                                  'Arrival',
-                                  null,
-                                  item[0].PlaceId,
-                                  item[1].PlaceId,
-                                  item[0].City ? item[0].City.Name : null,
-                                  item[1].City ? item[1].City.Name : null,
-                                  item[0].Date
-                                )}
-                              checkedArrival={item[1].NextDay}
-                              onPressCheckArrival={() =>
-                                this.handleNextDay (1, item[1], 'firstArrival')}
-                              isShowCheckArrival={true}
-                              departure={item[0].Place}
-                              arrival={item[1].Place}
-                              departureDate={viewDateSlash (item[0].Date)}
-                              departureTime={viewTime (item[0].Date)}
-                              arrivalDate={viewDateSlash (
-                                item[1] ? item[1].Date : new Date ()
-                              )}
-                              arrivalTime={viewTime (
-                                item[1] ? item[1].Date : new Date ()
-                              )}
-                              flightCode={
-                                item[1] ? item[1].Ticket.FlightNumber : ''
-                              }
-                              onPressDeparture={() =>
-                                this.handleAirport (
-                                  item[0],
-                                  null,
-                                  'firstDeparture'
-                                )}
-                              onPressArrival={() =>
-                                this.handleAirport (
-                                  item[1],
-                                  null,
-                                  'firstArrival'
-                                )}
-                              onPickDepartureDate={date => {
-                                this.handleFirstDepartureDate (item[0], date);
-                              }}
-                              onPickDepartureTime={time => {
-                                this.handleChangeTimeAirport (
-                                  item[0],
-                                  time,
-                                  'firstDeparture'
-                                );
-                              }}
-                              onPressDepartureDate={() =>
-                                this.setState ({
-                                  isDateDepDeparturePickerVisible: true,
-                                })}
-                              isDatePickerDeparture={
-                                this.state.isDateDepDeparturePickerVisible
-                              }
-                              onPressDepartureTime={() =>
-                                this.setState ({
-                                  isTimeDepDeparturePickerVisible: true,
-                                })}
-                              isTimePickerDeparture={
-                                this.state.isTimeDepDeparturePickerVisible
-                              }
-                              onPressArrivalTime={() =>
-                                this.setState ({
-                                  isTimeDepArrivalPickerVisible: true,
-                                })}
-                              isTimePickerArrival={
-                                this.state.isTimeDepArrivalPickerVisible
-                              }
-                              onPickArrivalTime={time => {
-                                this.handleChangeTimeAirport (
-                                  item[1],
-                                  time,
-                                  'firstArrival'
-                                );
-                              }}
-                              onChangeFlightCode={text =>
-                                this.handleChangeFlightCode (text, 'departure')}
-                              onChangeNote={text => {
-                                this.handleChangeNote (
-                                  text,
-                                  'departure',
-                                  item[0].Date,
-                                  item[1].Date
-                                );
-                              }}
-                              hideDateTimePicked={this.hideDateTimePicked}
-                            />
-                          );
-                        })
-                      : null
-                  : null}
-                {this.state.SummaryProgram
-                  ? this.state.SummaryProgram.length != 0
-                      ? this.state.SummaryProgram.map ((SP, i) => {
-                          let nextSP = this.state.SummaryProgram[i + 1];
-                          let isFlightSP = this.state.arrayIndexFlightTicketSP
-                            .length != 0
-                            ? !this.state.arrayIndexFlightTicketSP.find (e => {
-                                if (e.idxFrom < i && i <= e.idxTo) return true;
-                                else return false;
-                              })
-                            : true;
-                          if (
-                            SP.AccommodationSummary == undefined &&
-                            nextSP.AccommodationSummary == undefined
-                          ) {
-                            return (
-                              <CardFlight
-                                onPressDiscardTicket={() =>
-                                  this.handleDiscardTicket (
-                                    SP.Ticket
-                                      ? SP.Ticket.ServiceItemId
-                                          ? SP.Ticket.ServiceItemId
-                                          : null
-                                      : null,
-                                    false
-                                  )}
-                                serviceItemIdDep={
-                                  SP.Ticket
-                                    ? SP.Ticket.ServiceItemId
-                                        ? SP.Ticket.ServiceItemId
-                                        : null
-                                    : null
-                                }
-                                serviceItemIdArr={
-                                  SP.Ticket
-                                    ? SP.Ticket.ServiceItemId
-                                        ? SP.Ticket.ServiceItemId
-                                        : null
-                                    : null
-                                }
-                                PNRCodeDeparture={
-                                  SP.Ticket
-                                    ? SP.Ticket.PNR ? SP.Ticket.PNR : null
-                                    : null
-                                }
-                                PNRCodeArrival={
-                                  SP.Ticket
-                                    ? SP.Ticket.PNR ? SP.Ticket.PNR : null
-                                    : null
-                                }
-                                isChangeButton={
-                                  SP.Ticket
-                                    ? SP.Ticket.ServiceItemId
-                                        ? getAirlineTicketFirstIndex (
-                                            {
-                                              Departures: this.state.Departures,
-                                              MainPrograms: this.state
-                                                .SummaryProgram,
-                                              Returns: this.state.Returns,
-                                            },
-                                            SP.Ticket
-                                              ? SP.Ticket.ServiceItemId
-                                                  ? SP.Ticket.ServiceItemId
-                                                  : null
-                                              : null
-                                          ).type == 'MainPrograms' &&
-                                            getAirlineTicketFirstIndex (
-                                              {
-                                                Departures: this.state
-                                                  .Departures,
-                                                MainPrograms: this.state
-                                                  .SummaryProgram,
-                                                Returns: this.state.Returns,
-                                              },
-                                              SP.Ticket
-                                                ? SP.Ticket.ServiceItemId
-                                                    ? SP.Ticket.ServiceItemId
-                                                    : null
-                                                : null
-                                            ).index == 0
-                                            ? true
-                                            : false
-                                        : false
-                                    : false
-                                }
-                                isBtnMultiple={showButtonMultipleSP (
-                                  this.state.SummaryProgram,
-                                  i
-                                )}
-                                onPressMultipleDestination={() =>
-                                  this.handleNewAccommodation (
-                                    i,
-                                    'groupTicket'
-                                  )}
-                                //departure
-                                onPressDeparture={() =>
-                                  this.handleAirport (
-                                    this.state.SummaryProgram,
-                                    i
-                                  )}
-                                departureDate={viewDateSlash (SP.Date)}
-                                departureTime={viewTime (SP.Date)}
-                                departure={SP.Place}
-                                isTimePickerDeparture={
-                                  this.state.isTimeDepConPickerVisible
-                                }
-                                onPickDepartureTime={time => {
-                                  this.handleTimeConnectionFlight (i, time);
-                                }}
-                                onPressDepartureTime={() => {
-                                  this.setState ({
-                                    isTimeDepConPickerVisible: true,
-                                  });
-                                }}
-                                checkedDeparture={SP.NextDay}
-                                onPressCheckDeparture={() =>
-                                  this.handleNextDayFlight (SP.NextDay, i)}
-                                isShowCheckDeparture={
-                                  nextSP.NextDay ? false : true
-                                }
-                                //arrival
-                                onPressArrival={() =>
-                                  this.handleAirport (
-                                    this.state.SummaryProgram,
-                                    i + 1
-                                  )}
-                                arrivalDate={viewDateSlash (nextSP.Date)}
-                                arrivalTime={viewTime (nextSP.Date)}
-                                arrival={nextSP.Place}
-                                //time
-                                onPickArrivalTime={time => {
-                                  this.handleTimeConnectionFlight (i + 1, time);
-                                }}
-                                isTimePickerArrival={
-                                  this.state.isTimeArrConPickerVisible
-                                }
-                                onPressArrivalTime={() => {
-                                  this.setState ({
-                                    isTimeArrConPickerVisible: true,
-                                  });
-                                }}
-                                minDate={nextSP.Date}
-                                checkedArrival={nextSP.NextDay}
-                                onPressCheckArrival={() =>
-                                  this.handleNextDayFlight (nextSP.NextDay, i)}
-                                isShowCheckArrival={SP.NextDay ? false : true}
-                                flightCode={SP.Ticket.FlightNumber}
-                                onChangeFlightCode={text =>
-                                  this.onChangeFlight (text, i)}
-                                note={SP.Note}
-                                onChangeNote={text =>
-                                  this.onChangeNote (text, i)}
-                                hideDateTimePicked={this.hideDateTimePicked}
-                                isLoadingButton={this.state.loadingButton}
-                                onPressaddMoreDestination={() =>
-                                  this.handleNewAccommodation (i)}
-                                isBtnDestination={showButtonAddDestination (
-                                  this.state.SummaryProgram,
-                                  i
-                                )}
-                                onPressDeleteConnection={() =>
-                                  this.delConnecFlight (i)}
-                                isFlight={
-                                  this.props.DetailCustom.GroupCapacity ===
-                                    'LARGE'
-                                    ? isFlightSP
-                                    : false
-                                }
-                                onPressTicket={() =>
-                                  this.handleTicket (
-                                    i,
-                                    null,
-                                    SP.PlaceId,
-                                    this.state.SummaryProgram[i + 1].PlaceId,
-                                    SP.City.Name,
-                                    this.state.SummaryProgram[i + 1].City.Name,
-                                    i
-                                  )}
-                              />
-                            );
-                          } else if (SP.AccommodationSummary != undefined) {
-                            return (
-                              <CardAccommodation
-                                isChangeDuration={durationButtonDisable (i, {
-                                  Departures: this.state.Departures,
-                                  MainPrograms: this.state.SummaryProgram,
-                                  Returns: this.state.Returns,
-                                })}
-                                disableCity={
-                                  i != this.state.SummaryProgram.length - 1 &&
-                                    this.state.SummaryProgram[i + 1].Ticket
-                                    ? this.state.SummaryProgram[i + 1].Ticket
-                                        .ServiceItemId
-                                        ? true
-                                        : false
-                                    : false
-                                }
-                                isLoadingButton={this.state.loadingButton}
-                                onPressaddMoreDestination={() =>
-                                  this.handleNewAccommodation (i)}
-                                onPressCityDestination={() =>
-                                  this.confirmChangeDestination (i, SP.City)}
-                                onPressAccommodation={() =>
-                                  this.handleListAccomodation (i)}
-                                isBtnDestination={showButtonAddDestinationSP (
-                                  this.state.SummaryProgram,
-                                  i
-                                )}
-                                key={i}
-                                index={i}
-                                deleteAccomodation={() =>
-                                  this.confirmAlertDelete (i)}
-                                stayDuration={SP.TotalDays}
-                                onChangeDuration={text => {
-                                  if (isNaN (parseInt (text)))
-                                    text = SP.TotalDays;
-                                  this.handleChangeDuration (text, i);
-                                }}
-                                decrement={() => {
-                                  if (
-                                    this.state.SummaryProgram[i].TotalDays != 1
-                                  )
-                                    this.handleChangeDuration (
-                                      this.state.SummaryProgram[i].TotalDays -
-                                        1,
-                                      i
-                                    );
-                                }}
-                                increment={() =>
-                                  this.handleChangeDuration (
-                                    this.state.SummaryProgram[i].TotalDays + 1,
-                                    i
-                                  )}
-                                destination={SP.City ? SP.City.Name : null}
-                                accommodation={SP.AccommodationSummary.Name}
-                                checkInDate={viewDateSlash (
-                                  SP.AccommodationSummary.CheckIn
-                                )}
-                                checkInTime={viewTime (
-                                  SP.AccommodationSummary.CheckIn
-                                )}
-                                checkOutDate={viewDateSlash (
-                                  SP.AccommodationSummary.CheckOut
-                                )}
-                                checkOutTime={viewTime (
-                                  SP.AccommodationSummary.CheckOut
-                                )}
-                                onPressCheckInDate={() =>
-                                  this.onPressDateIn (i)}
-                                onPressCheckOutTime={() =>
-                                  this.onPressTimeOut (i)}
-                                onPressCheckInTime={() => this.onPressTime (i)}
-                                isDateTimePickerVisible={
-                                  this.state.isDateInPickerVisible[i]
-                                }
-                                isTimePickerVisible={
-                                  this.state.isTimeInPickerVisible[i]
-                                }
-                                isTimeOutPickerVisible={
-                                  this.state.isTimeOutPickerVisible[i]
-                                }
-                                handleTimePicked={time => {
-                                  this.handleTimeSP (i, time);
-                                }}
-                                handleDatePicked={date => {
-                                  this.handleDateSP (i, date);
-                                }}
-                                hideDateTimePicked={this.hideDateTimePicked}
-                                minDate={
-                                  i == 0
-                                    ? this.state.Departures[1].Date
-                                    : this.state.SummaryProgram[i - 1]
-                                        .AccommodationSummary != undefined
-                                        ? this.state.SummaryProgram[i - 1]
-                                            .LeavingDate
-                                        : this.state.SummaryProgram[i - 1].Date
-                                }
-                                maxDate={
-                                  i == 0
-                                    ? SumDays (this.state.Departures[1].Date, 1)
-                                    : this.state.SummaryProgram[i - 1]
-                                        .AccommodationSummary != undefined
-                                        ? SumDays (
-                                            this.state.SummaryProgram[i - 1]
-                                              .LeavingDate,
-                                            1
-                                          )
-                                        : SumDays (
-                                            this.state.SummaryProgram[i - 1]
-                                              .Date,
-                                            1
-                                          )
-                                }
-                                isConnection={
-                                  i != 0
-                                    ? SP.AccommodationSummary != undefined &&
-                                        this.state.SummaryProgram[i - 1]
-                                          .AccommodationSummary != undefined
-                                        ? SP.Region !=
-                                            this.state.SummaryProgram[i - 1]
-                                              .Region
-                                            ? true
-                                            : false
-                                        : false
-                                    : false
-                                }
-                                addConnectionFlight={() =>
-                                  this.addConnecFlight (
-                                    this.state.SummaryProgram,
-                                    i
-                                  )}
-                              />
-                            );
-                          }
-                        })
-                      : null
-                  : null}
-                {showBtnAddMultipleLast ({
-                  MainPrograms: this.state.SummaryProgram,
-                  Returns: this.state.Returns,
-                })
-                  ? <View
-                      style={[styles.rowNoPadding, styles.paddingVertical20]}
-                    >
-                      <NormalButton
-                        isLoading={this.state.loadingButton}
-                        text="+ ADD MULTIPLE DESTINATION"
-                        buttonWidth="100%"
-                        buttonHeight={40}
-                        bold
-                        buttonColor={styles.$goldcolor}
-                        textColor="black"
-                        onPress={() => this.addMoreDestination ()}
-                      />
-                    </View>
-                  : null}
-
-                {this.state.Returns != null
-                  ? splitFlightTransit (
-                      this.state.Returns,
-                      2
-                    ).map ((item, i) => {
-                      return (
-                        <CardFlight
-                          // isBtnMultiple={
-                          //   this.state.Returns[0].Ticket.ServiceItemId
-                          //     ? true
-                          //     : false
-                          // }
-                          isBtnMultiple={false}
-                          onPressMultipleDestination={() =>
-                            this.handleNewAccommodation (
-                              this.state.SummaryProgram.length - 1,
-                              'groupTicket'
-                            )}
-                          key={i}
-                          onPressDiscardTicket={() =>
-                            this.handleDiscardTicket (
+              },
+            ])}
+          >
+            <View style={styles.styleContainer}>
+              {this.state.Departures != null
+                ? this.state.Departures.length != 0
+                  ? splitFlightTransit(this.state.Departures, 2).map(
+                      (item, i) => {
+                        return (
+                          <CardFlight
+                            disableDeparture={disableFlight(item[0])}
+                            disableArrival={disableFlight(item[1])}
+                            key={i}
+                            serviceItemIdDep={
                               item[0].Ticket
                                 ? item[0].Ticket.ServiceItemId
-                                    ? item[0].Ticket.ServiceItemId
-                                    : null
-                                : null,
-                              false
-                            )}
-                          serviceItemIdDep={
-                            item[0].Ticket
-                              ? item[0].Ticket.ServiceItemId
                                   ? item[0].Ticket.ServiceItemId
                                   : null
-                              : null
-                          }
-                          serviceItemIdArr={
-                            item[1].Ticket
-                              ? item[1].Ticket.ServiceItemId
+                                : null
+                            }
+                            serviceItemIdArr={
+                              item[1].Ticket
+                                ? item[1].Ticket.ServiceItemId
                                   ? item[1].Ticket.ServiceItemId
                                   : null
-                              : null
-                          }
-                          PNRCodeDeparture={
-                            item[0].Ticket
-                              ? item[0].Ticket.PNR ? item[0].Ticket.PNR : null
-                              : null
-                          }
-                          PNRCodeArrival={
-                            item[1].Ticket
-                              ? item[1].Ticket.PNR ? item[1].Ticket.PNR : null
-                              : null
-                          }
-                          isChangeButton={
-                            i == 0
-                              ? item[0].Ticket
+                                : null
+                            }
+                            PNRCodeDeparture={
+                              item[0].Ticket
+                                ? item[0].Ticket.PNR
+                                  ? item[0].Ticket.PNR
+                                  : null
+                                : null
+                            }
+                            PNRCodeArrival={
+                              item[1].Ticket
+                                ? item[1].Ticket.PNR
+                                  ? item[1].Ticket.PNR
+                                  : null
+                                : null
+                            }
+                            isChangeButton={
+                              i == 0
+                                ? item[0].Ticket
                                   ? item[0].Ticket.ServiceItemId
-                                      ? getAirlineTicketFirstIndex (
-                                          {
-                                            Departures: this.state.Departures,
-                                            MainPrograms: this.state
-                                              .SummaryProgram,
-                                            Returns: this.state.Returns,
-                                          },
-                                          item[0].Ticket
+                                    ? getAirlineTicketFirstIndex(
+                                        {
+                                          Departures: this.state.Departures,
+                                          MainPrograms: this.state
+                                            .SummaryProgram,
+                                          Returns: this.state.Returns,
+                                        },
+                                        item[0].Ticket
+                                          ? item[0].Ticket.ServiceItemId
                                             ? item[0].Ticket.ServiceItemId
-                                                ? item[0].Ticket.ServiceItemId
-                                                : null
                                             : null
-                                        ).type == 'Returns' &&
-                                          getAirlineTicketFirstIndex (
-                                            {
-                                              Departures: this.state.Departures,
-                                              MainPrograms: this.state
-                                                .SummaryProgram,
-                                              Returns: this.state.Returns,
-                                            },
-                                            item[0].Ticket
-                                              ? item[0].Ticket.ServiceItemId
-                                                  ? item[0].Ticket.ServiceItemId
-                                                  : null
-                                              : null
-                                          ).index == 0
-                                          ? true
-                                          : false
+                                          : null
+                                      ).type == 'Departures' &&
+                                      getAirlineTicketFirstIndex(
+                                        {
+                                          Departures: this.state.Departures,
+                                          MainPrograms: this.state
+                                            .SummaryProgram,
+                                          Returns: this.state.Returns,
+                                        },
+                                        item[0].Ticket
+                                          ? item[0].Ticket.ServiceItemId
+                                            ? item[0].Ticket.ServiceItemId
+                                            : null
+                                          : null
+                                      ).index == 0
+                                      ? true
                                       : false
+                                    : false
                                   : false
-                              : false
-                          }
-                          isLastFlight={true}
-                          isFlight={
-                            this.props.DetailCustom.GroupCapacity === 'LARGE'
-                              ? true
-                              : false
-                          }
-                          onPressTicket={() =>
-                            this.handleTicket (
-                              'Departure',
-                              null,
-                              item[0].PlaceId,
-                              item[1].PlaceId,
-                              item[0].City ? item[0].City.Name : null,
-                              item[1].City ? item[1].City.Name : null,
-                              item[0].Date
+                                : false
+                            }
+                            isFirstFlight={true}
+                            isFlight={
+                              i == 0
+                                ? this.props.DetailCustom.GroupCapacity ===
+                                  'LARGE'
+                                  ? true
+                                  : false
+                                : false
+                            }
+                            onPressDiscardTicket={() =>
+                              this.handleDiscardTicket(
+                                item[0].Ticket
+                                  ? item[0].Ticket.ServiceItemId
+                                    ? item[0].Ticket.ServiceItemId
+                                    : null
+                                  : null,
+                                false
+                              )
+                            }
+                            onPressTicket={() =>
+                              this.handleTicket(
+                                'Arrival',
+                                null,
+                                item[0].PlaceId,
+                                item[1].PlaceId,
+                                item[0].City ? item[0].City.Name : null,
+                                item[1].City ? item[1].City.Name : null,
+                                item[0].Date
+                              )
+                            }
+                            checkedArrival={item[1].NextDay}
+                            onPressCheckArrival={() =>
+                              this.handleNextDay(1, item[1], 'firstArrival')
+                            }
+                            isShowCheckArrival={true}
+                            departure={item[0].Place}
+                            arrival={item[1].Place}
+                            departureDate={viewDateSlash(item[0].Date)}
+                            departureTime={viewTime(item[0].Date)}
+                            arrivalDate={viewDateSlash(
+                              item[1] ? item[1].Date : new Date()
                             )}
-                          checkedDeparture={
-                            this.state.Returns ? item[0].NextDay : false
-                          }
-                          checkedArrival={
-                            this.state.Returns ? item[1].NextDay : false
-                          }
-                          onPressCheckDeparture={() =>
-                            this.handleNextDay (0, item[0], 'lastDeparture')}
-                          onPressCheckArrival={() =>
-                            this.handleNextDay (1, item[1], 'lastArrival')}
-                          isShowCheckDeparture={true}
-                          isShowCheckArrival={true}
-                          departure={item[0].Place}
-                          arrival={item[1].Place}
-                          departureDate={viewDateSlash (item[0].Date)}
-                          departureTime={viewTime (item[0].Date)}
-                          arrivalDate={viewDateSlash (
-                            item[1] ? item[1].Date : item[0].Date
-                          )}
-                          arrivalTime={viewTime (
-                            item[1]
-                              ? item[1].Date
-                              : addsubtractTimeHours (item[0].Date, 2, 'add')
-                          )}
-                          flightCode={
-                            item[this.state.Returns.length - 1]
-                              ? item[this.state.Returns.length - 1].Ticket
-                                  .FlightNumber
-                              : ''
-                          }
-                          onPressDeparture={() =>
-                            this.handleAirport (item[0], null, 'lastDeparture')}
-                          onPressArrival={() =>
-                            this.handleAirport (
-                              item[this.state.Returns.length - 1],
-                              null,
-                              'lastArrival'
+                            arrivalTime={viewTime(
+                              item[1] ? item[1].Date : new Date()
                             )}
-                          onPickArrivalDate={date =>
-                            this.handleLastArrivalDate (
-                              item[this.state.Returns.length - 1],
-                              date
+                            flightCode={
+                              item[1] ? item[1].Ticket.FlightNumber : ''
+                            }
+                            onPressDeparture={() =>
+                              this.handleAirport(
+                                item[0],
+                                null,
+                                'firstDeparture'
+                              )
+                            }
+                            onPressArrival={() =>
+                              this.handleAirport(item[1], null, 'firstArrival')
+                            }
+                            onPickDepartureDate={date => {
+                              this.handleFirstDepartureDate(item[0], date);
+                            }}
+                            onPickDepartureTime={time => {
+                              this.handleChangeTimeAirport(
+                                item[0],
+                                time,
+                                'firstDeparture'
+                              );
+                            }}
+                            onPressDepartureDate={() =>
+                              this.setState({
+                                isDateDepDeparturePickerVisible: true,
+                              })
+                            }
+                            isDatePickerDeparture={
+                              this.state.isDateDepDeparturePickerVisible
+                            }
+                            onPressDepartureTime={() =>
+                              this.setState({
+                                isTimeDepDeparturePickerVisible: true,
+                              })
+                            }
+                            isTimePickerDeparture={
+                              this.state.isTimeDepDeparturePickerVisible
+                            }
+                            onPressArrivalTime={() =>
+                              this.setState({
+                                isTimeDepArrivalPickerVisible: true,
+                              })
+                            }
+                            isTimePickerArrival={
+                              this.state.isTimeDepArrivalPickerVisible
+                            }
+                            onPickArrivalTime={time => {
+                              this.handleChangeTimeAirport(
+                                item[1],
+                                time,
+                                'firstArrival'
+                              );
+                            }}
+                            onChangeFlightCode={text =>
+                              this.handleChangeFlightCode(text, 'departure')
+                            }
+                            onChangeNote={text => {
+                              this.handleChangeNote(
+                                text,
+                                'departure',
+                                item[0].Date,
+                                item[1].Date
+                              );
+                            }}
+                            hideDateTimePicked={this.hideDateTimePicked}
+                          />
+                        );
+                      }
+                    )
+                  : null
+                : null}
+              {this.state.SummaryProgram
+                ? this.state.SummaryProgram.length != 0
+                  ? this.state.SummaryProgram.map((SP, i) => {
+                      let nextSP = this.state.SummaryProgram[i + 1];
+                      let isFlightSP =
+                        this.state.arrayIndexFlightTicketSP.length != 0
+                          ? !this.state.arrayIndexFlightTicketSP.find(e => {
+                              if (e.idxFrom < i && i <= e.idxTo) return true;
+                              else return false;
+                            })
+                          : true;
+                      if (
+                        SP.AccommodationSummary == undefined &&
+                        nextSP.AccommodationSummary == undefined
+                      ) {
+                        return (
+                          <CardFlight
+                            onPressDiscardTicket={() =>
+                              this.handleDiscardTicket(
+                                SP.Ticket
+                                  ? SP.Ticket.ServiceItemId
+                                    ? SP.Ticket.ServiceItemId
+                                    : null
+                                  : null,
+                                false
+                              )
+                            }
+                            serviceItemIdDep={
+                              SP.Ticket
+                                ? SP.Ticket.ServiceItemId
+                                  ? SP.Ticket.ServiceItemId
+                                  : null
+                                : null
+                            }
+                            serviceItemIdArr={
+                              SP.Ticket
+                                ? SP.Ticket.ServiceItemId
+                                  ? SP.Ticket.ServiceItemId
+                                  : null
+                                : null
+                            }
+                            PNRCodeDeparture={
+                              SP.Ticket
+                                ? SP.Ticket.PNR
+                                  ? SP.Ticket.PNR
+                                  : null
+                                : null
+                            }
+                            PNRCodeArrival={
+                              SP.Ticket
+                                ? SP.Ticket.PNR
+                                  ? SP.Ticket.PNR
+                                  : null
+                                : null
+                            }
+                            isChangeButton={
+                              SP.Ticket
+                                ? SP.Ticket.ServiceItemId
+                                  ? getAirlineTicketFirstIndex(
+                                      {
+                                        Departures: this.state.Departures,
+                                        MainPrograms: this.state.SummaryProgram,
+                                        Returns: this.state.Returns,
+                                      },
+                                      SP.Ticket
+                                        ? SP.Ticket.ServiceItemId
+                                          ? SP.Ticket.ServiceItemId
+                                          : null
+                                        : null
+                                    ).type == 'MainPrograms' &&
+                                    getAirlineTicketFirstIndex(
+                                      {
+                                        Departures: this.state.Departures,
+                                        MainPrograms: this.state.SummaryProgram,
+                                        Returns: this.state.Returns,
+                                      },
+                                      SP.Ticket
+                                        ? SP.Ticket.ServiceItemId
+                                          ? SP.Ticket.ServiceItemId
+                                          : null
+                                        : null
+                                    ).index == 0
+                                    ? true
+                                    : false
+                                  : false
+                                : false
+                            }
+                            isBtnMultiple={showButtonMultipleSP(
+                              this.state.SummaryProgram,
+                              i
                             )}
-                          onPickArrivalTime={time =>
-                            this.handleChangeTimeAirport (
-                              item[this.state.Returns.length - 1],
-                              time,
-                              'lastArrival'
+                            onPressMultipleDestination={() =>
+                              this.handleNewAccommodation(i, 'groupTicket')
+                            }
+                            //departure
+                            onPressDeparture={() =>
+                              this.handleAirport(this.state.SummaryProgram, i)
+                            }
+                            departureDate={viewDateSlash(SP.Date)}
+                            departureTime={viewTime(SP.Date)}
+                            departure={SP.Place}
+                            isTimePickerDeparture={
+                              this.state.isTimeDepConPickerVisible
+                            }
+                            onPickDepartureTime={time => {
+                              this.handleTimeConnectionFlight(i, time);
+                            }}
+                            onPressDepartureTime={() => {
+                              this.setState({
+                                isTimeDepConPickerVisible: true,
+                              });
+                            }}
+                            checkedDeparture={SP.NextDay}
+                            onPressCheckDeparture={() =>
+                              this.handleNextDayFlight(SP.NextDay, i)
+                            }
+                            isShowCheckDeparture={nextSP.NextDay ? false : true}
+                            //arrival
+                            onPressArrival={() =>
+                              this.handleAirport(
+                                this.state.SummaryProgram,
+                                i + 1
+                              )
+                            }
+                            arrivalDate={viewDateSlash(nextSP.Date)}
+                            arrivalTime={viewTime(nextSP.Date)}
+                            arrival={nextSP.Place}
+                            //time
+                            onPickArrivalTime={time => {
+                              this.handleTimeConnectionFlight(i + 1, time);
+                            }}
+                            isTimePickerArrival={
+                              this.state.isTimeArrConPickerVisible
+                            }
+                            onPressArrivalTime={() => {
+                              this.setState({
+                                isTimeArrConPickerVisible: true,
+                              });
+                            }}
+                            minDate={nextSP.Date}
+                            checkedArrival={nextSP.NextDay}
+                            onPressCheckArrival={() =>
+                              this.handleNextDayFlight(nextSP.NextDay, i)
+                            }
+                            isShowCheckArrival={SP.NextDay ? false : true}
+                            flightCode={SP.Ticket.FlightNumber}
+                            onChangeFlightCode={text =>
+                              this.onChangeFlight(text, i)
+                            }
+                            note={SP.Note}
+                            onChangeNote={text => this.onChangeNote(text, i)}
+                            hideDateTimePicked={this.hideDateTimePicked}
+                            isLoadingButton={this.state.loadingButton}
+                            onPressaddMoreDestination={() =>
+                              this.handleNewAccommodation(i)
+                            }
+                            isBtnDestination={showButtonAddDestination(
+                              this.state.SummaryProgram,
+                              i
                             )}
-                          onPickDepartureTime={time =>
-                            this.handleChangeTimeAirport (
-                              item[0],
-                              time,
-                              'lastDeparture'
-                            )}
-                          onPressArrivalDate={() =>
-                            this.setState ({
-                              isDateRetArrivalPickerVisible: true,
+                            onPressDeleteConnection={() =>
+                              this.delConnecFlight(i)
+                            }
+                            isFlight={
+                              this.props.DetailCustom.GroupCapacity === 'LARGE'
+                                ? isFlightSP
+                                : false
+                            }
+                            onPressTicket={() =>
+                              this.handleTicket(
+                                i,
+                                null,
+                                SP.PlaceId,
+                                this.state.SummaryProgram[i + 1].PlaceId,
+                                SP.City.Name,
+                                this.state.SummaryProgram[i + 1].City.Name,
+                                i
+                              )
+                            }
+                          />
+                        );
+                      } else if (SP.AccommodationSummary != undefined) {
+                        return (
+                          <CardAccommodation
+                            isChangeDuration={durationButtonDisable(i, {
+                              Departures: this.state.Departures,
+                              MainPrograms: this.state.SummaryProgram,
+                              Returns: this.state.Returns,
                             })}
-                          onPressArrivalTime={() =>
-                            this.setState ({
-                              isTimeRetArrivalPickerVisible: true,
-                            })}
-                          onPressDepartureTime={() =>
-                            this.setState ({
-                              isTimeRetDeparturePickerVisible: true,
-                            })}
-                          isDatePickerArrival={
-                            this.state.isDateRetArrivalPickerVisible
-                          }
-                          isTimePickerArrival={
-                            this.state.isTimeRetArrivalPickerVisible
-                          }
-                          isTimePickerDeparture={
-                            this.state.isTimeRetDeparturePickerVisible
-                          }
-                          onChangeFlightCode={text =>
-                            this.handleChangeFlightCode (text, 'returns')}
-                          onChangeNote={text => {
-                            this.handleChangeNote (
-                              text,
-                              'returns',
-                              item[0].Date,
-                              item[1].Date
-                            );
-                          }}
-                          hideDateTimePicked={this.hideDateTimePicked}
-                        />
-                      );
+                            disableCity={
+                              i != this.state.SummaryProgram.length - 1 &&
+                              this.state.SummaryProgram[i + 1].Ticket
+                                ? this.state.SummaryProgram[i + 1].Ticket
+                                    .ServiceItemId
+                                  ? true
+                                  : false
+                                : false
+                            }
+                            isLoadingButton={this.state.loadingButton}
+                            onPressaddMoreDestination={() =>
+                              this.handleNewAccommodation(i)
+                            }
+                            onPressCityDestination={() =>
+                              this.confirmChangeDestination(i, SP.City)
+                            }
+                            onPressAccommodation={() =>
+                              this.handleListAccomodation(i)
+                            }
+                            isBtnDestination={showButtonAddDestinationSP(
+                              this.state.SummaryProgram,
+                              i
+                            )}
+                            key={i}
+                            index={i}
+                            deleteAccomodation={() =>
+                              this.confirmAlertDelete(i)
+                            }
+                            stayDuration={SP.TotalDays}
+                            onChangeDuration={text => {
+                              if (isNaN(parseInt(text))) text = SP.TotalDays;
+                              this.handleChangeDuration(text, i);
+                            }}
+                            decrement={() => {
+                              if (this.state.SummaryProgram[i].TotalDays != 1)
+                                this.handleChangeDuration(
+                                  this.state.SummaryProgram[i].TotalDays - 1,
+                                  i
+                                );
+                            }}
+                            increment={() =>
+                              this.handleChangeDuration(
+                                this.state.SummaryProgram[i].TotalDays + 1,
+                                i
+                              )
+                            }
+                            destination={SP.City ? SP.City.Name : null}
+                            accommodation={SP.AccommodationSummary.Name}
+                            checkInDate={viewDateSlash(
+                              SP.AccommodationSummary.CheckIn
+                            )}
+                            checkInTime={viewTime(
+                              SP.AccommodationSummary.CheckIn
+                            )}
+                            checkOutDate={viewDateSlash(
+                              SP.AccommodationSummary.CheckOut
+                            )}
+                            checkOutTime={viewTime(
+                              SP.AccommodationSummary.CheckOut
+                            )}
+                            onPressCheckInDate={() => this.onPressDateIn(i)}
+                            onPressCheckOutTime={() => this.onPressTimeOut(i)}
+                            onPressCheckInTime={() => this.onPressTime(i)}
+                            isDateTimePickerVisible={
+                              this.state.isDateInPickerVisible[i]
+                            }
+                            isTimePickerVisible={
+                              this.state.isTimeInPickerVisible[i]
+                            }
+                            isTimeOutPickerVisible={
+                              this.state.isTimeOutPickerVisible[i]
+                            }
+                            handleTimePicked={time => {
+                              this.handleTimeSP(i, time);
+                            }}
+                            handleDatePicked={date => {
+                              this.handleDateSP(i, date);
+                            }}
+                            hideDateTimePicked={this.hideDateTimePicked}
+                            minDate={
+                              i == 0
+                                ? this.state.Departures[1].Date
+                                : this.state.SummaryProgram[i - 1]
+                                    .AccommodationSummary != undefined
+                                ? this.state.SummaryProgram[i - 1].LeavingDate
+                                : this.state.SummaryProgram[i - 1].Date
+                            }
+                            maxDate={
+                              i == 0
+                                ? SumDays(this.state.Departures[1].Date, 1)
+                                : this.state.SummaryProgram[i - 1]
+                                    .AccommodationSummary != undefined
+                                ? SumDays(
+                                    this.state.SummaryProgram[i - 1]
+                                      .LeavingDate,
+                                    1
+                                  )
+                                : SumDays(
+                                    this.state.SummaryProgram[i - 1].Date,
+                                    1
+                                  )
+                            }
+                            isConnection={
+                              i != 0
+                                ? SP.AccommodationSummary != undefined &&
+                                  this.state.SummaryProgram[i - 1]
+                                    .AccommodationSummary != undefined
+                                  ? SP.Region !=
+                                    this.state.SummaryProgram[i - 1].Region
+                                    ? true
+                                    : false
+                                  : false
+                                : false
+                            }
+                            addConnectionFlight={() =>
+                              this.addConnecFlight(this.state.SummaryProgram, i)
+                            }
+                          />
+                        );
+                      }
                     })
-                  : null}
-              </View>
-            </ScrollView>
-          : <ScrollView
-              style={[stylesGlobal.containerScroll, styles.paddingTop20]}
-              scrollEventThrottle={16}
-              keyboardShouldPersistTaps="never"
-              onScroll={Animated.event ([
-                {
-                  nativeEvent: {
-                    contentOffset: {
-                      y: this.state.scrollY,
-                    },
+                  : null
+                : null}
+              {showBtnAddMultipleLast({
+                MainPrograms: this.state.SummaryProgram,
+                Returns: this.state.Returns,
+              }) ? (
+                <View style={[styles.rowNoPadding, styles.paddingVertical20]}>
+                  <NormalButton
+                    isLoading={this.state.loadingButton}
+                    text="+ ADD MULTIPLE DESTINATION"
+                    buttonWidth="100%"
+                    buttonHeight={40}
+                    bold
+                    buttonColor={styles.$goldcolor}
+                    textColor="black"
+                    onPress={() => this.addMoreDestination()}
+                  />
+                </View>
+              ) : null}
+
+              {this.state.Returns != null
+                ? splitFlightTransit(this.state.Returns, 2).map((item, i) => {
+                    return (
+                      <CardFlight
+                        // isBtnMultiple={
+                        //   this.state.Returns[0].Ticket.ServiceItemId
+                        //     ? true
+                        //     : false
+                        // }
+                        isBtnMultiple={false}
+                        onPressMultipleDestination={() =>
+                          this.handleNewAccommodation(
+                            this.state.SummaryProgram.length - 1,
+                            'groupTicket'
+                          )
+                        }
+                        key={i}
+                        onPressDiscardTicket={() =>
+                          this.handleDiscardTicket(
+                            item[0].Ticket
+                              ? item[0].Ticket.ServiceItemId
+                                ? item[0].Ticket.ServiceItemId
+                                : null
+                              : null,
+                            false
+                          )
+                        }
+                        serviceItemIdDep={
+                          item[0].Ticket
+                            ? item[0].Ticket.ServiceItemId
+                              ? item[0].Ticket.ServiceItemId
+                              : null
+                            : null
+                        }
+                        serviceItemIdArr={
+                          item[1].Ticket
+                            ? item[1].Ticket.ServiceItemId
+                              ? item[1].Ticket.ServiceItemId
+                              : null
+                            : null
+                        }
+                        PNRCodeDeparture={
+                          item[0].Ticket
+                            ? item[0].Ticket.PNR
+                              ? item[0].Ticket.PNR
+                              : null
+                            : null
+                        }
+                        PNRCodeArrival={
+                          item[1].Ticket
+                            ? item[1].Ticket.PNR
+                              ? item[1].Ticket.PNR
+                              : null
+                            : null
+                        }
+                        isChangeButton={
+                          i == 0
+                            ? item[0].Ticket
+                              ? item[0].Ticket.ServiceItemId
+                                ? getAirlineTicketFirstIndex(
+                                    {
+                                      Departures: this.state.Departures,
+                                      MainPrograms: this.state.SummaryProgram,
+                                      Returns: this.state.Returns,
+                                    },
+                                    item[0].Ticket
+                                      ? item[0].Ticket.ServiceItemId
+                                        ? item[0].Ticket.ServiceItemId
+                                        : null
+                                      : null
+                                  ).type == 'Returns' &&
+                                  getAirlineTicketFirstIndex(
+                                    {
+                                      Departures: this.state.Departures,
+                                      MainPrograms: this.state.SummaryProgram,
+                                      Returns: this.state.Returns,
+                                    },
+                                    item[0].Ticket
+                                      ? item[0].Ticket.ServiceItemId
+                                        ? item[0].Ticket.ServiceItemId
+                                        : null
+                                      : null
+                                  ).index == 0
+                                  ? true
+                                  : false
+                                : false
+                              : false
+                            : false
+                        }
+                        isLastFlight={true}
+                        isFlight={
+                          this.props.DetailCustom.GroupCapacity === 'LARGE'
+                            ? true
+                            : false
+                        }
+                        onPressTicket={() =>
+                          this.handleTicket(
+                            'Departure',
+                            null,
+                            item[0].PlaceId,
+                            item[1].PlaceId,
+                            item[0].City ? item[0].City.Name : null,
+                            item[1].City ? item[1].City.Name : null,
+                            item[0].Date
+                          )
+                        }
+                        checkedDeparture={
+                          this.state.Returns ? item[0].NextDay : false
+                        }
+                        checkedArrival={
+                          this.state.Returns ? item[1].NextDay : false
+                        }
+                        onPressCheckDeparture={() =>
+                          this.handleNextDay(0, item[0], 'lastDeparture')
+                        }
+                        onPressCheckArrival={() =>
+                          this.handleNextDay(1, item[1], 'lastArrival')
+                        }
+                        isShowCheckDeparture={true}
+                        isShowCheckArrival={true}
+                        departure={item[0].Place}
+                        arrival={item[1].Place}
+                        departureDate={viewDateSlash(item[0].Date)}
+                        departureTime={viewTime(item[0].Date)}
+                        arrivalDate={viewDateSlash(
+                          item[1] ? item[1].Date : item[0].Date
+                        )}
+                        arrivalTime={viewTime(
+                          item[1]
+                            ? item[1].Date
+                            : addsubtractTimeHours(item[0].Date, 2, 'add')
+                        )}
+                        flightCode={
+                          item[this.state.Returns.length - 1]
+                            ? item[this.state.Returns.length - 1].Ticket
+                                .FlightNumber
+                            : ''
+                        }
+                        onPressDeparture={() =>
+                          this.handleAirport(item[0], null, 'lastDeparture')
+                        }
+                        onPressArrival={() =>
+                          this.handleAirport(
+                            item[this.state.Returns.length - 1],
+                            null,
+                            'lastArrival'
+                          )
+                        }
+                        onPickArrivalDate={date =>
+                          this.handleLastArrivalDate(
+                            item[this.state.Returns.length - 1],
+                            date
+                          )
+                        }
+                        onPickArrivalTime={time =>
+                          this.handleChangeTimeAirport(
+                            item[this.state.Returns.length - 1],
+                            time,
+                            'lastArrival'
+                          )
+                        }
+                        onPickDepartureTime={time =>
+                          this.handleChangeTimeAirport(
+                            item[0],
+                            time,
+                            'lastDeparture'
+                          )
+                        }
+                        onPressArrivalDate={() =>
+                          this.setState({
+                            isDateRetArrivalPickerVisible: true,
+                          })
+                        }
+                        onPressArrivalTime={() =>
+                          this.setState({
+                            isTimeRetArrivalPickerVisible: true,
+                          })
+                        }
+                        onPressDepartureTime={() =>
+                          this.setState({
+                            isTimeRetDeparturePickerVisible: true,
+                          })
+                        }
+                        isDatePickerArrival={
+                          this.state.isDateRetArrivalPickerVisible
+                        }
+                        isTimePickerArrival={
+                          this.state.isTimeRetArrivalPickerVisible
+                        }
+                        isTimePickerDeparture={
+                          this.state.isTimeRetDeparturePickerVisible
+                        }
+                        onChangeFlightCode={text =>
+                          this.handleChangeFlightCode(text, 'returns')
+                        }
+                        onChangeNote={text => {
+                          this.handleChangeNote(
+                            text,
+                            'returns',
+                            item[0].Date,
+                            item[1].Date
+                          );
+                        }}
+                        hideDateTimePicked={this.hideDateTimePicked}
+                      />
+                    );
+                  })
+                : null}
+            </View>
+          </ScrollView>
+        ) : (
+          <ScrollView
+            style={[stylesGlobal.containerScroll, styles.paddingTop20]}
+            scrollEventThrottle={16}
+            keyboardShouldPersistTaps="never"
+            onScroll={Animated.event([
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    y: this.state.scrollY,
                   },
                 },
-              ])}
-            >
-              <Container>
-                {this.props.DailyProgram.map ((obj, i) => {
-                  return (
-                    <CardMedia
-                      type="itinerary"
-                      title={obj.TourDestinations
-                        .map (
-                          e =>
-                            this.props.cityList
-                              ? findName (this.props.cityList, e.Destination)
-                              : e.Destination
-                        )
-                        .join (', ')}
-                      day={'Day ' + obj.Day}
-                      subtitle={viewDate (obj.Date)}
-                      namabutton="SEE DETAIL"
-                      warnabutton={styles.$goldcolor}
-                      textbuttoncolor="white"
-                      onPress={() => this.handleTourSchedule (i, obj.Date)}
-                      key={i}
-                    />
-                  );
-                })}
-                {this.props.DailyProgram.length == 3
-                  ? <View style={styles.cardhidden} />
-                  : null}
+              },
+            ])}
+          >
+            <Container>
+              {this.props.DailyProgram.map((obj, i) => {
+                return (
+                  <CardMedia
+                    type="itinerary"
+                    title={obj.TourDestinations.map(e =>
+                      this.props.cityList
+                        ? findName(this.props.cityList, e.Destination)
+                        : e.Destination
+                    ).join(', ')}
+                    day={'Day ' + obj.Day}
+                    subtitle={viewDate(obj.Date)}
+                    namabutton="SEE DETAIL"
+                    warnabutton={styles.$goldcolor}
+                    textbuttoncolor="white"
+                    onPress={() => this.handleTourSchedule(i, obj.Date)}
+                    key={i}
+                  />
+                );
+              })}
+              {this.props.DailyProgram.length == 3 ? (
+                <View style={styles.cardhidden} />
+              ) : null}
 
-                <View
-                  style={[stylesGlobal.marginBottom80, stylesGlobal.width100]}
-                />
-              </Container>
-            </ScrollView>}
+              <View
+                style={[stylesGlobal.marginBottom80, stylesGlobal.width100]}
+              />
+            </Container>
+          </ScrollView>
+        )}
         <TouchableOpacity
           style={styles.footerFilter}
           onPress={this.handlePressTourList}
@@ -2678,7 +2669,7 @@ const mapStateToProps = state => ({
   //   cityList: state.generalReducer.cityInCountry
 });
 
-export default connect (mapStateToProps, {
+export default connect(mapStateToProps, {
   setSummaryProgramAction,
   setDeparturesItineraryAction,
   setReturnsItineraryAction,
@@ -2695,4 +2686,4 @@ export default connect (mapStateToProps, {
   getOperatorListAction,
   resetOperatorListAction,
   getCityInCountryAction,
-}) (AccommodationSummary);
+})(AccommodationSummary);

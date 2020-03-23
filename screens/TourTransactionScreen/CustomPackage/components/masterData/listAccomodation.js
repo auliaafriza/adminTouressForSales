@@ -43,6 +43,7 @@ import {
 import {Seperator} from '../../../../../components/list';
 import IconClose from '../../../../../assets/Icon/close.png';
 import {handleFilterImagePrimary} from '../../../../../helper/checkingHelper';
+import dummyListAccommodation from '../../../../../helper/dummy';
 
 class listAccomodation extends Component {
   static propTypes = {
@@ -168,7 +169,6 @@ class listAccomodation extends Component {
   componentDidUpdate () {
     if (this.props.isAccomodation === 'success') {
       this.props.resetAccommodationProfileAction ();
-      // this.props.dispatch(reset_accomodation());
       this.setState ({
         loading: false,
         ListAccommodation: this.props.listAccomodation.AccommodationResults,
@@ -184,7 +184,10 @@ class listAccomodation extends Component {
       return false;
     } else if (this.props.isAccomodation === 'failed') {
       this.props.resetAccommodationProfileAction ();
-      this.setState ({loading: false});
+      this.setState ({
+        loading: false,
+        ListAccommodation: dummyListAccommodation,
+      });
       return false;
     } else return true;
   }
@@ -206,7 +209,9 @@ class listAccomodation extends Component {
   };
 
   handlePressCustom = () => {
-    this.props.navigation.navigate ('customPackagesOption');
+    this.props.navigation.navigate ('CustomPackageOption', {
+      screen: 'CustomPackageOptionStack',
+    });
   };
 
   handlePressDetail = hotel => {

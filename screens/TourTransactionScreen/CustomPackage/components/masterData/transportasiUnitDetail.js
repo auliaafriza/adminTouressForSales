@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   ScrollView,
   Text,
@@ -11,22 +11,22 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
+import {Ionicons} from '@expo/vector-icons';
+import {LinearGradient} from 'expo-linear-gradient';
 import IOSPicker from 'react-native-ios-picker';
-import { Container } from '../../components/container';
-import { Card } from '../../components/card';
+import {Container} from '../../../../../components/container';
+import {Card} from '../../../../../components/card';
 import styles from './styles';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import imagebg from '../../assets/images/NoImage.png';
-import { NormalButton } from '../../components/button';
-import { SeperatorRepeat } from '../../components/list/index';
-import { addItemTransportation } from '../../helper/dailyProgram';
-import { set_daily_program } from '../../actions/customAction';
-import stylesGlobal from '../../components/styles';
-import IconSeat from '../../assets/Icon/seat.png';
+import imagebg from '../../../../../assets/images/NoImage.png';
+import {NormalButton} from '../../../../../components/button';
+import {SeperatorRepeat} from '../../../../../components/list/index';
+import {addItemTransportation} from '../../../../../helper/dailyProgram';
+import {set_daily_program} from '../../../../../actions/customAction';
+import stylesGlobal from '../../../../../components/styles';
+import IconSeat from '../../../../../assets/Icon/seat.png';
 class transportasiUnitDetail extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
@@ -37,11 +37,11 @@ class transportasiUnitDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Item: this.props.navigation.state.params.Item,
-      Mov: this.props.navigation.state.params.Mov,
+      Item: this.props.route.params.Item,
+      Mov: this.props.route.params.Mov,
       LabelSerciceItem: null,
       labelDuration: null,
-      Hidden: this.props.navigation.state.params.hiddenTransfer,
+      Hidden: this.props.route.params.hiddenTransfer,
       scrollY: new Animated.Value(0),
     };
   }
@@ -56,8 +56,8 @@ class transportasiUnitDetail extends Component {
   handleSelected = async () => {
     let DP = addItemTransportation(
       this.props.dailyProgram,
-      this.props.navigation.state.params.dayIndex,
-      this.props.navigation.state.params.moveIndex,
+      this.props.route.params.dayIndex,
+      this.props.route.params.moveIndex,
       this.state.Item.itemTransport,
       this.state.Item.serviceItem,
       this.state.Item.hoursItem
@@ -100,7 +100,7 @@ class transportasiUnitDetail extends Component {
         <Animated.View
           style={[
             styles.headerTransparent,
-            { height: headerHeight, backgroundColor: backgroundColorAnimate },
+            {height: headerHeight, backgroundColor: backgroundColorAnimate},
           ]}
         >
           <LinearGradient
@@ -130,7 +130,7 @@ class transportasiUnitDetail extends Component {
           scrollEventThrottle={16}
           onScroll={Animated.event([
             {
-              nativeEvent: { contentOffset: { y: this.state.scrollY } },
+              nativeEvent: {contentOffset: {y: this.state.scrollY}},
             },
           ])}
         >
@@ -138,7 +138,7 @@ class transportasiUnitDetail extends Component {
             {this.state.Item.itemTransport.ImageUrl != null &&
             this.state.Item.itemTransport.ImageUrl != '' ? (
               <Image
-                source={{ uri: this.state.Item.itemTransport.ImageUrl }}
+                source={{uri: this.state.Item.itemTransport.ImageUrl}}
                 resizeMode="contain"
                 style={styles.carouselImage}
               />
@@ -187,7 +187,7 @@ class transportasiUnitDetail extends Component {
                         source={IconSeat}
                         style={[
                           stylesGlobal.imageIcon,
-                          { tintColor: styles.$blacklight4color },
+                          {tintColor: styles.$blacklight4color},
                         ]}
                         resizeMode="contain"
                       />

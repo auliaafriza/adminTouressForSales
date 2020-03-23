@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Text,
   ScrollView,
@@ -10,31 +10,34 @@ import {
   BackHandler,
   StatusBar,
   Platform,
-  Dimensions
-} from "react-native";
-import IOSPicker from "react-native-ios-picker";
-import { Container } from "../../components/container/index";
-import styles from "./styles";
-import stylesGlobal from "../../components/styles";
-import { CardAccomodation } from "../../components/card/index";
-import { ClearButtonWithIcon, NormalButton } from "../../components/button";
-import { RoundedLoading } from "../../components/loading";
-import PropTypes from "prop-types";
+  Dimensions,
+} from 'react-native';
+import IOSPicker from 'react-native-ios-picker';
+import { Container } from '../../../../../components/container/index';
+import styles from './styles';
+import stylesGlobal from '../../../../../components/styles';
+import { CardAccomodation } from '../../../../../components/card/index';
 import {
-  get_attraction,
-  reset_get_attraction
-} from "../../actions/itemIteneraryAction";
-import { SearchBar } from "react-native-elements";
-import { convertTimetoString } from "../../helper/helper";
+  ClearButtonWithIcon,
+  NormalButton,
+} from '../../../../../components/button';
+import { RoundedLoading } from '../../../../../components/loading';
+import PropTypes from 'prop-types';
+import {
+  getExcursionByFilter,
+  resetStatusExcursion,
+} from '../../../../../actions/excrusion/excrusionAction';
+import { SearchBar } from 'react-native-elements';
+import { convertTimetoString } from '../../../../../helper/helper';
 import {
   convertToStringDate,
   getHour,
-  SumSecond
-} from "../../helper/timeHelper";
-import { Seperator } from "../../components/list";
-import { copyObject } from "../../helper/dailyProgram";
-import { handleFilterImagePrimary } from "../../helper/checkingHelper";
-import { transactionItem } from "../../helper/transactionHelper";
+  SumSecond,
+} from '../../../../../helper/timeHelper';
+import { Seperator } from '../../../../../components/list';
+import { copyObject } from '../../../../../helper/dailyProgram';
+import { handleFilterImagePrimary } from '../../../../../helper/checkingHelper';
+import { transactionItem } from '../../../../../helper/transactionHelper';
 
 class listExcrution extends Component {
   static propTypes = {
@@ -47,58 +50,58 @@ class listExcrution extends Component {
     CustomDetails: PropTypes.array,
     Returns: PropTypes.array,
     Departures: PropTypes.array,
-    SummaryProgram: PropTypes.array
+    SummaryProgram: PropTypes.array,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       Filter: {
-        categoryId: "",
-        typeId: ""
+        categoryId: '',
+        typeId: '',
       },
       labelcategoryId: null,
       labeltypeId: null,
-      Mov: this.props.navigation.state.params.Mov,
+      Mov: this.props.route.params.Mov,
       AccomodationFilter: null,
       ListExcrusion: [],
       modalVisible: false,
       loading: true,
-      searchText: ""
+      searchText: '',
     };
   }
 
   handleDetailExcrution = att => {
     let DP = copyObject(this.props.DailyProgram);
     let inDep = DP[this.state.Mov.dayIndex].Movements.findIndex(
-      item => item.MovementName == "DEPARTURE"
+      item => item.MovementName == 'DEPARTURE'
     );
     let inArr = DP[this.state.Mov.dayIndex].Movements.findIndex(
-      item => item.MovementName == "ARRIVAL"
+      item => item.MovementName == 'ARRIVAL'
     );
     if (
       DP[this.state.Mov.dayIndex].Movements.findIndex(
         item => item.Item.ServiceItemId == att.ServiceItemId
       ) >= 0
     )
-      Alert.alert("Failed", "Cannot choose same excursion in this day", [
+      Alert.alert('Failed', 'Cannot choose same excursion in this day', [
         {
-          text: "OK"
-        }
+          text: 'OK',
+        },
       ]);
     else if (
       DP[this.state.Mov.dayIndex].Movements.findIndex(
-        item => item.Item.ServiceType == "Package"
+        item => item.Item.ServiceType == 'Package'
       ) >= 0 &&
-      att.AttractionCategory == "Package"
+      att.AttractionCategory == 'Package'
     )
       Alert.alert(
-        "Failed",
-        "Only one choose type package excursion in this day",
+        'Failed',
+        'Only one choose type package excursion in this day',
         [
           {
-            text: "OK"
-          }
+            text: 'OK',
+          },
         ]
       );
     else if (att.IsSolidStartTime) {
@@ -109,18 +112,18 @@ class listExcrution extends Component {
           getHour(DP[this.state.Mov.dayIndex].Movements[inDep].DateTime)
         )
           Alert.alert(
-            "Failed",
-            "Estimated time for this excursion has exceed to departure time.Please choose another excursion.",
+            'Failed',
+            'Estimated time for this excursion has exceed to departure time.Please choose another excursion.',
             [
               {
-                text: "OK"
-              }
+                text: 'OK',
+              },
             ]
           );
         else {
-          this.props.navigation.navigate("ExcrutionDetail", {
+          this.props.navigation.navigate('ExcrutionDetail', {
             Id: att.ServiceItemId,
-            Mov: this.state.Mov
+            Mov: this.state.Mov,
           });
         }
       } else if (inArr >= 0 && inDep < 0) {
@@ -128,18 +131,18 @@ class listExcrution extends Component {
           getHour(att.OperationStartTime) >=
           getHour(DP[this.state.Mov.dayIndex].Movements[inArr].DateTime) + 2
         ) {
-          this.props.navigation.navigate("ExcrutionDetail", {
+          this.props.navigation.navigate('ExcrutionDetail', {
             Id: att.ServiceItemId,
-            Mov: this.state.Mov
+            Mov: this.state.Mov,
           });
         } else
           Alert.alert(
-            "Failed",
-            "Estimated time for this excursion has exceed to arrival time.Please choose another excursion.",
+            'Failed',
+            'Estimated time for this excursion has exceed to arrival time.Please choose another excursion.',
             [
               {
-                text: "OK"
-              }
+                text: 'OK',
+              },
             ]
           );
       } else if (inDep >= 0 && inArr >= 0) {
@@ -150,18 +153,18 @@ class listExcrution extends Component {
             getHour(DP[this.state.Mov.dayIndex].Movements[inDep].DateTime)
           )
             Alert.alert(
-              "Failed",
-              "Estimated time for this excursion has exceed to departure time.Please choose another excursion.",
+              'Failed',
+              'Estimated time for this excursion has exceed to departure time.Please choose another excursion.',
               [
                 {
-                  text: "OK"
-                }
+                  text: 'OK',
+                },
               ]
             );
           else {
-            this.props.navigation.navigate("ExcrutionDetail", {
+            this.props.navigation.navigate('ExcrutionDetail', {
               Id: att.ServiceItemId,
-              Mov: this.state.Mov
+              Mov: this.state.Mov,
             });
           }
         } else if (inArr < this.state.Mov.indexMov) {
@@ -169,42 +172,42 @@ class listExcrution extends Component {
             getHour(att.OperationStartTime) >=
             getHour(DP[this.state.Mov.dayIndex].Movements[inArr].DateTime) + 2
           ) {
-            this.props.navigation.navigate("ExcrutionDetail", {
+            this.props.navigation.navigate('ExcrutionDetail', {
               Id: att.ServiceItemId,
-              Mov: this.state.Mov
+              Mov: this.state.Mov,
             });
           } else
             Alert.alert(
-              "Failed",
-              "Estimated time for this excursion has exceed to arrival time.Please choose another excursion.",
+              'Failed',
+              'Estimated time for this excursion has exceed to arrival time.Please choose another excursion.',
               [
                 {
-                  text: "OK"
-                }
+                  text: 'OK',
+                },
               ]
             );
         } else {
-          this.props.navigation.navigate("ExcrutionDetail", {
+          this.props.navigation.navigate('ExcrutionDetail', {
             Id: att.ServiceItemId,
-            Mov: this.state.Mov
+            Mov: this.state.Mov,
           });
         }
       } else {
-        this.props.navigation.navigate("ExcrutionDetail", {
+        this.props.navigation.navigate('ExcrutionDetail', {
           Id: att.ServiceItemId,
-          Mov: this.state.Mov
+          Mov: this.state.Mov,
         });
       }
     } else {
-      this.props.navigation.navigate("ExcrutionDetail", {
+      this.props.navigation.navigate('ExcrutionDetail', {
         Id: att.ServiceItemId,
-        Mov: this.state.Mov
+        Mov: this.state.Mov,
       });
     }
   };
 
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
@@ -217,29 +220,30 @@ class listExcrution extends Component {
       this.props.Departures,
       this.props.Returns
     );
-    this.props.dispatch(
-      get_attraction(
-        this.props.DailyProgram[dayIndex].Movements[indexMov].Destination,
-        this.state.Filter.typeId,
-        convertToStringDate(this.props.DailyProgram[dayIndex].Date),
-        GuestAllocation.Adult + GuestAllocation.Child,
-        item
-      )
-    );
+    const data = {
+      cityId: this.props.DailyProgram[dayIndex].Movements[indexMov].Destination,
+      attractionTypeId: this.state.Filter.typeId,
+      requestedDate: convertToStringDate(
+        this.props.DailyProgram[dayIndex].Date
+      ),
+      pax: GuestAllocation.Adult + GuestAllocation.Child,
+      dataDemoPrice: item,
+    };
+    this.props.getExcursionByFilter(data);
   }
 
   componentDidUpdate() {
-    if (this.props.isExcursion === "success") {
-      this.props.dispatch(reset_get_attraction());
+    if (this.props.isExcursion === 'success') {
+      this.props.resetStatusExcursion();
       this.setState({
         loading: false,
-        ListExcrusion: this.props.listExcursion
+        ListExcrusion: this.props.listExcursion,
       });
       return false;
-    } else if (this.props.isExcursion === "failed") {
-      this.props.dispatch(reset_get_attraction());
+    } else if (this.props.isExcursion === 'failed') {
+      this.props.resetStatusExcursion();
       this.setState({
-        loading: false
+        loading: false,
       });
       return false;
     } else return true;
@@ -284,7 +288,7 @@ class listExcrution extends Component {
 
   render() {
     const width90 =
-      Dimensions.get("window").width - Dimensions.get("window").width * 0.1;
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.1;
     return (
       <Container>
         {/* <SearchBar
@@ -312,7 +316,7 @@ class listExcrution extends Component {
                 <View style={styles.row}>
                   <Text>Excrusion Of Category</Text>
                 </View>
-                {Platform.OS === "ios" ? (
+                {Platform.OS === 'ios' ? (
                   <IOSPicker
                     mode="modal"
                     textStyle={styles.textblack}
@@ -320,14 +324,14 @@ class listExcrution extends Component {
                     selectedValue={
                       this.state.Filter.categoryId
                         ? this.state.Filter.categoryId
-                        : "Excrusion Category"
+                        : 'Excrusion Category'
                     }
                     onValueChange={itemValue => {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          categoryId: itemValue
-                        }
+                          categoryId: itemValue,
+                        },
                       });
                     }}
                   >
@@ -345,8 +349,8 @@ class listExcrution extends Component {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          categoryId: itemValue
-                        }
+                          categoryId: itemValue,
+                        },
                       });
                     }}
                   >
@@ -363,7 +367,7 @@ class listExcrution extends Component {
                 <View style={styles.row}>
                   <Text>Excrusion Type</Text>
                 </View>
-                {Platform.OS === "ios" ? (
+                {Platform.OS === 'ios' ? (
                   <IOSPicker
                     mode="modal"
                     textStyle={styles.textblack}
@@ -371,19 +375,19 @@ class listExcrution extends Component {
                     selectedValue={
                       this.state.Filter.typeId
                         ? this.state.labeltypeId == 0
-                          ? "Excrusion Type"
+                          ? 'Excrusion Type'
                           : this.props.attractionTypeFilter[
                               this.state.labeltypeId - 1
                             ].Name
-                        : "Excrusion Type"
+                        : 'Excrusion Type'
                     }
                     onValueChange={(itemValue, itemIndex) => {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          typeId: itemValue
+                          typeId: itemValue,
                         },
-                        labeltypeId: itemIndex
+                        labeltypeId: itemIndex,
                       });
                     }}
                   >
@@ -410,8 +414,8 @@ class listExcrution extends Component {
                       this.setState({
                         Filter: {
                           ...this.state.Filter,
-                          typeId: itemValue
-                        }
+                          typeId: itemValue,
+                        },
                       });
                     }}
                   >
@@ -467,14 +471,14 @@ class listExcrution extends Component {
                 stylesGlobal.width100,
                 stylesGlobal.marginTop10,
                 stylesGlobal.flexSize,
-                stylesGlobal.paddingHorizontal20
+                stylesGlobal.paddingHorizontal20,
               ]}
             >
               <RoundedLoading width={width90} height={150} line={10} />
             </View>
           ) : (
             <Container
-              paddingtopcontainer={Platform.OS === "ios" ? 20 : 40}
+              paddingtopcontainer={Platform.OS === 'ios' ? 20 : 40}
               paddingbottomcontainer={50}
             >
               {this.state.ListExcrusion
@@ -491,24 +495,24 @@ class listExcrution extends Component {
                         key={i}
                         onPress={() => this.handleDetailExcrution(att)}
                         roundedText={
-                          att.AttractionCategory == "Package"
-                            ? "Fix Timing"
-                            : "Flexible Timing"
+                          att.AttractionCategory == 'Package'
+                            ? 'Fix Timing'
+                            : 'Flexible Timing'
                         }
                         subText={
-                          att.AttractionType ? att.AttractionType.Name : ""
+                          att.AttractionType ? att.AttractionType.Name : ''
                         }
                         typeCard="Excurtion"
                         bottomText={
-                          "Min Duration: " +
+                          'Min Duration: ' +
                           convertTimetoString(att.OptimumDuration)
                         }
                         city={
                           att.AddressObject
                             ? att.AddressObject.City
                               ? att.AddressObject.City.Name
-                              : ""
-                            : ""
+                              : ''
+                            : ''
                         }
                         estimatedPrice={att.EstimatedTotalPrice.Price}
                         currency={att.EstimatedTotalPrice.CurrencyId}
@@ -531,7 +535,7 @@ class listExcrution extends Component {
             backgroundColor="transparent"
           />
           <SearchBar
-            clearIcon={{ color: "red" }}
+            clearIcon={{ color: 'red' }}
             searchIcon={true}
             onChangeText={this._handleSearch}
             placeholder="Type Here..."
@@ -568,14 +572,17 @@ class listExcrution extends Component {
 }
 
 const mapStateToProps = state => ({
-  listExcursion: state.itemIteneraryReducer.attraction,
-  isExcursion: state.itemIteneraryReducer.isAttraction,
-  attractionTypeFilter: state.itemIteneraryReducer.attractionTypeFilter,
-  DailyProgram: state.cusPackagesReducer.DailyProgram,
+  listExcursion: state.excrusionReducer.excursions,
+  isExcursion: state.excrusionReducer.getExcursionByFilterStatus,
+  attractionTypeFilter: state.excrusionReducer.attractionTypeFilter,
+  DailyProgram: state.transactionReducer.DailyProgram,
   CustomDetails: state.transactionReducer.CustomDetails,
-  Returns: state.cusPackagesReducer.Returns,
-  Departures: state.cusPackagesReducer.Departures,
-  SummaryProgram: state.cusPackagesReducer.SummaryProgram
+  Returns: state.transactionReducer.Returns,
+  Departures: state.transactionReducer.Departures,
+  SummaryProgram: state.transactionReducer.SummaryProgram,
 });
 
-export default connect(mapStateToProps)(listExcrution);
+export default connect(mapStateToProps, {
+  getExcursionByFilter,
+  resetStatusExcursion,
+})(listExcrution);

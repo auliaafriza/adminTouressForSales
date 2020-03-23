@@ -99,7 +99,7 @@ class PackagesDetail extends PureComponent {
 
   componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", () => {
-      this.props.navigation.state.params.from
+      this.props.route.params.from
         ? this.props.navigation.navigate("Home")
         : this.props.navigation.pop(); // works best when the goBack is async
       return true;
@@ -200,8 +200,8 @@ class PackagesDetail extends PureComponent {
   };
 
   //   goBack = () => {
-  //     const from = this.props.navigation.state.params.from
-  //       ? this.props.navigation.state.params.from
+  //     const from = this.props.route.params.from
+  //       ? this.props.route.params.from
   //       : '';
 
   //     {
@@ -212,7 +212,7 @@ class PackagesDetail extends PureComponent {
   //   };
   //   componentDidMount() {
   //     BackHandler.addEventListener('hardwareBackPress', () => {
-  //       this.props.navigation.state.params.from
+  //       this.props.route.params.from
   //         ? this.props.navigation.navigate('Home')
   //         : this.props.navigation.pop(); // works best when the goBack is async
   //       return true;

@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Container } from "../../components/container";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Container} from '../../../../../components/container';
 import {
   ScrollView,
   View,
@@ -9,27 +9,30 @@ import {
   Picker,
   StatusBar,
   BackHandler,
-  Platform
-} from "react-native";
-import IOSPicker from "react-native-ios-picker";
-import styles from "./styles";
-import stylesGlobal from "../../components/styles";
-import PropTypes from "prop-types";
+  Platform,
+} from 'react-native';
+import IOSPicker from 'react-native-ios-picker';
+import styles from './styles';
+import stylesGlobal from '../../../../../components/styles';
+import PropTypes from 'prop-types';
 import {
   get_transport,
-  reset_get_transport
-} from "../../actions/itemIteneraryAction";
+  reset_get_transport,
+} from '../../../../../actions/itemIteneraryAction';
 
-import { SearchBar } from "react-native-elements";
-import { ClearButtonWithIcon, NormalButton } from "../../components/button";
-import { Loading } from "../../components/loading";
-import { CardAccomodation } from "../../components/card";
+import {SearchBar} from 'react-native-elements';
+import {
+  ClearButtonWithIcon,
+  NormalButton,
+} from '../../../../../components/button';
+import {Loading} from '../../../../../components/loading';
+import {CardAccomodation} from '../../../../../components/card';
 
-import { Seperator } from "../../components/list";
-import { ModalSort } from "../../components/modal/";
+import {Seperator} from '../../../../../components/list';
+import {ModalSort} from '../../../../../components/modal/';
 
-import { isThereExcursionMeal } from "../../helper/dailyProgram";
-import { transactionItem } from "../../helper/transactionHelper";
+import {isThereExcursionMeal} from '../../../../../helper/dailyProgram';
+import {transactionItem} from '../../../../../helper/transactionHelper';
 
 class listTransportasiUnit extends Component {
   static propTypes = {
@@ -58,7 +61,7 @@ class listTransportasiUnit extends Component {
       labelratingId: null,
       labelseatTypeId: null,
       labeltypeId: null,
-      Mov: this.props.navigation.state.params.Mov,
+      Mov: this.props.route.params.Mov,
       Item: {
         itemTransport: null,
         serviceItem: null,
@@ -77,15 +80,15 @@ class listTransportasiUnit extends Component {
   }
 
   openModal = () => {
-    this.setState({ modalVisible: true });
+    this.setState({modalVisible: true});
   };
 
   openModalSort = () => {
-    this.setState({ modalVisibleSort: true });
+    this.setState({modalVisibleSort: true});
   };
 
   closeModal = () => {
-    this.setState({ modalVisible: false, modalVisibleSort: false });
+    this.setState({modalVisible: false, modalVisibleSort: false});
   };
 
   componentDidMount() {
@@ -117,22 +120,22 @@ class listTransportasiUnit extends Component {
   }
 
   cekHidden = async () => {
-    let DP = this.props.navigation.state.params.DP;
-    let dayIndex = this.props.navigation.state.params.dayIndex;
-    let moveIndex = this.props.navigation.state.params.moveIndex;
+    let DP = this.props.route.params.DP;
+    let dayIndex = this.props.route.params.dayIndex;
+    let moveIndex = this.props.route.params.moveIndex;
     let status = await isThereExcursionMeal(DP, dayIndex, moveIndex);
-    this.setState({ hiddenTransfer: status });
+    this.setState({hiddenTransfer: status});
   };
 
   componentDidUpdate() {
-    if (this.props.isTransport === "success") {
-      this.setState({ listTransport: this.props.listTransport });
+    if (this.props.isTransport === 'success') {
+      this.setState({listTransport: this.props.listTransport});
       this.props.dispatch(reset_get_transport());
-      this.setState({ loading: false });
+      this.setState({loading: false});
       return false;
     } else if (this.props.isTransport === "failed") {
       this.props.dispatch(reset_get_transport());
-      this.setState({ loading: false });
+      this.setState({loading: false});
       return false;
     } else return true;
   }
@@ -148,8 +151,8 @@ class listTransportasiUnit extends Component {
       Item: this.state.Item,
       Mov: this.state.Mov,
       hiddenTransfer: this.state.hiddenTransfer,
-      dayIndex: this.props.navigation.state.params.dayIndex,
-      moveIndex: this.props.navigation.state.params.moveIndex
+      dayIndex: this.props.route.params.dayIndex,
+      moveIndex: this.props.route.params.moveIndex,
     });
   };
 
@@ -196,7 +199,7 @@ class listTransportasiUnit extends Component {
   };
 
   _handleSearch = value => {
-    this.setState({ searchText: value });
+    this.setState({searchText: value});
     let updatedList = this.props.listTransport;
     updatedList = updatedList.filter(v => {
       if (v.Name.toLowerCase().indexOf(value.toLowerCase()) > -1) {
@@ -204,7 +207,7 @@ class listTransportasiUnit extends Component {
       }
       return false;
     });
-    this.setState({ listTransport: updatedList });
+    this.setState({listTransport: updatedList});
   };
 
   render() {
@@ -513,8 +516,8 @@ class listTransportasiUnit extends Component {
                 if (
                   (this.state.hiddenTransfer == true &&
                     trans.TransportationItemServiceTypes.length == 1 &&
-                      trans.TransportationItemServiceTypes[0].ServiceType ==
-                        "Transfer") ||
+                    trans.TransportationItemServiceTypes[0].ServiceType ==
+                      'Transfer') ||
                   trans.TransportationItemServiceTypes[0].ServiceType ==
                     "Transfer_with_guide"
                 ) {
@@ -537,12 +540,16 @@ class listTransportasiUnit extends Component {
                     estimatedPrice={
                       trans.EstimatedTotalPrice
                         ? trans.EstimatedTotalPrice.Price
-                        : ""
+                        : ''
                     }
                     currency={
                       trans.EstimatedTotalPrice
                         ? trans.EstimatedTotalPrice.CurrencyId
+<<<<<<< Updated upstream
                         : ""
+=======
+                        : ''
+>>>>>>> Stashed changes
                     }
                   />
                 );
@@ -563,7 +570,7 @@ class listTransportasiUnit extends Component {
             backgroundColor="transparent"
           />
           <SearchBar
-            clearIcon={{ color: "red" }}
+            clearIcon={{color: 'red'}}
             searchIcon={true}
             onChangeText={this._handleSearch}
             placeholder="Type Here..."

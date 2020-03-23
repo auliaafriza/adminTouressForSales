@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
-import { Container } from '../../components/container/index';
-import stylesGlobal from '../../components/styles';
+import React, {Component} from 'react';
+import {ScrollView} from 'react-native';
+import {Container} from '../../../../../components/container';
+import stylesGlobal from '../../../../../components/styles';
 
 import PropTypes from 'prop-types';
-import { locationAccommodation } from '../../helper/checkingHelper';
-import { CardWithIcon } from '../../components/card';
+import {locationAccommodation} from '../../../../../helper/checkingHelper';
+import {CardWithIcon} from '../../../../../components/card';
 
 class allNearbyLocation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataFacilities: this.props.navigation.state.params.data,
+      dataFacilities: this.props.route.params.data,
     };
   }
 

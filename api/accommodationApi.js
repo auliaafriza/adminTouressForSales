@@ -1,5 +1,5 @@
-import apiClient from "./apiClient";
-import { ACCOMMODATION_PROFILE_URL } from "./apiUrl";
+import apiClient from './apiClient';
+import {ACCOMMODATION_PROFILE_URL, GET_ACCOMMODATION_ROOMS_URL} from './apiUrl';
 
 export const getAccommodationProfileApi = data => {
   return apiClient.post(
@@ -26,4 +26,18 @@ export const getAccommodationFacilitiesApi = () => {
 
 export const getAccommodationAreaApi = cityId => {
   return apiClient.get(`/Areas/ByCity?cityId=${cityId}`);
+};
+
+export const getAccommodationByIdApi = Id => {
+  return apiClient.get(`/AccommodationProfiles?ID=${Id}`);
+};
+
+export const getAccommodationRoomsApi = data => {
+  return apiClient.get(
+    `${GET_ACCOMMODATION_ROOMS_URL}?profileId=${data.profileId}&requestedDate=${data.requestedDate}&endDate=${data.checkOutDate}&useExtraBed=${data.useExtraBed}&useChildExtraBed=${data.useChildExtraBed}&useSharingBed=${data.useSharingBed}&sharingRoomPax=${data.sharingRoomPax}&singleRoomPax=${data.singleRoomPax}`
+  );
+};
+
+export const getAccommodationByServiceItemIdApi = Id => {
+  return apiClient.get(`/AccommodationProfiles/ByServiceItemId/${Id}`);
 };

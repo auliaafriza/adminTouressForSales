@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -12,37 +12,37 @@ import {
   SafeAreaView,
 } from 'react-native';
 import IOSPicker from 'react-native-ios-picker';
-import { Container } from '../../components/container';
-import { SeperatorNew } from '../../components/list/index';
-import { isEmailValid } from '../../helper/helper';
-import { NormalButton } from '../../components/button';
-import { TextWarning } from '../../components/text';
-import { LinearGradient } from 'expo-linear-gradient';
+import {Container} from '../../components/container';
+import {SeperatorNew} from '../../components/list/index';
+import {isEmailValid} from '../../helper/helper';
+import {NormalButton} from '../../components/button';
+import {TextWarning} from '../../components/text';
+import {LinearGradient} from 'expo-linear-gradient';
 import styles from './styles';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { get_total_currencies_start } from '../../actions/generalAction';
+import {connect} from 'react-redux';
+import {get_total_currencies_start} from '../../actions/generalAction';
 import {
   simple_register,
   reset_simple_register_company,
 } from '../../actions/transactionAction';
-import { Loading } from '../../components/loading';
+import {Loading} from '../../components/loading';
 import stylesGlobal from '../../components/styles';
 import {
   RoundedTextInput,
   RoundedTextInputWithButton,
 } from '../../components/textInput';
-import { Card } from '../../components/card';
+import {Card} from '../../components/card';
 
 class registerCustomer extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super (props);
     this.state = {
       Register: {
         CompanyName: '',
         CompanyAddress: '',
         CompanyPhone: '',
-        Country: { Name: null },
+        Country: {Name: null},
         CurrencyId: '',
         FirstName: '',
         LastName: '',
@@ -72,12 +72,12 @@ class registerCustomer extends Component {
     DataRegister: PropTypes.object,
   };
 
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.pop(); // works best when the goBack is async
+  componentDidMount () {
+    BackHandler.addEventListener ('hardwareBackPress', () => {
+      this.props.navigation.pop (); // works best when the goBack is async
       return true;
     });
-    this.props.dispatch(get_total_currencies_start());
+    this.props.dispatch (get_total_currencies_start ());
   }
 
   validate = () => {
@@ -126,7 +126,7 @@ class registerCustomer extends Component {
       isError = true;
       errors.errorEmail = REQUIRED;
     } else {
-      if (isEmailValid(Email)) {
+      if (isEmailValid (Email)) {
         isError = true;
         errors.errorEmail = 'Format email not valid';
       }
@@ -148,7 +148,7 @@ class registerCustomer extends Component {
       errors.errorCurrencyId = 'Required';
     }
 
-    this.setState({
+    this.setState ({
       ...this.state,
       ...errors,
     });
@@ -156,31 +156,31 @@ class registerCustomer extends Component {
   };
 
   nextRegister = () => {
-    const error = this.validate();
+    const error = this.validate ();
     if (!error) {
-      this.setState({ loading: true });
-      this.props.dispatch(simple_register(this.state.Register));
+      this.setState ({loading: true});
+      this.props.dispatch (simple_register (this.state.Register));
     }
   };
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate (nextProps) {
     if (nextProps.isDataRegister === 'success') {
-      this.setState({ loading: false });
-      Alert.alert('Success', 'Success register customer', [{ text: 'OK' }]);
-      this.props.dispatch(reset_simple_register_company());
-      this.props.navigation.pop();
-      this.props.navigation.state.params.onSelectData(nextProps.DataRegister);
+      this.setState ({loading: false});
+      Alert.alert ('Success', 'Success register customer', [{text: 'OK'}]);
+      this.props.dispatch (reset_simple_register_company ());
+      this.props.navigation.pop ();
+      this.props.route.params.onSelectData (nextProps.DataRegister);
       return false;
     } else if (nextProps.isDataRegister === 'failed') {
-      this.setState({ loading: false });
-      Alert.alert('Failed', 'Please check again', [{ text: 'OK' }]);
-      this.props.dispatch(reset_simple_register_company());
+      this.setState ({loading: false});
+      Alert.alert ('Failed', 'Please check again', [{text: 'OK'}]);
+      this.props.dispatch (reset_simple_register_company ());
       return false;
     } else return true;
   }
 
   onSelectCountry = data => {
-    this.setState({
+    this.setState ({
       Register: {
         ...this.state.Register,
         Country: data,
@@ -189,19 +189,19 @@ class registerCustomer extends Component {
   };
 
   handleCountry = () => {
-    this.props.navigation.navigate('ListCountry', {
+    this.props.navigation.navigate ('ListCountry', {
       onSelect: this.onSelectCountry,
     });
   };
 
-  render() {
-    let seperator = new Array(28).fill(0);
+  render () {
+    let seperator = new Array (28).fill (0);
     return (
       <SafeAreaView style={stylesGlobal.styleSafeArea}>
         <Container>
-          {this.state.loading ? (
-            <Loading sizeloading="large" colorloading={styles.$goldcolor} />
-          ) : null}
+          {this.state.loading
+            ? <Loading sizeloading="large" colorloading={styles.$goldcolor} />
+            : null}
           <View>
             <StatusBar translucent={false} barStyle="light-content" />
           </View>
@@ -220,7 +220,7 @@ class registerCustomer extends Component {
                   Company Data
                 </Text>
                 <View style={stylesGlobal.rowNoPadding}>
-                  {seperator.map(i => {
+                  {seperator.map (i => {
                     {
                       return (
                         <SeperatorNew
@@ -244,10 +244,9 @@ class registerCustomer extends Component {
                     placeholder="Enter Company Name"
                     value={this.state.Register.CompanyName}
                     onChangeText={text =>
-                      this.setState({
-                        Register: { ...this.state.Register, CompanyName: text },
-                      })
-                    }
+                      this.setState ({
+                        Register: {...this.state.Register, CompanyName: text},
+                      })}
                     error={this.state.errorCompanyName}
                   />
 
@@ -261,13 +260,12 @@ class registerCustomer extends Component {
                     placeholder="Enter Company Telephone"
                     value={this.state.Register.CompanyPhone}
                     onChangeText={text =>
-                      this.setState({
+                      this.setState ({
                         Register: {
                           ...this.state.Register,
                           CompanyPhone: text,
                         },
-                      })
-                    }
+                      })}
                     error={this.state.errorCompanyTelephone}
                   />
 
@@ -281,13 +279,12 @@ class registerCustomer extends Component {
                     placeholder="Enter Company Address"
                     value={this.state.Register.CompanyAddress}
                     onChangeText={text =>
-                      this.setState({
+                      this.setState ({
                         Register: {
                           ...this.state.Register,
                           CompanyAddress: text,
                         },
-                      })
-                    }
+                      })}
                     error={this.state.errorAddress}
                   />
                   <TouchableOpacity
@@ -310,100 +307,92 @@ class registerCustomer extends Component {
                   </TouchableOpacity>
                   <Text style={styles.textTourType}>Based Currency</Text>
                   <View style={[stylesGlobal.row100, styles.containerDropDown]}>
-                    {Platform.OS === 'ios' ? (
-                      <IOSPicker
-                        mode="modal"
-                        textStyle={styles.textPicker}
-                        style={styles.dropdownIos}
-                        onValueChange={(itemValue, itemIndex) =>
-                          this.setState({
-                            Register: {
-                              ...this.state.Register,
-                              CurrencyId: itemValue,
-                            },
-                            labelCurrencyId: itemIndex,
-                          })
-                        }
-                        selectedValue={
-                          this.state.Register.CurrencyId ? (
-                            this.state.labelCurrencyId == 0 ? (
-                              <Text
-                                style={[
-                                  stylesGlobal.text14,
-                                  styles.colorgreylight2,
-                                ]}
-                              >
-                                Choose Based Currency
-                              </Text>
-                            ) : (
-                              this.props.currencies[
-                                this.state.labelCurrencyId - 1
-                              ].Description
-                            )
-                          ) : (
-                            <Text
-                              style={[
-                                stylesGlobal.text14,
-                                styles.colorgreylight2,
-                              ]}
-                            >
-                              Choose Based Currency
-                            </Text>
-                          )
-                        }
-                      >
-                        <Picker.Item
-                          label="Based Currency"
-                          value=""
-                          color={styles.$greylight2color}
-                          style={stylesGlobal.text14}
-                        />
-                        {this.props.currencies
-                          ? this.props.currencies.map((currency, i) => {
-                              return (
-                                <Picker.Item
-                                  label={currency.Description}
-                                  value={currency.Id}
-                                  key={i}
-                                />
-                              );
-                            })
-                          : null}
-                      </IOSPicker>
-                    ) : (
-                      <Picker
-                        mode="dialog"
-                        textStyle={styles.textPicker}
-                        style={styles.containerDropDownAndroid}
-                        selectedValue={this.state.Register.CurrencyId}
-                        onValueChange={itemValue =>
-                          this.setState({
-                            Register: {
-                              ...this.state.Register,
-                              CurrencyId: itemValue,
-                            },
-                          })
-                        }
-                      >
-                        <Picker.Item
-                          label="Based Currency"
-                          value=""
-                          color={styles.$greylight2color}
-                          style={stylesGlobal.text14}
-                        />
-                        {this.props.currencies
-                          ? this.props.currencies.map((currency, i) => {
-                              return (
-                                <Picker.Item
-                                  label={currency.Description}
-                                  value={currency.Id}
-                                  key={i}
-                                />
-                              );
-                            })
-                          : null}
-                      </Picker>
-                    )}
+                    {Platform.OS === 'ios'
+                      ? <IOSPicker
+                          mode="modal"
+                          textStyle={styles.textPicker}
+                          style={styles.dropdownIos}
+                          onValueChange={(itemValue, itemIndex) =>
+                            this.setState ({
+                              Register: {
+                                ...this.state.Register,
+                                CurrencyId: itemValue,
+                              },
+                              labelCurrencyId: itemIndex,
+                            })}
+                          selectedValue={
+                            this.state.Register.CurrencyId
+                              ? this.state.labelCurrencyId == 0
+                                  ? <Text
+                                      style={[
+                                        stylesGlobal.text14,
+                                        styles.colorgreylight2,
+                                      ]}
+                                    >
+                                      Choose Based Currency
+                                    </Text>
+                                  : this.props.currencies[
+                                      this.state.labelCurrencyId - 1
+                                    ].Description
+                              : <Text
+                                  style={[
+                                    stylesGlobal.text14,
+                                    styles.colorgreylight2,
+                                  ]}
+                                >
+                                  Choose Based Currency
+                                </Text>
+                          }
+                        >
+                          <Picker.Item
+                            label="Based Currency"
+                            value=""
+                            color={styles.$greylight2color}
+                            style={stylesGlobal.text14}
+                          />
+                          {this.props.currencies
+                            ? this.props.currencies.map ((currency, i) => {
+                                return (
+                                  <Picker.Item
+                                    label={currency.Description}
+                                    value={currency.Id}
+                                    key={i}
+                                  />
+                                );
+                              })
+                            : null}
+                        </IOSPicker>
+                      : <Picker
+                          mode="dialog"
+                          textStyle={styles.textPicker}
+                          style={styles.containerDropDownAndroid}
+                          selectedValue={this.state.Register.CurrencyId}
+                          onValueChange={itemValue =>
+                            this.setState ({
+                              Register: {
+                                ...this.state.Register,
+                                CurrencyId: itemValue,
+                              },
+                            })}
+                        >
+                          <Picker.Item
+                            label="Based Currency"
+                            value=""
+                            color={styles.$greylight2color}
+                            style={stylesGlobal.text14}
+                          />
+                          {this.props.currencies
+                            ? this.props.currencies.map ((currency, i) => {
+                                return (
+                                  <Picker.Item
+                                    label={currency.Description}
+                                    value={currency.Id}
+                                    key={i}
+                                  />
+                                );
+                              })
+                            : null}
+                        </Picker>}
                   </View>
                   <View
                     style={[styles.colNoPaddingLeft, styles.marginBottom20]}
@@ -428,7 +417,7 @@ class registerCustomer extends Component {
                   User Data
                 </Text>
                 <View style={stylesGlobal.rowNoPadding}>
-                  {seperator.map(i => {
+                  {seperator.map (i => {
                     {
                       return (
                         <SeperatorNew
@@ -452,10 +441,9 @@ class registerCustomer extends Component {
                     placeholder="Enter First Name"
                     value={this.state.Register.FirstName}
                     onChangeText={text =>
-                      this.setState({
-                        Register: { ...this.state.Register, FirstName: text },
-                      })
-                    }
+                      this.setState ({
+                        Register: {...this.state.Register, FirstName: text},
+                      })}
                     error={this.state.errorFirstname}
                   />
                   <RoundedTextInput
@@ -468,10 +456,9 @@ class registerCustomer extends Component {
                     placeholder="Enter Last Name"
                     value={this.state.Register.LastName}
                     onChangeText={text =>
-                      this.setState({
-                        Register: { ...this.state.Register, LastName: text },
-                      })
-                    }
+                      this.setState ({
+                        Register: {...this.state.Register, LastName: text},
+                      })}
                     error={this.state.errorLastname}
                   />
                   <RoundedTextInput
@@ -484,10 +471,9 @@ class registerCustomer extends Component {
                     placeholder="Enter Telephone"
                     value={this.state.Register.UserPhone}
                     onChangeText={text =>
-                      this.setState({
-                        Register: { ...this.state.Register, UserPhone: text },
-                      })
-                    }
+                      this.setState ({
+                        Register: {...this.state.Register, UserPhone: text},
+                      })}
                     error={this.state.errorTelephone}
                   />
                   <RoundedTextInput
@@ -500,10 +486,9 @@ class registerCustomer extends Component {
                     placeholder="Enter Email"
                     value={this.state.Register.Email}
                     onChangeText={text =>
-                      this.setState({
-                        Register: { ...this.state.Register, Email: text },
-                      })
-                    }
+                      this.setState ({
+                        Register: {...this.state.Register, Email: text},
+                      })}
                     error={this.state.errorEmail}
                   />
                 </View>
@@ -542,4 +527,4 @@ const mapStateToProps = state => ({
   DataRegister: state.transactionReducer.DataRegister,
 });
 
-export default connect(mapStateToProps)(registerCustomer);
+export default connect (mapStateToProps) (registerCustomer);

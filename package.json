@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "postinstall": "rndebugger-open",
+    "postinstall": "rndebugger-open --expo",
     "debug": "set REACT_DEBUGGER='rndebugger-open --open --port 8081' && npm start"
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "react-native-gesture-handler": "~1.5.0",
     "react-native-ios-picker": "^1.0.0",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-maps": "0.26.1",
     "react-native-modal-datetime-picker": "^8.5.1",
     "react-native-reanimated": "~1.4.0",
     "react-native-safe-area-context": "0.6.0",

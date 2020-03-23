@@ -39,6 +39,7 @@ import {
   RESET_POST_QUOTATION,
   SET_SPECIAL_ADJUSMENT,
 } from './actionTypes';
+
 import {
   getReadyPackageListApi,
   getSeriesPackageListApi,
@@ -156,214 +157,191 @@ export const setGuestDataAction = data => {
 };
 
 export const setGuestQuotationAction = data => {
-  return {
-    type: SET_GUEST_QUOTATION,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_GUEST_QUOTATION,
+      payload: data,
+    });
   };
 };
 
 export const setGuestTourGuideAction = data => {
-  return {
-    type: SET_GUEST_TOUR_GUIDE,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_GUEST_TOUR_GUIDE,
+      payload: data,
+    });
   };
 };
 
 export const setCustomItineraryAction = data => {
-  return {
-    type: SET_CUSTOM_ITINERARY,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_CUSTOM_ITINERARY,
+      payload: data,
+    });
   };
 };
 
 export const resetCustomItineraryAction = () => {
-  return {
-    type: RESET_CUSTOM_ITINERARY,
+  return dispatch => {
+    return dispatch({
+      type: RESET_CUSTOM_ITINERARY,
+    });
   };
 };
 
 export const setArrivalItineraryAction = data => {
-  return {
-    type: SET_ARRIVAL_ITINERARY,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_ARRIVAL_ITINERARY,
+      payload: data,
+    });
   };
 };
 
 export const resetArrivalItineraryAction = () => {
-  return {
-    type: RESET_ARRIVAL_ITINERARY,
+  return dispatch => {
+    return dispatch({
+      type: RESET_ARRIVAL_ITINERARY,
+    });
   };
 };
 
 export const setdepartureiteneraryAction = data => {
-  return {
-    type: SET_DEPATURE_ITINERARY,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_DEPATURE_ITINERARY,
+      payload: data,
+    });
   };
 };
 
 export const resetDepartureItineraryAction = () => {
-  return {
-    type: RESET_DEPATURE_ITINERARY,
+  return dispatch => {
+    return dispatch({
+      type: RESET_DEPATURE_ITINERARY,
+    });
   };
 };
 
 //Departures and Returns
 export const setDeparturesItineraryAction = data => {
-  return {
-    type: SET_DEPARTURES_ITINERARY,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_DEPARTURES_ITINERARY,
+      payload: data,
+    });
   };
 };
 
 export const resetDeparturesItineraryAction = () => {
-  return {
-    type: RESET_DEPARTURES_ITINERARY,
+  return dispatch => {
+    return dispatch({
+      type: RESET_DEPARTURES_ITINERARY,
+    });
   };
 };
 
 export const setReturnsItineraryAction = data => {
-  return {
-    type: SET_RETURNS_ITINERARY,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_RETURNS_ITINERARY,
+      payload: data,
+    });
   };
 };
 
 export const resetReturnsItineraryAction = () => {
-  return {
-    type: RESET_RETURNS_ITINERARY,
+  return dispatch => {
+    return dispatch({
+      type: RESET_RETURNS_ITINERARY,
+    });
   };
 };
 //End----
 
 export const setSummaryProgramAction = data => {
-  return {
-    type: SET_SUMMARY_PROGRAM,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_SUMMARY_PROGRAM,
+      payload: data,
+    });
   };
 };
 
 export const resetSummaryProgramAction = () => {
-  return {
-    type: RESET_SUMMARY_PROGRAM,
+  return dispatch => {
+    return dispatch({
+      type: RESET_SUMMARY_PROGRAM,
+    });
   };
 };
 
 export const setDailyProgramAction = data => {
-  return {
-    type: SET_DAILY_PROGRAM,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_DAILY_PROGRAM,
+      payload: data,
+    });
   };
 };
 
 export const resetDailyProgram = () => {
-  return {
-    type: RESET_DAILY_PROGRAM,
+  return dispatch => {
+    return dispatch({
+      type: RESET_DAILY_PROGRAM,
+    });
   };
 };
 
 export const setGuestAction = data => {
-  return {
-    type: SET_GUEST_ITINERARY,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_GUEST_ITINERARY,
+      payload: data,
+    });
   };
 };
 
 export const resetGuestAction = () => {
-  return {
-    type: RESET_GUEST_ITINERARY,
+  return dispatch => {
+    return dispatch({
+      type: RESET_GUEST_ITINERARY,
+    });
   };
 };
 
 export const setOperatorAction = data => {
-  return {
-    type: SET_TOUROPERATOR,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_TOUROPERATOR,
+      payload: data,
+    });
   };
 };
 
 export const resetOperatorAction = () => {
-  return {
-    type: RESET_TOUROPERATOR,
+  return dispatch => {
+    return dispatch({
+      type: RESET_TOUROPERATOR,
+    });
   };
 };
 
 export const setGuestQoutationAction = data => {
-  return {
-    type: SET_GUEST_QUOTATION,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: SET_GUEST_QUOTATION,
+      payload: data,
+    });
   };
 };
 
 export const resetGuestQoutationAction = () => {
-  return {
-    type: RESET_GUEST_QUOTATION,
-  };
-};
-
-// export const postCreateCustomAction = data => {
-//   return {
-//     type: POST_CREATE_CUSTOM,
-//     payload: postCreateCustomApi(data),
-//   };
-// };
-
-export const postCreateCustomOnBeHalfAction = data => {
-  return {
-    type: POST_CREATE_CUSTOM_ON_BE_HALF,
-    payload: postCreateCustomOnBeHalfApi(data),
-  };
-};
-
-export const postEditQuotationAction = (tourTransactionId, data) => {
-  return {
-    type: POST_EDIT_QUOTATION,
-    payload: postEditQuotationApi(tourTransactionId, data),
-  };
-};
-
-// export const postEditQuotationAction = (tourTransactionId, data) => {
-//   return {
-//     type: POST_EDIT_QUOTATION,
-//     payload: postEditQuotationApi(tourTransactionId, data),
-//   };
-// };
-
-export const resetPostCreateCustomAction = () => {
-  return {
-    type: RESET_POST_CREATE_CUSTOM,
-  };
-};
-// export const postJoinTourAction = (data, type, packageId) => {
-//   return {
-//     type: POST_JOIN_TOUR,
-//     payload: postJoinTourApi(data, type, packageId),
-//   };
-// };
-
-export const postJoinTourAction = (data, type, packageId) => {
-  return {
-    type: POST_JOIN_TOUR,
-    payload: postJoinTourApi(data, type, packageId),
-  };
-};
-
-export const getTourSummaryByIdAction = (tourTransactionId, data) => {
-  return {
-    type: GET_TOUR_SUMMARY_BY_ID,
-    payload: getTourSummaryByIdApi(tourTransactionId, data),
-  };
-};
-
-export const resetPostQuotationAction = () => {
-  return {
-    type: RESET_POST_QUOTATION,
-  };
-};
-
-export const setSpecialAdjusmentAction = data => {
-  return {
-    type: SET_SPECIAL_ADJUSMENT,
-    payload: data,
+  return dispatch => {
+    return dispatch({
+      type: RESET_GUEST_QUOTATION,
+    });
   };
 };

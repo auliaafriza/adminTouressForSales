@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import stylesGlobal from '../styles';
 import styles from './styles';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
@@ -15,36 +15,39 @@ const RoundedLoading = ({ width, height, radius, column, line }) => {
   return column ? (
     <View style={styles.textLoading}>
       <View style={stylesGlobal.width50}>
-        <ShimmerPlaceHolder
+        {/* <ShimmerPlaceHolder
           autoRun={true}
           visible={false}
           width={width}
           height={height}
           style={loadingStyle}
-        />
+        /> */}
+        <ActivityIndicator size="20" color="green" />
       </View>
       <View style={stylesGlobal.width50}>
-        <ShimmerPlaceHolder
+        {/* <ShimmerPlaceHolder
           autoRun={true}
           visible={false}
           width={width}
           height={height}
           style={loadingStyle}
-        />
+        /> */}
+        <ActivityIndicator size="20" color="green" />
       </View>
     </View>
   ) : (
     <View>
       {lineArray.map((item, index) => {
         return (
-          <ShimmerPlaceHolder
-            key={index}
-            autoRun={true}
-            visible={false}
-            width={width}
-            height={height ? height : 10}
-            style={[loadingStyle, stylesGlobal.marginBottom20]}
-          />
+          // <ShimmerPlaceHolder
+          //   key={index}
+          //   autoRun={true}
+          //   visible={false}
+          //   width={width}
+          //   height={height ? height : 10}
+          //   style={[loadingStyle, stylesGlobal.marginBottom20]}
+          // />
+          <ActivityIndicator size="20" color="green" />
         );
       })}
     </View>

@@ -10,8 +10,6 @@ backendHost = 'https://touressapiqa.azurewebsites.net/';
 //config prod
 // backendHost = "https://api.touress.com/";
 
-// const userToken = JSON.parse (AsyncStorage.getItem ('token'));
-
 const API_ROOT = `${backendHost}/Api`;
 const apiClient = axios.create({
   baseURL: API_ROOT,

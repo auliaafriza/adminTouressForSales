@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Container } from '../../components/container';
-import { Text, ScrollView, BackHandler } from 'react-native';
-import { CardMasterData } from '../../components/card';
+import React, {Component} from 'react';
+import {Container} from '../../../../../components/container';
+import {Text, ScrollView, BackHandler} from 'react-native';
+import {CardMasterData} from '../../../../../components/card';
 import PropTypes from 'prop-types';
-import image from './../../assets/images/photo.png';
+import image from '../../../../../assets/images/photo.png';
 
 class listTransport extends Component {
   static propTypes = {

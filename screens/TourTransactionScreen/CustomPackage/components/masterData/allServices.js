@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
-import { Container } from '../../components/container/index';
-import stylesGlobal from '../../components/styles';
-import { facilitiesAccommodation } from '../../helper/checkingHelper';
+import React, {Component} from 'react';
+import {ScrollView} from 'react-native';
+import {Container} from '../../../../../components/container';
+import stylesGlobal from '../../../../../components/styles';
+import {facilitiesAccommodation} from '../../../../../helper/checkingHelper';
 
 import PropTypes from 'prop-types';
-import { CardWithIcon } from '../../components/card';
+import {CardWithIcon} from '../../../../../components/card';
 
 class allServices extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataFacilities: this.props.navigation.state.params.data,
+      dataFacilities: this.props.route.params.data,
     };
   }
 

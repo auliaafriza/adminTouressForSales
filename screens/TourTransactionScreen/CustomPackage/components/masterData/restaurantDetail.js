@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Container } from '../../components/container';
+import React, {Component} from 'react';
+import {Container} from '../../../../../components/container';
 import {
   View,
   Text,
@@ -13,21 +13,21 @@ import {
   TouchableWithoutFeedback,
   Platform,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import MapView, { Marker } from 'react-native-maps';
-import { SeperatorRepeat } from '../../components/list/index';
-import { Card } from '../../components/card/index';
+import {LinearGradient} from 'expo-linear-gradient';
+import MapView, {Marker} from 'react-native-maps';
+import {SeperatorRepeat} from '../../../../../components/list/index';
+import {Card} from '../../../../../components/card/index';
 import styles from './styles';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Loading } from '../../components/loading';
-import IMAGES from '../../assets/images/NoImage.png';
-import IconClock from '../../assets/Icon/clock.png';
-import { ModalDuration } from '../../components/modal';
+import {Loading} from '../../../../../components/loading';
+import IMAGES from '../../../../../assets/images/NoImage.png';
+import IconClock from '../../../../../assets/Icon/clock.png';
+import {ModalDuration} from '../../../../../components/modal';
 import moment from 'moment';
-import { changeTimeNew } from '../../helper/timeHelper';
-import { Ionicons, Entypo } from '@expo/vector-icons';
+import {changeTimeNew} from '../../../../../helper/timeHelper';
+import {Ionicons, Entypo} from '@expo/vector-icons';
 import {
   addDailyDetails,
   afterAddActivityAndDriving,
@@ -35,16 +35,16 @@ import {
   setObjectDuration,
   changeTimeSummaryProgramAfterAddActivity,
   getDrivingAddress,
-} from '../../helper/dailyProgram';
+} from '../../../../../helper/dailyProgram';
 import {
   set_daily_program,
   set_summary_program,
-} from '../../actions/customAction';
-import IconMapIOS from '../../assets/Icon/map_restaurantIOS.png';
-import { getDurationAPI } from '../../api/itemItenerarySaga';
-import { set_driving } from '../../actions/itemIteneraryAction';
-import stylesGlobal from '../../components/styles';
-import { get_restaurant_by_id } from '../../actions/itemProfileAction';
+} from '../../../../../actions/customAction';
+import IconMapIOS from '../../../../../assets/Icon/map_restaurantIOS.png';
+import {getDurationAPI} from '../../../../../api/itemItenerarySaga';
+import {set_driving} from '../../../../../actions/itemIteneraryAction';
+import stylesGlobal from '../../../../../components/styles';
+import {get_restaurant_by_id} from '../../../../../actions/itemProfileAction';
 class restaurantDetail extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
@@ -63,9 +63,7 @@ class restaurantDetail extends Component {
     this.state = {
       modalVisible: false,
       startDateTimePickerVisible: false,
-      Mov: this.props.navigation.state.params.Mov
-        ? this.props.navigation.state.params.Mov
-        : '',
+      Mov: this.props.route.params.Mov ? this.props.route.params.Mov : '',
       scrollY: new Animated.Value(0),
       loading: false,
       namaButton: 'Read More',
@@ -76,10 +74,8 @@ class restaurantDetail extends Component {
   }
 
   async componentDidMount() {
-    this.setState({ loading: true });
-    await this.props.dispatch(
-      get_restaurant_by_id(this.props.navigation.state.params.Id)
-    );
+    this.setState({loading: true});
+    await this.props.dispatch(get_restaurant_by_id(this.props.route.params.Id));
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
@@ -93,7 +89,7 @@ class restaurantDetail extends Component {
         : ''
       : '';
     this.getLocation(address);
-    this.setState({ loading: false });
+    this.setState({loading: false});
   }
 
   getLocation = async address => {
@@ -185,8 +181,7 @@ class restaurantDetail extends Component {
     });
   };
 
-  _showDateTimePicker = () =>
-    this.setState({ startDateTimePickerVisible: true });
+  _showDateTimePicker = () => this.setState({startDateTimePickerVisible: true});
 
   closeModal = () => {
     this.setState({
@@ -266,7 +261,7 @@ class restaurantDetail extends Component {
       this.props.SummaryProgram
     );
     this.props.dispatch(set_summary_program(SP));
-    this.setState({ loading: false });
+    this.setState({loading: false});
     this.props.navigation.pop();
     this.props.navigation.pop();
   };
@@ -276,14 +271,13 @@ class restaurantDetail extends Component {
   //   this.hideDateTimePicked();
   // };
 
-  hideDateTimePicked = () =>
-    this.setState({ startDateTimePickerVisible: false });
+  hideDateTimePicked = () => this.setState({startDateTimePickerVisible: false});
 
   textButton = text => {
     if (this.state.namaButton == 'Read More') {
-      this.setState({ Desc: text, namaButton: 'Read Less' });
+      this.setState({Desc: text, namaButton: 'Read Less'});
     } else {
-      this.setState({ Desc: text.slice(0, 30), namaButton: 'Read More' });
+      this.setState({Desc: text.slice(0, 30), namaButton: 'Read More'});
     }
   };
 
@@ -308,7 +302,7 @@ class restaurantDetail extends Component {
         <Animated.View
           style={[
             styles.headerTransparent,
-            { height: headerHeight, backgroundColor: backgroundColorAnimate },
+            {height: headerHeight, backgroundColor: backgroundColorAnimate},
           ]}
         >
           <LinearGradient
@@ -348,7 +342,7 @@ class restaurantDetail extends Component {
           scrollEventThrottle={16}
           onScroll={Animated.event([
             {
-              nativeEvent: { contentOffset: { y: this.state.scrollY } },
+              nativeEvent: {contentOffset: {y: this.state.scrollY}},
             },
           ])}
         >
@@ -424,7 +418,7 @@ class restaurantDetail extends Component {
                 <ModalDuration
                   onPressClose={this.closeModal}
                   onPressTime={() => {
-                    this.setState({ startDateTimePickerVisible: true });
+                    this.setState({startDateTimePickerVisible: true});
                   }}
                   DateTime={moment(this.state.Mov.ActivityData.Startime).format(
                     'HH : mm '
@@ -452,7 +446,7 @@ class restaurantDetail extends Component {
             {this.state.Mov.Item &&
             this.state.Mov.Item.RestaurantProfileImages ? (
               <Image
-                source={{ uri: this.state.Mov.Item.RestaurantProfileImages[0] }}
+                source={{uri: this.state.Mov.Item.RestaurantProfileImages[0]}}
                 resizeMode="cover"
                 style={styles.carouselImage}
               />
@@ -617,7 +611,7 @@ class restaurantDetail extends Component {
                             >
                               {menu.ImageUrl ? (
                                 <Image
-                                  source={{ uri: menu.ImageUrl }}
+                                  source={{uri: menu.ImageUrl}}
                                   style={[
                                     stylesGlobal.width100,
                                     stylesGlobal.backgroundColorGrey,

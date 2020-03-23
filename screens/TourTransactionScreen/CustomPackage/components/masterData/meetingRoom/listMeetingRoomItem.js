@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Container } from "../../../components/container";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import axios from "axios";
+import React, { Component } from 'react';
+import { Container } from '../../../components/container';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import axios from 'axios';
 import {
   View,
   Text,
@@ -12,51 +12,51 @@ import {
   StatusBar,
   Platform,
   Dimensions,
-  TouchableOpacity
-} from "react-native";
-import stylesGlobal from "../../../components/styles";
-import { LinearGradient } from "expo-linear-gradient";
-import MapView, { Marker } from "react-native-maps";
-import { SeperatorRepeat } from "../../../components/list/index";
-import { Card, CardHotel } from "../../../components/card/index";
-import styles from "../styles";
-import { RoundedLoading, MenuLoading } from "../../../components/loading";
-import { Ionicons, Entypo } from "@expo/vector-icons";
-import { handleFilterImagePrimary } from "../../../helper/checkingHelper";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import IMAGES from "../../../assets/images/NoImage.png";
+  TouchableOpacity,
+} from 'react-native';
+import stylesGlobal from '../../../components/styles';
+import { LinearGradient } from 'expo-linear-gradient';
+import MapView, { Marker } from 'react-native-maps';
+import { SeperatorRepeat } from '../../../components/list/index';
+import { Card, CardHotel } from '../../../components/card/index';
+import styles from '../styles';
+import { RoundedLoading, MenuLoading } from '../../../components/loading';
+import { Ionicons, Entypo } from '@expo/vector-icons';
+import { handleFilterImagePrimary } from '../../../helper/checkingHelper';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import IMAGES from '../../../assets/images/NoImage.png';
 import {
   get_accommodation_by_id,
-  get_room_accomodation_item
-} from "../../../actions/itemProfileAction";
+  get_room_accomodation_item,
+} from '../../../actions/itemProfileAction';
 import {
   locationAccommodation,
-  facilitiesAccommodation
-} from "../../../helper/checkingHelper";
-import IconMap from "../../../assets/Icon/map_hotel.png";
-import IconMapIOS from "../../../assets/Icon/map_hotelIOS.png";
-import { transactionItem } from "../../../helper/transactionHelper";
+  facilitiesAccommodation,
+} from '../../../helper/checkingHelper';
+import IconMap from '../../../assets/Icon/map_hotel.png';
+import IconMapIOS from '../../../assets/Icon/map_hotelIOS.png';
+import { transactionItem } from '../../../helper/transactionHelper';
 
 class accomodationDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //   Parameter: this.props.navigation.state.params.Parameter,
-      Hotel: this.props.navigation.state.params.MeetingRoom,
+      //   Parameter: this.props.route.params.Parameter,
+      Hotel: this.props.route.params.MeetingRoom,
       Room: null,
       Service: null,
 
       scrollY: new Animated.Value(0),
-      keywords: "Coding Elements",
+      keywords: 'Coding Elements',
       coords: null,
-      fullAddress: "",
+      fullAddress: '',
       lat: null,
       long: null,
-      statusDesc: "Read More",
-      error: "",
+      statusDesc: 'Read More',
+      error: '',
       // yang diubah
-      loading: false
+      loading: false,
     };
   }
   static propTypes = {
@@ -69,7 +69,7 @@ class accomodationDetail extends Component {
     CustomDetails: PropTypes.array,
     Returns: PropTypes.array,
     Departures: PropTypes.array,
-    SummaryProgram: PropTypes.array
+    SummaryProgram: PropTypes.array,
   };
 
   //   handleDetailRoom = room => {
@@ -168,26 +168,26 @@ class accomodationDetail extends Component {
   //   };
 
   render() {
-    const fullWidth = Dimensions.get("window").width;
+    const fullWidth = Dimensions.get('window').width;
     const width90 =
-      Dimensions.get("window").width - Dimensions.get("window").width * 0.1;
-    const Data = this.state.Hotel ? this.state.Hotel : "";
-    const DataStar = Data.AccommodationRating || "";
-    const Star = parseInt(DataStar.Id) || "";
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.1;
+    const Data = this.state.Hotel ? this.state.Hotel : '';
+    const DataStar = Data.AccommodationRating || '';
+    const Star = parseInt(DataStar.Id) || '';
     let stars = new Array(Star).fill(0);
     const HEADER_MAX_HEIGHT = 300;
     const HEADER_MIN_HEIGHT = 70;
 
     const backgroundColorAnimate = this.state.scrollY.interpolate({
       inputRange: [0, 1],
-      outputRange: ["transparent", "white"],
-      extrapolate: "clamp"
+      outputRange: ['transparent', 'white'],
+      extrapolate: 'clamp',
     });
 
     const headerHeight = this.state.scrollY.interpolate({
       inputRange: [0, 1],
       outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-      extrapolate: "clamp"
+      extrapolate: 'clamp',
     });
     return (
       <Container>
@@ -195,11 +195,11 @@ class accomodationDetail extends Component {
         <Animated.View
           style={[
             styles.headerTransparent,
-            { height: headerHeight, backgroundColor: backgroundColorAnimate }
+            { height: headerHeight, backgroundColor: backgroundColorAnimate },
           ]}
         >
           <LinearGradient
-            colors={["#e5e5e5", "rgba(255,255,255,0)"]}
+            colors={['#e5e5e5', 'rgba(255,255,255,0)']}
             style={styles.gradientFooter}
           >
             <StatusBar
@@ -214,7 +214,7 @@ class accomodationDetail extends Component {
               <Ionicons name="ios-arrow-back" size={35} color="#252525" />
             </TouchableOpacity>
             <View style={styles.topNavTextDetail}>
-              <Text style={styles.textHeader}>{Data ? Data.Name : ""}</Text>
+              <Text style={styles.textHeader}>{Data ? Data.Name : ''}</Text>
             </View>
           </LinearGradient>
         </Animated.View>
@@ -224,9 +224,9 @@ class accomodationDetail extends Component {
           onScroll={Animated.event([
             {
               nativeEvent: {
-                contentOffset: { y: this.state.scrollY }
-              }
-            }
+                contentOffset: { y: this.state.scrollY },
+              },
+            },
           ])}
         >
           <Container widthContainer={fullWidth}>
@@ -234,13 +234,13 @@ class accomodationDetail extends Component {
               <RoundedLoading width={fullWidth} height={350} />
             ) : Data ? (
               Data.ObjectImages.length != 0 ||
-              (Data.ImageUrl != undefined && Data.ImageUrl != "") ? (
+              (Data.ImageUrl != undefined && Data.ImageUrl != '') ? (
                 <Image
                   source={{
                     uri:
                       Data.ObjectImages.length != 0
                         ? handleFilterImagePrimary(Data.ObjectImages)
-                        : Data.ImageUrl
+                        : Data.ImageUrl,
                   }}
                   resizeMode="cover"
                   style={styles.carouselImage}
@@ -271,10 +271,10 @@ class accomodationDetail extends Component {
                     style={[
                       styles.text20,
                       styles.marginTop10,
-                      styles.marginBottom10
+                      styles.marginBottom10,
                     ]}
                   >
-                    {Data ? Data.Name : ""}
+                    {Data ? Data.Name : ''}
                   </Text>
                 )}
 
@@ -287,7 +287,7 @@ class accomodationDetail extends Component {
                     style={[
                       styles.rowNoPadding,
                       styles.marginBottom20,
-                      stylesGlobal.alignItemsCenter
+                      stylesGlobal.alignItemsCenter,
                     ]}
                   >
                     {stars.map(i => {
@@ -305,7 +305,7 @@ class accomodationDetail extends Component {
                     <Text style={styles.accomodationTypeText}>Hotel</Text>
                     <Entypo name="dot-single" size={28} color="#555555" />
                     <Text style={styles.locationText}>
-                      {Data ? (Data.City ? Data.City.Name : "") : ""}
+                      {Data ? (Data.City ? Data.City.Name : '') : ''}
                     </Text>
                   </View>
                 )}
@@ -318,11 +318,11 @@ class accomodationDetail extends Component {
                   ) : (
                     <View style={styles.rowNoPadding}>
                       <Text style={styles.text12Wrap}>
-                        {this.state.statusDesc == "Read More"
+                        {this.state.statusDesc == 'Read More'
                           ? Data.Desc.slice(0, 250)
                           : Data.Desc}
                         <Text style={styles.seall} onPress={this.DescPress}>
-                          {this.state.statusDesc == "Read More" ? "... " : " "}
+                          {this.state.statusDesc == 'Read More' ? '... ' : ' '}
                           {this.state.statusDesc}
                         </Text>
                       </Text>
@@ -351,7 +351,7 @@ class accomodationDetail extends Component {
                               <View
                                 style={[
                                   styles.col25,
-                                  stylesGlobal.alignItemsCenter
+                                  stylesGlobal.alignItemsCenter,
                                 ]}
                                 key={i}
                               >
@@ -362,7 +362,7 @@ class accomodationDetail extends Component {
                                 <Text
                                   style={[
                                     styles.text12NoBold,
-                                    styles.textCenter
+                                    styles.textCenter,
                                   ]}
                                 >
                                   {Aloc.Name}
@@ -416,7 +416,7 @@ class accomodationDetail extends Component {
                                 <View
                                   style={[
                                     styles.col25,
-                                    stylesGlobal.alignItemsCenter
+                                    stylesGlobal.alignItemsCenter,
                                   ]}
                                   key={i}
                                 >
@@ -427,7 +427,7 @@ class accomodationDetail extends Component {
                                   <Text
                                     style={[
                                       styles.text12NoBold,
-                                      styles.textCenter
+                                      styles.textCenter,
                                     ]}
                                   >
                                     {Aloc.Name}
@@ -471,18 +471,18 @@ class accomodationDetail extends Component {
                     latitude: this.state.lat,
                     longitude: this.state.long,
                     latitudeDelta: 0.00922,
-                    longitudeDelta: 0.00421
+                    longitudeDelta: 0.00421,
                   }}
                 >
                   <Marker
                     key={0}
                     coordinate={{
                       latitude: this.state.lat,
-                      longitude: this.state.long
+                      longitude: this.state.long,
                     }}
                   >
                     <Image
-                      source={Platform.OS === "ios" ? IconMapIOS : IconMap}
+                      source={Platform.OS === 'ios' ? IconMapIOS : IconMap}
                       style={styles.image30}
                       resizeMode="contain"
                     />
@@ -495,7 +495,7 @@ class accomodationDetail extends Component {
               style={[
                 styles.rowNoPadding,
                 stylesGlobal.paddingHorizontal20,
-                stylesGlobal.marginTop20
+                stylesGlobal.marginTop20,
               ]}
             >
               <Text style={styles.bold14}>Choose your Room</Text>
@@ -521,12 +521,12 @@ class accomodationDetail extends Component {
                       estimatedPrice={
                         hotel.EstimatedTotalPrice
                           ? hotel.EstimatedTotalPrice.Price
-                          : ""
+                          : ''
                       }
                       currency={
                         hotel.EstimatedTotalPrice
                           ? hotel.EstimatedTotalPrice.CurrencyId
-                          : ""
+                          : ''
                       }
                     />
                   </View>
@@ -549,27 +549,27 @@ const mapStateToProps = state => ({
   CustomDetails: state.transactionReducer.CustomDetails,
   Returns: state.cusPackagesReducer.Returns,
   Departures: state.cusPackagesReducer.Departures,
-  SummaryProgram: state.cusPackagesReducer.SummaryProgram
+  SummaryProgram: state.cusPackagesReducer.SummaryProgram,
 });
 
 export default connect(mapStateToProps)(accomodationDetail);
 
 const DATAROOM = [
   {
-    CutOffDate: "2025-01-01T00:00:00",
-    StayingPeriodFrom: "2019-03-01T00:00:00",
-    StayingPeriodTo: "2021-03-31T00:00:00",
+    CutOffDate: '2025-01-01T00:00:00',
+    StayingPeriodFrom: '2019-03-01T00:00:00',
+    StayingPeriodTo: '2021-03-31T00:00:00',
     IsInstantConfirmation: true,
     Id: 0,
     AccommodationType: {
-      Id: "DOUBLEORTWIN",
-      Name: "Double/Twin Sharing",
-      Capacity: 2
+      Id: 'DOUBLEORTWIN',
+      Name: 'Double/Twin Sharing',
+      Capacity: 2,
     },
-    Name: "Deluxe Room",
-    Explanation: "Deluxe Room",
-    ImageUrl: "",
-    Currency: "USD",
+    Name: 'Deluxe Room',
+    Explanation: 'Deluxe Room',
+    ImageUrl: '',
+    Currency: 'USD',
     Price: 0.0,
     ServiceItemId: 28059,
     IsPromo: false,
@@ -577,10 +577,10 @@ const DATAROOM = [
     ExtrabedCapacity: 1,
     NeedApprovalTreshold: 0,
     AccommodationProfileId: 120,
-    AccommodationProfileName: "Pullman Deira City Center",
+    AccommodationProfileName: 'Pullman Deira City Center',
     DefaultReleaseDay: 0,
     SimpleAccommodationItemFacilities: [],
-    AccommodationItemServiceTypes: ["With_breakfast"],
-    ItemImages: []
-  }
+    AccommodationItemServiceTypes: ['With_breakfast'],
+    ItemImages: [],
+  },
 ];
