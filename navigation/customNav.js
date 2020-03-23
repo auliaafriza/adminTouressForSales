@@ -27,6 +27,10 @@ export default function customNav({ navigation, route }) {
         name="TourSummaryCustomReady"
         component={TourSummaryCustomReady}
       /> */}
+      <Stack.Screen
+        name="TourSummaryCustomReady"
+        component={TourSummaryCustomReady}
+      />
     </Stack.Navigator>
   );
 }

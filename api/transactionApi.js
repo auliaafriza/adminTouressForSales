@@ -56,9 +56,8 @@ export const postJoinTourApi = (data, type, packageId) => {
   );
 };
 
-export const getTourSummaryByIdApi = (tourTransactionId, data) => {
-  return apiClient.post(
-    `${TOUR_TRANSACTION_URL}/TransactionSummary?id=${tourTransactionId}`,
-    data
+export const getTourSummaryByIdApi = tourTransactionId => {
+  return apiClient.get(
+    `${TOUR_TRANSACTION_URL}/TransactionSummary?id=${tourTransactionId}`
   );
 };

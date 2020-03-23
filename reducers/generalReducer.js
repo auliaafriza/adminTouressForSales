@@ -1,11 +1,15 @@
-import * as types from "../actions/General/actionTypes";
+import * as types from '../actions/General/actionTypes';
 
 const initialState = {
   tourTypeList: [],
   tourCategoryList: [],
   allMovementTypes: [],
   cityInCountry: [],
-  loading: false
+  loading: false,
+  ListCompany: [],
+  isListCompany: '',
+  dataUserIdCompany: [],
+  isDataUserIdCompany: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,13 +23,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         tourTypeList: action.payload.data,
         loading: false,
-        errors: null
+        errors: null,
       };
     case types.GET_TOUR_CATEGORY_REJECTED:
       return {
         ...state,
         loading: false,
-        errors: action.payload.response.data
+        errors: action.payload.response.data,
       };
 
     case types.GET_TOUR_TYPE:
@@ -37,13 +41,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         tourCategoryList: action.payload.data,
         loading: false,
-        errors: null
+        errors: null,
       };
     case types.GET_TOUR_TYPE_REJECTED:
       return {
         ...state,
         loading: false,
-        errors: action.payload.response.data
+        errors: action.payload.response.data,
       };
 
     case types.GET_ALL_MOVEMENT_TYPES:
@@ -56,14 +60,14 @@ const reducer = (state = initialState, action) => {
         isMovementMode: true,
         allMovementTypes: action.payload.data,
         loading: false,
-        errors: null
+        errors: null,
       };
     case types.GET_ALL_MOVEMENT_TYPES_REJECTED:
       return {
         ...state,
         loading: false,
         errors: action.payload.response.data,
-        isMovementMode: false
+        isMovementMode: false,
       };
 
     case types.GET_CITY_IN_COUNTRY:
@@ -76,13 +80,60 @@ const reducer = (state = initialState, action) => {
 
         cityInCountry: action.payload.data,
         loading: false,
-        errors: null
+        errors: null,
       };
     case types.GET_CITY_IN_COUNTRY_REJECTED:
       return {
         ...state,
         loading: false,
-        errors: action.payload.response.data
+        errors: action.payload.response.data,
+      };
+
+    case types.GET_CUSTOMER_LIST:
+      return { ...state };
+    case types.GET_CUSTOMER_LIST_PENDING:
+      return { ...state, loading: true };
+    case types.GET_CUSTOMER_LIST_FULFILLED:
+      return {
+        ...state,
+        ListCompany: action.payload.data,
+        isListCompany: 'success',
+        loading: false,
+        errors: null,
+      };
+    case types.GET_CUSTOMER_LIST_REJECTED:
+      return {
+        ...state,
+        loading: false,
+        isListCompany: 'failed',
+        errors: action.payload.response.data,
+      };
+
+    case types.GET_USER_ID_COMPANY:
+      return { ...state };
+    case types.GET_USER_ID_COMPANY_PENDING:
+      return { ...state, loading: true };
+    case types.GET_USER_ID_COMPANY_FULFILLED:
+      return {
+        ...state,
+        dataUserIdCompany: action.payload.data,
+        isDataUserIdCompany: 'success',
+        loading: false,
+        errors: null,
+      };
+    case types.GET_USER_ID_COMPANY_REJECTED:
+      return {
+        ...state,
+        loading: false,
+        isDataUserIdCompany: 'failed',
+        errors: action.payload.response.data,
+      };
+
+    case types.RESET_CUSTOMER_LIST:
+      return {
+        ...state,
+        isListCompany: '',
+        isDataUserIdCompany: '',
       };
 
     default:
