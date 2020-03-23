@@ -12,7 +12,7 @@ import {
 
 import apiClient from './apiClient';
 
-export const getDurationApi = (type, data) => {
+export const getDurationApi = (type, data, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   let urlString = null;
   if (data.FromId && data.ToId)
@@ -43,49 +43,49 @@ export const getDurationApi = (type, data) => {
   return apiClient.get(urlString);
 };
 
-export const getAirportApi = region => {
+export const getAirportApi = (region, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${PLACE_URL}/Get/ByRegion/${region}`);
 };
 
-export const getAirportListApi = () => {
+export const getAirportListApi = authToken => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${PLACE_URL}/Get/ByPlaceType/1`);
 };
 
-export const getTransportationProfileRatingsApi = () => {
+export const getTransportationProfileRatingsApi = authToken => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_PROFILE_RATINGS_URL);
 };
 
-export const getTransportationProfileCategoriesApi = () => {
+export const getTransportationProfileCategoriesApi = authToken => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_PROFILE_CATEGORIES_URL);
 };
 
-export const getTransportationProfilesApi = () => {
+export const getTransportationProfilesApi = authToken => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_PROFILES_URL);
 };
 
-export const getTransportationTypesApi = () => {
+export const getTransportationTypesApi = authToken => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_TYPES_URL);
 };
 
-export const getTransportationSeatTypesApi = () => {
+export const getTransportationSeatTypesApi = authToken => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(GET_TRANSPORTATION_SEAT_TYPES_URL);
 };
 
-export const getTransportationUnitsFilterApi = data => {
+export const getTransportationUnitsFilterApi = (data, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(
     `${GET_TRANSPORTATION_UNITS_FILTER_URL}?fromCity=${data.fromCity}&toCities=${data.toCities}&RatingId=${data.RatingId}&seatTypeId=${data.seatTypeId}&typeId=${data.typeId}&requestedDate=${data.requestedDate}`
   );
 };
 
-export const getTransportationUnitByIdApi = id => {
+export const getTransportationUnitByIdApi = (id, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${GET_TRANSPORTATION_UNIT_BY_ID_URL}/${id}`);
 };
