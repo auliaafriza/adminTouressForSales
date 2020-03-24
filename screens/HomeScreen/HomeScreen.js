@@ -30,7 +30,10 @@ import iconFixed from '../../assets/Icon/series_package.png';
 import iconCustom from '../../assets/Icon/custom_package.png';
 import { LinearGradient } from 'expo-linear-gradient';
 import { setPackageStatusFromHomeToListAction } from '../../actions/Transactions/TransactionAction';
-import { getAllMovementTypesAction } from '../../actions/General/generalAction';
+import {
+  getAllMovementTypesAction,
+  getCityInCountryAction,
+} from '../../actions/General/generalAction';
 import { setToken } from '../../actions/UserAuth/userAuthAction';
 
 class home extends Component {
@@ -75,6 +78,7 @@ class home extends Component {
     const userToken = await AsyncStorage.getItem('token');
     this.props.setToken(userToken);
     this.props.getAllMovementTypesAction();
+    this.props.getCityInCountryAction();
     handleAndroidBackButton(exitAlert);
     await this.getCountryLoc();
 
@@ -296,4 +300,5 @@ export default connect(mapStateToProps, {
   setPackageStatusFromHomeToListAction,
   setToken,
   getAllMovementTypesAction,
+  getCityInCountryAction,
 })(home);

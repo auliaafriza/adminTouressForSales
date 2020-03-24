@@ -20,23 +20,23 @@ const Container = ({
 }) => {
   const containerStyles = [styles.container];
   if (color) {
-    containerStyles.push({backgroundColor: color});
+    containerStyles.push({ backgroundColor: color });
   }
   if (widthContainer) {
-    containerStyles.push({width: widthContainer});
+    containerStyles.push({ width: widthContainer });
   }
   if (heightContainer) {
-    containerStyles.push({height: heightContainer});
+    containerStyles.push({ height: heightContainer });
   }
   if (paddingtopcontainer) {
-    containerStyles.push({paddingTop: paddingtopcontainer});
+    containerStyles.push({ paddingTop: paddingtopcontainer });
   }
 
   if (paddingbottomcontainer) {
-    containerStyles.push({paddingBottom: paddingbottomcontainer});
+    containerStyles.push({ paddingBottom: paddingbottomcontainer });
   }
   if (marginTop) {
-    containerStyles.push({marginTop: marginTop});
+    containerStyles.push({ marginTop: marginTop });
   }
 
   return (

@@ -12,6 +12,9 @@ import {
   GET_TRANSPORTATION_UNITS_FILTER,
   RESET_STATUS_TRANSPORTATION,
   RESET_STATUS_TRANSPORTATION_UNITS_FILTER,
+  GET_DURATION_FULFILLED,
+  GET_DURATION_REJECTED,
+  GET_DURATION,
 } from './actionTypes';
 import {
   getDurationApi,
@@ -65,15 +68,27 @@ export const getAirportAction = data => {
 // ADDRESS TO ID
 // ID TO ADDRESS
 // ADDRESS TO ADDRESS
-export const getDurationAction = (type, data) => {
+export const getDurationAction = data => {
   const state = store.getState();
   const authToken = state.authReducer.token;
 
   return dispatch => {
     return dispatch({
       type: GET_DURATION,
-      payload: getDurationApi(type, data, authToken),
-    });
+      payload: getDurationApi(data, authToken),
+    })
+      .then(response =>
+        dispatch({
+          type: GET_DURATION_FULFILLED,
+          payload: response.value.data,
+        })
+      )
+      .catch(error => {
+        dispatch({
+          type: GET_DURATION_REJECTED,
+          payload: error,
+        });
+      });
   };
 };
 

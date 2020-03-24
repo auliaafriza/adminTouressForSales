@@ -9,6 +9,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Container } from '../../../components/container/index';
@@ -16,6 +17,7 @@ import { NormalButton } from '../../../components/button/index';
 import { RoundedTextInput } from '../../../components/textInput';
 import { SeperatorRepeat } from '../../../components/list/index';
 import { Card, CardMediaNew } from ',,/../../components/card';
+import { CheckBox } from 'react-native-elements';
 import styles from './styles';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -29,6 +31,7 @@ import {
   resetPostQuotationAction,
   setSpecialAdjusmentAction,
   resetTransactionAction,
+  sendEmailConfirmation,
 } from '../../../actions/Transactions/TransactionAction';
 // import { get_history_created_booking } from '../../actions/historyAction';
 // import {
@@ -85,6 +88,8 @@ class summaryCustom extends Component {
       specialAdjusment: this.props.specialAdjusment
         ? this.props.specialAdjusment
         : [],
+      modalSendEmailConfirmation: false,
+      isSendEmailConfirmation: false,
     };
   }
   static propTypes = {
@@ -141,7 +146,7 @@ class summaryCustom extends Component {
   };
 
   handleCreate = () => {
-    this.setState({ loading: true });
+    this.setState({ loading: true, modalSendEmailConfirmation: false });
     let item = copyObject(this.state.ItemTransaction);
     item.TourNote = this.state.TourNote;
 
@@ -154,7 +159,6 @@ class summaryCustom extends Component {
       item.UserProfileId = this.state.Company.Id;
       this.props.postCreateCustomOnBeHalfAction(item);
     }
-    console.log(item);
   };
 
   handleQuotation = () => {
@@ -201,51 +205,112 @@ class summaryCustom extends Component {
     }
   };
 
-  shouldComponentUpdate(nextProps) {
+  // shouldComponentUpdate(nextProps) {
+  //   if (this.props.packageByIdStatus) {
+  //     // this.props.setSpecialAdjusmentAction(this.props.specialAdjusment);
+  //     this.props.resetTransactionAction();
+  //     return false;
+  //   } else if (this.props.packageByIdStatus !== null) {
+  //     // Alert.alert('Failed', this.props.messages, [{ text: 'OK' }]);
+  //     this.props.resetTransactionAction();
+  //     return false;
+  //   }
+
+  //   if (nextProps.isCreateTour === 'success') {
+  //     this.setState({ loading: false });
+  //     this.props.resetPostCreateCustomAction();
+  //     //   this.props.dispatch(reset_additional_service());
+  //     //   this.props.dispatch(get_history_created_booking());
+  //     let iD = nextProps.CreateTour
+  //       ? nextProps.CreateTour.BookingDetailSum.Id
+  //       : '';
+  //     this.state.isQuotationSave
+  //       ? this.setState({ modalQuotationSaved: true })
+  //       : this.openModal(iD);
+  //     return false;
+  //   } else if (nextProps.isCreateTour === 'failed') {
+  //     this.setState({ loading: false });
+  //     Alert.alert('Failed', nextProps.CreateTourError, [{ text: 'OK' }]);
+  //     this.props.resetPostCreateCustomAction();
+  //     return false;
+  //   }
+
+  //   if (nextProps.isQuotationPost === 'success') {
+  //     this.setState({ loading: false });
+  //     this.setState({ modalQuotationSaved: true });
+  //     //   this.props.dispatch(reset_qoutation());
+  //     //   this.props.dispatch(reset_additional_service());
+  //     //   this.props.dispatch(get_my_qoutation());
+  //     this.props.navigation.navigate('ListMyQoutation');
+  //     return false;
+  //   } else if (nextProps.isQuotationPost === 'failed') {
+  //     this.setState({ loading: false });
+  //     Alert.alert('Failed', 'Please check again', [{ text: 'OK' }]);
+  //     //   this.props.dispatch(reset_qoutation());
+  //     return false;
+  //   } else return true;
+  // }
+
+  componentDidUpdate() {
     if (this.props.packageByIdStatus) {
-      // this.props.setSpecialAdjusmentAction(this.props.specialAdjusment);
       this.props.resetTransactionAction();
+      // this.props.dispatch(reset_additional_service());
+      let iD = this.props.CreateTour
+        ? this.props.CreateTour.BookingDetailSum.Id
+        : '';
+      this.handleSendEmailAfterCreateBooking(iD);
       return false;
     } else if (this.props.packageByIdStatus !== null) {
-      // Alert.alert('Failed', this.props.messages, [{ text: 'OK' }]);
+      this.setState({ loading: false });
+      // this.props.CreateTourError
+      Alert.alert('Failed', 'Please try Again', [{ text: 'OK' }]);
       this.props.resetTransactionAction();
-      return false;
-    }
-
-    if (nextProps.isCreateTour === 'success') {
-      this.setState({ loading: false });
-      this.props.resetPostCreateCustomAction();
-      //   this.props.dispatch(reset_additional_service());
-      //   this.props.dispatch(get_history_created_booking());
-      let iD = nextProps.CreateTour
-        ? nextProps.CreateTour.BookingDetailSum.Id
-        : '';
-      this.state.isQuotationSave
-        ? this.setState({ modalQuotationSaved: true })
-        : this.openModal(iD);
-      return false;
-    } else if (nextProps.isCreateTour === 'failed') {
-      this.setState({ loading: false });
-      Alert.alert('Failed', nextProps.CreateTourError, [{ text: 'OK' }]);
-      this.props.resetPostCreateCustomAction();
-      return false;
-    }
-
-    if (nextProps.isQuotationPost === 'success') {
-      this.setState({ loading: false });
-      this.setState({ modalQuotationSaved: true });
-      //   this.props.dispatch(reset_qoutation());
-      //   this.props.dispatch(reset_additional_service());
-      //   this.props.dispatch(get_my_qoutation());
-      this.props.navigation.navigate('ListMyQoutation');
-      return false;
-    } else if (nextProps.isQuotationPost === 'failed') {
-      this.setState({ loading: false });
-      Alert.alert('Failed', 'Please check again', [{ text: 'OK' }]);
-      //   this.props.dispatch(reset_qoutation());
       return false;
     } else return true;
   }
+
+  handleSendEmailAfterCreateBooking = IdBook => {
+    const data = {
+      Id: IdBook,
+      emailSendConfirmed: this.state.isSendEmailConfirmation,
+    };
+    this.props.sendEmailConfirmation(data);
+  };
+
+  // shouldComponentUpdate(nextProps) {
+  //   if (nextProps.isSendEmailConfirmation === 'success') {
+  //     this.setState({ loading: false });
+  //     this.props.dispatch(reset_send_email_confirmation());
+  //     this.props.dispatch(get_history_created_booking());
+  //     let iD = this.props.CreateTour
+  //       ? this.props.CreateTour.BookingDetailSum.Id
+  //       : '';
+  //     this.state.isQuotationSave
+  //       ? this.setState({ modalQuotationSaved: true })
+  //       : this.openModal(iD);
+  //     return false;
+  //   } else if (nextProps.isSendEmailConfirmation === 'failed') {
+  //     this.setState({ loading: false });
+  //     Alert.alert('Failed', nextProps.sendEmailConfirmation, [{ text: 'OK' }]);
+  //     this.props.dispatch(reset_send_email_confirmation());
+  //     return false;
+  //   }
+
+  //   if (nextProps.isQuotationPost === 'success') {
+  //     this.setState({ loading: false });
+  //     this.setState({ modalQuotationSaved: true });
+  //     this.props.dispatch(reset_qoutation());
+  //     this.props.dispatch(reset_additional_service());
+  //     this.props.dispatch(get_my_qoutation());
+  //     this.props.navigation.navigate('ListMyQoutation');
+  //     return false;
+  //   } else if (nextProps.isQuotationPost === 'failed') {
+  //     this.setState({ loading: false });
+  //     Alert.alert('Failed', 'Please check again', [{ text: 'OK' }]);
+  //     this.props.dispatch(reset_qoutation());
+  //     return false;
+  //   } else return true;
+  // }
 
   openModal = id => {
     this.setState({ modalVisible: true, idBook: id });
@@ -331,6 +396,21 @@ class summaryCustom extends Component {
       specialAdjusment,
     });
   };
+
+  closeModal = () => {
+    this.setState({ modalSendEmailConfirmation: false });
+  };
+
+  handleCheckSendEmail = () => {
+    this.setState({
+      isSendEmailConfirmation: !this.state.isSendEmailConfirmation,
+    });
+  };
+
+  openModalSendEmail = () => {
+    this.setState({ modalSendEmailConfirmation: true });
+  };
+
   render() {
     // const Data = this.props.DemoPrice ? this.props.DemoPrice : "";
     const Data =
@@ -505,6 +585,65 @@ class summaryCustom extends Component {
             </View>
           </View>
         </ModalBottom>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalSendEmailConfirmation}
+          onRequestClose={() => {
+            this.setModalVisible(!this.state.modalSendEmailConfirmation);
+          }}
+        >
+          <View style={styles.modalContainer}>
+            {this.state.modalSendEmailConfirmation ? (
+              <View style={styles.innerContainerSort}>
+                <Text style={[stylesGlobal.text20, stylesGlobal.textBold]}>
+                  Confirmation
+                </Text>
+                <Text>Are you sure to book this tour?</Text>
+                <CheckBox
+                  onPress={this.handleCheckSendEmail}
+                  checked={this.state.isSendEmailConfirmation}
+                  center
+                  title="Send email manual"
+                  containerStyle={styles.checkBoxStyle}
+                  textStyle={[
+                    stylesGlobal.text14,
+                    stylesGlobal.center,
+                    stylesGlobal.colorBlackLight,
+                  ]}
+                />
+
+                <View style={[stylesGlobal.row, stylesGlobal.width100]}>
+                  <View style={stylesGlobal.width50}>
+                    <NormalButton
+                      textSize={14}
+                      text="Yes"
+                      buttonWidth="90%"
+                      buttonHeight={40}
+                      radiusBorder={10}
+                      buttonColor={styles.$goldcolor}
+                      textColor="black"
+                      onPress={this.handleCreate}
+                    />
+                  </View>
+                  <View style={stylesGlobal.width50}>
+                    <NormalButton
+                      textSize={14}
+                      text="Cancel"
+                      buttonWidth="90%"
+                      buttonHeight={40}
+                      radiusBorder={10}
+                      colorBorder={styles.$goldcolor}
+                      buttonColor={'white'}
+                      textColor="black"
+                      onPress={this.closeModal}
+                    />
+                  </View>
+                </View>
+              </View>
+            ) : null}
+          </View>
+        </Modal>
         {this.props.loading ? (
           <View style={stylesGlobal.marginTop50}>
             <RoundedLoading
@@ -1570,29 +1709,29 @@ class summaryCustom extends Component {
                   />
                 </View>
                 <View style={stylesGlobal.width50}>
-                  {/* {this.props.DetailCustom.Status == 'edit' ? (
-                  <NormalButton
-                    textSize={14}
-                    buttonWidth="98%"
-                    buttonHeight={40}
-                    text="Accept Quotation"
-                    textColor={styles.$goldcolor}
-                    buttonColor="transparent"
-                    colorBorder={styles.$goldcolor}
-                    onPress={this.handleAcceptQuotation}
-                  />
-                ) : ( */}
-                  <NormalButton
-                    textSize={16}
-                    buttonWidth="98%"
-                    buttonHeight={40}
-                    text="Book Now"
-                    buttonColor={styles.$goldcolor}
-                    colorBorder={styles.$goldcolor}
-                    textColor="#252525"
-                    onPress={this.handleCreate}
-                  />
-                  {/* )} */}
+                  {this.props.DetailCustom.Status == 'edit' ? (
+                    <NormalButton
+                      textSize={14}
+                      buttonWidth="98%"
+                      buttonHeight={40}
+                      text="Accept Quotation"
+                      textColor={styles.$goldcolor}
+                      buttonColor="transparent"
+                      colorBorder={styles.$goldcolor}
+                      onPress={this.handleAcceptQuotation}
+                    />
+                  ) : (
+                    <NormalButton
+                      textSize={16}
+                      buttonWidth="98%"
+                      buttonHeight={40}
+                      text="Book Now"
+                      buttonColor={styles.$goldcolor}
+                      colorBorder={styles.$goldcolor}
+                      textColor="#252525"
+                      onPress={this.openModalSendEmail}
+                    />
+                  )}
                 </View>
               </View>
             </LinearGradient>
@@ -1642,6 +1781,7 @@ const mapStateToProps = state => ({
   packageById: state.transactionReducer.packageById,
   packageByIdStatus: state.transactionReducer.packageByIdStatus,
   loading: state.transactionReducer.loading,
+  DetailCustom: state.transactionReducer.CustomDetails,
 });
 
 export default connect(mapStateToProps, {
@@ -1652,6 +1792,7 @@ export default connect(mapStateToProps, {
   resetPostQuotationAction,
   setSpecialAdjusmentAction,
   resetTransactionAction,
+  sendEmailConfirmation,
 })(summaryCustom);
 
 const list = [

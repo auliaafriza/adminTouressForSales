@@ -88,7 +88,7 @@ class PackageList extends PureComponent {
           Id: Id,
           TourOperator: TourOperator,
         })
-      : this.props.navigation.navigate('ReadyPackagesDetail', {
+      : this.props.navigation.navigate('PackagesDetail', {
           status: type,
           Id: Id,
           TourOperator: TourOperator,
@@ -761,7 +761,6 @@ class PackageList extends PureComponent {
                             ? ''
                             : 'Fixed Price'
                         }
-                        //label=""
                         commission={
                           item.PackageType == 'Fixed'
                             ? convertRoundPrice(

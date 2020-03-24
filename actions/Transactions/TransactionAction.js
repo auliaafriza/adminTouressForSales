@@ -42,6 +42,9 @@ import {
   POST_DEMO_JOIN_TOUR,
   POST_DEMO_CREATE_TOUR,
   RESET_STATUS_POST_DEMO,
+  SET_ADDITIONAL_SERVICES,
+  SEND_EMAIL_CONFIRMATION,
+  RESET_SEND_EMAIL,
 } from './actionTypes';
 
 import {
@@ -59,6 +62,7 @@ import {
   getTransactionHistoryByStatusApi,
   getDemoJoinTourApi,
   getDemoCreateTourApi,
+  sendEmailConfirmationApi,
 } from '../../api/transactionApi';
 
 import store from '../../config/store';
@@ -505,6 +509,35 @@ export const resetStatusPostDemo = () => {
   return dispatch => {
     return dispatch({
       type: RESET_STATUS_POST_DEMO,
+    });
+  };
+};
+
+export const setAdditionalServicesAction = data => {
+  return dispatch => {
+    return dispatch({
+      type: SET_ADDITIONAL_SERVICES,
+      payload: data,
+    });
+  };
+};
+
+export const sendEmailConfirmation = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+
+  return dispatch => {
+    return dispatch({
+      type: SEND_EMAIL_CONFIRMATION,
+      payload: sendEmailConfirmationApi(data, authToken),
+    });
+  };
+};
+
+export const resetSendEmail = () => {
+  return dispatch => {
+    return dispatch({
+      type: RESET_SEND_EMAIL,
     });
   };
 };

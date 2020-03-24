@@ -396,7 +396,7 @@ class TourSchedule extends Component {
               DP[i].Movements[j].Duration = 0;
             }
           } else {
-            if (item == undefined) {
+            if (item == undefined || item == null) {
               DP[i].Movements[j].Duration = 0;
             } else {
               DP[i].Movements[j].Duration = item.Duration.value;

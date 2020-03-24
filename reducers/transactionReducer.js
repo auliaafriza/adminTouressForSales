@@ -37,6 +37,9 @@ const initialState = {
   packageHistoryListStatus: '',
   postDemoStatus: '',
   postDemo: null,
+  additionalServices: null,
+  sendEmailConfirmationStatus: '',
+  sendEmailConfirmation: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -502,7 +505,43 @@ const reducer = (state = initialState, action) => {
         loading: false,
         errors: action.payload.response.data,
       };
-
+    //set data additional services
+    case types.SET_ADDITIONAL_SERVICES:
+      return {
+        ...state,
+        additionalServices: action.payload,
+      };
+    //send email
+    case types.SEND_EMAIL_CONFIRMATION:
+      return {
+        ...state,
+      };
+    case types.SEND_EMAIL_CONFIRMATION_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.SEND_EMAIL_CONFIRMATION_FULFILLED:
+      return {
+        ...state,
+        sendEmailConfirmation: action.payload.data,
+        errors: {},
+        loading: false,
+        sendEmailConfirmationStatus: 'success',
+      };
+    case types.SEND_EMAIL_CONFIRMATION_REJECTED:
+      return {
+        ...state,
+        sendEmailConfirmation: null,
+        errors: action.payload.response.data,
+        loading: false,
+        sendEmailConfirmationStatus: 'failed',
+      };
+    case types.RESET_SEND_EMAIL:
+      return {
+        ...state,
+        sendEmailConfirmationStatus: '',
+      };
     default:
       return state;
   }

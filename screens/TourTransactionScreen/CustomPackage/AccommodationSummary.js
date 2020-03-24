@@ -79,10 +79,7 @@ import {
   resetDeparturesItineraryAction,
   resetSummaryProgramAction,
 } from '../../../actions/Transactions/TransactionAction';
-import {
-  getAllMovementTypesAction,
-  getCityInCountryAction,
-} from '../../../actions/General/generalAction';
+import { getAllMovementTypesAction } from '../../../actions/General/generalAction';
 import { transactionItem } from '../../../helper/transactionHelper';
 import { findName } from '../../../helper/checkingHelper';
 import {
@@ -219,7 +216,6 @@ class AccommodationSummary extends Component {
     if (this.props.isMovementMode == []) {
       this.props.getAllMovementTypesAction();
     }
-    this.props.getCityInCountryAction();
   }
 
   backButton = () => {
@@ -751,7 +747,7 @@ class AccommodationSummary extends Component {
               DP[i].Movements[j + 1].Item
             );
             item = await this.props.getDurationAction(data);
-            item = this.props.getDuration; //getDurationAPI(this.props.token, data);
+            item = response ? response.payload : undefined;
             if (item.Duration != undefined) {
               this.props.setDrivingAction(
                 setObjectDuration(this.props.driving, data, item)
@@ -2690,5 +2686,4 @@ export default connect(mapStateToProps, {
   getAirportAction,
   getOperatorListAction,
   resetOperatorListAction,
-  getCityInCountryAction,
 })(AccommodationSummary);

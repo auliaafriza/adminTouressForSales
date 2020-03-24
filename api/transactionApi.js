@@ -89,3 +89,10 @@ export const getDemoCreateTour = (item, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.post(`/TourTransactions/DemoPrice`, item);
 };
+
+export const sendEmailConfirmationApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.post(
+    `/TourTransactions/EmailSendConfirmation?tourTransactionCode=${data.Id}&emailSendConfirmed=${data.emailSendConfirmed}`
+  );
+};

@@ -222,7 +222,7 @@ class restaurantDetail extends Component {
               DP[i].Movements[j].Item.MapsString = '';
             }
           } else {
-            if (item == undefined) {
+            if (item == undefined || item == null) {
               DP[i].Movements[j].Duration = 0;
               DP[i].Movements[j].DurationText = '';
               DP[i].Movements[j].Item.MapsString = '';

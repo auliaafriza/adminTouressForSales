@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -12,24 +12,24 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import RadioGroup from 'react-native-custom-radio-group';
-import {LinearGradient} from 'expo-linear-gradient';
-import {CardWithInputDuration, Card} from '../../../components/card';
-import {Container} from '../../../components/container/index';
-import {NormalButton} from '../../../components/button/index';
+import { LinearGradient } from 'expo-linear-gradient';
+import { CardWithInputDuration, Card } from '../../../components/card';
+import { Container } from '../../../components/container/index';
+import { NormalButton } from '../../../components/button/index';
 import {
   RoundedTextInput,
   RoundedTextInputWithButton,
 } from '../../../components/textInput';
-import {TextWarning} from '../../../components/text';
+import { TextWarning } from '../../../components/text';
 
 import IOSPicker from 'react-native-ios-picker';
 import styles from './styles';
 import stylesGlobal from '../../../components/styles';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {initialSetCustomPackage} from '../../../helper/itineraryBuilder';
-import {Seperator} from '../../../components/list';
-import {Loading} from '../../../components/loading';
+import { connect } from 'react-redux';
+import { initialSetCustomPackage } from '../../../helper/itineraryBuilder';
+import { Seperator } from '../../../components/list';
+import { Loading } from '../../../components/loading';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // import {
 //   set_custom_itenerary,
@@ -54,8 +54,8 @@ import {
   setGuestTourGuideAction,
 } from '../../../actions/Transactions/TransactionAction';
 class customPackagesOption extends Component {
-  constructor (props) {
-    super (props);
+  constructor(props) {
+    super(props);
     this.state = {
       DetailCustom: {
         IdTour: null,
@@ -65,7 +65,7 @@ class customPackagesOption extends Component {
         TourType: null,
         Departures: [],
         Returns: [],
-        GuestAllocation: {Adult: 0, Child: 0, Infant: 0},
+        GuestAllocation: { Adult: 0, Child: 0, Infant: 0 },
         RoomAllocation: {
           SharingRoomQty: 0,
           ChildSharingRoomQty: 0,
@@ -96,18 +96,18 @@ class customPackagesOption extends Component {
     };
   }
 
-  componentDidMount () {
-    BackHandler.addEventListener ('hardwareBackPress', () => {
-      this.props.navigation.pop (); // works best when the goBack is async
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
-    this.getAction ();
-    this.props.resetCustomItineraryAction ();
+    this.getAction();
+    this.props.resetCustomItineraryAction();
   }
 
   getAction = () => {
-    this.props.getTourCategoryAction ();
-    this.props.getTourTypeAction ();
+    this.props.getTourCategoryAction();
+    this.props.getTourTypeAction();
   };
 
   validate = () => {
@@ -184,7 +184,7 @@ class customPackagesOption extends Component {
       errors.errorRoomAllocation = 'Room allocation not same with total guest';
     }
 
-    this.setState ({
+    this.setState({
       ...this.state,
       ...errors,
     });
@@ -203,9 +203,9 @@ class customPackagesOption extends Component {
 
   onSelectCountry = data => {
     let newDepartures = [];
-    newDepartures.push (data);
+    newDepartures.push(data);
 
-    this.setState ({
+    this.setState({
       DetailCustom: {
         ...this.state.DetailCustom,
         Departures: newDepartures,
@@ -214,7 +214,7 @@ class customPackagesOption extends Component {
   };
 
   addRoomAllocation = data => {
-    this.setState ({
+    this.setState({
       DetailCustom: {
         ...this.state.DetailCustom,
         RoomAllocation: data,
@@ -223,31 +223,33 @@ class customPackagesOption extends Component {
   };
 
   handleRoomAllocation = () => {
-    const {GuestAllocation} = this.state.DetailCustom;
+    const { GuestAllocation } = this.state.DetailCustom;
     const totalGuest =
       GuestAllocation.Adult + GuestAllocation.Child + GuestAllocation.Infant;
     if (totalGuest != 0) {
-      this.props.navigation.navigate ('RoomAllocation', {
+      this.props.navigation.navigate('RoomAllocation', {
         onSelect: this.addRoomAllocation,
         Guest: this.state.DetailCustom.GuestAllocation,
         RoomAlloc: this.state.DetailCustom.RoomAllocation,
         Travel: this.state.DetailCustom.GroupCapacity,
       });
     } else {
-      Alert.alert (
+      Alert.alert(
         'Please Fill Guest Allocation',
         'Guest Allocation minimum 1 pax for adult',
-        [{text: 'OK'}]
+        [{ text: 'OK' }]
       );
     }
   };
 
   tapped = () => {
-    Alert.alert ('Please fill Guest Allocation, minimum 1 pax', [{text: 'OK'}]);
+    Alert.alert('Please fill Guest Allocation, minimum 1 pax', [
+      { text: 'OK' },
+    ]);
   };
 
   handleCountry = () => {
-    this.props.navigation.navigate ('General', {
+    this.props.navigation.navigate('General', {
       screen: 'ListCity',
       params: {
         onSelect: this.onSelectCountry,
@@ -256,24 +258,24 @@ class customPackagesOption extends Component {
   };
 
   handleAccomodation = async () => {
-    const error = this.validate ();
+    const error = this.validate();
     if (!error) {
-      this.setState ({loading: true});
-      this.props.setCustomItineraryAction (this.state.DetailCustom);
+      this.setState({ loading: true });
+      this.props.setCustomItineraryAction(this.state.DetailCustom);
       //for get airport
       const headline = {
         Departures: null,
         MainPrograms: null,
         Returns: null,
       };
-      const data = initialSetCustomPackage (
+      const data = initialSetCustomPackage(
         headline,
         this.state.DetailCustom.RoomAllocation
       );
-      this.props.setDeparturesItineraryAction (data.headlineProgram.Departures);
-      this.props.setSummaryProgramAction (data.headlineProgram.MainPrograms);
-      this.props.setReturnsItineraryAction (data.headlineProgram.Returns);
-      this.props.setGuestTourGuideAction (
+      this.props.setDeparturesItineraryAction(data.headlineProgram.Departures);
+      this.props.setSummaryProgramAction(data.headlineProgram.MainPrograms);
+      this.props.setReturnsItineraryAction(data.headlineProgram.Returns);
+      this.props.setGuestTourGuideAction(
         this.state.DetailCustom.GuestAllocation.Adult +
           this.state.DetailCustom.GuestAllocation.Child
       );
@@ -292,14 +294,14 @@ class customPackagesOption extends Component {
       //         this.state.DetailCustom.GuestAllocation.Child
       //     )
       //   );
-      this.setState ({loading: false});
-      this.props.setGuestQuotationAction ([]);
+      this.setState({ loading: false });
+      this.props.setGuestQuotationAction([]);
       //   this.props.dispatch(set_guest_qoutation([]));
-      this.props.navigation.navigate ('AccommodationSummary');
+      this.props.navigation.navigate('AccommodationSummary');
     }
   };
 
-  render () {
+  render() {
     let groupCapacity = [
       {
         label: 'Small ( under 9 pax )',
@@ -310,13 +312,13 @@ class customPackagesOption extends Component {
         value: 'LARGE',
       },
     ];
-    const {loading} = this.props;
+    const { loading } = this.props;
     return (
       <SafeAreaView style={stylesGlobal.styleSafeAreaWhite}>
         <Container paddingbottomcontainer={30}>
-          {loading
-            ? <Loading sizeloading="large" colorloading={styles.$goldcolor} />
-            : null}
+          {loading ? (
+            <Loading sizeloading="large" colorloading={styles.$goldcolor} />
+          ) : null}
           <StatusBar
             translucent={true}
             barStyle="dark-content"
@@ -346,12 +348,13 @@ class customPackagesOption extends Component {
                     positionError="bottom"
                     value={this.state.DetailCustom.TourName}
                     onChangeText={text =>
-                      this.setState ({
+                      this.setState({
                         DetailCustom: {
                           ...this.state.DetailCustom,
                           TourName: text,
                         },
-                      })}
+                      })
+                    }
                     error={this.state.errorTourName}
                   />
                   <View
@@ -368,7 +371,7 @@ class customPackagesOption extends Component {
                     </Text>
                     <RadioGroup
                       onChange={itemValue => {
-                        this.setState ({
+                        this.setState({
                           DetailCustom: {
                             ...this.state.DetailCustom,
                             GroupCapacity: itemValue,
@@ -387,7 +390,7 @@ class customPackagesOption extends Component {
                       }}
                       buttonTextActiveStyle={[
                         stylesGlobal.text14,
-                        {color: '#252525'},
+                        { color: '#252525' },
                       ]}
                     />
                     <TextWarning
@@ -441,103 +444,111 @@ class customPackagesOption extends Component {
                     Tour Category
                   </Text>
                   <View style={[stylesGlobal.row100, styles.containerDropDown]}>
-                    {Platform.OS === 'ios'
-                      ? <IOSPicker
-                          mode="modal"
-                          textStyle={styles.textPicker}
-                          style={styles.dropdownIos}
-                          selectedValue={
+                    {Platform.OS === 'ios' ? (
+                      <IOSPicker
+                        mode="modal"
+                        textStyle={styles.textPicker}
+                        style={styles.dropdownIos}
+                        selectedValue={
+                          this.state.DetailCustom.TourCategory ? (
+                            this.state.LabelTourCategory == 0 ? (
+                              <Text
+                                style={[
+                                  stylesGlobal.text14,
+                                  styles.colorgreylight2,
+                                ]}
+                              >
+                                Choose Category
+                              </Text>
+                            ) : (
+                              this.props.paxTypeTour[
+                                this.state.LabelTourCategory - 1
+                              ].Name
+                            )
+                          ) : (
+                            <Text
+                              style={[
+                                stylesGlobal.text14,
+                                styles.colorgreylight2,
+                              ]}
+                            >
+                              Choose Category
+                            </Text>
+                          )
+                        }
+                        onValueChange={(itemValue, itemIndex) => {
+                          this.setState({
+                            DetailCustom: {
+                              ...this.state.DetailCustom,
+                              TourCategory: itemValue,
+                            },
+                            LabelTourCategory: itemIndex,
+                          });
+                        }}
+                      >
+                        <Picker.Item
+                          label="Tour Category"
+                          value=""
+                          color={styles.$greylight2color}
+                          style={stylesGlobal.text14}
+                        />
+                        {this.props.paxTypeTour.map((employee, i) => {
+                          return (
+                            <Picker.Item
+                              label={employee.Name}
+                              value={employee.Id}
+                              key={i}
+                            />
+                          );
+                        })}
+                      </IOSPicker>
+                    ) : (
+                      <Picker
+                        mode="dialog"
+                        textStyle={styles.textPicker}
+                        style={styles.containerDropDownAndroid}
+                        selectedValue={
+                          this.state.DetailCustom.TourCategory ? (
                             this.state.DetailCustom.TourCategory
-                              ? this.state.LabelTourCategory == 0
-                                  ? <Text
-                                      style={[
-                                        stylesGlobal.text14,
-                                        styles.colorgreylight2,
-                                      ]}
-                                    >
-                                      Choose Category
-                                    </Text>
-                                  : this.props.paxTypeTour[
-                                      this.state.LabelTourCategory - 1
-                                    ].Name
-                              : <Text
-                                  style={[
-                                    stylesGlobal.text14,
-                                    styles.colorgreylight2,
-                                  ]}
-                                >
-                                  Choose Category
-                                </Text>
-                          }
-                          onValueChange={(itemValue, itemIndex) => {
-                            this.setState ({
-                              DetailCustom: {
-                                ...this.state.DetailCustom,
-                                TourCategory: itemValue,
-                              },
-                              LabelTourCategory: itemIndex,
-                            });
-                          }}
-                        >
-                          <Picker.Item
-                            label="Tour Category"
-                            value=""
-                            color={styles.$greylight2color}
-                            style={stylesGlobal.text14}
-                          />
-                          {this.props.paxTypeTour.map ((employee, i) => {
-                            return (
-                              <Picker.Item
-                                label={employee.Name}
-                                value={employee.Id}
-                                key={i}
-                              />
-                            );
-                          })}
-                        </IOSPicker>
-                      : <Picker
-                          mode="dialog"
-                          textStyle={styles.textPicker}
-                          style={styles.containerDropDownAndroid}
-                          selectedValue={
-                            this.state.DetailCustom.TourCategory
-                              ? this.state.DetailCustom.TourCategory
-                              : <Text
-                                  style={[
-                                    styles.colorgreylight2,
-                                    stylesGlobal.text14,
-                                  ]}
-                                >
-                                  Choose Category
-                                </Text>
-                          }
-                          onValueChange={itemValue => {
-                            this.setState ({
-                              DetailCustom: {
-                                ...this.state.DetailCustom,
-                                TourCategory: itemValue,
-                              },
-                            });
-                          }}
-                        >
-                          <Picker.Item
-                            label="Tour Category"
-                            value=""
-                            color={styles.$greylight2color}
-                            style={stylesGlobal.text14}
-                          />
-                          {this.props.paxTypeTour
-                            ? this.props.paxTypeTour.map ((employee, i) => {
-                                return (
-                                  <Picker.Item
-                                    label={employee.Name}
-                                    value={employee.Id}
-                                    key={i}
-                                  />
-                                );
-                              })
-                            : null}
-                        </Picker>}
+                          ) : (
+                            <Text
+                              style={[
+                                styles.colorgreylight2,
+                                stylesGlobal.text14,
+                              ]}
+                            >
+                              Choose Category
+                            </Text>
+                          )
+                        }
+                        onValueChange={itemValue => {
+                          this.setState({
+                            DetailCustom: {
+                              ...this.state.DetailCustom,
+                              TourCategory: itemValue,
+                            },
+                          });
+                        }}
+                      >
+                        <Picker.Item
+                          label="Tour Category"
+                          value=""
+                          color={styles.$greylight2color}
+                          style={stylesGlobal.text14}
+                        />
+                        {this.props.paxTypeTour
+                          ? this.props.paxTypeTour.map((employee, i) => {
+                              return (
+                                <Picker.Item
+                                  label={employee.Name}
+                                  value={employee.Id}
+                                  key={i}
+                                />
+                              );
+                            })
+                          : null}
+                      </Picker>
+                    )}
                   </View>
 
                   <View
@@ -551,103 +562,110 @@ class customPackagesOption extends Component {
                   </View>
                   <Text style={styles.textTourType}>Tour Type</Text>
                   <View style={[stylesGlobal.row100, styles.containerDropDown]}>
-                    {Platform.OS === 'ios'
-                      ? <IOSPicker
-                          mode="modal"
-                          textStyle={styles.textPicker}
-                          style={styles.dropdownIos}
-                          selectedValue={
+                    {Platform.OS === 'ios' ? (
+                      <IOSPicker
+                        mode="modal"
+                        textStyle={styles.textPicker}
+                        style={styles.dropdownIos}
+                        selectedValue={
+                          this.state.DetailCustom.TourType ? (
+                            this.state.LabelTourType == 0 ? (
+                              <Text
+                                style={[
+                                  stylesGlobal.text14,
+                                  styles.colorgreylight2,
+                                ]}
+                              >
+                                Choose Type
+                              </Text>
+                            ) : (
+                              this.props.typeTour[this.state.LabelTourType - 1]
+                                .Name
+                            )
+                          ) : (
+                            <Text
+                              style={[
+                                stylesGlobal.text14,
+                                styles.colorgreylight2,
+                              ]}
+                            >
+                              Choose Type
+                            </Text>
+                          )
+                        }
+                        onValueChange={(itemValue, itemIndex) => {
+                          this.setState({
+                            DetailCustom: {
+                              ...this.state.DetailCustom,
+                              TourType: itemValue,
+                            },
+                            LabelTourType: itemIndex,
+                          });
+                        }}
+                      >
+                        <Picker.Item
+                          label="Tour Type"
+                          value=""
+                          color={styles.$greylight2color}
+                          style={stylesGlobal.text14}
+                        />
+                        {this.props.typeTour.map((employee, i) => {
+                          return (
+                            <Picker.Item
+                              label={employee.Name}
+                              value={employee.Id}
+                              key={i}
+                            />
+                          );
+                        })}
+                      </IOSPicker>
+                    ) : (
+                      <Picker
+                        mode="dialog"
+                        textStyle={styles.textPicker}
+                        style={styles.containerDropDownAndroid}
+                        selectedValue={
+                          this.state.DetailCustom.TourType ? (
                             this.state.DetailCustom.TourType
-                              ? this.state.LabelTourType == 0
-                                  ? <Text
-                                      style={[
-                                        stylesGlobal.text14,
-                                        styles.colorgreylight2,
-                                      ]}
-                                    >
-                                      Choose Type
-                                    </Text>
-                                  : this.props.typeTour[
-                                      this.state.LabelTourType - 1
-                                    ].Name
-                              : <Text
-                                  style={[
-                                    stylesGlobal.text14,
-                                    styles.colorgreylight2,
-                                  ]}
-                                >
-                                  Choose Type
-                                </Text>
-                          }
-                          onValueChange={(itemValue, itemIndex) => {
-                            this.setState ({
-                              DetailCustom: {
-                                ...this.state.DetailCustom,
-                                TourType: itemValue,
-                              },
-                              LabelTourType: itemIndex,
-                            });
-                          }}
-                        >
-                          <Picker.Item
-                            label="Tour Type"
-                            value=""
-                            color={styles.$greylight2color}
-                            style={stylesGlobal.text14}
-                          />
-                          {this.props.typeTour.map ((employee, i) => {
-                            return (
-                              <Picker.Item
-                                label={employee.Name}
-                                value={employee.Id}
-                                key={i}
-                              />
-                            );
-                          })}
-                        </IOSPicker>
-                      : <Picker
-                          mode="dialog"
-                          textStyle={styles.textPicker}
-                          style={styles.containerDropDownAndroid}
-                          selectedValue={
-                            this.state.DetailCustom.TourType
-                              ? this.state.DetailCustom.TourType
-                              : <Text
-                                  style={[
-                                    styles.colorgreylight2,
-                                    stylesGlobal.text14,
-                                  ]}
-                                >
-                                  Choose Type
-                                </Text>
-                          }
-                          onValueChange={itemValue => {
-                            this.setState ({
-                              DetailCustom: {
-                                ...this.state.DetailCustom,
-                                TourType: itemValue,
-                              },
-                            });
-                          }}
-                        >
-                          <Picker.Item
-                            label="Tour Type"
-                            value=""
-                            color={styles.$greylight2color}
-                            style={stylesGlobal.text14}
-                          />
-                          {this.props.typeTour
-                            ? this.props.typeTour.map ((employee, i) => {
-                                return (
-                                  <Picker.Item
-                                    label={employee.Name}
-                                    value={employee.Id}
-                                    key={i}
-                                  />
-                                );
-                              })
-                            : null}
-                        </Picker>}
+                          ) : (
+                            <Text
+                              style={[
+                                styles.colorgreylight2,
+                                stylesGlobal.text14,
+                              ]}
+                            >
+                              Choose Type
+                            </Text>
+                          )
+                        }
+                        onValueChange={itemValue => {
+                          this.setState({
+                            DetailCustom: {
+                              ...this.state.DetailCustom,
+                              TourType: itemValue,
+                            },
+                          });
+                        }}
+                      >
+                        <Picker.Item
+                          label="Tour Type"
+                          value=""
+                          color={styles.$greylight2color}
+                          style={stylesGlobal.text14}
+                        />
+                        {this.props.typeTour
+                          ? this.props.typeTour.map((employee, i) => {
+                              return (
+                                <Picker.Item
+                                  label={employee.Name}
+                                  value={employee.Id}
+                                  key={i}
+                                />
+                              );
+                            })
+                          : null}
+                      </Picker>
+                    )}
                   </View>
                   <View
                     style={[styles.colNoPaddingLeft, styles.marginBottom20]}
@@ -690,41 +708,44 @@ class customPackagesOption extends Component {
                       textSize={15}
                       value={this.state.DetailCustom.GuestAllocation.Adult}
                       onChangeText={text => {
-                        if (isNaN (parseInt (text))) text = 0;
-                        this.setState ({
+                        if (isNaN(parseInt(text))) text = 0;
+                        this.setState({
                           DetailCustom: {
                             ...this.state.DetailCustom,
                             GuestAllocation: {
                               ...this.state.DetailCustom.GuestAllocation,
-                              Adult: parseInt (text),
+                              Adult: parseInt(text),
                             },
                           },
                         });
                       }}
                       Decrement={() => {
                         if (this.state.DetailCustom.GuestAllocation.Adult != 0)
-                          this.setState ({
+                          this.setState({
                             DetailCustom: {
                               ...this.state.DetailCustom,
                               GuestAllocation: {
                                 ...this.state.DetailCustom.GuestAllocation,
-                                Adult: this.state.DetailCustom.GuestAllocation
-                                  .Adult - 1,
+                                Adult:
+                                  this.state.DetailCustom.GuestAllocation
+                                    .Adult - 1,
                               },
                             },
                           });
                       }}
                       Increment={() =>
-                        this.setState ({
+                        this.setState({
                           DetailCustom: {
                             ...this.state.DetailCustom,
                             GuestAllocation: {
                               ...this.state.DetailCustom.GuestAllocation,
-                              Adult: this.state.DetailCustom.GuestAllocation
-                                .Adult + 1,
+                              Adult:
+                                this.state.DetailCustom.GuestAllocation.Adult +
+                                1,
                             },
                           },
-                        })}
+                        })
+                      }
                       widthCard="100%"
                       heightCard="30%"
                       error={this.state.errorGuestAllocation}
@@ -735,41 +756,44 @@ class customPackagesOption extends Component {
                       textSize={15}
                       value={this.state.DetailCustom.GuestAllocation.Child}
                       onChangeText={text => {
-                        if (isNaN (parseInt (text))) text = 0;
-                        this.setState ({
+                        if (isNaN(parseInt(text))) text = 0;
+                        this.setState({
                           DetailCustom: {
                             ...this.state.DetailCustom,
                             GuestAllocation: {
                               ...this.state.DetailCustom.GuestAllocation,
-                              Child: parseInt (text),
+                              Child: parseInt(text),
                             },
                           },
                         });
                       }}
                       Decrement={() => {
                         if (this.state.DetailCustom.GuestAllocation.Child != 0)
-                          this.setState ({
+                          this.setState({
                             DetailCustom: {
                               ...this.state.DetailCustom,
                               GuestAllocation: {
                                 ...this.state.DetailCustom.GuestAllocation,
-                                Child: this.state.DetailCustom.GuestAllocation
-                                  .Child - 1,
+                                Child:
+                                  this.state.DetailCustom.GuestAllocation
+                                    .Child - 1,
                               },
                             },
                           });
                       }}
                       Increment={() =>
-                        this.setState ({
+                        this.setState({
                           DetailCustom: {
                             ...this.state.DetailCustom,
                             GuestAllocation: {
                               ...this.state.DetailCustom.GuestAllocation,
-                              Child: this.state.DetailCustom.GuestAllocation
-                                .Child + 1,
+                              Child:
+                                this.state.DetailCustom.GuestAllocation.Child +
+                                1,
                             },
                           },
-                        })}
+                        })
+                      }
                       widthCard="100%"
                       heightCard="30%"
                     />
@@ -779,41 +803,44 @@ class customPackagesOption extends Component {
                       textSize={15}
                       value={this.state.DetailCustom.GuestAllocation.Infant}
                       onChangeText={text => {
-                        if (isNaN (parseInt (text))) text = 0;
-                        this.setState ({
+                        if (isNaN(parseInt(text))) text = 0;
+                        this.setState({
                           DetailCustom: {
                             ...this.state.DetailCustom,
                             GuestAllocation: {
                               ...this.state.DetailCustom.GuestAllocation,
-                              Infant: parseInt (text),
+                              Infant: parseInt(text),
                             },
                           },
                         });
                       }}
                       Decrement={() => {
                         if (this.state.DetailCustom.GuestAllocation.Infant != 0)
-                          this.setState ({
+                          this.setState({
                             DetailCustom: {
                               ...this.state.DetailCustom,
                               GuestAllocation: {
                                 ...this.state.DetailCustom.GuestAllocation,
-                                Infant: this.state.DetailCustom.GuestAllocation
-                                  .Infant - 1,
+                                Infant:
+                                  this.state.DetailCustom.GuestAllocation
+                                    .Infant - 1,
                               },
                             },
                           });
                       }}
                       Increment={() =>
-                        this.setState ({
+                        this.setState({
                           DetailCustom: {
                             ...this.state.DetailCustom,
                             GuestAllocation: {
                               ...this.state.DetailCustom.GuestAllocation,
-                              Infant: this.state.DetailCustom.GuestAllocation
-                                .Infant + 1,
+                              Infant:
+                                this.state.DetailCustom.GuestAllocation.Infant +
+                                1,
                             },
                           },
-                        })}
+                        })
+                      }
                       widthCard="100%"
                       heightCard="30%"
                     />
@@ -829,7 +856,7 @@ class customPackagesOption extends Component {
                       placeholder="Choose Room Allocation"
                       containerHeight={50}
                       animated="hidden"
-                      value={this.state.DetailCustom.RoomAllocation.StringAlloc.slice (
+                      value={this.state.DetailCustom.RoomAllocation.StringAlloc.slice(
                         0,
                         35
                       )}
@@ -882,7 +909,7 @@ const mapStateToProps = state => ({
   //   airport: state.itemItineraryReducer.airport
 });
 
-export default connect (mapStateToProps, {
+export default connect(mapStateToProps, {
   getTourCategoryAction,
   getTourTypeAction,
   setCustomItineraryAction,
@@ -892,4 +919,4 @@ export default connect (mapStateToProps, {
   setDeparturesItineraryAction,
   setReturnsItineraryAction,
   setGuestTourGuideAction,
-}) (customPackagesOption);
+})(customPackagesOption);

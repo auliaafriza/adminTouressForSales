@@ -12,33 +12,17 @@ import {
 
 import apiClient from './apiClient';
 
-export const getDurationApi = (type, data, authToken) => {
+export const getDurationApi = (data, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   let urlString = null;
   if (data.FromId && data.ToId)
-    urlString = `${TOUR_TRANSACTION_URL}/Movement?originSesrviceItemId=' +
-        data.FromId +
-        '&destinationServiceItemId=' +
-        data.ToId +
-        '&mode=DRIVING`;
+    urlString = `${TOUR_TRANSACTION_URL}/Movement?originSesrviceItemId=${data.FromId}&destinationServiceItemId=${data.ToId}&mode=DRIVING`;
   else if (!data.FromId && data.ToId)
-    urlString = `${TOUR_TRANSACTION_URL}/Movement?originAddress=' +
-        data.FromAddress +
-        '&destinationServiceItemId=' +
-        data.ToId +
-        '&mode=DRIVING`;
+    urlString = `${TOUR_TRANSACTION_URL}/Movement?originAddress=${data.FromAddress}&destinationServiceItemId=${data.ToId}&mode=DRIVING`;
   else if (data.FromId && !data.ToId)
-    urlString = `${TOUR_TRANSACTION_URL}/Movement?originServiceItemId=' +
-        data.FromId +
-        '&destinationAddress=' +
-        data.ToAddress +
-        '&mode=DRIVING`;
+    urlString = `${TOUR_TRANSACTION_URL}/Movement?originServiceItemId=${data.FromId}&destinationAddress=${data.ToAddress}&mode=DRIVING`;
   else
-    urlString = `${TOUR_TRANSACTION_URL}/Movement?originAddress=' +
-        data.FromAddress +
-        '&destinationAddress=' +
-        data.ToAddress +
-        '&mode=DRIVING`;
+    urlString = `${TOUR_TRANSACTION_URL}/Movement?originAddress=${data.FromAddress}&destinationAddress=${data.ToAddress}&mode=DRIVING`;
 
   return apiClient.get(urlString);
 };

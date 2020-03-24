@@ -247,32 +247,34 @@ const reducer = (state = initialState, action) => {
         getTransportationUnitsFilterStatus: '',
       };
 
-    //get duration
-    case types.GET_DURATION:
-      return {
-        ...state,
-      };
-    case types.GET_DURATION_PENDING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case types.GET_DURATION_FULFILLED:
-      return {
-        ...state,
-        getDuration: action.payload.data,
-        errors: {},
-        loading: false,
-        getDurationStatus: 'success',
-      };
-    case types.GET_DURATION_REJECTED:
-      return {
-        ...state,
-        getDuration: null,
-        errors: action.payload.response.data,
-        loading: false,
-        getDurationStatus: 'failed',
-      };
+    // //get duration
+    // case types.GET_DURATION:
+    //   return {
+    //     ...state,
+    //   };
+    // case types.GET_DURATION_PENDING:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+    // case types.GET_DURATION_FULFILLED:
+    //   return {
+    //     ...state,
+    //     getDuration: action.payload.data,
+    //     errors: {},
+    //     loading: false,
+    //     getDurationStatus: 'success',
+    //   };
+    // case types.GET_DURATION_REJECTED:
+    //   return {
+    //     ...state,
+    //     getDuration: null,
+    //     errors: action.payload.response.data,
+    //     loading: false,
+    //     getDurationStatus: 'failed',
+    //   };
+    // //get duration
+
     default:
       return state;
   }

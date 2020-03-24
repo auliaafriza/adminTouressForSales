@@ -45,6 +45,8 @@ import {
   resetTransactionAction,
   getTourOperatorProfileByIdAction,
   setPackageDataAction,
+  getReadyPackageByIdAction,
+  getReadyPackageFixedPriceByIdAction,
 } from '../../actions/Transactions/TransactionAction';
 // import {
 //   get_tour_operator_profile,
@@ -104,9 +106,20 @@ class PackagesDetail extends PureComponent {
         : this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
-    this;
-    const { packageIdFromSystem, getSeriesPackageByIdAction } = this.props;
-    getSeriesPackageByIdAction(packageIdFromSystem);
+    let statusPackages = this.props.route.params.status
+      ? this.props.route.params.status
+      : '';
+    const {
+      packageIdFromSystem,
+      getSeriesPackageByIdAction,
+      getReadyPackageByIdAction,
+      getReadyPackageFixedPriceByIdAction,
+    } = this.props;
+    statusPackages == 'Fixed'
+      ? getSeriesPackageByIdAction(packageIdFromSystem)
+      : statusPackages == 'Ready'
+      ? getReadyPackageByIdAction(packageIdFromSystem)
+      : getReadyPackageFixedPriceByIdAction(packageIdFromSystem);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -116,12 +129,6 @@ class PackagesDetail extends PureComponent {
     } else if (this.props.packageByIdStatus !== null) {
       this.props.resetTransactionAction();
     }
-    // if (this.props.tourOperatorIdStatus) {
-    //   this.setTourOperator(this.props.tourOperatorId);
-    //   this.props.resetTransactionAction();
-    // } else if (this.props.tourOperatorIdStatus !== null) {
-    //   this.props.resetTransactionAction();
-    // }
   }
 
   setTourOperator = data => {
@@ -129,6 +136,7 @@ class PackagesDetail extends PureComponent {
       tourOperator: data,
     });
   };
+
   setDetailPackage = data => {
     data.TourOperator &&
       this.props.getTourOperatorProfileByIdAction(data.TourOperator.Id);
@@ -160,30 +168,23 @@ class PackagesDetail extends PureComponent {
     const { packageStatus, setPackageDataAction, packageById } = this.props;
     const { packages } = this.state;
     const status = packageStatus;
-    // {
-    //   status == "Fixed"
-    //     ? this.props.navigation.navigate("SeriesOptions", {
-    //         Desc: packages.Descriptions,
-    //         KoutaPax:
-    //           packages.BookingDetailSum.FixedPackage.MinimumGuest -
-    //           packages.BookingDetailSum.FixedPackage.ConfirmedGuest,
-    //         MinPax: packages.MinPax,
-    //         Status: "Fixed"
-    //       })
-    //     : this.props.navigation.navigate("ReadyPackagesOption", {
-    //         data: packages,
-    //         type: status
-    //       });
-    // }
     {
       status == 'Fixed'
         ? this.props.navigation.navigate('SeriesOptions')
-        : this.props.navigation.navigate('ReadyPackagesOption');
+        : this.props.navigation.navigate('Ready', {
+            screen: 'ReadyPackageOption',
+            params: {
+              data: this.state.packages,
+              type: this.props.route.params.status,
+            },
+          });
     }
     setPackageDataAction(packages);
   };
 
   static propTypes = {
+    route: PropTypes.object,
+    navigation: PropTypes.object,
     // dispatch: PropTypes.func,
     // navigation: PropTypes.object,
     // dataFix: PropTypes.object,
@@ -199,17 +200,17 @@ class PackagesDetail extends PureComponent {
     // token: PropTypes.string
   };
 
-  //   goBack = () => {
-  //     const from = this.props.route.params.from
-  //       ? this.props.route.params.from
-  //       : '';
+  goBack = () => {
+    const from = this.props.route.params.from
+      ? this.props.route.params.from
+      : '';
 
-  //     {
-  //       from == 'Home'
-  //         ? this.props.navigation.navigate('Home')
-  //         : this.props.navigation.pop();
-  //     }
-  //   };
+    {
+      from == 'Home'
+        ? this.props.navigation.navigate('Home')
+        : this.props.navigation.pop();
+    }
+  };
   //   componentDidMount() {
   //     BackHandler.addEventListener('hardwareBackPress', () => {
   //       this.props.route.params.from
@@ -430,7 +431,9 @@ class PackagesDetail extends PureComponent {
       packages,
       tourOperator,
     } = this.state;
-    const status = 'Fixed';
+    const status = this.props.route.params.status
+      ? this.props.route.params.status
+      : '';
     const HEADER_MAX_HEIGHT = 300;
     const HEADER_MIN_HEIGHT = 100;
     const backgroundColorAnimate = this.state.scrollY.interpolate({
@@ -445,7 +448,7 @@ class PackagesDetail extends PureComponent {
     });
     return (
       <>
-        <Container>
+        <Container paddingbottomcontainer={60}>
           <Animated.View
             style={[
               styles.headerTransparent,
@@ -1590,4 +1593,6 @@ export default connect(mapStateToProps, {
   resetTransactionAction,
   getTourOperatorProfileByIdAction,
   setPackageDataAction,
+  getReadyPackageByIdAction,
+  getReadyPackageFixedPriceByIdAction,
 })(PackagesDetail);
