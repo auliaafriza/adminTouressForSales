@@ -25,6 +25,10 @@ import { viewDate } from '../../../helper/timeHelper';
 import { Ionicons } from '@expo/vector-icons';
 import IconCalendar from '../../../assets/Icon/calendar.png';
 import { setGuestDataAction } from '../../../actions/Transactions/TransactionAction';
+import {
+  getCountriesAction,
+  getGuestTitleTypeAction,
+} from '../../../actions/General/generalAction';
 
 class SeriesPackageBooking extends Component {
   constructor(props) {
@@ -63,7 +67,8 @@ class SeriesPackageBooking extends Component {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
-
+    this.props.getCountriesAction();
+    this.props.getGuestTitleTypeAction();
     this.setState({
       dataDetailPackages: this.props.setPackageData,
     });
@@ -198,16 +203,38 @@ class SeriesPackageBooking extends Component {
 
     const error = this.validate();
     if (!error) {
-      const data = {
-        Booking: this.state.Booking,
-        Guest: Guests,
-      };
-      await this.props.setGuestDataAction(data);
-      this.props.navigation.navigate('Guest', {
-        screen: 'GuestList',
-        params: { type: 'series' },
-      });
+      // const data = {
+      //   Booking: this.state.Booking,
+      //   Guest: Guests,
+      // };
+      // await this.props.setGuestDataAction(data);
+      // this.props.navigation.navigate('Guest', {
+      //   screen: 'GuestList',
+      //   params: { type: 'series' },
+      // });
+      this.setState(
+        {
+          Booking: {
+            ...this.state.Booking,
+            Guests: Guests,
+          },
+        },
+        () => {
+          this.props.navigation.navigate('Guest', {
+            screen: 'GuestList',
+            params: { Booking: this.state.Booking, type: 'series' },
+          });
+        }
+      );
     }
+
+    // if (!error) {
+    // const data = {
+    //   Booking: this.state.Booking,
+    //   Guest: Guests,
+    // };
+    // await this.props.setGuestDataAction(data);
+    // }
   };
 
   setGuestForMandatorywithInfant = index => {
@@ -1338,6 +1365,8 @@ const mapStateToProps = state => ({
 });
 export default connect(mapStateToProps, {
   setGuestDataAction,
+  getCountriesAction,
+  getGuestTitleTypeAction,
 })(SeriesPackageBooking);
 
 // export default SeriesPackageBooking;

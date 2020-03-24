@@ -5,6 +5,9 @@ import {
   getCityInCountryApi,
   getCustomerListApi,
   getUserIdCompanyApi,
+  getCountryApi,
+  getIdentityTypeApi,
+  getGuestTitleTypeApi,
 } from '../../api/generalApi';
 import {
   GET_TOUR_TYPE,
@@ -15,6 +18,9 @@ import {
   GET_CUSTOMER_LIST,
   RESET_CUSTOMER_LIST,
   GET_USER_ID_COMPANY,
+  GET_COUNTRIES,
+  GET_GUEST_TITLE_TYPE,
+  GET_IDENTITY_TYPE,
 } from './actionTypes';
 
 import store from '../../config/store';
@@ -92,5 +98,36 @@ export const getUserIdCompanyAction = id => {
 export const resetListCustomerAction = () => {
   return {
     type: RESET_CUSTOMER_LIST,
+  };
+};
+
+export const getCountriesAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+  return {
+    type: GET_COUNTRIES,
+    payload: getCountryApi(authToken),
+  };
+};
+
+export const getGuestTitleTypeAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+  return dispatch => {
+    return dispatch({
+      type: GET_GUEST_TITLE_TYPE,
+      payload: getGuestTitleTypeApi(authToken),
+    });
+  };
+};
+
+export const getIdentityTypeAction = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+  return dispatch => {
+    return dispatch({
+      type: GET_IDENTITY_TYPE,
+      payload: getIdentityTypeApi(authToken),
+    });
   };
 };

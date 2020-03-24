@@ -41,6 +41,7 @@ import {
   GET_TRANSACTION_HISTORY_BY_STATUS,
   POST_DEMO_JOIN_TOUR,
   POST_DEMO_CREATE_TOUR,
+  RESET_STATUS_POST_DEMO,
 } from './actionTypes';
 
 import {

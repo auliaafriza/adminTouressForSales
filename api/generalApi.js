@@ -35,3 +35,17 @@ export const getUserIdCompanyApi = (id, authToken) => {
     `/UserProfiles/CompanyUsers/ByCompanyCode?companyCode=${id}`
   );
 };
+
+export const getCountryApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.get(`/countries`);
+};
+
+export const getIdentityTypeApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.get(`${TOUR_TRANSACTION_URL}/IdentityTypeList`);
+};
+export const getGuestTitleTypeApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.get(`${TOUR_TRANSACTION_URL}/GuestTitleList`);
+};

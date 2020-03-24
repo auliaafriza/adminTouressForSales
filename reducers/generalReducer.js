@@ -11,6 +11,8 @@ const initialState = {
   dataUserIdCompany: [],
   isDataUserIdCompany: '',
   guestData: null,
+  countries: [],
+  guestTitle: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -142,6 +144,57 @@ const reducer = (state = initialState, action) => {
         isDataUserIdCompany: '',
       };
 
+    case types.GET_COUNTRIES:
+      return { ...state };
+    case types.GET_COUNTRIES_PENDING:
+      return { ...state, loading: true };
+    case types.GET_COUNTRIES_FULFILLED:
+      return {
+        ...state,
+        countries: action.payload.data,
+        loading: false,
+        errors: null,
+      };
+    case types.GET_COUNTRIES_REJECTED:
+      return {
+        ...state,
+        loading: false,
+        errors: action.payload.response.data,
+      };
+
+    case types.GET_GUEST_TITLE_TYPE:
+      return { ...state };
+    case types.GET_GUEST_TITLE_TYPE_PENDING:
+      return { ...state, loading: true };
+    case types.GET_GUEST_TITLE_TYPE_FULFILLED:
+      return {
+        ...state,
+        guestTitle: action.payload.data,
+        loading: false,
+      };
+    case types.GET_GUEST_TITLE_TYPE_REJECTED:
+      return {
+        ...state,
+        loading: false,
+        errors: { global: action.payload.response.data.error_description },
+      };
+
+    case types.GET_IDENTITY_TYPE:
+      return { ...state };
+    case types.GET_IDENTITY_TYPE_PENDING:
+      return { ...state, loading: true };
+    case types.GET_IDENTITY_TYPE_FULFILLED:
+      return {
+        ...state,
+        listIdentityType: action.payload.data,
+        loading: false,
+      };
+    case types.GET_IDENTITY_TYPE_REJECTED:
+      return {
+        ...state,
+        loading: false,
+        errors: { global: action.payload.response.data.error_description },
+      };
     default:
       return state;
   }

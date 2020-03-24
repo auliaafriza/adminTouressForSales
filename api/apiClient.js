@@ -3,9 +3,9 @@ import axios from 'axios';
 
 let backendHost;
 // config dev
-backendHost = 'https://touressapidev.azurewebsites.net';
+// backendHost = 'https://touressapidev.azurewebsites.net';
 //config qa
-// backendHost = 'https://touressapiqa.azurewebsites.net/';
+backendHost = 'https://touressapiqa.azurewebsites.net/';
 //config demo
 //backendHost = 'https://touressapidemo.azurewebsites.net/';
 //config prod

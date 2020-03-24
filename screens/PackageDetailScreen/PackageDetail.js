@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from 'react';
 import {
   View,
   Text,
@@ -12,40 +12,40 @@ import {
   TouchableOpacity,
   Animated,
   Platform,
-  Dimensions
-} from "react-native";
-import stylesGlobal from "../../components/styles";
-import AutoHeightWebView from "react-native-autoheight-webview";
-import { LinearGradient } from "expo-linear-gradient";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+  Dimensions,
+} from 'react-native';
+import stylesGlobal from '../../components/styles';
+import AutoHeightWebView from 'react-native-autoheight-webview';
+import { LinearGradient } from 'expo-linear-gradient';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   CardAccomodation,
   Card,
-  CardMediaNew
-} from "../../components/card/index";
-import * as Permissions from "expo-permissions";
-import * as FileSystem from "expo-file-system";
+  CardMediaNew,
+} from '../../components/card/index';
+import * as Permissions from 'expo-permissions';
+import * as FileSystem from 'expo-file-system';
 import {
   NormalButtonWithIcon,
-  ShimmerButton
-} from "../../components/button/index";
-import styles from "./styles";
-import { Container } from "../../components/container";
-import moment from "moment";
-import IMAGES from "./../../assets/images/NoImage.png";
-import { Ionicons } from "@expo/vector-icons";
-import IconLoc from "../../assets/Icon/address.png";
-import IconCalendar from "../../assets/Icon/calendar.png";
-import IconClock from "../../assets/Icon/clock.png";
-import { RoundedLoading, SliderLoading } from "../../components/loading";
-import { TextPaymentTerms } from "../../components/text";
+  ShimmerButton,
+} from '../../components/button/index';
+import styles from './styles';
+import { Container } from '../../components/container';
+import moment from 'moment';
+import IMAGES from './../../assets/images/NoImage.png';
+import { Ionicons } from '@expo/vector-icons';
+import IconLoc from '../../assets/Icon/address.png';
+import IconCalendar from '../../assets/Icon/calendar.png';
+import IconClock from '../../assets/Icon/clock.png';
+import { RoundedLoading, SliderLoading } from '../../components/loading';
+import { TextPaymentTerms } from '../../components/text';
 import {
   getSeriesPackageByIdAction,
   resetTransactionAction,
   getTourOperatorProfileByIdAction,
-  setPackageDataAction
-} from "../../actions/Transactions/TransactionAction";
+  setPackageDataAction,
+} from '../../actions/Transactions/TransactionAction';
 // import {
 //   get_tour_operator_profile,
 //   reset_fixpackages_by_id,
@@ -60,22 +60,22 @@ import {
 //   get_readypackages_by_id,
 // } from '../../actions/readyPackegaesAction';
 
-const cardWidth = Dimensions.get("window").width;
+const cardWidth = Dimensions.get('window').width;
 // import url from "../../api/apiUrl";
-import { convertRoundPrice } from "../../helper/helper";
+import { convertRoundPrice } from '../../helper/helper';
 
-import { viewDate } from "../../helper/timeHelper";
-import { SeperatorRepeat } from "../../components/list";
-import { ModalBottom } from "../../components/modal";
+import { viewDate } from '../../helper/timeHelper';
+import { SeperatorRepeat } from '../../components/list';
+import { ModalBottom } from '../../components/modal';
 
-import IconTwinSharing from "../../assets/Icon/sharing_room.png";
-import IconSingleRoom from "../../assets/Icon/single_room.png";
-import IconExtraBedAdult from "../../assets/Icon/room_type.png";
-import IconExtraBedChild from "../../assets/Icon/baby.png";
-import IconBabyCrib from "../../assets/Icon/baby_carriage.png";
-import IconWithParents from "../../assets/Icon/sharing_with_parrent.png";
-import IconDownload from "../../assets/Icon/download.png";
-import IconClose from "../../assets/Icon/close.png";
+import IconTwinSharing from '../../assets/Icon/sharing_room.png';
+import IconSingleRoom from '../../assets/Icon/single_room.png';
+import IconExtraBedAdult from '../../assets/Icon/room_type.png';
+import IconExtraBedChild from '../../assets/Icon/baby.png';
+import IconBabyCrib from '../../assets/Icon/baby_carriage.png';
+import IconWithParents from '../../assets/Icon/sharing_with_parrent.png';
+import IconDownload from '../../assets/Icon/download.png';
+import IconClose from '../../assets/Icon/close.png';
 
 class PackagesDetail extends PureComponent {
   constructor(props) {
@@ -87,20 +87,20 @@ class PackagesDetail extends PureComponent {
       heightData: 0,
       currentPage: 1,
       scrollY: new Animated.Value(0),
-      nameButton: "READ MORE",
+      nameButton: 'READ MORE',
       modalInfoFixedPrice: false,
       paymentTerms: null,
-      price: "",
-      imageslogo: "",
+      price: '',
+      imageslogo: '',
       daily: null,
-      Img: []
+      Img: [],
     };
   }
 
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.route.params.from
-        ? this.props.navigation.navigate("Home")
+        ? this.props.navigation.navigate('Home')
         : this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
@@ -126,7 +126,7 @@ class PackagesDetail extends PureComponent {
 
   setTourOperator = data => {
     this.setState({
-      tourOperator: data
+      tourOperator: data,
     });
   };
   setDetailPackage = data => {
@@ -142,22 +142,22 @@ class PackagesDetail extends PureComponent {
           ? data.Images.length > 0
             ? data.Images
             : data.BookingDetailSum.City.ImageUrl
-            ? data.BookingDetailSum.City.ImageUrl != ""
+            ? data.BookingDetailSum.City.ImageUrl != ''
               ? data.BookingDetailSum.City.ImageUrl
               : []
             : []
           : data.BookingDetailSum.City.ImageUrl
-          ? data.BookingDetailSum.City.ImageUrl != ""
+          ? data.BookingDetailSum.City.ImageUrl != ''
             ? data.BookingDetailSum.City.ImageUrl
             : []
           : []
         : [],
-      packages: data
+      packages: data,
     });
   };
 
   handlePressBookingGuest = () => {
-    const { packageStatus, setPackageDataAction } = this.props;
+    const { packageStatus, setPackageDataAction, packageById } = this.props;
     const { packages } = this.state;
     const status = packageStatus;
     // {
@@ -176,9 +176,9 @@ class PackagesDetail extends PureComponent {
     //       });
     // }
     {
-      status == "Fixed"
-        ? this.props.navigation.navigate("SeriesOptions")
-        : this.props.navigation.navigate("ReadyPackagesOption");
+      status == 'Fixed'
+        ? this.props.navigation.navigate('SeriesOptions')
+        : this.props.navigation.navigate('ReadyPackagesOption');
     }
     setPackageDataAction(packages);
   };
@@ -418,9 +418,9 @@ class PackagesDetail extends PureComponent {
   //   };
 
   render() {
-    const fullWidth = Dimensions.get("window").width;
+    const fullWidth = Dimensions.get('window').width;
     const width90 =
-      Dimensions.get("window").width - Dimensions.get("window").width * 0.1;
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.1;
     const {
       paymentTerms,
       price,
@@ -428,20 +428,20 @@ class PackagesDetail extends PureComponent {
       daily,
       Img,
       packages,
-      tourOperator
+      tourOperator,
     } = this.state;
-    const status = "Fixed";
+    const status = 'Fixed';
     const HEADER_MAX_HEIGHT = 300;
     const HEADER_MIN_HEIGHT = 100;
     const backgroundColorAnimate = this.state.scrollY.interpolate({
       inputRange: [0, 1],
-      outputRange: ["transparent", "white"],
-      extrapolate: "clamp"
+      outputRange: ['transparent', 'white'],
+      extrapolate: 'clamp',
     });
     const headerHeight = this.state.scrollY.interpolate({
       inputRange: [0, 1],
       outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-      extrapolate: "clamp"
+      extrapolate: 'clamp',
     });
     return (
       <>
@@ -449,11 +449,11 @@ class PackagesDetail extends PureComponent {
           <Animated.View
             style={[
               styles.headerTransparent,
-              { height: headerHeight, backgroundColor: backgroundColorAnimate }
+              { height: headerHeight, backgroundColor: backgroundColorAnimate },
             ]}
           >
             <LinearGradient
-              colors={["#e5e5e5", "rgba(255,255,255,0)"]}
+              colors={['#e5e5e5', 'rgba(255,255,255,0)']}
               style={styles.gradientFooter}
             >
               <StatusBar
@@ -468,7 +468,7 @@ class PackagesDetail extends PureComponent {
                 <Ionicons name="ios-arrow-back" size={35} color="#252525" />
               </TouchableOpacity>
               <View style={styles.topNavTextDetail}>
-                {status == "Fixed" ? (
+                {status == 'Fixed' ? (
                   <Text style={styles.textHeader}>Series Package Detail</Text>
                 ) : (
                   <Text style={styles.textHeader}>Ready Package Detail</Text>
@@ -479,7 +479,7 @@ class PackagesDetail extends PureComponent {
           <ScrollView
             style={[stylesGlobal.containerScroll, stylesGlobal.marginBottom30]}
             onScroll={Animated.event([
-              { nativeEvent: { contentOffset: { y: this.state.scrollY } } }
+              { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
             ])}
           >
             <Container paddingbottomcontainer={70}>
@@ -503,14 +503,14 @@ class PackagesDetail extends PureComponent {
                           style={[
                             stylesGlobal.row100,
                             stylesGlobal.marginBottom20,
-                            stylesGlobal.marginTop20
+                            stylesGlobal.marginTop20,
                           ]}
                         >
                           <View style={stylesGlobal.width90}>
                             <Text
                               style={[
                                 stylesGlobal.text20,
-                                stylesGlobal.textBold
+                                stylesGlobal.textBold,
                               ]}
                             >
                               What is Fixed Price?
@@ -527,7 +527,7 @@ class PackagesDetail extends PureComponent {
                                 source={IconClose}
                                 style={[
                                   stylesGlobal.imageIcon,
-                                  styles.tintColorRed
+                                  styles.tintColorRed,
                                 ]}
                               />
                             </TouchableOpacity>
@@ -546,7 +546,7 @@ class PackagesDetail extends PureComponent {
                         <View
                           style={[
                             stylesGlobal.width100,
-                            stylesGlobal.paddingVertical20
+                            stylesGlobal.paddingVertical20,
                           ]}
                         >
                           <Text style={stylesGlobal.text16}>
@@ -563,7 +563,7 @@ class PackagesDetail extends PureComponent {
                             <Card
                               type="Flat"
                               key={i}
-                              widthCard={Dimensions.get("window").width}
+                              widthCard={Dimensions.get('window').width}
                               heightCard={350}
                             >
                               <View style={styles.carouselImageContainer}>
@@ -611,7 +611,7 @@ class PackagesDetail extends PureComponent {
               </View>
               {this.state.loading ? null : (
                 <View style={styles.contentContainerDetail1}>
-                  {status == "Fixed" ? (
+                  {status == 'Fixed' ? (
                     <View style={styles.row100}>
                       <View style={[stylesGlobal.width30, styles.left]}>
                         <View style={styles.containerIndicator}>
@@ -639,8 +639,8 @@ class PackagesDetail extends PureComponent {
                           buttonColor={styles.$goldcolor}
                           textColor="black"
                           sizeicon={18}
-                          textSize={Platform.OS === "ios" ? 12 : 12}
-                          buttonWidth={Platform.OS === "ios" ? "70%" : "90%"}
+                          textSize={Platform.OS === 'ios' ? 12 : 12}
+                          buttonWidth={Platform.OS === 'ios' ? '70%' : '90%'}
                           buttonHeight={35}
                           onPress={this.getBrochure}
                           image={true}
@@ -659,7 +659,7 @@ class PackagesDetail extends PureComponent {
                       <Text
                         style={[stylesGlobal.text22, stylesGlobal.textBold]}
                       >
-                        {packages ? packages.BookingDetailSum.Title : ""}
+                        {packages ? packages.BookingDetailSum.Title : ''}
                       </Text>
                     )}
                   </View>
@@ -674,20 +674,20 @@ class PackagesDetail extends PureComponent {
                         <View
                           style={[
                             stylesGlobal.row100,
-                            stylesGlobal.alignItemsCenter
+                            stylesGlobal.alignItemsCenter,
                           ]}
                         >
                           <View
                             style={[
                               stylesGlobal.containerIcon30,
-                              stylesGlobal.padding5
+                              stylesGlobal.padding5,
                             ]}
                           >
                             <Image
                               source={IconLoc}
                               style={[
                                 stylesGlobal.imageIcon,
-                                stylesGlobal.tintColorGrey
+                                stylesGlobal.tintColorGrey,
                               ]}
                               resizeMode="contain"
                             />
@@ -695,48 +695,48 @@ class PackagesDetail extends PureComponent {
                           <Text>
                             {packages
                               ? packages.BookingDetailSum.City.Name
-                              : ""}
-                            ,{" "}
+                              : ''}
+                            ,{' '}
                             {packages
                               ? packages.BookingDetailSum.Country.Name
-                              : ""}
+                              : ''}
                           </Text>
                         </View>
 
-                        {status == "Fixed" ? (
+                        {status == 'Fixed' ? (
                           <View
                             style={[
                               stylesGlobal.row100,
-                              stylesGlobal.alignItemsCenter
+                              stylesGlobal.alignItemsCenter,
                             ]}
                           >
                             <View
                               style={[
                                 stylesGlobal.containerIcon30,
-                                stylesGlobal.padding5
+                                stylesGlobal.padding5,
                               ]}
                             >
                               <Image
                                 source={IconCalendar}
                                 style={[
                                   stylesGlobal.imageIcon,
-                                  stylesGlobal.tintColorGrey
+                                  stylesGlobal.tintColorGrey,
                                 ]}
                                 resizeMode="contain"
                               />
                             </View>
                             <Text>
-                              {" "}
+                              {' '}
                               {packages
                                 ? viewDate(packages.BookingDetailSum.StartDate)
-                                : ""}
+                                : ''}
                             </Text>
                           </View>
-                        ) : status == "FixedDateVariable" ? (
+                        ) : status == 'FixedDateVariable' ? (
                           <TouchableOpacity
                             style={[
                               stylesGlobal.row100,
-                              stylesGlobal.alignItemsCenter
+                              stylesGlobal.alignItemsCenter,
                             ]}
                             onPress={() =>
                               this.setState({ modalInfoFixedPrice: true })
@@ -745,7 +745,7 @@ class PackagesDetail extends PureComponent {
                             <View
                               style={[
                                 stylesGlobal.containerIcon30,
-                                stylesGlobal.padding5
+                                stylesGlobal.padding5,
                               ]}
                             >
                               <Ionicons
@@ -754,17 +754,17 @@ class PackagesDetail extends PureComponent {
                                 color="#3f51b5"
                               />
                             </View>
-                            <Text style={{ color: "#3f51b5" }}>
+                            <Text style={{ color: '#3f51b5' }}>
                               Fixed Price
                             </Text>
                           </TouchableOpacity>
                         ) : null}
                       </View>
-                      {status == "Fixed" ? (
+                      {status == 'Fixed' ? (
                         <View style={[stylesGlobal.width50, styles.right]}>
                           <Text>
                             <Text style={[styles.text14Red, styles.textPax]}>
-                              Only{" "}
+                              Only{' '}
                             </Text>
                             <Text style={styles.text28Red}>
                               {packages
@@ -772,7 +772,7 @@ class PackagesDetail extends PureComponent {
                                     .MinimumGuest -
                                   packages.BookingDetailSum.FixedPackage
                                     .ConfirmedGuest
-                                : 0}{" "}
+                                : 0}{' '}
                             </Text>
                             <Text style={styles.text14Red}>pax left</Text>
                           </Text>
@@ -780,20 +780,20 @@ class PackagesDetail extends PureComponent {
                             style={[
                               stylesGlobal.row100,
                               styles.rightBottom,
-                              stylesGlobal.alignItemsCenter
+                              stylesGlobal.alignItemsCenter,
                             ]}
                           >
                             <View
                               style={[
                                 stylesGlobal.containerIcon30,
-                                stylesGlobal.padding5
+                                stylesGlobal.padding5,
                               ]}
                             >
                               <Image
                                 source={IconClock}
                                 style={[
                                   stylesGlobal.imageIcon,
-                                  stylesGlobal.tintColorGrey
+                                  stylesGlobal.tintColorGrey,
                                 ]}
                                 resizeMode="contain"
                               />
@@ -804,31 +804,31 @@ class PackagesDetail extends PureComponent {
                                     packages.BookingDetailSum.EndDate
                                   ).diff(
                                     moment(packages.BookingDetailSum.StartDate),
-                                    "days"
+                                    'days'
                                   ) + 1
                                 : 0}
-                              {" days"}{" "}
+                              {' days'}{' '}
                               {packages
                                 ? moment(
                                     packages.BookingDetailSum.EndDate
                                   ).diff(
                                     moment(packages.BookingDetailSum.StartDate),
-                                    "days"
+                                    'days'
                                   )
                                 : 0}
-                              {" nights"}
+                              {' nights'}
                             </Text>
                           </View>
                         </View>
-                      ) : status == "FixedDateVariable" ? (
+                      ) : status == 'FixedDateVariable' ? (
                         <View style={[stylesGlobal.width50, styles.right]}>
                           <Text style={stylesGlobal.text22}>Expired Until</Text>
                           <Text style={styles.text26gold}>
                             {packages
                               ? packages.BookingDetailSum.ExpiredOn
                                 ? viewDate(packages.BookingDetailSum.ExpiredOn)
-                                : ""
-                              : ""}{" "}
+                                : ''
+                              : ''}{' '}
                           </Text>
                         </View>
                       ) : null}
@@ -842,13 +842,13 @@ class PackagesDetail extends PureComponent {
                           stylesGlobal.paddingBottom10,
                           stylesGlobal.paddingLeft20,
                           stylesGlobal.paddingRight20,
-                          stylesGlobal.paddingTop20
+                          stylesGlobal.paddingTop20,
                         ]}
                       >
                         <View
                           style={[
                             styles.cardWarningMinPax,
-                            stylesGlobal.center
+                            stylesGlobal.center,
                           ]}
                         >
                           <Ionicons
@@ -857,7 +857,7 @@ class PackagesDetail extends PureComponent {
                             color={styles.$redcolor}
                           />
                           <Text>
-                            {" "}
+                            {' '}
                             This packages has minimum : {packages.MinPax} Guests
                           </Text>
                         </View>
@@ -879,7 +879,7 @@ class PackagesDetail extends PureComponent {
                       stylesGlobal.paddingBottom20,
                       stylesGlobal.paddingLeft20,
                       stylesGlobal.paddingRight20,
-                      stylesGlobal.paddingTop10
+                      stylesGlobal.paddingTop10,
                     ]}
                   >
                     Tour Description
@@ -889,7 +889,7 @@ class PackagesDetail extends PureComponent {
                     style={[
                       styles.row100,
                       styles.colPadding20,
-                      styles.marginBottom10
+                      styles.marginBottom10,
                     ]}
                   >
                     {this.state.loading ? (
@@ -905,15 +905,15 @@ class PackagesDetail extends PureComponent {
                                     0,
                                     250
                                   )
-                                : this.state.nameButton == "READ MORE"
+                                : this.state.nameButton == 'READ MORE'
                                 ? packages.BookingDetailSum.Description.slice(
                                     0,
                                     250
                                   )
                                 : packages.BookingDetailSum.Description
-                              : ""
-                            : ""
-                          : ""}
+                              : ''
+                            : ''
+                          : ''}
                       </Text>
                     )}
                   </View>
@@ -926,7 +926,7 @@ class PackagesDetail extends PureComponent {
                             style={[
                               styles.row100,
                               styles.colPadding20,
-                              styles.marginBottomCenter20
+                              styles.marginBottomCenter20,
                             ]}
                           >
                             <TouchableOpacity
@@ -944,7 +944,7 @@ class PackagesDetail extends PureComponent {
                   ) : null}
                 </Card>
 
-                {status == "Fixed" ? (
+                {status == 'Fixed' ? (
                   this.state.loading ? (
                     <RoundedLoading width={width90} height={200} />
                   ) : (
@@ -953,7 +953,7 @@ class PackagesDetail extends PureComponent {
                         style={[
                           stylesGlobal.paddingTop20,
                           stylesGlobal.paddingHorizontal20,
-                          styles.bold20
+                          styles.bold20,
                         ]}
                       >
                         Tour Operator
@@ -973,15 +973,15 @@ class PackagesDetail extends PureComponent {
                         style={[
                           styles.row100,
                           styles.colPadding20,
-                          styles.paddingBottom20
+                          styles.paddingBottom20,
                         ]}
                       >
                         <View style={stylesGlobal.width30}>
-                          {imageslogo != "" ? (
+                          {imageslogo != '' ? (
                             <Image
                               style={[
                                 styles.imagestyleDetail,
-                                styles.borderRadius80
+                                styles.borderRadius80,
                               ]}
                               source={{ uri: imageslogo }}
                             />
@@ -989,7 +989,7 @@ class PackagesDetail extends PureComponent {
                             <Image
                               style={[
                                 styles.imagestyleDetail,
-                                styles.borderRadius80
+                                styles.borderRadius80,
                               ]}
                               source={IMAGES}
                             />
@@ -1001,17 +1001,17 @@ class PackagesDetail extends PureComponent {
                           <Text style={styles.textInfo}>
                             {this.props.operator
                               ? this.props.operator.Name
-                              : ""}
+                              : ''}
                           </Text>
                           <Text style={styles.textInfo}>
-                            Region:{" "}
-                            {tourOperator ? tourOperator.RegionName : ""}
+                            Region:{' '}
+                            {tourOperator ? tourOperator.RegionName : ''}
                           </Text>
                           <Text style={styles.textInfo}>
-                            {tourOperator ? tourOperator.Telephone : ""}
+                            {tourOperator ? tourOperator.Telephone : ''}
                           </Text>
                           <Text style={styles.textInfo}>
-                            {tourOperator ? tourOperator.Email : ""}
+                            {tourOperator ? tourOperator.Email : ''}
                           </Text>
                         </View>
                       </View>
@@ -1024,7 +1024,7 @@ class PackagesDetail extends PureComponent {
                     style={[
                       styles.bold18,
                       stylesGlobal.paddingVertical20,
-                      stylesGlobal.paddingLeft20
+                      stylesGlobal.paddingLeft20,
                     ]}
                   >
                     Where we'll stay
@@ -1041,8 +1041,8 @@ class PackagesDetail extends PureComponent {
                       packages.Accommodations.length != 0 ? (
                         packages.Accommodations.map((room, i) => {
                           {
-                            let DataStar = room.AccommodationRating || "";
-                            let Star = parseInt(DataStar.Id) || "";
+                            let DataStar = room.AccommodationRating || '';
+                            let Star = parseInt(DataStar.Id) || '';
                             return (
                               <View
                                 key={i}
@@ -1053,14 +1053,14 @@ class PackagesDetail extends PureComponent {
                                 }
                                 onLayout={event =>
                                   this.setState({
-                                    heightData: event.nativeEvent.layout.height
+                                    heightData: event.nativeEvent.layout.height,
                                   })
                                 }
                               >
                                 <CardAccomodation
                                   Img={room.ImageUrl ? room.ImageUrl : null}
                                   Title={room.Name}
-                                  Address={room.City ? room.City.Name : ""}
+                                  Address={room.City ? room.City.Name : ''}
                                   namabutton="SEE DETAIL"
                                   numberStar={Star}
                                   ProfileFacilities={room.ProfileFacilities}
@@ -1083,7 +1083,7 @@ class PackagesDetail extends PureComponent {
                   style={[
                     stylesGlobal.row100,
                     stylesGlobal.padding20,
-                    stylesGlobal.alignItemsCenter
+                    stylesGlobal.alignItemsCenter,
                   ]}
                 >
                   <View
@@ -1105,7 +1105,7 @@ class PackagesDetail extends PureComponent {
                         buttonColor={styles.$goldcolor}
                         textColor="black"
                         sizeicon={18}
-                        textSize={Platform.OS === "ios" ? 12 : 12}
+                        textSize={Platform.OS === 'ios' ? 12 : 12}
                         buttonWidth="100%"
                         buttonHeight={35}
                         onPress={this.getSchedule}
@@ -1118,7 +1118,7 @@ class PackagesDetail extends PureComponent {
                   <View
                     style={[
                       stylesGlobal.paddingHorizontal20,
-                      styles.paddingBottom20
+                      styles.paddingBottom20,
                     ]}
                   >
                     <SliderLoading width={200} height={150} column={3} />
@@ -1141,13 +1141,13 @@ class PackagesDetail extends PureComponent {
                                   : null
                               }
                               subtitle={`${move.Day}`}
-                              duration={moment(move.Date).format("DD MMM YYYY")}
+                              duration={moment(move.Date).format('DD MMM YYYY')}
                               image={
                                 move.TourDestinations
                                   ? move.TourDestinations.length > 0
                                     ? move.TourDestinations[0].ImageUrl
-                                    : ""
-                                  : ""
+                                    : ''
+                                  : ''
                               }
                               onPress={() => this.handlePressItinerary(i)}
                             />
@@ -1165,13 +1165,13 @@ class PackagesDetail extends PureComponent {
                     <View style={stylesGlobal.paddingHorizontal20}>
                       <RoundedLoading width={width90} height={200} />
                     </View>
-                  ) : status == "Fixed" ? (
+                  ) : status == 'Fixed' ? (
                     <Card widthCard="90%">
                       <Text
                         style={[
                           stylesGlobal.paddingTop20,
                           stylesGlobal.paddingHorizontal20,
-                          styles.bold20
+                          styles.bold20,
                         ]}
                       >
                         Payment Terms
@@ -1191,7 +1191,7 @@ class PackagesDetail extends PureComponent {
                           <View
                             style={[
                               stylesGlobal.paddingHorizontal20,
-                              stylesGlobal.paddingBottom20
+                              stylesGlobal.paddingBottom20,
                             ]}
                           >
                             {paymentTerms.map((pay, i) => {
@@ -1201,7 +1201,7 @@ class PackagesDetail extends PureComponent {
                                   paymentterms={pay.Description}
                                   percentage={pay.PaymentPercentage}
                                   date={moment(pay.DueDate).format(
-                                    "DD MMM YYYY"
+                                    'DD MMM YYYY'
                                   )}
                                 />
                               );
@@ -1219,13 +1219,13 @@ class PackagesDetail extends PureComponent {
                   </View>
                 ) : (
                   <Card widthCard="90%">
-                    {status == "Fixed" || status == "FixedDateVariable" ? (
+                    {status == 'Fixed' || status == 'FixedDateVariable' ? (
                       <View>
                         <Text
                           style={[
                             stylesGlobal.paddingHorizontal20,
                             stylesGlobal.paddingTop20,
-                            styles.bold20
+                            styles.bold20,
                           ]}
                         >
                           Room Packages Price
@@ -1243,7 +1243,7 @@ class PackagesDetail extends PureComponent {
                         <View
                           style={[
                             stylesGlobal.paddingHorizontal20,
-                            stylesGlobal.paddingBottom20
+                            stylesGlobal.paddingBottom20,
                           ]}
                         >
                           <View style={stylesGlobal.row100}>
@@ -1258,13 +1258,13 @@ class PackagesDetail extends PureComponent {
                             </View>
                             <View style={stylesGlobal.width50}>
                               <Text style={styles.text14}>
-                                {" "}
+                                {' '}
                                 Twin Sharing Room
                               </Text>
                             </View>
                             <View style={stylesGlobal.width40}>
                               <Text style={styles.text14}>
-                                {price.CurrencyId}{" "}
+                                {price.CurrencyId}{' '}
                                 {convertRoundPrice(
                                   price.SharingRoomPrice,
                                   price.CurrencyId
@@ -1278,7 +1278,7 @@ class PackagesDetail extends PureComponent {
                               <View
                                 style={[
                                   stylesGlobal.containerIcon30,
-                                  stylesGlobal.padding5
+                                  stylesGlobal.padding5,
                                 ]}
                               >
                                 <Image
@@ -1293,7 +1293,7 @@ class PackagesDetail extends PureComponent {
                             </View>
                             <View style={stylesGlobal.width40}>
                               <Text style={styles.text14}>
-                                {price.CurrencyId}{" "}
+                                {price.CurrencyId}{' '}
                                 {convertRoundPrice(
                                   price.SingleRoomPrice,
                                   price.CurrencyId
@@ -1314,13 +1314,13 @@ class PackagesDetail extends PureComponent {
                             </View>
                             <View style={stylesGlobal.width50}>
                               <Text style={styles.text14}>
-                                {" "}
+                                {' '}
                                 Extra Bed Adult
                               </Text>
                             </View>
                             <View style={stylesGlobal.width40}>
                               <Text style={styles.text14}>
-                                {price.CurrencyId}{" "}
+                                {price.CurrencyId}{' '}
                                 {convertRoundPrice(
                                   price.AdultExtraBedPrice,
                                   price.CurrencyId
@@ -1334,7 +1334,7 @@ class PackagesDetail extends PureComponent {
                               <View
                                 style={[
                                   stylesGlobal.containerIcon30,
-                                  stylesGlobal.padding5
+                                  stylesGlobal.padding5,
                                 ]}
                               >
                                 <Image
@@ -1346,13 +1346,13 @@ class PackagesDetail extends PureComponent {
                             </View>
                             <View style={stylesGlobal.width50}>
                               <Text style={styles.text14}>
-                                {" "}
+                                {' '}
                                 Extra Bed Child
                               </Text>
                             </View>
                             <View style={stylesGlobal.width40}>
                               <Text style={styles.text14}>
-                                {price.CurrencyId}{" "}
+                                {price.CurrencyId}{' '}
                                 {convertRoundPrice(
                                   price.ChildExtraBedPrice,
                                   price.CurrencyId
@@ -1366,7 +1366,7 @@ class PackagesDetail extends PureComponent {
                               <View
                                 style={[
                                   stylesGlobal.containerIcon30,
-                                  stylesGlobal.padding5
+                                  stylesGlobal.padding5,
                                 ]}
                               >
                                 <Image
@@ -1381,7 +1381,7 @@ class PackagesDetail extends PureComponent {
                             </View>
                             <View style={stylesGlobal.width40}>
                               <Text style={styles.text14}>
-                                {price.CurrencyId}{" "}
+                                {price.CurrencyId}{' '}
                                 {convertRoundPrice(
                                   price.NoBedPrice,
                                   price.CurrencyId
@@ -1395,7 +1395,7 @@ class PackagesDetail extends PureComponent {
                               <View
                                 style={[
                                   stylesGlobal.containerIcon30,
-                                  stylesGlobal.padding5
+                                  stylesGlobal.padding5,
                                 ]}
                               >
                                 <Image
@@ -1407,13 +1407,13 @@ class PackagesDetail extends PureComponent {
                             </View>
                             <View style={stylesGlobal.width50}>
                               <Text style={styles.text14}>
-                                {" "}
+                                {' '}
                                 Sharing Bed With Parents
                               </Text>
                             </View>
                             <View style={stylesGlobal.width40}>
                               <Text style={styles.text14}>
-                                {price.CurrencyId}{" "}
+                                {price.CurrencyId}{' '}
                                 {convertRoundPrice(
                                   price.SharingBedPrice,
                                   price.CurrencyId
@@ -1443,17 +1443,17 @@ class PackagesDetail extends PureComponent {
                               style={[
                                 stylesGlobal.paddingHorizontal20,
                                 stylesGlobal.paddingTop20,
-                                styles.bold20
+                                styles.bold20,
                               ]}
                             >
-                              {status == "Fixed"
-                                ? "Important Information"
-                                : "Additional Information"}
+                              {status == 'Fixed'
+                                ? 'Important Information'
+                                : 'Additional Information'}
                             </Text>
                             <View
                               style={[
                                 stylesGlobal.width100,
-                                stylesGlobal.hidden
+                                stylesGlobal.hidden,
                               ]}
                             >
                               <SeperatorRepeat
@@ -1469,7 +1469,7 @@ class PackagesDetail extends PureComponent {
                                   key={i}
                                   style={[
                                     styles.bottom,
-                                    styles.marginBottom20
+                                    styles.marginBottom20,
                                     // stylesGlobal.paddingHorizontal20
                                   ]}
                                 >
@@ -1486,17 +1486,17 @@ class PackagesDetail extends PureComponent {
                                     heightOffset={5}
                                     files={[
                                       {
-                                        href: "cssfileaddress",
-                                        type: "text/css",
-                                        rel: "stylesheet"
-                                      }
+                                        href: 'cssfileaddress',
+                                        type: 'text/css',
+                                        rel: 'stylesheet',
+                                      },
                                     ]}
                                     scalesPageToFit={
-                                      Platform.OS == "android" ? true : false
+                                      Platform.OS == 'android' ? true : false
                                     }
                                     style={[
                                       stylesGlobal.width100,
-                                      styles.marginBottom20
+                                      styles.marginBottom20,
                                     ]}
                                     source={{ html: Desc.Content }}
                                   />
@@ -1516,11 +1516,11 @@ class PackagesDetail extends PureComponent {
         <View style={[styles.footer, styles.topRadius]}>
           {this.state.loading ? (
             <RoundedLoading width={fullWidth} height={300} />
-          ) : status == "Fixed" || status == "FixedDateVariable" ? (
+          ) : status == 'Fixed' || status == 'FixedDateVariable' ? (
             <View style={stylesGlobal.row100}>
               <View style={[stylesGlobal.width60, stylesGlobal.padding20]}>
                 <Text style={[stylesGlobal.textWhite, stylesGlobal.text10]}>
-                  Starting{" "}
+                  Starting{' '}
                 </Text>
                 <View style={stylesGlobal.width100}>
                   <Text style={styles.right}>
@@ -1528,15 +1528,15 @@ class PackagesDetail extends PureComponent {
                       style={[
                         stylesGlobal.text20,
                         stylesGlobal.textSemiBold,
-                        stylesGlobal.textWhite
+                        stylesGlobal.textWhite,
                       ]}
                     >
-                      {price ? price.CurrencyId : ""}{" "}
+                      {price ? price.CurrencyId : ''}{' '}
                       {price
                         ? price.SharingRoomPrice.toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
                             .toLocaleString(price.CurrencyId)
-                        : ""}
+                        : ''}
                     </Text>
                   </Text>
                   <Text style={[stylesGlobal.text10, stylesGlobal.textWhite]}>
@@ -1582,12 +1582,12 @@ const mapStateToProps = state => ({
   packageStatus: state.transactionReducer.packageStatusFromHomeToList,
   packageIdFromSystem: state.transactionReducer.packageIdFromSystem,
   tourOperatorId: state.transactionReducer.tourOperatorId,
-  tourOperatorIdStatus: state.transactionReducer.tourOperatorIdStatus
+  tourOperatorIdStatus: state.transactionReducer.tourOperatorIdStatus,
 });
 
 export default connect(mapStateToProps, {
   getSeriesPackageByIdAction,
   resetTransactionAction,
   getTourOperatorProfileByIdAction,
-  setPackageDataAction
+  setPackageDataAction,
 })(PackagesDetail);

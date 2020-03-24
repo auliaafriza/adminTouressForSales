@@ -58,7 +58,7 @@ export const postJoinTourApi = (data, type, packageId, authToken) => {
   return apiClient.post(
     type === 'FixedDateVariable'
       ? (`${TOUR_TRANSACTION_URL}/JoinTour/VariableDate/${packageId}`, data)
-      : (`${TOUR_TRANSACTION_URL}/JoinTour/${packageId}`, data)
+      : (`${TOUR_TRANSACTION_URL}/JoinTour/OnBehalf/${packageId}`, data)
   );
 };
 

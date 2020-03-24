@@ -75,6 +75,7 @@ const reducer = (state = initialState, action) => {
         packageByIdStatus: null,
         packageHistoryList: [],
         packageHistoryListStatus: '',
+        postDemoStatus: '',
       };
     case types.SET_PACKAGE_STATUS_FROM_HOME_TO_LIST:
       return {
@@ -476,6 +477,32 @@ const reducer = (state = initialState, action) => {
         postDemoStatus: '',
       };
     }
+
+    case types.POST_JOIN_TOUR:
+      return {
+        ...state,
+      };
+    case types.POST_JOIN_TOUR_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.POST_JOIN_TOUR_FULFILLED:
+      return {
+        ...state,
+        postJoinTourStatus: 'success',
+        postJoinTour: action.payload.data,
+        loading: false,
+        errors: {},
+      };
+    case types.POST_JOIN_TOUR_REJECTED:
+      return {
+        ...state,
+        postJoinTourStatus: 'failed',
+        loading: false,
+        errors: action.payload.response.data,
+      };
+
     default:
       return state;
   }

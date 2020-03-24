@@ -25,7 +25,7 @@ import {
   resetTransactionAction,
   postDemoJoinTour,
   postDemoCreateTour,
-  resetStatusPostDemo
+  resetStatusPostDemo,
 } from '../../../actions/Transactions/TransactionAction';
 import {
   createTransactionItemSeries,
@@ -41,7 +41,20 @@ class guestList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Booking: null,
+      // Booking: null,
+      Booking: {
+        GuestAllocation: this.props.route.params.Booking.GuestAllocation,
+        RoomAllocation: this.props.route.params.Booking.RoomAllocation,
+        IsSplitStaffCommission: this.props.route.params.Booking
+          .IsSplitStaffCommission,
+        IsPrintInvoice: this.props.route.params.Booking.IsPrintInvoice,
+        TourNote: this.props.route.params.Booking.TourNote,
+        Guests: this.props.route.params.Booking.Guests,
+        AdditionalItem: this.props.route.params.Booking.AdditionalItem,
+        Supplements: this.props.route.params.Booking.Supplements,
+        StartDate: this.props.route.params.Booking.StartDate,
+        EndDate: this.props.route.params.Booking.EndDate,
+      },
       loading: false,
       errorValidation: '',
       changeSplit: '',
@@ -53,9 +66,9 @@ class guestList extends Component {
       this.props.navigation.pop(); // works best when the goBack is async
       return true;
     });
-    this.props.route.params.type == 'series'
-      ? this.setDataGuest(this.props.guestData)
-      : this.setDataCustom();
+    // this.props.route.params.type == 'series'
+    //   ? this.setDataGuest(this.props.guestData)
+    //   : this.setDataCustom();
   }
 
   // componentDidUpdate() {
@@ -130,14 +143,22 @@ class guestList extends Component {
   };
 
   handlePressDetail = i => {
-    this.props.navigation.navigate('GuestDetail', {
-      onSelect: this.addGuest,
-      index: i,
-      guests: this.state.Booking.Guests,
+    // this.props.navigation.navigate('GuestDetail', {
+    //   onSelect: this.addGuest,
+    //   index: i,
+    //   guests: this.state.Booking.Guests,
+    // });
+    this.props.navigation.navigate('Guest', {
+      screen: 'GuestDetail',
+      params: {
+        onSelect: this.addGuest,
+        index: i,
+        guests: this.state.Booking.Guests,
+      },
     });
   };
 
-  handlePressSummary = () => {
+  handlePressSummary = async () => {
     const error = this.validate();
     let item = null;
     let packageStatus =
@@ -161,7 +182,7 @@ class guestList extends Component {
             this.props.AdditionalService
           );
         } else if (this.props.DetailCustom.Status == 'FixedDateVariable') {
-            item = await transactionItemDemoFixPrice(
+          item = await transactionItemDemoFixPrice(
             this.props.DetailCustom,
             this.props.DailyProgram,
             this.state.Guest,
@@ -181,7 +202,8 @@ class guestList extends Component {
           );
         }
       }
-      this.props.route.params.type == 'series' || this.props.DetailCustom.Status == 'FixedDateVariable'
+      this.props.route.params.type == 'series' ||
+      this.props.DetailCustom.Status == 'FixedDateVariable'
         ? this.props.postDemoJoinTour(
             this.props.IdPackages,
             item,
@@ -211,7 +233,7 @@ class guestList extends Component {
   }
 
   render() {
-    // const Data = this.state.Booking.Guests || "";
+    const Data = this.state.Booking.Guests || '';
     let num = 0;
     return (
       <Container>
@@ -651,7 +673,7 @@ class guestList extends Component {
           onPress={this.handlePressSummary}
         >
           <LinearGradient
-            colors={['#e6ca6b', '#ffd734']}
+            colors={['#38AF95', '#75BDAE']}
             style={[styles.footer, styles.topRadius]}
             start={[0, 0]}
             end={[1, 0]}
@@ -686,5 +708,5 @@ export default connect(mapStateToProps, {
   resetTransactionAction,
   postDemoJoinTour,
   postDemoCreateTour,
-  resetStatusPostDemo
+  resetStatusPostDemo,
 })(guestList);
