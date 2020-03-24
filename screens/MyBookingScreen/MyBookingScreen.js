@@ -66,7 +66,7 @@ class MyBookingScreen extends Component {
       return true;
     });
     // this.setState({ loading: true, positionLoad: "relative" });
-    this.props.getTransactionHistoryByStatusAction('Booking_In_Payment');
+    this.props.getTransactionHistoryByStatusAction('Booking_created');
     // this.props.dispatch(get_history_created_booking());
   }
 
@@ -93,14 +93,24 @@ class MyBookingScreen extends Component {
     } else return true;
   }
 
-  handlePayment = id => {
-    this.props.navigation.navigate('Summary', {
-      screen: 'TourSummaryCustomReady',
-      params: {
-        id: id,
-        type: 'myBooking',
-      },
-    });
+  handlePayment = (id, packageType) => {
+    if (packageType === 'Fixed') {
+      this.props.navigation.navigate('Summary', {
+        screen: 'TourSummarySeries',
+        params: {
+          id: id,
+          type: 'myBooking',
+        },
+      });
+    } else {
+      this.props.navigation.navigate('Summary', {
+        screen: 'TourSummaryCustomReady',
+        params: {
+          id: id,
+          type: 'myBooking',
+        },
+      });
+    }
   };
 
   _handleSearch = value => {
@@ -249,7 +259,9 @@ class MyBookingScreen extends Component {
                             }
                             label={convertStatusPackage(item.Status)}
                             key={'created' + index}
-                            onPress={() => this.handlePayment(item.Id)}
+                            onPress={() =>
+                              this.handlePayment(item.Id, item.PackageType)
+                            }
                             isRead={item.IsRead}
                             packageType={item.PackageType}
                             totalGuest={item.TotalGuest}

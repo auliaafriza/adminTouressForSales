@@ -45,6 +45,7 @@ import {
   SET_ADDITIONAL_SERVICES,
   SEND_EMAIL_CONFIRMATION,
   RESET_SEND_EMAIL,
+  POST_SPECIAL_ADJUSMENT,
 } from './actionTypes';
 
 import {
@@ -63,6 +64,7 @@ import {
   getDemoJoinTourApi,
   getDemoCreateTourApi,
   sendEmailConfirmationApi,
+  postSpecialAdjusmentApi,
 } from '../../api/transactionApi';
 
 import store from '../../config/store';
@@ -423,13 +425,6 @@ export const resetPostCreateCustomAction = () => {
   };
 };
 
-// export const postJoinTourAction = (data, type, packageId) => {
-//   return {
-//     type: POST_JOIN_TOUR,
-//     payload: postJoinTourApi(data, type, packageId),
-//   };
-// };
-
 export const postJoinTourAction = (data, type, packageId) => {
   const state = store.getState();
   const authToken = state.authReducer.token;
@@ -442,14 +437,14 @@ export const postJoinTourAction = (data, type, packageId) => {
   };
 };
 
-export const getTourSummaryByIdAction = (tourTransactionId, data) => {
+export const getTourSummaryByIdAction = tourTransactionId => {
   const state = store.getState();
   const authToken = state.authReducer.token;
 
   return dispatch => {
     return dispatch({
       type: GET_TOUR_SUMMARY_BY_ID,
-      payload: getTourSummaryByIdApi(tourTransactionId, data, authToken),
+      payload: getTourSummaryByIdApi(tourTransactionId, authToken),
     });
   };
 };
@@ -538,6 +533,16 @@ export const resetSendEmail = () => {
   return dispatch => {
     return dispatch({
       type: RESET_SEND_EMAIL,
+    });
+  };
+};
+export const postSpecialAdjusmentAction = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+  return dispatch => {
+    return dispatch({
+      type: POST_SPECIAL_ADJUSMENT,
+      payload: postSpecialAdjusmentApi(data, authToken),
     });
   };
 };

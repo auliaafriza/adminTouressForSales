@@ -55,10 +55,14 @@ export const postEditQuotationApi = (tourTransactionId, data, authToken) => {
 
 export const postJoinTourApi = (data, type, packageId, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  // return apiClient.post(
+  //   type === 'FixedDateVariable'
+  //     ? (`${TOUR_TRANSACTION_URL}/JoinTour/VariableDate/${packageId}`, data)
+  //     : (`${TOUR_TRANSACTION_URL}/JoinTour/OnBehalf/${packageId}`, data)
+  // );
   return apiClient.post(
-    type === 'FixedDateVariable'
-      ? (`${TOUR_TRANSACTION_URL}/JoinTour/VariableDate/${packageId}`, data)
-      : (`${TOUR_TRANSACTION_URL}/JoinTour/OnBehalf/${packageId}`, data)
+    `${TOUR_TRANSACTION_URL}/JoinTour/OnBehalf/${packageId}`,
+    data
   );
 };
 
@@ -95,4 +99,9 @@ export const sendEmailConfirmationApi = (data, authToken) => {
   return apiClient.post(
     `/TourTransactions/EmailSendConfirmation?tourTransactionCode=${data.Id}&emailSendConfirmed=${data.emailSendConfirmed}`
   );
+};
+
+export const postSpecialAdjusmentApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.post(`${TOUR_TRANSACTION_URL}/AdditionalItems`, data);
 };

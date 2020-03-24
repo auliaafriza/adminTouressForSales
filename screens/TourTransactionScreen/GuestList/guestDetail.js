@@ -496,7 +496,7 @@ class guestDetail extends Component {
           onPress={() => this.handleResult(this.state.Guests)}
         >
           <LinearGradient
-            colors={['#e6ca6b', '#ffd734']}
+            colors={['#38AF95', '#75BDAE']}
             style={[styles.footer, styles.topRadius]}
             start={[0, 0]}
             end={[1, 0]}

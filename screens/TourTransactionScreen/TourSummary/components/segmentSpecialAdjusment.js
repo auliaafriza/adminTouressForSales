@@ -48,28 +48,30 @@ const segmentTourNote = props => {
       {specialAdjusmentList
         ? specialAdjusmentList.map((data, i) => {
             return (
-              <View
-                style={[
-                  styles.rowNoPadding,
-                  styles.colPadding20,
-                  stylesGlobal.marginBottom10,
-                ]}
-              >
-                <View style={styles.col60}>
-                  <Text style={stylesGlobal.text16}>{data.Description}</Text>
+              data.ActionType !== 3 && (
+                <View
+                  style={[
+                    styles.rowNoPadding,
+                    styles.colPadding20,
+                    stylesGlobal.marginBottom10,
+                  ]}
+                >
+                  <View style={styles.col60}>
+                    <Text style={stylesGlobal.text16}>{data.Description}</Text>
+                  </View>
+                  <View style={styles.col15}>
+                    <Text style={stylesGlobal.text16}>{data.Qty} Pax</Text>
+                  </View>
+                  <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
+                    <Text style={stylesGlobal.text16}>
+                      {`${data.CurrencyId} ${convertRoundPrice(
+                        Math.abs(data.UnitCost),
+                        data.CurrencyId
+                      )} `}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.col15}>
-                  <Text style={stylesGlobal.text16}>{data.Qty} Pax</Text>
-                </View>
-                <View style={[styles.col40, stylesGlobal.alignItemsEnd]}>
-                  <Text style={stylesGlobal.text16}>
-                    {`${data.CurrencyId} ${convertRoundPrice(
-                      Math.abs(data.UnitCost),
-                      data.CurrencyId
-                    )} `}
-                  </Text>
-                </View>
-              </View>
+              )
             );
           })
         : null}

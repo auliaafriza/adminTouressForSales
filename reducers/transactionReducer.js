@@ -40,6 +40,8 @@ const initialState = {
   additionalServices: null,
   sendEmailConfirmationStatus: '',
   sendEmailConfirmation: null,
+  postSpecialAdjusmentStatus: '',
+  postSpecialAdjusmentTour: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -79,6 +81,9 @@ const reducer = (state = initialState, action) => {
         packageHistoryList: [],
         packageHistoryListStatus: '',
         postDemoStatus: '',
+        postJoinTourStatus: '',
+        postSpecialAdjusmentStatus: '',
+        postSpecialAdjusmentTour: [],
       };
     case types.SET_PACKAGE_STATUS_FROM_HOME_TO_LIST:
       return {
@@ -517,10 +522,7 @@ const reducer = (state = initialState, action) => {
         ...state,
       };
     case types.SEND_EMAIL_CONFIRMATION_PENDING:
-      return {
-        ...state,
-        loading: true,
-      };
+
     case types.SEND_EMAIL_CONFIRMATION_FULFILLED:
       return {
         ...state,
@@ -542,6 +544,32 @@ const reducer = (state = initialState, action) => {
         ...state,
         sendEmailConfirmationStatus: '',
       };
+
+    case types.POST_SPECIAL_ADJUSMENT:
+      return {
+        ...state,
+      };
+    case types.POST_SPECIAL_ADJUSMENT_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.POST_SPECIAL_ADJUSMENT_FULFILLED:
+      return {
+        ...state,
+        postSpecialAdjusmentStatus: 'success',
+        postSpecialAdjusmentTour: action.payload.data,
+        loading: false,
+        errors: {},
+      };
+    case types.POST_SPECIAL_ADJUSMENT_REJECTED:
+      return {
+        ...state,
+        postSpecialAdjusmentStatus: 'failed',
+        loading: false,
+        errors: action.payload.response.data,
+      };
+
     default:
       return state;
   }

@@ -38,7 +38,9 @@ class specialAdjusmentDetail extends Component {
     const { listAdjusment } = this.state;
     let data = {
       Id: 0,
-      TourTransactionId: '',
+      TourTransactionId: this.props.route.params.tourTransactionId
+        ? this.props.route.params.tourTransactionId
+        : '',
       ActionType: 1,
       Description: '',
       Qty: 0,
