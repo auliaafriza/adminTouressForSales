@@ -8,6 +8,8 @@ import {
   getCountryApi,
   getIdentityTypeApi,
   getGuestTitleTypeApi,
+  getTotalCurrenciesApi,
+  postSimpleRegisterApi,
 } from '../../api/generalApi';
 import {
   GET_TOUR_TYPE,
@@ -21,6 +23,9 @@ import {
   GET_COUNTRIES,
   GET_GUEST_TITLE_TYPE,
   GET_IDENTITY_TYPE,
+  GET_TOTAL_CURRENCIES,
+  POST_SIMPLE_REGISTER,
+  RESET_SIMPLE_REGISTER,
 } from './actionTypes';
 
 import store from '../../config/store';
@@ -128,6 +133,36 @@ export const getIdentityTypeAction = () => {
     return dispatch({
       type: GET_IDENTITY_TYPE,
       payload: getIdentityTypeApi(authToken),
+    });
+  };
+};
+
+export const getTotalCurrencies = () => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+  return dispatch => {
+    return dispatch({
+      type: GET_TOTAL_CURRENCIES,
+      payload: getTotalCurrenciesApi(authToken),
+    });
+  };
+};
+
+export const postSimpleRegister = data => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+  return dispatch => {
+    return dispatch({
+      type: POST_SIMPLE_REGISTER,
+      payload: postSimpleRegisterApi(data, authToken),
+    });
+  };
+};
+
+export const resetSimpleRegister = () => {
+  return dispatch => {
+    return dispatch({
+      type: RESET_SIMPLE_REGISTER,
     });
   };
 };

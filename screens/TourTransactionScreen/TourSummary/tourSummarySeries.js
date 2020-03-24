@@ -7,8 +7,7 @@ import {
   Linking,
   BackHandler,
   Image,
-  // Dimensions,
-  // Platform,
+  Modal,
   TouchableOpacity,
   // Keyboard,
 } from 'react-native';
@@ -17,6 +16,7 @@ import {
   NormalButton,
   //NormalButtonWithIcon,
 } from '../../../components/button/index';
+import { CheckBox } from 'react-native-elements';
 import { SeperatorRepeat } from '../../../components/list/index';
 import styles from './styles';
 import PropTypes from 'prop-types';
@@ -40,6 +40,8 @@ import {
   getTransactionHistoryByStatusAction,
   getTourSummaryByIdAction,
   postSpecialAdjusmentAction,
+  sendEmailConfirmation,
+  resetSendEmail,
 } from '../../../actions/Transactions/TransactionAction';
 // import {
 //   post_fix_packaegs,
@@ -79,14 +81,18 @@ class tourSummarySeries extends Component {
               .BookingCommission.ApplicableCommission
           : ''
         : this.props.packageById
-        ? this.props.packageById.BookingDetailSum.FixedPackage
+        ? this.props.packageById.BookingDetailSum
           ? this.props.packageById.BookingDetailSum.FixedPackage
-              .BookingCommission.ApplicableCommission
+            ? this.props.packageById.BookingDetailSum.FixedPackage
+                .BookingCommission.ApplicableCommission
+            : ''
           : ''
         : '',
       specialAdjusment: this.props.specialAdjusment
         ? this.props.specialAdjusment
         : [],
+      modalSendEmailConfirmation: false,
+      isSendEmailConfirmation: false,
     };
   }
   static propTypes = {
@@ -136,7 +142,7 @@ class tourSummarySeries extends Component {
   };
 
   handlePressguest = async () => {
-    this.setState({ loading: true });
+    this.setState({ loading: true, modalSendEmailConfirmation: false });
     let item = null;
 
     if (this.state.Company.Code == null) {
@@ -162,32 +168,56 @@ class tourSummarySeries extends Component {
     }
   };
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.postfixpackagesstatus === 'success') {
+  componentDidUpdate() {
+    if (this.props.postfixpackagesstatus === 'success') {
       this.setState({ loading: false });
-      let iD = nextProps.postfixpackages
-        ? nextProps.postfixpackages.BookingDetailSum.Id
+      let iD = this.props.postfixpackages
+        ? this.props.postfixpackages.BookingDetailSum.Id
         : '';
-      this.openModal(iD);
+      this.handleSendEmailAfterCreateBooking(iD);
       this.props.resetTransactionAction();
-      this.props.getTransactionHistoryByStatusAction('Booking_created');
-
       return false;
-    } else if (nextProps.postfixpackagesstatus === 'failed') {
+    } else if (this.props.postfixpackagesstatus === 'failed') {
       this.setState({ loading: false });
-      Alert.alert('Failed', nextProps.postfixpackagesError.MessageDetail, [
+      Alert.alert('Failed', this.props.postfixpackagesError.MessageDetail, [
         { text: 'OK' },
       ]);
       this.props.resetTransactionAction();
       return false;
     }
     if (this.props.packageByIdStatus) {
-      // this.props.setSpecialAdjusmentAction(this.props.specialAdjusment);
       this.props.resetTransactionAction();
       return false;
     } else if (this.props.packageByIdStatus !== null) {
-      // Alert.alert('Failed', this.props.messages, [{ text: 'OK' }]);
       this.props.resetTransactionAction();
+      return false;
+    } else return true;
+  }
+
+  handleSendEmailAfterCreateBooking = IdBook => {
+    const data = {
+      Id: IdBook,
+      emailSendConfirmed: this.state.isSendEmailConfirmation,
+    };
+    this.props.sendEmailConfirmation(data);
+  };
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.sendEmailConfirmationStatus === 'success') {
+      this.setState({ loading: false });
+      let iD = nextProps.postfixpackages
+        ? nextProps.postfixpackages.BookingDetailSum.Id
+        : '';
+      this.openModal(iD);
+      this.props.resetSendEmail();
+      this.props.getTransactionHistoryByStatusAction('Booking_created');
+      return false;
+    } else if (nextProps.sendEmailConfirmationStatus === 'failed') {
+      this.setState({ loading: false });
+      Alert.alert('Failed', nextProps.postfixpackagesError.MessageDetail, [
+        { text: 'OK' },
+      ]);
+      this.props.resetSendEmail();
       return false;
     } else return true;
   }
@@ -254,11 +284,27 @@ class tourSummarySeries extends Component {
       },
     });
   };
+
   handleSetSpecialAdjusment = async specialAdjusment => {
     await this.setState({
       specialAdjusment,
     });
   };
+
+  closeModal = () => {
+    this.setState({ modalSendEmailConfirmation: false });
+  };
+
+  handleCheckSendEmail = () => {
+    this.setState({
+      isSendEmailConfirmation: !this.state.isSendEmailConfirmation,
+    });
+  };
+
+  openModalSendEmail = () => {
+    this.setState({ modalSendEmailConfirmation: true });
+  };
+
   render() {
     const type = this.props.route.params.type;
     const Data =
@@ -400,6 +446,65 @@ class tourSummarySeries extends Component {
             </View>
           </View>
         </ModalBottom>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalSendEmailConfirmation}
+          onRequestClose={() => {
+            this.setModalVisible(!this.state.modalSendEmailConfirmation);
+          }}
+        >
+          <View style={styles.modalContainer}>
+            {this.state.modalSendEmailConfirmation ? (
+              <View style={styles.innerContainerSort}>
+                <Text style={[stylesGlobal.text20, stylesGlobal.textBold]}>
+                  Confirmation
+                </Text>
+                <Text>Are you sure to book this tour?</Text>
+                <CheckBox
+                  onPress={this.handleCheckSendEmail}
+                  checked={this.state.isSendEmailConfirmation}
+                  center
+                  title="Want to send email notification to travel agent?"
+                  containerStyle={styles.checkBoxStyle}
+                  textStyle={[
+                    stylesGlobal.text14,
+                    stylesGlobal.center,
+                    stylesGlobal.colorBlackLight,
+                  ]}
+                />
+
+                <View style={[stylesGlobal.row, stylesGlobal.width100]}>
+                  <View style={stylesGlobal.width50}>
+                    <NormalButton
+                      textSize={14}
+                      text="Yes"
+                      buttonWidth="90%"
+                      buttonHeight={40}
+                      radiusBorder={10}
+                      buttonColor={styles.$goldcolor}
+                      textColor="black"
+                      onPress={this.handlePressguest}
+                    />
+                  </View>
+                  <View style={stylesGlobal.width50}>
+                    <NormalButton
+                      textSize={14}
+                      text="Cancel"
+                      buttonWidth="90%"
+                      buttonHeight={40}
+                      radiusBorder={10}
+                      colorBorder={styles.$goldcolor}
+                      buttonColor={'white'}
+                      textColor="black"
+                      onPress={this.closeModal}
+                    />
+                  </View>
+                </View>
+              </View>
+            ) : null}
+          </View>
+        </Modal>
         {this.props.loading ? (
           <View style={stylesGlobal.marginTop50}>
             <RoundedLoading
@@ -516,27 +621,6 @@ class tourSummarySeries extends Component {
                       colorSepar="#777"
                     />
                   </View>
-                  {/* <View
-                  style={[
-                    stylesGlobal.row100,
-                    stylesGlobal.paddingBottom20,
-                    stylesGlobal.paddingHorizontal20,
-
-                    stylesGlobal.marginBottom10,
-                  ]}
-                >
-                  <View style={styles.col30}>
-                    <Text style={styles.text16}>Booking Code </Text>
-                  </View>
-                  <View style={styles.col5}>
-                    <Text style={styles.text16}>:</Text>
-                  </View>
-                  <View style={[styles.col65, stylesGlobal.alignItemsEnd]}>
-                    <Text style={styles.text16}>
-                      {Data.BookingDetailSum.Id}
-                    </Text>
-                  </View>
-                </View> */}
                   <View
                     style={[
                       stylesGlobal.row100,
@@ -1473,7 +1557,7 @@ class tourSummarySeries extends Component {
         ) : (
           <TouchableOpacity
             style={styles.footer}
-            onPress={this.handlePressguest}
+            onPress={this.openModalSendEmail}
           >
             <LinearGradient
               colors={['#38AF95', '#75BDAE']}
@@ -1488,7 +1572,7 @@ class tourSummarySeries extends Component {
                 buttonHeight="100%"
                 textColor="#252525"
                 buttonColor="transparent"
-                onPress={this.handlePressguest}
+                onPress={this.openModalSendEmail}
               />
             </LinearGradient>
           </TouchableOpacity>
@@ -1507,6 +1591,8 @@ const mapStateToProps = state => ({
   packageById: state.transactionReducer.packageById,
   packageByIdStatus: state.transactionReducer.packageByIdStatus,
   loading: state.transactionReducer.loading,
+  sendEmailConfirmationStatus:
+    state.transactionReducer.sendEmailConfirmationStatus,
   //   ItemTransaction: state.transactionReducer.ItemTransaction,
   //   TourSchedulePDF: state.historyReducer.TourSchedulePDF,
   //   isCreateTour: state.transactionReducer.isCreateTour,
@@ -1519,4 +1605,7 @@ export default connect(mapStateToProps, {
   resetTransactionAction,
   getTransactionHistoryByStatusAction,
   getTourSummaryByIdAction,
+  postSpecialAdjusmentAction,
+  sendEmailConfirmation,
+  resetSendEmail,
 })(tourSummarySeries);

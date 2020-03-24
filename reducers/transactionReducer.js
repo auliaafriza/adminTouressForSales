@@ -522,6 +522,10 @@ const reducer = (state = initialState, action) => {
         ...state,
       };
     case types.SEND_EMAIL_CONFIRMATION_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
 
     case types.SEND_EMAIL_CONFIRMATION_FULFILLED:
       return {

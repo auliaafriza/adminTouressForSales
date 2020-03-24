@@ -6,7 +6,7 @@ const Stack = createStackNavigator();
 
 export default function readyNav({ navigation, route }) {
   return (
-    <Stack.Navigator headerMode="screen">
+    <Stack.Navigator headerMode="none">
       <Stack.Screen name="ReadyPackageOption" component={ReadyPackageOption} />
     </Stack.Navigator>
   );

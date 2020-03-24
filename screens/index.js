@@ -86,8 +86,8 @@ EStyleSheet.build({
 
 const App = () => (
   <Provider store={store}>
-    <Navigator onNavigationStateChange={null} />
-    {/* <Navigator /> */}
+    {/* <Navigator onNavigationStateChange={null} /> */}
+    <Navigator />
   </Provider>
 );
 

@@ -16,33 +16,186 @@ import MapView from '../screens/TourTransactionScreen/CustomPackage/components/m
 // import ListAccomodation from '../screens/TourTransactionScreen/CustomPackage/components/masterData/listAccomodation';
 import ListCustomer from '../screens/Common/listCustomer';
 import ListUserCustomer from '../screens/Common/listUserCustomer';
+import RegisterCustomer from '../screens/Common/registerCustomer';
 
+import { Icon } from '../components/icon';
+import {
+  headerStyle,
+  headerStyleNoShadow,
+  headerTitleContainerStyle,
+  headerTitleStyle,
+} from '../helper/helper';
 const Stack = createStackNavigator();
 
 export default function masterDataNav({ navigation, route }) {
   return (
     <Stack.Navigator headerMode="screen">
-      <Stack.Screen name="ListAccomodation" component={ListAccomodation} />
-      <Stack.Screen name="AccomodationDetail" component={AccomodationDetail} />
-      <Stack.Screen name="HotelAndRoomDetail" component={HotelAndRoomDetail} />
-      <Stack.Screen name="AllServices" component={AllServices} />
-      <Stack.Screen name="AllNearbyLocation" component={AllNearbyLocation} />
-      <Stack.Screen name="ListExcrution" component={ListExcrution} />
+      <Stack.Screen
+        name="ListAccomodation"
+        component={ListAccomodation}
+        options={{
+          title: 'Accommodation',
+          headerStyle: headerStyleNoShadow,
+          headerTitleStyle: headerTitleStyle,
+          headerTitleContainerStyle: headerTitleContainerStyle,
+          headerLeft: () => (
+            <Icon type="headerleft" onPress={() => navigation.pop()} />
+          ),
+          headerRight: () => (
+            <Icon
+              type="headerright"
+              onPress={() => navigation.navigate('Home')}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="AccomodationDetail"
+        component={AccomodationDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="HotelAndRoomDetail"
+        component={HotelAndRoomDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="AllServices"
+        component={AllServices}
+        options={{
+          title: 'All Services',
+          headerStyle: headerStyle,
+          headerTitleStyle: headerTitleStyle,
+          headerTitleContainerStyle: headerTitleContainerStyle,
+          headerLeft: () => (
+            <Icon type="headerleft" onPress={() => navigation.pop()} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="AllNearbyLocation"
+        component={AllNearbyLocation}
+        options={{
+          title: 'All Nearby Location',
+          headerStyle: headerStyle,
+          headerTitleStyle: headerTitleStyle,
+          headerTitleContainerStyle: headerTitleContainerStyle,
+          headerLeft: () => (
+            <Icon type="headerleft" onPress={() => navigation.pop()} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ListExcrution"
+        component={ListExcrution}
+        options={{
+          title: 'Excursion',
+          headerStyle: headerStyleNoShadow,
+          headerTitleStyle: headerTitleStyle,
+          headerTitleContainerStyle: headerTitleContainerStyle,
+          headerLeft: () => (
+            <Icon type="headerleft" onPress={() => navigation.pop()} />
+          ),
+          headerRight: () => (
+            <Icon
+              type="headerright"
+              onPress={() => navigation.navigate('Home')}
+            />
+          ),
+        }}
+      />
       {/* <Stack.Screen name="ListTransport" component={ListTransport} /> */}
-      <Stack.Screen name="ExcrutionDetail" component={ExcrutionDetail} />
-      <Stack.Screen name="ListRestaurant" component={ListRestaurant} />
+      <Stack.Screen
+        name="ExcrutionDetail"
+        component={ExcrutionDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ListRestaurant"
+        component={ListRestaurant}
+        options={{
+          title: 'Restaurant',
+          headerStyle: headerStyleNoShadow,
+          headerTitleStyle: headerTitleStyle,
+          headerTitleContainerStyle: headerTitleContainerStyle,
+          headerLeft: () => (
+            <Icon type="headerleft" onPress={() => navigation.pop()} />
+          ),
+          headerRight: () => (
+            <Icon
+              type="headerright"
+              onPress={() => navigation.navigate('Home')}
+            />
+          ),
+        }}
+      />
       <Stack.Screen
         name="ListTransportasiUnit"
         component={ListTransportasiUnit}
+        options={{
+          title: 'Transportation',
+          headerStyle: headerStyleNoShadow,
+          headerTitleStyle: headerTitleStyle,
+          headerTitleContainerStyle: headerTitleContainerStyle,
+          headerLeft: () => (
+            <Icon type="headerleft" onPress={() => navigation.pop()} />
+          ),
+          headerRight: () => (
+            <Icon
+              type="headerright"
+              onPress={() => navigation.navigate('Home')}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="TransportasiUnitDetail"
         component={TransportasiUnitDetail}
+        options={{ headerShown: false }}
       />
-      <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} />
-      <Stack.Screen name="MapView" component={MapView} />
-      <Stack.Screen name="ListCustomer" component={ListCustomer} />
-      <Stack.Screen name="ListUserCustomer" component={ListUserCustomer} />
+      <Stack.Screen
+        name="RestaurantDetail"
+        component={RestaurantDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MapView"
+        component={MapView}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ListCustomer"
+        component={ListCustomer}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ListUserCustomer"
+        component={ListUserCustomer}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="RegisterCustomer"
+        component={RegisterCustomer}
+        options={{
+          title: 'Register Customer',
+          headerStyle: headerStyle,
+          headerTitleStyle: headerTitleStyle,
+          headerTitleContainerStyle: headerTitleContainerStyle,
+          headerLeft: () => (
+            <Icon type="headerleft" onPress={() => navigation.pop()} />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }

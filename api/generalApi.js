@@ -45,7 +45,17 @@ export const getIdentityTypeApi = authToken => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${TOUR_TRANSACTION_URL}/IdentityTypeList`);
 };
+
 export const getGuestTitleTypeApi = authToken => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.get(`${TOUR_TRANSACTION_URL}/GuestTitleList`);
+};
+export const getTotalCurrenciesApi = authToken => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.get(`/currencies/`);
+};
+
+export const postSimpleRegisterApi = (data, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.post(`/Account/RegisterCompany/SimpleCustomer`, data);
 };

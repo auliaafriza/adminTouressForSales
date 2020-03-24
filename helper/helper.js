@@ -77,3 +77,36 @@ export function stringAllocation(data) {
 
   return alloc.join();
 }
+
+export const headerStyle = {
+  backgroundColor: 'white',
+  borderBottomColor: 'white',
+  height: 90,
+  shadowColor: '#ccc',
+  shadowOffset: { width: 0, height: 0 },
+  shadowOpacity: 0.3,
+  shadowRadius: 10,
+  elevation: 7,
+  width: '100%',
+};
+
+export const headerStyleNoShadow = {
+  backgroundColor: 'white',
+  elevation: 0,
+  borderBottomColor: 'white',
+  height: 90,
+  width: '100%',
+};
+
+export const headerTitleStyle = {
+  color: '#252525',
+  textAlign: 'center',
+  fontSize: 16,
+  padding: 10,
+};
+
+export const headerTitleContainerStyle = {
+  width: '100%',
+  alignItems: 'flex-start',
+  marginLeft: '10%',
+};

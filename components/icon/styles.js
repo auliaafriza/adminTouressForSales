@@ -36,6 +36,19 @@ const styles = EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  marginRight10: { marginRight: 10 },
+  marginLeft10: { marginLeft: 10 },
+  paddingLeft10: { paddingLeft: 10 },
+  paddingRight10: { paddingRight: 10 },
+  width100: {
+    width: '100%',
+  },
+  flexDirectionRow: { flexDirection: 'row' },
+  image20: {
+    height: 20,
+    width: 20,
+  },
+  width100height100: { width: '100%', height: '100%' },
 });
 
 export default styles;

@@ -1303,7 +1303,7 @@ class SeriesPackageBooking extends Component {
             </View>
           </Container>
         </ScrollView>
-        <View style={[styles.footer, styles.topRadius]}>
+        <View style={[styles.footerSeries, styles.topRadius]}>
           <View style={stylesGlobal.row100}>
             <View style={[stylesGlobal.width60, stylesGlobal.padding20]}>
               <Text style={[stylesGlobal.textWhite, stylesGlobal.text10]}>

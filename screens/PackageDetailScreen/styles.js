@@ -1,30 +1,30 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-import {Dimensions, Platform} from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
-const cardWidth = Dimensions.get ('window').width - 40;
-const fullWidth = Dimensions.get ('window').width;
+const cardWidth = Dimensions.get('window').width - 40;
+const fullWidth = Dimensions.get('window').width;
 
-export default EStyleSheet.create ({
+export default EStyleSheet.create({
   $goldcolor: '$gold',
   $black: 'black',
   $redcolor: '$red',
   $textnotecolor: '$textnote',
   $blacklightcolor: '$blacklight',
-  colorred: {color: '$red'},
-  paddingHorizontal5: {paddingHorizontal: 5},
+  colorred: { color: '$red' },
+  paddingHorizontal5: { paddingHorizontal: 5 },
   $blacklight2color: '$blacklight2',
-  tintColorRed: {tintColor: '$red'},
+  tintColorRed: { tintColor: '$red' },
   paddingTop: 50,
   paddingTop30: {
     paddingTop: 30,
   },
-  alignCenter: {alignItems: 'center'},
-  height400: {height: 400},
-  lineHeight20: {lineHeight: 20},
-  paddingLeft5: {paddingLeft: 5},
+  alignCenter: { alignItems: 'center' },
+  height400: { height: 400 },
+  lineHeight20: { lineHeight: 20 },
+  paddingLeft5: { paddingLeft: 5 },
   $greylight2color: '$greylight2',
-  colorgreylight2: {color: '$greylight2'},
+  colorgreylight2: { color: '$greylight2' },
   tintColorRed: {
     tintColor: '$red',
   },
@@ -181,7 +181,7 @@ export default EStyleSheet.create ({
     justifyContent: 'center',
     backgroundColor: '#fff',
     shadowColor: '#ccc',
-    shadowOffset: {width: 0, height: 0},
+    shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
     elevation: 7,
@@ -250,7 +250,7 @@ export default EStyleSheet.create ({
     flexDirection: 'column',
   },
 
-  textwrap: {flexWrap: 'wrap'},
+  textwrap: { flexWrap: 'wrap' },
 
   text16gold: {
     fontSize: 16,
@@ -497,9 +497,9 @@ export default EStyleSheet.create ({
     textAlign: 'center',
   },
 
-  right: {alignItems: 'flex-end'},
-  marginTop20: {marginTop: 20},
-  flexWrap: {flexWrap: 'wrap'},
+  right: { alignItems: 'flex-end' },
+  marginTop20: { marginTop: 20 },
+  flexWrap: { flexWrap: 'wrap' },
   text28Bold: {
     fontWeight: '300',
     fontSize: 28,
@@ -757,7 +757,7 @@ export default EStyleSheet.create ({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
-  left: {alignItems: 'flex-start'},
+  left: { alignItems: 'flex-start' },
   paddingVertical20: {
     paddingVertical: 20,
   },
@@ -782,12 +782,12 @@ export default EStyleSheet.create ({
   marginBottom10: {
     marginBottom: 10,
   },
-  readMoreText: {fontWeight: '300', color: '$gold'},
-  paddingBottom20: {paddingBottom: 20},
-  borderRadius80: {borderRadius: 80},
-  paddingLeft30: {paddingLeft: 30},
-  textInfo: {color: '#252525', lineHeight: 25},
-  paddingHorizontal20: {paddingHorizontal: 20},
+  readMoreText: { fontWeight: '300', color: '$gold' },
+  paddingBottom20: { paddingBottom: 20 },
+  borderRadius80: { borderRadius: 80 },
+  paddingLeft30: { paddingLeft: 30 },
+  textInfo: { color: '#252525', lineHeight: 25 },
+  paddingHorizontal20: { paddingHorizontal: 20 },
   borderBottom2: {
     borderBottomColor: '#f4f4f4',
     borderBottomWidth: 2,
@@ -795,14 +795,14 @@ export default EStyleSheet.create ({
     marginBottom: 20,
     paddingLeft: 15,
   },
-  paddingLeft10: {paddingLeft: 10},
+  paddingLeft10: { paddingLeft: 10 },
   text18: {
     fontSize: 18,
     lineHeight: 25,
   },
-  readMoreTextGold: {fontWeight: '300', color: '$gold'},
+  readMoreTextGold: { fontWeight: '300', color: '$gold' },
 
-  paddingLeft20: {paddingLeft: 20},
+  paddingLeft20: { paddingLeft: 20 },
   totalContainer: {
     width: '70%',
     paddingRight: 20,
@@ -874,7 +874,7 @@ export default EStyleSheet.create ({
     height: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    width: Dimensions.get ('window').width,
+    width: Dimensions.get('window').width,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     flexDirection: 'row',
@@ -893,7 +893,7 @@ export default EStyleSheet.create ({
   },
   stylesScrollViewSchedule: {
     marginBottom: 0,
-    width: Dimensions.get ('window').width,
+    width: Dimensions.get('window').width,
   },
   paddingTop20: {
     paddingTop: 20,
@@ -967,7 +967,7 @@ export default EStyleSheet.create ({
   colNoPadding90: {
     width: '90%',
   },
-  size14: {fontSize: 14},
+  size14: { fontSize: 14 },
   textblack: {
     fontSize: 12,
     color: 'black',
@@ -1031,7 +1031,7 @@ export default EStyleSheet.create ({
     color: 'black',
     flexWrap: 'wrap',
   },
-  marginRight3: {marginRight: 3},
+  marginRight3: { marginRight: 3 },
 
   containerDropDown45: {
     width: '45%',
@@ -1097,7 +1097,7 @@ export default EStyleSheet.create ({
     zIndex: 5,
     marginBottom: 20,
   },
-  iconClose: {position: 'absolute', top: 20, right: 20},
+  iconClose: { position: 'absolute', top: 20, right: 20 },
   topRadius: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

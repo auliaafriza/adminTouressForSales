@@ -139,7 +139,27 @@ export default EStyleSheet.create({
     borderTopRightRadius: 20,
     overflow: 'hidden',
   },
-
+  footerSeries: {
+    position: 'absolute',
+    flex: 0.1,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#252525',
+    shadowColor: '#f4f4f4',
+    shadowOffset: {
+      width: 5,
+      height: 5,
+    },
+    zIndex: 0,
+    shadowRadius: 10,
+    shadowOpacity: 0.5,
+    overflow: 'hidden',
+  },
   containerScroll: {
     flex: 1,
     width: '100%',

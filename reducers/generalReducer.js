@@ -13,6 +13,10 @@ const initialState = {
   guestData: null,
   countries: [],
   guestTitle: [],
+  postSimpleRegisterStatus: '',
+  postSimpleRegister: null,
+  getTotalCurrencies: null,
+  getTotalCurrenciesStatus: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -194,6 +198,51 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         errors: { global: action.payload.response.data.error_description },
+      };
+
+    case GET_TOTAL_CURRENCIES:
+      return { ...state };
+    case GET_TOTAL_CURRENCIES_PENDING:
+      return { ...state, loading: true };
+    case GET_TOTAL_CURRENCIES_FULFILLED:
+      return {
+        ...state,
+        getTotalCurrenciesStatus: 'success',
+        getTotalCurrencies: action.payload.data,
+        loading: false,
+        errors: {},
+      };
+    case GET_TOTAL_CURRENCIES_REJECTED:
+      return {
+        ...state,
+        getTotalCurrenciesStatus: 'failed',
+        loading: false,
+        errors: action.payload.response.data,
+      };
+
+    case POST_SIMPLE_REGISTER:
+      return { ...state };
+    case POST_SIMPLE_REGISTER_PENDING:
+      return { ...state, loading: true };
+    case POST_SIMPLE_REGISTER_FULFILLED:
+      return {
+        ...state,
+        postSimpleRegisterStatus: 'success',
+        postSimpleRegister: action.payload.data,
+        loading: false,
+        errors: {},
+      };
+    case POST_SIMPLE_REGISTER_REJECTED:
+      return {
+        ...state,
+        postSimpleRegisterStatus: 'failed',
+        loading: false,
+        errors: action.payload.response.data,
+      };
+    case RESET_SIMPLE_REGISTER:
+      return {
+        ...state,
+        postSimpleRegisterStatus: '',
       };
     default:
       return state;

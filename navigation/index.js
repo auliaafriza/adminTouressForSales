@@ -10,7 +10,11 @@ const Stack = createStackNavigator();
 const Root = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Auth" headerMode="none" mode="modal">
+      <Stack.Navigator
+        initialRouteName="AutAuthLoadingh"
+        headerMode="none"
+        mode="modal"
+      >
         <Stack.Screen name="App" component={AppNav} />
         <Stack.Screen name="AuthLoading" component={AuthLoadingScreen} />
         <Stack.Screen name="Auth" component={Login} />
