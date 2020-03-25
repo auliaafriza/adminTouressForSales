@@ -9,6 +9,7 @@ import {
   headerStyleNoShadow,
   headerTitleContainerStyle,
   headerTitleStyle,
+  headerStyle,
 } from '../helper/helper';
 const Stack = createStackNavigator();
 
@@ -42,7 +43,15 @@ export default function seriesNav({ navigation, route }) {
       <Stack.Screen
         name="SeriesOptions"
         component={SeriesOptions}
-        options={{ headerShown: false }}
+        options={{
+          title: 'Booking Option',
+          headerStyle: headerStyle,
+          headerTitleStyle: headerTitleStyle,
+          headerTitleContainerStyle: headerTitleContainerStyle,
+          headerLeft: () => (
+            <Icon type="headerleft" onPress={() => navigation.pop()} />
+          ),
+        }}
       />
       <Stack.Screen
         name="DetailAccommodation"

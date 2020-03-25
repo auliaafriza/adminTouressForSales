@@ -200,11 +200,11 @@ const reducer = (state = initialState, action) => {
         errors: { global: action.payload.response.data.error_description },
       };
 
-    case GET_TOTAL_CURRENCIES:
+    case types.GET_TOTAL_CURRENCIES:
       return { ...state };
-    case GET_TOTAL_CURRENCIES_PENDING:
+    case types.GET_TOTAL_CURRENCIES_PENDING:
       return { ...state, loading: true };
-    case GET_TOTAL_CURRENCIES_FULFILLED:
+    case types.GET_TOTAL_CURRENCIES_FULFILLED:
       return {
         ...state,
         getTotalCurrenciesStatus: 'success',
@@ -212,7 +212,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         errors: {},
       };
-    case GET_TOTAL_CURRENCIES_REJECTED:
+    case types.GET_TOTAL_CURRENCIES_REJECTED:
       return {
         ...state,
         getTotalCurrenciesStatus: 'failed',
@@ -220,11 +220,11 @@ const reducer = (state = initialState, action) => {
         errors: action.payload.response.data,
       };
 
-    case POST_SIMPLE_REGISTER:
+    case types.POST_SIMPLE_REGISTER:
       return { ...state };
-    case POST_SIMPLE_REGISTER_PENDING:
+    case types.POST_SIMPLE_REGISTER_PENDING:
       return { ...state, loading: true };
-    case POST_SIMPLE_REGISTER_FULFILLED:
+    case types.POST_SIMPLE_REGISTER_FULFILLED:
       return {
         ...state,
         postSimpleRegisterStatus: 'success',
@@ -232,14 +232,14 @@ const reducer = (state = initialState, action) => {
         loading: false,
         errors: {},
       };
-    case POST_SIMPLE_REGISTER_REJECTED:
+    case types.POST_SIMPLE_REGISTER_REJECTED:
       return {
         ...state,
         postSimpleRegisterStatus: 'failed',
         loading: false,
         errors: action.payload.response.data,
       };
-    case RESET_SIMPLE_REGISTER:
+    case types.RESET_SIMPLE_REGISTER:
       return {
         ...state,
         postSimpleRegisterStatus: '',

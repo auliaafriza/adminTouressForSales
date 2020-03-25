@@ -46,6 +46,7 @@ import {
   SEND_EMAIL_CONFIRMATION,
   RESET_SEND_EMAIL,
   POST_SPECIAL_ADJUSMENT,
+  RESET_GET_TOUR_SUMMARY_BY_ID,
 } from './actionTypes';
 
 import {
@@ -543,6 +544,14 @@ export const postSpecialAdjusmentAction = data => {
     return dispatch({
       type: POST_SPECIAL_ADJUSMENT,
       payload: postSpecialAdjusmentApi(data, authToken),
+    });
+  };
+};
+
+export const resetGetTourSummaryById = () => {
+  return dispatch => {
+    return dispatch({
+      type: RESET_GET_TOUR_SUMMARY_BY_ID,
     });
   };
 };

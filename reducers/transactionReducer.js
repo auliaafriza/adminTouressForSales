@@ -31,8 +31,8 @@ const initialState = {
   DeparturesStatus: '',
   ReturnsStatus: '',
   isUpdateSpecialAdjusment: null,
-  packageById: {},
-  packageByIdStatus: null,
+  packageByIdSummary: {},
+  packageByIdSummaryStatus: null,
   packageHistoryList: [],
   packageHistoryListStatus: '',
   postDemoStatus: '',
@@ -76,8 +76,6 @@ const reducer = (state = initialState, action) => {
         tourOperatorIdStatus: null,
         setGuestDataStatus: null,
         isUpdateSpecialAdjusment: null,
-        packageById: {},
-        packageByIdStatus: null,
         packageHistoryList: [],
         packageHistoryListStatus: '',
         postDemoStatus: '',
@@ -397,18 +395,21 @@ const reducer = (state = initialState, action) => {
     case types.GET_TOUR_SUMMARY_BY_ID_FULFILLED:
       return {
         ...state,
-        packageById: action.payload.data,
-        packageByIdStatus: true,
+        packageByIdSummary: action.payload.data,
+        packageByIdSummaryStatus: 'success',
         loading: false,
         errors: null,
       };
     case types.GET_TOUR_SUMMARY_BY_ID_REJECTED:
       return {
         ...state,
-        packageByIdStatus: false,
+        packageByIdSummaryStatus: 'failed',
         loading: false,
         errors: action.payload.response.data,
       };
+    case types.RESET_GET_TOUR_SUMMARY_BY_ID: {
+      return { ...state, packageByIdSummaryStatus: '' };
+    }
 
     case types.GET_TRANSACTION_HISTORY_BY_STATUS:
       return { ...state };

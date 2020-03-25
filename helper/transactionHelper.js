@@ -927,41 +927,43 @@ export const generateOrderedItem = data => {
   let restaurant = [];
   let excursion = [];
   let transportation = [];
-  const generateOrderedItem = data.reduce((sum, record) => {
-    record.OrderedItems.length > 0 &&
-      record.OrderedItems.forEach(data => {
-        let cutNameOnly = data.ItemName.split('-')[0];
-        let isSame = true;
-        if (data.ItemType.toLowerCase() === 'accommodation') {
-          isSame = accommodation.includes(cutNameOnly);
-          !isSame && accommodation.push(cutNameOnly);
-        } else if (data.ItemType.toLowerCase() === 'flight_ticket') {
-          isSame = flight.includes(cutNameOnly);
-          !isSame && flight.push(cutNameOnly);
-          // return flight.push(data.ItemName);
-        } else if (data.ItemType.toLowerCase() === 'restaurant') {
-          isSame = restaurant.includes(cutNameOnly);
-          !isSame && restaurant.push(cutNameOnly);
-          // return restaurant.push(data.ItemName);
-        } else if (data.ItemType.toLowerCase() === 'attraction') {
-          isSame = excursion.includes(cutNameOnly);
-          !isSame && excursion.push(cutNameOnly);
-          // return excursion.push(data.ItemName);
-        } else if (data.ItemType.toLowerCase() === 'transportation') {
-          isSame = transportation.includes(cutNameOnly);
-          !isSame && transportation.push(cutNameOnly);
-          // return transporation.push(data.ItemName);
-        }
-      });
-    sum = {
-      accommodation: accommodation,
-      flight: flight,
-      restaurant: restaurant,
-      excursion: excursion,
-      transportation: transportation,
-    };
-    return sum;
-  }, {});
+  const generateOrderedItem = data
+    ? data.reduce((sum, record) => {
+        record.OrderedItems.length > 0 &&
+          record.OrderedItems.forEach(data => {
+            let cutNameOnly = data.ItemName.split('-')[0];
+            let isSame = true;
+            if (data.ItemType.toLowerCase() === 'accommodation') {
+              isSame = accommodation.includes(cutNameOnly);
+              !isSame && accommodation.push(cutNameOnly);
+            } else if (data.ItemType.toLowerCase() === 'flight_ticket') {
+              isSame = flight.includes(cutNameOnly);
+              !isSame && flight.push(cutNameOnly);
+              // return flight.push(data.ItemName);
+            } else if (data.ItemType.toLowerCase() === 'restaurant') {
+              isSame = restaurant.includes(cutNameOnly);
+              !isSame && restaurant.push(cutNameOnly);
+              // return restaurant.push(data.ItemName);
+            } else if (data.ItemType.toLowerCase() === 'attraction') {
+              isSame = excursion.includes(cutNameOnly);
+              !isSame && excursion.push(cutNameOnly);
+              // return excursion.push(data.ItemName);
+            } else if (data.ItemType.toLowerCase() === 'transportation') {
+              isSame = transportation.includes(cutNameOnly);
+              !isSame && transportation.push(cutNameOnly);
+              // return transporation.push(data.ItemName);
+            }
+          });
+        sum = {
+          accommodation: accommodation,
+          flight: flight,
+          restaurant: restaurant,
+          excursion: excursion,
+          transportation: transportation,
+        };
+        return sum;
+      }, {})
+    : [];
   return generateOrderedItem;
 };
 
