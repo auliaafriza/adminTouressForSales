@@ -94,23 +94,13 @@ class MyBookingScreen extends Component {
   }
 
   handlePayment = (id, packageType) => {
-    if (packageType === 'Fixed') {
-      this.props.navigation.navigate('Summary', {
-        screen: 'TourSummarySeries',
-        params: {
-          id: id,
-          type: 'myBooking',
-        },
-      });
-    } else {
-      this.props.navigation.navigate('Summary', {
-        screen: 'TourSummaryCustomReady',
-        params: {
-          id: id,
-          type: 'myBooking',
-        },
-      });
-    }
+    this.props.navigation.navigate('Summary', {
+      screen: 'TourSummarySeries',
+      params: {
+        id: id,
+        type: 'myBooking',
+      },
+    });
   };
 
   _handleSearch = value => {
