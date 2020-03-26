@@ -249,19 +249,13 @@ class PackagesDetail extends PureComponent {
   //     this.props.dispatch(get_tour_schedule(this.props.IdPackages));
   //   }
 
-  //   handlePressItinerary = idmove => {
-  //     const { navigation } = this.props;
-  //     const status = navigation.getParam('status', 'null');
-  //     {
-  //       status == 'Ready' || status == 'FixedDateVariable'
-  //         ? this.props.navigation.navigate('ReadyPackagesItenary', {
-  //             Id: idmove,
-  //           })
-  //         : this.props.navigation.navigate('FixPackagesItenary', {
-  //             Id: idmove,
-  //           });
-  //     }
-  //   };
+  handlePressItinerary = (data, index, PackageType) => {
+    this.props.navigation.navigate('TourScheduleSummary', {
+      data: data,
+      Id: index,
+      PackageType: PackageType,
+    });
+  };
 
   //   handleOnScroll = e => {
   //     let newPageNum = parseInt(e.nativeEvent.contentOffset.x / cardWidth + 1);
@@ -1133,7 +1127,9 @@ class PackagesDetail extends PureComponent {
                                   : ''
                                 : ''
                             }
-                            onPress={() => this.handlePressItinerary(i)}
+                            onPress={() =>
+                              this.handlePressItinerary(daily, i, status)
+                            }
                           />
                         </View>
                       );

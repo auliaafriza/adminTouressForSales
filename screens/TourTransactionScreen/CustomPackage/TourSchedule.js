@@ -468,7 +468,7 @@ class TourSchedule extends Component {
   shouldComponentUpdate(nextProps) {
     if (nextProps.isDataDetail === 'success') {
       this.setState({ loading: false });
-      this.props.navigation.navigate('masterData', {
+      this.props.navigation.navigate('PackageList', {
         screen: 'DetailAccommodation',
         params: {
           hotel: nextProps.dataDetail,
@@ -480,18 +480,24 @@ class TourSchedule extends Component {
     }
     if (nextProps.isData === 'success') {
       this.setState({ loading: false });
-      this.props.navigation.navigate('DetailInformation', {
-        data: nextProps.dataExcrusion,
-        type: this.state.type,
+      this.props.navigation.navigate('PackageList', {
+        screen: 'DetailInformation',
+        params: {
+          data: nextProps.dataExcrusion,
+          type: this.state.type,
+        },
       });
       this.props.resetExcrusionDetail();
       return false;
     }
     if (nextProps.isDataRestaurant === 'success') {
       this.setState({ loading: false });
-      this.props.navigation.navigate('DetailInformation', {
-        data: nextProps.dataRestaurant,
-        type: this.state.type,
+      this.props.navigation.navigate('PackageList', {
+        screen: 'DetailInformation',
+        params: {
+          data: nextProps.dataExcrusion,
+          type: this.state.type,
+        },
       });
       this.props.resetStatusRestaurant();
       return false;
@@ -502,16 +508,19 @@ class TourSchedule extends Component {
     ) {
       this.setState({ loading: false });
       this.state.type != 'EAT' && this.state.type != 'RECREATION'
-        ? this.props.navigation.navigate('masterData', {
+        ? this.props.navigation.navigate('PackageList', {
             screen: 'DetailAccommodation',
             parmas: {
               hotel: this.state.dataHotel,
               type: this.state.type,
             },
           })
-        : this.props.navigation.navigate('DetailInformation', {
-            data: this.state.dataHotel,
-            type: this.state.type,
+        : this.props.navigation.navigate('PackageList', {
+            screen: 'DetailInformation',
+            params: {
+              data: this.state.dataHotel,
+              type: this.state.type,
+            },
           });
       this.props.resetGetAccommodationAction();
       this.props.resetExcrusionDetail();
