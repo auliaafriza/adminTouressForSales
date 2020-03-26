@@ -519,7 +519,7 @@ export default EStyleSheet.create({
     alignItems: 'flex-start',
     top: '40%',
     width: '100%',
-    height: '30%',
+    height: '40%',
     backgroundColor: '$whitelight',
     paddingRight: 20,
     paddingLeft: 20,

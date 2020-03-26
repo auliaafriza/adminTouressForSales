@@ -10,6 +10,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Modal,
+  Picker,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Container } from '../../../components/container/index';
@@ -65,7 +66,9 @@ import {
 import SegmentTourNote from './components/segmentTourNote';
 import dummayDemo from './components/orderedItemDetail/demoPrice';
 import SegmentSpecialAdjusment from './components/segmentSpecialAdjusment';
-import { RoundedLoading } from '../../../components/loading';
+import { Loading } from '../../../components/loading';
+import IOSPicker from 'react-native-ios-picker';
+import { TextWarning } from '../../../components/text';
 
 class summaryCustom extends Component {
   constructor(props) {
@@ -89,7 +92,9 @@ class summaryCustom extends Component {
         ? this.props.specialAdjusment
         : [],
       modalSendEmailConfirmation: false,
-      isSendEmailConfirmation: false,
+      isSendEmailConfirmation: null,
+      LabelSendEmail: null,
+      errorSendEmail: '',
     };
   }
   static propTypes = {
@@ -146,18 +151,21 @@ class summaryCustom extends Component {
   };
 
   handleCreate = () => {
-    this.setState({ loading: true, modalSendEmailConfirmation: false });
-    let item = copyObject(this.state.ItemTransaction);
-    item.TourNote = this.state.TourNote;
+    const error = this.validate();
+    if (!error) {
+      this.setState({ loading: true, modalSendEmailConfirmation: false });
+      let item = copyObject(this.state.ItemTransaction);
+      item.TourNote = this.state.TourNote;
 
-    if (this.state.Company.Code == null) {
-      this.setState({ loading: false });
-      Alert.alert('Failed', 'Please select company', [{ text: 'OK' }]);
-    } else {
-      this.setState({ loading: false });
-      item.CompanyCode = this.state.Company.Code;
-      item.UserProfileId = this.state.Company.Id;
-      this.props.postCreateCustomOnBeHalfAction(item);
+      if (this.state.Company.Code == null) {
+        this.setState({ loading: false });
+        Alert.alert('Failed', 'Please select company', [{ text: 'OK' }]);
+      } else {
+        this.setState({ loading: false });
+        item.CompanyCode = this.state.Company.Code;
+        item.UserProfileId = this.state.Company.Id;
+        this.props.postCreateCustomOnBeHalfAction(item);
+      }
     }
   };
 
@@ -187,7 +195,6 @@ class summaryCustom extends Component {
         this.setState({ isQuotationSave: true });
       }
     }
-    console.log(item);
   };
 
   handleAcceptQuotation = () => {
@@ -203,6 +210,26 @@ class summaryCustom extends Component {
       item.CompanyCode = this.state.Company.Code;
       this.props.postEditQuotationAction(item);
     }
+  };
+
+  validate = () => {
+    const { isSendEmailConfirmation } = this.state;
+    let isError = false;
+    const errors = {
+      errorSendEmail: '',
+    };
+
+    if (isSendEmailConfirmation == null) {
+      isError = true;
+      errors.errorSendEmail = 'Please select send email notification';
+    }
+
+    this.setState({
+      ...this.state,
+      ...errors,
+    });
+
+    return isError;
   };
 
   // shouldComponentUpdate(nextProps) {
@@ -596,11 +623,139 @@ class summaryCustom extends Component {
           <View style={styles.modalContainer}>
             {this.state.modalSendEmailConfirmation ? (
               <View style={styles.innerContainerSort}>
-                <Text style={[stylesGlobal.text20, stylesGlobal.textBold]}>
+                <Text
+                  style={[
+                    stylesGlobal.text20,
+                    stylesGlobal.textBold,
+                    stylesGlobal.paddingBottom10,
+                  ]}
+                >
                   Confirmation
                 </Text>
-                <Text>Are you sure to book this tour?</Text>
-                <CheckBox
+                <Text
+                  style={[stylesGlobal.textBold, stylesGlobal.paddingBottom5]}
+                >
+                  Make sure the data that is filled in is correct. transaction
+                  will be create
+                </Text>
+                <Text
+                  style={[stylesGlobal.colorBlackLight, styles.marginBottom10]}
+                >
+                  Want to send email notification to travel agent?
+                </Text>
+                <View
+                  style={[
+                    stylesGlobal.row100,
+                    stylesDropDown.containerDropDown,
+                  ]}
+                >
+                  {Platform.OS === 'ios' ? (
+                    <IOSPicker
+                      mode="modal"
+                      textStyle={stylesDropDown.textPicker}
+                      style={stylesDropDown.dropdownIos}
+                      selectedValue={
+                        this.state.isSendEmailConfirmation ? (
+                          this.state.LabelSendEmail == 0 ? (
+                            <Text
+                              style={[
+                                stylesGlobal.text14,
+                                styles.colorgreylight2,
+                              ]}
+                            >
+                              Choose...
+                            </Text>
+                          ) : (
+                            dataDropDown[this.state.LabelSendEmail - 1].label
+                          )
+                        ) : (
+                          <Text
+                            style={[
+                              stylesGlobal.text14,
+                              stylesDropDown.colorgreylight2,
+                            ]}
+                          >
+                            Choose...
+                          </Text>
+                        )
+                      }
+                      onValueChange={(itemValue, itemIndex) => {
+                        this.setState({
+                          isSendEmailConfirmation: itemValue,
+                          LabelSendEmail: itemIndex,
+                        });
+                      }}
+                    >
+                      <Picker.Item
+                        label="Choose..."
+                        value=""
+                        color={stylesDropDown.$greylight2color}
+                        style={stylesGlobal.text14}
+                      />
+                      {dataDropDown.map((data, i) => {
+                        return (
+                          <Picker.Item
+                            label={data.label}
+                            value={data.value}
+                            key={i}
+                          />
+                        );
+                      })}
+                    </IOSPicker>
+                  ) : (
+                    <Picker
+                      mode="dialog"
+                      textStyle={stylesDropDown.textPicker}
+                      style={stylesDropDown.containerDropDownAndroid}
+                      selectedValue={
+                        this.state.isSendEmailConfirmation ? (
+                          this.state.isSendEmailConfirmation
+                        ) : (
+                          <Text
+                            style={[
+                              stylesDropDown.colorgreylight2,
+                              stylesGlobal.text14,
+                            ]}
+                          >
+                            Choose...
+                          </Text>
+                        )
+                      }
+                      onValueChange={itemValue => {
+                        this.setState({
+                          isSendEmailConfirmation: itemValue,
+                        });
+                      }}
+                    >
+                      <Picker.Item
+                        label="Choose..."
+                        value=""
+                        color={stylesDropDown.$greylight2color}
+                        style={stylesGlobal.text14}
+                      />
+                      {dataDropDown
+                        ? dataDropDown.map((data, i) => {
+                            return (
+                              <Picker.Item
+                                label={data.label}
+                                value={data.value}
+                                key={i}
+                              />
+                            );
+                          })
+                        : null}
+                    </Picker>
+                  )}
+                </View>
+
+                <View style={[styles.colNoPaddingLeft, styles.marginBottom20]}>
+                  <TextWarning
+                    show={true}
+                    textwarning={this.state.errorSendEmail}
+                    alignSelfText="flex-start"
+                  />
+                </View>
+                {/* <CheckBox
                   onPress={this.handleCheckSendEmail}
                   checked={this.state.isSendEmailConfirmation}
                   center
@@ -611,7 +766,7 @@ class summaryCustom extends Component {
                     stylesGlobal.center,
                     stylesGlobal.colorBlackLight,
                   ]}
-                />
+                /> */}
 
                 <View style={[stylesGlobal.row, stylesGlobal.width100]}>
                   <View style={stylesGlobal.width50}>
@@ -645,13 +800,14 @@ class summaryCustom extends Component {
           </View>
         </Modal>
         {this.props.loading ? (
-          <View style={stylesGlobal.marginTop50}>
-            <RoundedLoading
-              width={stylesGlobal.width90}
-              height={200}
-              line={10}
-            />
-          </View>
+          // <View style={stylesGlobal.marginTop50}>
+          //   <RoundedLoading
+          //     width={stylesGlobal.width90}
+          //     height={200}
+          //     line={10}
+          //   />
+          // </View>
+          <Loading sizeloading="large" colorloading={styles.$goldcolor} />
         ) : (
           <ScrollView
             style={[
