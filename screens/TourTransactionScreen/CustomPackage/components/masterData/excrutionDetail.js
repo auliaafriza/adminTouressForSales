@@ -254,8 +254,10 @@ class excrutionDetail extends Component {
               DP[i].Movements[j - 1].Item,
               DP[i].Movements[j + 1].Item
             );
-            item = await this.props.getDurationAction(data);
-            item = this.props.getDuration;
+            await this.props
+              .getDurationAction(data)
+              .then(res => (item = res.value.data))
+              .catch(err => (item = err.response.data.Message));
             if (item.Duration != undefined) {
               await this.props.setDrivingAction(
                 setObjectDuration(this.props.driving, data, item)

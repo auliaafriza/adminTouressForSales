@@ -407,7 +407,7 @@ class tourSummarySeries extends Component {
         <ModalBottom height="50%" visible={this.state.loading} isCenter={true}>
           <Text style={stylesGlobal.text18}>
             {type === 'myBooking'
-              ? 'Special adjusment'
+              ? 'Saving your Special adjusment'
               : 'Booking your package'}
           </Text>
           <AnimatedEllipsis style={stylesGlobal.text24} />
