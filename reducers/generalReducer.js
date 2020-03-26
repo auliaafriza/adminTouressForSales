@@ -17,6 +17,7 @@ const initialState = {
   postSimpleRegister: null,
   getTotalCurrencies: null,
   getTotalCurrenciesStatus: '',
+  isTourSchedulePDF: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -243,6 +244,27 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         postSimpleRegisterStatus: '',
+      };
+
+    case types.GET_TOUR_SCHEDULE:
+      return { ...state };
+    case types.GET_TOUR_SCHEDULE_PENDING:
+      return { ...state, loading: true };
+    case types.GET_TOUR_SCHEDULE_FULFILLED:
+      return {
+        ...state,
+        isTourSchedulePDF: 'success',
+        TourSchedulePDF: action.payload.data,
+        loading: false,
+        errors: {},
+      };
+    case types.GET_TOUR_SCHEDULE_REJECTED:
+      return {
+        ...state,
+        isTourSchedulePDF: 'failed',
+        TourSchedulePDF: '',
+        loading: false,
+        errors: action.payload.response.data,
       };
     default:
       return state;

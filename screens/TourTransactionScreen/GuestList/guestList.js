@@ -49,7 +49,10 @@ class guestList extends Component {
           .IsSplitStaffCommission,
         IsPrintInvoice: this.props.route.params.Booking.IsPrintInvoice,
         TourNote: this.props.route.params.Booking.TourNote,
-        Guests: this.props.route.params.Booking.Guests,
+        Guests:
+          this.props.route.params.type === 'custom'
+            ? this.props.Guest
+            : this.props.route.params.Booking.Guests,
         AdditionalItem: this.props.route.params.Booking.AdditionalItem,
         Supplements: this.props.route.params.Booking.Supplements,
         StartDate: this.props.route.params.Booking.StartDate,
@@ -67,7 +70,7 @@ class guestList extends Component {
       return true;
     });
     // this.props.route.params.type == 'series'
-    //   ? this.setDataGuest(this.props.guestData)
+    //   ? this.setDataGuest(this.props.route.params)
     //   : this.setDataCustom();
   }
 
@@ -194,9 +197,12 @@ class guestList extends Component {
             this.props.DetailCustom,
             this.props.SummaryProgram,
             this.props.DailyProgram,
-            this.state.Departures,
-            this.state.Returns,
-            this.state.Guest,
+            // this.state.Departures,
+            // this.state.Returns,
+            // this.state.Guest,
+            this.props.Departures,
+            this.props.Returns,
+            this.state.Booking.Guests,
             this.props.Operator,
             this.props.AdditionalService
           );
@@ -217,7 +223,10 @@ class guestList extends Component {
     if (nextProps.ispostDemoFixedPackages === 'success') {
       this.setState({ loading: false });
       this.props.navigation.navigate('Summary', {
-        screen: 'TourSummarySeries',
+        screen:
+          this.props.route.params.type === 'custom'
+            ? 'TourSummaryCustomReady'
+            : 'TourSummarySeries',
         params: {
           Guest: this.state.Booking,
         },
@@ -702,6 +711,14 @@ const mapStateToProps = state => ({
   setGuestDataStatus: state.transactionReducer.setGuestDataStatus,
   Guest: state.generalReducer.guestData,
   IdPackages: state.transactionReducer.packageIdFromSystem,
+  DetailCustom: state.transactionReducer.CustomDetails,
+  //
+  Departures: state.transactionReducer.Departures,
+  Returns: state.transactionReducer.Returns,
+  SummaryProgram: state.transactionReducer.SummaryProgram,
+  DailyProgram: state.transactionReducer.DailyProgram,
+  AdditionalService: state.transactionReducer.dataAdditionalService,
+  Operator: state.operatorReducer.Operator,
 });
 
 export default connect(mapStateToProps, {

@@ -10,6 +10,7 @@ import {
   getGuestTitleTypeApi,
   getTotalCurrenciesApi,
   postSimpleRegisterApi,
+  getTourScheduleApi,
 } from '../../api/generalApi';
 import {
   GET_TOUR_TYPE,
@@ -26,6 +27,7 @@ import {
   GET_TOTAL_CURRENCIES,
   POST_SIMPLE_REGISTER,
   RESET_SIMPLE_REGISTER,
+  GET_TOUR_SCHEDULE,
 } from './actionTypes';
 
 import store from '../../config/store';
@@ -163,6 +165,17 @@ export const resetSimpleRegister = () => {
   return dispatch => {
     return dispatch({
       type: RESET_SIMPLE_REGISTER,
+    });
+  };
+};
+
+export const getTourScheduleAction = packageId => {
+  const state = store.getState();
+  const authToken = state.authReducer.token;
+  return dispatch => {
+    return dispatch({
+      type: GET_TOUR_SCHEDULE,
+      payload: getTourScheduleApi(packageId, authToken),
     });
   };
 };

@@ -42,6 +42,7 @@ const initialState = {
   sendEmailConfirmation: null,
   postSpecialAdjusmentStatus: '',
   postSpecialAdjusmentTour: [],
+  dataAdditionalService: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -316,7 +317,14 @@ const reducer = (state = initialState, action) => {
       };
     }
 
-    case types.SET_TOUROPERATOR: {
+    // case types.SET_TOUROPERATOR: {
+    //   return {
+    //     ...state,
+    //     Operator: action.payload,
+    //   };
+    // }
+
+    case types.SET_OPERATOR: {
       return {
         ...state,
         Operator: action.payload,
@@ -574,7 +582,19 @@ const reducer = (state = initialState, action) => {
         loading: false,
         errors: action.payload.response.data,
       };
-
+    // additional service set data
+    case types.SET_ADDITIONAL_SERVICE: {
+      return {
+        ...state,
+        dataAdditionalService: action.data,
+      };
+    }
+    case types.RESET_ADDITIONAL_SERVICE: {
+      return {
+        ...state,
+        dataAdditionalService: null,
+      };
+    }
     default:
       return state;
   }

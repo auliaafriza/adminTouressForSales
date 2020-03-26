@@ -78,6 +78,7 @@ import {
   resetReturnsItineraryAction,
   resetDeparturesItineraryAction,
   resetSummaryProgramAction,
+  // setCustomItineraryAction,
 } from '../../../actions/Transactions/TransactionAction';
 import { getAllMovementTypesAction } from '../../../actions/General/generalAction';
 import { transactionItem } from '../../../helper/transactionHelper';
@@ -894,8 +895,8 @@ class AccommodationSummary extends Component {
         this.props.Returns
       );
       this.setState({ loading: true });
-      this.props.getOperatorListAction(item);
-      //this.props.dispatch(get_operator_list(item));
+      this.props.getOperatorListAction(this.props.packageStatus, item);
+      // this.props.setCustomItineraryAction(item);
     }
   };
 
@@ -1491,9 +1492,11 @@ class AccommodationSummary extends Component {
       this.props.resetOperatorListAction();
       //this.props.dispatch(reset_operator_list());
       return false;
-    } else if (nextProps.isTourOperator) {
+    } else if (nextProps.isTourOperator !== null) {
       this.setState({ loading: false });
-      Alert.alert('Failed', nextProps.tourOperatorListError, [{ text: 'OK' }]);
+      Alert.alert('Failed', nextProps.tourOperatorListError.Message, [
+        { text: 'OK' },
+      ]);
       this.props.resetOperatorListAction();
       //this.props.dispatch(reset_operator_list());
       return false;
@@ -2664,6 +2667,7 @@ const mapStateToProps = state => ({
   cityList: state.generalReducer.cityInCountry,
   getAirportData: state.transportationReducer.getAirportData,
   getDuration: state.transportationReducer.getDuration,
+  packageStatus: state.transactionReducer.packageStatusFromHomeToList,
   // tourOperatorListError: state.operatorReducer.tourOperatorListError,
   //   airport: state.itemIteneraryReducer.airport,
   //   driving: state.itemIteneraryReducer.driving,
@@ -2686,4 +2690,5 @@ export default connect(mapStateToProps, {
   getAirportAction,
   getOperatorListAction,
   resetOperatorListAction,
+  // setCustomItineraryAction,
 })(AccommodationSummary);

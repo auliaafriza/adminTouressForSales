@@ -1,9 +1,9 @@
-import * as types from "../actions/operator/actionTypes";
+import * as types from '../actions/operator/actionTypes';
 
 const initialState = {
   operatorList: [],
   isTourOperator: null,
-  loading: false
+  loading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,19 +18,26 @@ const reducer = (state = initialState, action) => {
         operatorList: action.payload.data,
         loading: false,
         errors: null,
-        isTourOperator: true
+        isTourOperator: true,
       };
     case types.GET_TOUR_OPERATOR_LIST_REJECTED:
       return {
         ...state,
         loading: false,
         errors: action.payload.response.data,
-        isTourOperator: false
+        isTourOperator: false,
       };
     case types.RESET_TOUR_OPERATOR_LIST: {
       return {
         ...state,
-        isTourOperator: null
+        isTourOperator: null,
+      };
+    }
+
+    case types.SET_OPERATOR: {
+      return {
+        ...state,
+        Operator: action.payload,
       };
     }
     default:

@@ -48,6 +48,7 @@ import {
   getReadyPackageByIdAction,
   getReadyPackageFixedPriceByIdAction,
 } from '../../actions/Transactions/TransactionAction';
+import { getTourScheduleAction } from '../../actions/General/generalAction';
 // import {
 //   get_tour_operator_profile,
 //   reset_fixpackages_by_id,
@@ -120,6 +121,7 @@ class PackagesDetail extends PureComponent {
       : statusPackages == 'Ready'
       ? getReadyPackageByIdAction(packageIdFromSystem)
       : getReadyPackageFixedPriceByIdAction(packageIdFromSystem);
+    this.props.getTourScheduleAction(packageIdFromSystem);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -143,7 +145,10 @@ class PackagesDetail extends PureComponent {
     this.setState({
       paymentTerms: data.BookingDetailSum.FixedPackage.PaymentTerms,
       price: data.Prices,
-      imageslogo: data.TourOperator.ImageUrl,
+      imageslogo:
+        this.props.route.params.type === 'Fixed'
+          ? data.TourOperator.ImageUrl
+          : '',
       daily: data.DailyPrograms,
       Img: data
         ? data.Images
@@ -210,6 +215,56 @@ class PackagesDetail extends PureComponent {
         ? this.props.navigation.navigate('Home')
         : this.props.navigation.pop();
     }
+  };
+
+  getBrochure = () => {
+    this.state.packages.Brochures
+      ? this.state.packages.Brochures.length > 0
+        ? this.state.packages.Brochures[0].ImageUrl
+          ? Linking.openURL(this.state.brochureData).catch(err =>
+              Alert.alert('Sorry', err, [
+                {
+                  text: 'OK',
+                },
+              ])
+            )
+          : Alert.alert('Sorry', 'This packages dose not have brochure', [
+              {
+                text: 'OK',
+              },
+            ])
+        : Alert.alert('Sorry', 'This packages dose not have brochure', [
+            {
+              text: 'OK',
+            },
+          ])
+      : Alert.alert('Sorry', 'This packages dose not have brochure', [
+          {
+            text: 'OK',
+          },
+        ]);
+  };
+
+  getSchedule = () => {
+    this.props.TourSchedulePDF != null
+      ? this.props.TourSchedulePDF != ''
+        ? Linking.openURL(this.props.TourSchedulePDF).catch(err =>
+            Alert.alert('Sorry', err, [
+              {
+                text: 'OK',
+              },
+            ])
+          )
+        : Alert.alert('Sorry', 'This packages dose not have schedule', [
+            {
+              text: 'OK',
+            },
+          ])
+      : Alert.alert('Sorry', 'This packages dose not have schedule', [
+          {
+            text: 'OK',
+          },
+        ]);
   };
   //   componentDidMount() {
   //     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -1549,6 +1604,8 @@ const mapStateToProps = state => ({
   packageIdFromSystem: state.transactionReducer.packageIdFromSystem,
   tourOperatorId: state.transactionReducer.tourOperatorId,
   tourOperatorIdStatus: state.transactionReducer.tourOperatorIdStatus,
+  isTourSchedulePDF: state.generalReducer.isTourSchedulePDF,
+  TourSchedulePDF: state.generalReducer.TourSchedulePDF,
 });
 
 export default connect(mapStateToProps, {
@@ -1558,4 +1615,5 @@ export default connect(mapStateToProps, {
   setPackageDataAction,
   getReadyPackageByIdAction,
   getReadyPackageFixedPriceByIdAction,
+  getTourScheduleAction,
 })(PackagesDetail);

@@ -8,7 +8,6 @@ import transportationReducer from '../reducers/transportationReducer';
 import accommodationReducer from '../reducers/accommodationReducer';
 import excrusionReducer from '../reducers/excrusionReducer';
 import restaurantReducer from '../reducers/restaurantReducer';
-
 const reducers = {
   authReducer,
   transactionReducer,

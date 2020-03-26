@@ -5,6 +5,7 @@ import CustomPackageOption from '../screens/TourTransactionScreen/CustomPackage/
 import RoomAllocation from '../screens/TourTransactionScreen/CustomPackage/RoomAllocation';
 import AccommodationSummary from '../screens/TourTransactionScreen/CustomPackage/AccommodationSummary';
 import TourOperatorList from '../screens/TourTransactionScreen/CustomPackage/components/operatorList/operatorList';
+import TourSchedule from '../screens/TourTransactionScreen/CustomPackage/TourSchedule';
 
 import { Icon } from '../components/icon';
 import {
@@ -101,6 +102,19 @@ export default function customNav({ navigation, route }) {
               type="headerright"
               onPress={() => navigation.navigate('Home')}
             />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="TourSchedule"
+        component={TourSchedule}
+        options={{
+          title: 'TourSchedule',
+          headerStyle: headerStyle,
+          headerTitleStyle: headerTitleStyle,
+          headerTitleContainerStyle: headerTitleContainerStyle,
+          headerLeft: () => (
+            <Icon type="headerleft" onPress={() => navigation.pop()} />
           ),
         }}
       />

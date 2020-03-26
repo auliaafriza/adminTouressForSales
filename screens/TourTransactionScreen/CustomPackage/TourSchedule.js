@@ -10,11 +10,11 @@ import {
   StatusBar,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Container } from '../../../../../components/container';
+import { Container } from '../../../components/container';
 import styles from './styles';
-import stylesGlobal from '../../../../../components/styles';
-import { CardItenary } from '../../../../../components/card';
-import { ModalItinerary, ModalDuration } from '../../../../../components/modal';
+import stylesGlobal from '../../../components/styles';
+import { CardItenary } from '../../../components/card';
+import { ModalItinerary, ModalDuration } from '../../../components/modal';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import {
@@ -24,8 +24,8 @@ import {
   viewDate,
   viewDay,
   convertToStringDate,
-} from '../../../../../helper/timeHelper';
-import { isDurationFromText } from '../../../../../helper/checkingHelper';
+} from '../../../helper/timeHelper';
+import { isDurationFromText } from '../../../helper/checkingHelper';
 
 import {
   setSummaryProgramAction,
@@ -45,9 +45,9 @@ import {
   afterEditActivity,
   changeTimeSummaryProgramAfterAddActivity,
   getDrivingAddress,
-} from '../../../../../helper/dailyProgram';
+} from '../../../helper/dailyProgram';
 // import { AmountGuide } from '../../helper/tourGuides';
-import { Loading } from '../../../../../components/loading';
+import { Loading } from '../../../components/loading';
 
 import {
   setDrivingAction,

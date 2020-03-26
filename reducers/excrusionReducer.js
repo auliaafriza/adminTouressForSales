@@ -114,7 +114,7 @@ const reducer = (state = initialState, action) => {
         excrusionDetail: null,
         isExcrusionDetailStatus: 'failed',
       };
-    case type.RESET_GET_EXCRUSION_DETAIL:
+    case types.RESET_GET_EXCRUSION_DETAIL:
       return {
         ...state,
         loading: false,

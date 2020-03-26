@@ -129,8 +129,6 @@ class summaryCustom extends Component {
       : '';
     if (type === 'myBooking') {
       this.props.getTourSummaryByIdAction(id);
-    } else {
-      this.props.setSpecialAdjusmentAction(dummayDemo.AdditionalItems);
     }
   }
 
@@ -409,11 +407,19 @@ class summaryCustom extends Component {
   };
 
   handlePressSpecialAdjusmentDetail = async () => {
+    const type = this.props.route.params.type;
     this.props.navigation.navigate('Summary', {
       screen: 'SpecialAdjusmentDetail',
       params: {
         data: this.state.specialAdjusment,
         onUpdate: await this.handleSetSpecialAdjusment,
+        tourTransactionId: this.props.route.params.id
+          ? this.props.route.params.id
+          : '',
+        currencyId:
+          type === 'myBooking'
+            ? this.state.dataSummary.BookingDetailSum.CurrencyId
+            : this.props.DemoPrice.BookingDetailSum.CurrencyId,
       },
     });
   };
@@ -445,7 +451,9 @@ class summaryCustom extends Component {
         ? this.props.packageByIdStatus
           ? this.props.packageById
           : dummayDemo
-        : dummayDemo;
+        : this.props.DemoPrice
+        ? this.props.DemoPrice
+        : '';
     const modalNoteHeight = Dimensions.get('window').height * 0.7;
     const generateOrderItemData = generateOrderedItem(Data.DailyPrograms);
     const type = this.props.route.params.type;
@@ -1938,6 +1946,7 @@ const mapStateToProps = state => ({
   packageByIdStatus: state.transactionReducer.packageByIdStatus,
   loading: state.transactionReducer.loading,
   DetailCustom: state.transactionReducer.CustomDetails,
+  DemoPrice: state.transactionReducer.postDemo,
 });
 
 export default connect(mapStateToProps, {
@@ -1950,26 +1959,3 @@ export default connect(mapStateToProps, {
   resetTransactionAction,
   sendEmailConfirmation,
 })(summaryCustom);
-
-const list = [
-  {
-    Id: 1,
-    TourTransactionId: 'sample string 2',
-    ActionType: 0,
-    Description: 'sample string 3',
-    Qty: 4,
-    UnitCost: 1000000,
-    CurrencyId: 'IDR',
-    IsHiddenData: true,
-  },
-  {
-    Id: 1,
-    TourTransactionId: 'sample string 2',
-    ActionType: 0,
-    Description: 'sample string 3',
-    Qty: 4,
-    UnitCost: -500,
-    CurrencyId: 'IDR',
-    IsHiddenData: true,
-  },
-];

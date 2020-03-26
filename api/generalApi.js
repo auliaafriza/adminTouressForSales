@@ -59,3 +59,10 @@ export const postSimpleRegisterApi = (data, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.post(`/Account/RegisterCompany/SimpleCustomer`, data);
 };
+
+export const getTourScheduleApi = (packageId, authToken) => {
+  apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
+  return apiClient.get(
+    `/BookingTemplates/DownloadSchedule?bookingTemplateId=${packageId}`
+  );
+};

@@ -84,7 +84,7 @@ export const getDemoJoinTourApi = (id, item, status, authToken) => {
   return apiClient.post(`${URL}/${id}`, item);
 };
 
-export const getDemoCreateTour = (item, authToken) => {
+export const getDemoCreateTourApi = (item, authToken) => {
   apiClient.defaults.headers['Authorization'] = 'Bearer ' + authToken;
   return apiClient.post(`/TourTransactions/DemoPrice`, item);
 };

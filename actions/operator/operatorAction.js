@@ -26,8 +26,9 @@ export const resetOperatorListAction = () => {
   };
 };
 
-export const setOperatorAction = () => {
+export const setOperatorAction = data => {
   return {
     type: SET_OPERATOR,
+    payload: data,
   };
 };

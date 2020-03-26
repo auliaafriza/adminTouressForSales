@@ -492,7 +492,6 @@ export const postDemoJoinTour = (id, item, status) => {
 export const postDemoCreateTour = item => {
   const state = store.getState();
   const authToken = state.authReducer.token;
-
   return dispatch => {
     return dispatch({
       type: POST_DEMO_CREATE_TOUR,
