@@ -1,4 +1,4 @@
-import * as types from '../actions/actionTypes';
+import * as types from '../actions/restaurant/actionTypes';
 
 const initialState = {
   restaurants: [],
@@ -27,9 +27,9 @@ const reducer = (state = initialState, action) => {
     // GET_RESTAURANT_BY_FILTER
     //---------------------------------
     case types.GET_RESTAURANT_BY_FILTER:
-      return {...state};
+      return { ...state };
     case types.GET_RESTAURANT_BY_FILTER_PENDING:
-      return {...state, loadingRestaurantByFilter: true};
+      return { ...state, loadingRestaurantByFilter: true };
     case types.GET_RESTAURANT_BY_FILTER_FULFILLED:
       return {
         ...state,
@@ -50,9 +50,9 @@ const reducer = (state = initialState, action) => {
     // GET_RESTAURANT_RATING
     //---------------------------------
     case types.GET_RESTAURANT_RATING:
-      return {...state};
+      return { ...state };
     case types.GET_RESTAURANT_RATING_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_RESTAURANT_RATING_FULFILLED:
       return {
         ...state,
@@ -73,9 +73,9 @@ const reducer = (state = initialState, action) => {
     // GET_RESTAURANT_SPECIALIZATIONS
     //---------------------------------
     case types.GET_RESTAURANT_SPECIALIZATIONS:
-      return {...state};
+      return { ...state };
     case types.GET_RESTAURANT_SPECIALIZATIONS_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_RESTAURANT_SPECIALIZATIONS_FULFILLED:
       return {
         ...state,
@@ -96,9 +96,9 @@ const reducer = (state = initialState, action) => {
     // GET_RESTAURANT_MENU_CLASSES
     //---------------------------------
     case types.GET_RESTAURANT_MENU_CLASSES:
-      return {...state};
+      return { ...state };
     case types.GET_RESTAURANT_MENU_CLASSES_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_RESTAURANT_MENU_CLASSES_FULFILLED:
       return {
         ...state,
@@ -119,9 +119,9 @@ const reducer = (state = initialState, action) => {
     // GET_RESTAURANT_MENU_BY_ID
     //---------------------------------
     case types.GET_RESTAURANT_MENU_BY_ID:
-      return {...state};
+      return { ...state };
     case types.GET_RESTAURANT_MENU_BY_ID_PENDING:
-      return {...state, loadingRestaurantMenuById: true};
+      return { ...state, loadingRestaurantMenuById: true };
     case types.GET_RESTAURANT_MENU_BY_ID_FULFILLED:
       return {
         ...state,
@@ -142,9 +142,9 @@ const reducer = (state = initialState, action) => {
     // GET_MENU_BY_ID
     //---------------------------------
     case types.GET_MENU_BY_ID:
-      return {...state};
+      return { ...state };
     case types.GET_MENU_BY_ID_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_MENU_BY_ID_FULFILLED:
       return {
         ...state,
@@ -165,9 +165,9 @@ const reducer = (state = initialState, action) => {
     // GET_RESTAURANT_PROFILE_BY_SERVICE_ITEM
     //---------------------------------
     case types.GET_RESTAURANT_PROFILE_BY_SERVICE_ITEM:
-      return {...state};
+      return { ...state };
     case types.GET_RESTAURANT_PROFILE_BY_SERVICE_ITEM_PENDING:
-      return {...state, loading: true};
+      return { ...state, loading: true };
     case types.GET_RESTAURANT_PROFILE_BY_SERVICE_ITEM_FULFILLED:
       return {
         ...state,
