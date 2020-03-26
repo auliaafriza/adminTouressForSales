@@ -76,19 +76,19 @@ export const getDurationAction = data => {
     return dispatch({
       type: GET_DURATION,
       payload: getDurationApi(data, authToken),
-    })
-      .then(response =>
-        dispatch({
-          type: GET_DURATION_FULFILLED,
-          payload: response.value.data,
-        })
-      )
-      .catch(error => {
-        dispatch({
-          type: GET_DURATION_REJECTED,
-          payload: error,
-        });
-      });
+    });
+    // .then(response =>
+    //   dispatch({
+    //     type: GET_DURATION_FULFILLED,
+    //     payload: response.value.data,
+    //   })
+    // )
+    // .catch(error => {
+    //   dispatch({
+    //     type: GET_DURATION_REJECTED,
+    //     payload: error,
+    //   });
+    // });
   };
 };
 
