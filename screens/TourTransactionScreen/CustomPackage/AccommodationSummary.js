@@ -746,17 +746,17 @@ class AccommodationSummary extends Component {
               DP[i].Movements[j - 1].Item,
               DP[i].Movements[j + 1].Item
             );
-            item = await this.props.getDurationAction(data);
-            item = response ? response.payload : undefined;
+            // item = await this.props.getDurationAction(data);
+            // item = response ? response.payload : undefined;
+            await this.props
+              .getDurationAction(data)
+              .then(res => (item = res.value.data))
+              .catch(err => (item = err.response.data.Message));
             if (item.Duration != undefined) {
               this.props.setDrivingAction(
                 setObjectDuration(this.props.driving, data, item)
               );
-              //   this.props.dispatch(
-              //     await set_driving(
-              //       setObjectDuration(this.props.driving, data, item)
-              //     )
-              //   );
+
               DP[i].Movements[j].Duration = item.Duration.value;
               DP[i].Movements[j].DurationText = item.Duration.text;
               DP[i].Movements[j].Item.MapsString = item.Duration.MapsString;

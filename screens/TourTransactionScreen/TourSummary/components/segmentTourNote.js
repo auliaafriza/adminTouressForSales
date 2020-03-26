@@ -1,19 +1,19 @@
-import React from "react";
-import { Text, View } from "react-native";
-import styles from "../../styles";
-import PropTypes from "prop-types";
-import stylesGlobal from "../../../../components/styles";
-import { Card } from "../../../../components/card";
-import { RoundedTextInput } from "../../../../components/textInput";
+import React from 'react';
+import { Text, View } from 'react-native';
+import styles from '../../styles';
+import PropTypes from 'prop-types';
+import stylesGlobal from '../../../../components/styles';
+import { Card } from '../../../../components/card';
+import { RoundedTextInput } from '../../../../components/textInput';
 const segmentTourNote = props => {
-  const { tourNote, onChangeText } = props;
+  const { tourNote, onChangeText, type } = props;
   return (
     <Card widthCard="90%">
       <Text
         style={[
           stylesGlobal.paddingHorizontal20,
           styles.bold20,
-          stylesGlobal.paddingTop20
+          stylesGlobal.paddingTop20,
         ]}
       >
         {`Notes (optional)`}
@@ -24,7 +24,7 @@ const segmentTourNote = props => {
           stylesGlobal.width100,
           stylesGlobal.paddingLeft10,
           stylesGlobal.paddingRight10,
-          stylesGlobal.paddingTop10
+          stylesGlobal.paddingTop10,
         ]}
       >
         <RoundedTextInput
@@ -35,8 +35,10 @@ const segmentTourNote = props => {
           containerHeight={80}
           animated="hidden"
           placeholder="Have intruction or request about this tour for us?"
-          value={tourNote}
+          value={tourNote ? tourNote : '-'}
           onChangeText={onChangeText}
+          disableInput={type ? 'disable' : ''}
+          disable={type}
         />
       </View>
     </Card>
@@ -45,7 +47,7 @@ const segmentTourNote = props => {
 
 segmentTourNote.propTypes = {
   tourNote: PropTypes.string,
-  onChangeText: PropTypes.func
+  onChangeText: PropTypes.func,
 };
 
 export default segmentTourNote;

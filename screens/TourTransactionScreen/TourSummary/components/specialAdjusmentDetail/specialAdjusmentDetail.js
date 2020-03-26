@@ -30,7 +30,7 @@ class specialAdjusmentDetail extends Component {
     data['ActionType'] = 3;
     listAdjusment[index] = data;
     this.setState(listAdjusment);
-    this.props.setSpecialAdjusmentAction(listAdjusment);
+
     this.props.route.params.onUpdate(listAdjusment);
   };
 
@@ -45,22 +45,26 @@ class specialAdjusmentDetail extends Component {
       Description: '',
       Qty: 0,
       UnitCost: 0,
-      CurrencyId: 'IDR',
+      CurrencyId: this.props.route.params.currencyId,
       IsHiddenData: false,
+      AdditionalItemTypeId: 1,
     };
     listAdjusment.push(data);
     this.setState({ listAdjusment });
-    this.props.setSpecialAdjusmentAction(listAdjusment);
+
     this.props.route.params.onUpdate(listAdjusment);
   };
   handleEditSpecialAdjusment = (index, value, name) => {
     let { listAdjusment } = this.state;
     let data = listAdjusment[index];
     data[name] = value;
-    data['ActionType'] = 2;
+    if (data['ActionType'] !== 1) {
+      data['ActionType'] = 2;
+    }
+    data['AdditionalItemTypeId'] = 1;
     listAdjusment[index] = data;
     this.setState(listAdjusment);
-    this.props.setSpecialAdjusmentAction(listAdjusment);
+    //
     this.props.route.params.onUpdate(listAdjusment);
   };
 
@@ -71,7 +75,7 @@ class specialAdjusmentDetail extends Component {
     data['Qty'] = total;
     listAdjusment[index] = data;
     this.setState(listAdjusment);
-    this.props.setSpecialAdjusmentAction(listAdjusment);
+
     this.props.route.params.onUpdate(listAdjusment);
   };
   handleIncrease = index => {
@@ -81,7 +85,7 @@ class specialAdjusmentDetail extends Component {
     data['Qty'] = total;
     listAdjusment[index] = data;
     this.setState(listAdjusment);
-    this.props.setSpecialAdjusmentAction(listAdjusment);
+
     this.props.route.params.onUpdate(listAdjusment);
   };
   handleCheckBox = (index, name, value) => {
@@ -100,7 +104,7 @@ class specialAdjusmentDetail extends Component {
     }
     listAdjusment[index] = data;
     this.setState(listAdjusment);
-    this.props.setSpecialAdjusmentAction(listAdjusment);
+
     this.props.route.params.onUpdate(listAdjusment);
   };
 
@@ -189,6 +193,7 @@ class specialAdjusmentDetail extends Component {
                         onChangeText={text =>
                           this.handleEditSpecialAdjusment(i, text, 'UnitCost')
                         }
+                        keyboardType="numeric"
                       />
                     </View>
                     <View style={[styles.rowNoPadding]}>

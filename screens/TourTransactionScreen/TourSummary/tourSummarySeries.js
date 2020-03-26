@@ -86,9 +86,10 @@ class tourSummarySeries extends Component {
             : ''
           : ''
         : '',
-      specialAdjusment: this.props.specialAdjusment
-        ? this.props.specialAdjusment
-        : [],
+      // specialAdjusment: this.props.getSummaryById
+      //   ? this.props.getSummaryById.AdditionalItems
+      //   : [],
+      specialAdjusment: [],
       modalSendEmailConfirmation: false,
       isSendEmailConfirmation: null,
       dataSummary: null,
@@ -216,10 +217,28 @@ class tourSummarySeries extends Component {
       this.props.resetTransactionAction();
       return false;
     }
+
+    if (this.props.postSpecialAdjusmentStatus === 'success') {
+      let Id = this.props.getSummaryById
+        ? this.props.getSummaryById.BookingDetailSum.Id
+        : '';
+      this.handleSendEmailAfterCreateBooking(Id);
+      this.props.resetTransactionAction();
+      // this.props.getTourSummaryByIdAction(Id);
+      return false;
+    } else if (this.props.postSpecialAdjusmentStatus === 'failed') {
+      this.setState({ loading: false });
+      Alert.alert('Failed', this.props.postfixpackagesError.MessageDetail, [
+        { text: 'OK' },
+      ]);
+      this.props.resetTransactionAction();
+      return false;
+    }
     if (this.props.getSummaryByIdStatus == 'success') {
       this.setState({
         loadingLoad: false,
         dataSummary: this.props.getSummaryById,
+        specialAdjusment: this.props.getSummaryById.AdditionalItems,
       });
       this.props.resetGetTourSummaryById();
       return false;
@@ -311,6 +330,7 @@ class tourSummarySeries extends Component {
   };
 
   handlePressSpecialAdjusmentDetail = async () => {
+    const type = this.props.route.params.type;
     this.props.navigation.navigate('Summary', {
       screen: 'SpecialAdjusmentDetail',
       params: {
@@ -319,6 +339,10 @@ class tourSummarySeries extends Component {
         tourTransactionId: this.props.route.params.id
           ? this.props.route.params.id
           : '',
+        currencyId:
+          type === 'myBooking'
+            ? this.state.dataSummary.BookingDetailSum.CurrencyId
+            : this.props.postDemofixedPackages.BookingDetailSum.CurrencyId,
       },
     });
   };
@@ -341,6 +365,16 @@ class tourSummarySeries extends Component {
 
   openModalSendEmail = () => {
     this.setState({ modalSendEmailConfirmation: true });
+  };
+
+  handleSaveSpecialAdjusment = async () => {
+    this.setState({ loading: true, modalSendEmailConfirmation: false });
+    let item = null;
+
+    item = {
+      AdditionalItems: this.state.specialAdjusment,
+    };
+    this.props.postSpecialAdjusmentAction(item);
   };
 
   render() {
@@ -371,7 +405,11 @@ class tourSummarySeries extends Component {
     return (
       <Container>
         <ModalBottom height="50%" visible={this.state.loading} isCenter={true}>
-          <Text style={stylesGlobal.text18}>Booking your package</Text>
+          <Text style={stylesGlobal.text18}>
+            {type === 'myBooking'
+              ? 'Special adjusment'
+              : 'Booking your package'}
+          </Text>
           <AnimatedEllipsis style={stylesGlobal.text24} />
         </ModalBottom>
         <ModalBottom
@@ -380,7 +418,7 @@ class tourSummarySeries extends Component {
           isCenter={true}
         >
           <Text style={[stylesGlobal.text16, stylesGlobal.textBold]}>
-            Booking Success
+            {type === 'myBooking' ? 'Success' : 'Booking Success'}
           </Text>
           <View style={styles.containerImageModal}>
             <Image
@@ -397,8 +435,12 @@ class tourSummarySeries extends Component {
               stylesGlobal.paddingRight10,
             ]}
           >
-            Booking Number {this.state.idBook ? this.state.idBook : ''}{' '}
-            successfully created. check your booking in my booking
+            {type === 'myBooking'
+              ? 'Special Adjusment successfully, check your booking in my booking  '
+              : `Booking Number ${
+                  this.state.idBook ? this.state.idBook : ''
+                }{' '}
+            successfully created. check your booking in my booking `}
           </Text>
           <NormalButton
             text="Go to my booking"
@@ -467,6 +509,8 @@ class tourSummarySeries extends Component {
                     TourNote: text,
                   })
                 }
+                disableInput={type === 'myBooking' ? 'disable' : ''}
+                disable={true}
               />
             </View>
             <View style={stylesGlobal.row100}>
@@ -1601,6 +1645,7 @@ class tourSummarySeries extends Component {
                     })
                   }
                   tourNote={this.state.TourNote}
+                  type={type === 'myBooking' ? true : false}
                 />
                 {type === 'myBooking' ? null : (
                   <Card widthCard="90%">
@@ -1726,7 +1771,7 @@ class tourSummarySeries extends Component {
                 buttonHeight="100%"
                 textColor="#252525"
                 buttonColor="transparent"
-                onPress={this.handlePressguest}
+                onPress={this.handleSaveSpecialAdjusment}
               />
             </LinearGradient>
           </TouchableOpacity>
@@ -1771,6 +1816,9 @@ const mapStateToProps = state => ({
   loading: state.transactionReducer.loading,
   sendEmailConfirmationStatus:
     state.transactionReducer.sendEmailConfirmationStatus,
+  postSpecialAdjusmentStatus:
+    state.transactionReducer.postSpecialAdjusmentStatus,
+  postSpecialAdjusmentTour: state.transactionReducer.postSpecialAdjusmentTour,
 });
 
 export default connect(mapStateToProps, {
